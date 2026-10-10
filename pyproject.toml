@@ -1,0 +1,22 @@
+[project]
+name = "jugglebot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "CXinCheng", email = "Smilence97@outlook.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "gymnasium>=1.4.0",
+    "mujoco>=3.15.0",
+    "numpy>=2.5.3",
+    "stable-baselines3>=2.9.0",
+]
+
+[project.scripts]
+jugglebot = "jugglebot:main"
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14.0"]
+build-backend = "uv_build"
