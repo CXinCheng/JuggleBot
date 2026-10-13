@@ -1,18 +1,12 @@
-stroke: V 1.7 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 0.0 deg; peak arm joint speed 1.33 x 180 deg/s; peak at t = 0.087 s, stops at 0.173 s
-  over the planning margin (0.9); lower --V
 stroke: V 1.7 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 90.0 deg; peak arm joint speed 0.77 x 180 deg/s; peak at t = 0.087 s, stops at 0.173 s
-t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 11.4 +- 1.0 ms after peak | speed 1.64 +- 0.01 m/s (hand 1.66 +- 0.01) | angle 1.7 +- 0.8 deg, sideways 49 +- 23 mm/s | spin 1.3 +- 0.6 rad/s | apex 124 +- 2 mm | arm speed peak 0.77
-t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 26.7 +- 1.1 ms after peak | speed 1.44 +- 0.03 m/s (hand 1.36 +- 0.03) | angle 1.8 +- 0.9 deg, sideways 45 +- 23 mm/s | spin 1.1 +- 0.7 rad/s | apex 95 +- 5 mm | arm speed peak 0.78
-stroke: V 1.7 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 180.0 deg; peak arm joint speed 1.15 x 180 deg/s; peak at t = 0.087 s, stops at 0.173 s
-  over the planning margin (0.9); lower --V
+t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 14.4 +- 1.9 ms after peak | speed 1.62 +- 0.02 m/s (hand 1.62 +- 0.02) | angle 1.6 +- 0.7 deg, sideways 45 +- 20 mm/s | spin 1.2 +- 0.6 rad/s | apex 120 +- 2 mm | arm speed peak 0.77
+t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 34.1 +- 1.3 ms after peak | speed 1.39 +- 0.06 m/s (hand 1.18 +- 0.03) | angle 3.8 +- 1.2 deg, sideways 92 +- 31 mm/s | spin 2.6 +- 1.6 rad/s | apex 89 +- 10 mm | arm speed peak 0.78
 stroke: V 1.7 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 270.0 deg; peak arm joint speed 0.77 x 180 deg/s; peak at t = 0.087 s, stops at 0.173 s
-t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 10.7 +- 0.8 ms after peak | speed 1.66 +- 0.01 m/s (hand 1.67 +- 0.01) | angle 1.2 +- 0.6 deg, sideways 35 +- 17 mm/s | spin 0.9 +- 0.3 rad/s | apex 124 +- 1 mm | arm speed peak 0.77
-t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 26.5 +- 1.4 ms after peak | speed 1.45 +- 0.04 m/s (hand 1.37 +- 0.03) | angle 1.0 +- 0.4 deg, sideways 26 +- 11 mm/s | spin 0.9 +- 0.5 rad/s | apex 95 +- 5 mm | arm speed peak 0.78
-stroke: V 1.2 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 0.0 deg; peak arm joint speed 0.93 x 180 deg/s; peak at t = 0.061 s, stops at 0.122 s
-  over the planning margin (0.9); lower --V
+t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 14.5 +- 2.1 ms after peak | speed 1.65 +- 0.02 m/s (hand 1.62 +- 0.03) | angle 1.8 +- 0.9 deg, sideways 52 +- 27 mm/s | spin 1.4 +- 0.6 rad/s | apex 120 +- 3 mm | arm speed peak 0.77
+t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 34.0 +- 1.4 ms after peak | speed 1.40 +- 0.07 m/s (hand 1.18 +- 0.04) | angle 2.8 +- 0.6 deg, sideways 69 +- 16 mm/s | spin 1.8 +- 1.1 rad/s | apex 89 +- 9 mm | arm speed peak 0.78
 stroke: V 1.0 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 0.0 deg; peak arm joint speed 0.78 x 180 deg/s; peak at t = 0.051 s, stops at 0.102 s
-t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 8.8 +- 0.4 ms after peak | speed 0.94 +- 0.00 m/s (hand 0.96 +- 0.01) | angle 2.7 +- 1.1 deg, sideways 45 +- 18 mm/s | spin 1.1 +- 0.5 rad/s | apex 41 +- 0 mm | arm speed peak 0.77
-t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 26.8 +- 1.2 ms after peak | speed 0.64 +- 0.03 m/s (hand 0.52 +- 0.04) | angle 3.1 +- 1.7 deg, sideways 34 +- 18 mm/s | spin 0.8 +- 0.5 rad/s | apex 19 +- 2 mm | arm speed peak 0.78
+t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 12.6 +- 0.8 ms after peak | speed 0.91 +- 0.00 m/s (hand 0.90 +- 0.02) | angle 3.7 +- 0.9 deg, sideways 60 +- 15 mm/s | spin 1.6 +- 0.4 rad/s | apex 38 +- 1 mm | arm speed peak 0.77
+t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 33.8 +- 1.5 ms after peak | speed 0.56 +- 0.08 m/s (hand 0.32 +- 0.04) | angle 8.7 +- 2.1 deg, sideways 86 +- 28 mm/s | spin 2.2 +- 1.4 rad/s | apex 15 +- 4 mm | arm speed peak 0.78
 stroke: V 1.2 m/s, up 3.0 g, down 3.0 g, tilt 20.0 deg towards 180.0 deg; peak arm joint speed 0.81 x 180 deg/s; peak at t = 0.061 s, stops at 0.122 s
-t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 8.2 +- 1.2 ms after peak | speed 1.15 +- 0.01 m/s (hand 1.17 +- 0.01) | angle 3.6 +- 0.9 deg, sideways 72 +- 17 mm/s | spin 1.8 +- 0.4 rad/s | apex 62 +- 1 mm | arm speed peak 0.81
-t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 26.8 +- 1.4 ms after peak | speed 0.86 +- 0.05 m/s (hand 0.75 +- 0.04) | angle 4.0 +- 1.3 deg, sideways 60 +- 17 mm/s | spin 1.2 +- 0.5 rad/s | apex 32 +- 4 mm | arm speed peak 0.81
+t_open  -20 ms, T_open  30 ms: 10/10 thrown | release 14.2 +- 0.8 ms after peak | speed 1.12 +- 0.00 m/s (hand 1.09 +- 0.01) | angle 3.7 +- 0.9 deg, sideways 72 +- 17 mm/s | spin 1.8 +- 0.4 rad/s | apex 57 +- 1 mm | arm speed peak 0.81
+t_open  +20 ms, T_open  30 ms: 10/10 thrown | release 34.3 +- 1.4 ms after peak | speed 0.84 +- 0.08 m/s (hand 0.53 +- 0.04) | angle 5.6 +- 1.7 deg, sideways 82 +- 26 mm/s | spin 2.3 +- 1.4 rad/s | apex 30 +- 6 mm | arm speed peak 0.81

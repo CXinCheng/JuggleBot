@@ -4,7 +4,8 @@ Copied from v2 (cup) with the task point moved to the flange site. The IK task s
 flange position + flange axis (= palm normal). The rotation about the palm normal (which
 way the fingers point) is left to the null-space pull towards the nominal configuration;
 the finger frame matters for the hand (it is not symmetric like the cup), so callers check
-it where needed. The scratch MjData keeps the fingers flat (qpos 0).
+it where needed. The scratch MjData keeps the fingers flat (qpos 0). The task site is the
+flange by default; catching uses catch_point (tcp_site argument).
 
 v2: fk / jacobian also accept another site of the cup (e.g. ball_seat, where the
 ball centre sits when it rests on the cup base).
@@ -43,7 +44,7 @@ class IKResult:
 class ArmKinematics:
     """Kinematics helper for the 6 arm joints, independent of the simulation state."""
 
-    def __init__(self, model: mujoco.MjModel):
+    def __init__(self, model: mujoco.MjModel, tcp_site: str = TCP_SITE):
         self.model = model
         self.data = mujoco.MjData(model)  # scratch copy; never stepped
         joints = [model.joint(n) for n in ARM_JOINTS]
@@ -51,7 +52,7 @@ class ArmKinematics:
         self.dof_adr = np.array([j.dofadr[0] for j in joints])
         self.q_min = np.array([j.range[0] for j in joints])
         self.q_max = np.array([j.range[1] for j in joints])
-        self.site_id = model.site(TCP_SITE).id
+        self.site_id = model.site(tcp_site).id
         self._jacp = np.zeros((3, model.nv))
         self._jacr = np.zeros((3, model.nv))
 

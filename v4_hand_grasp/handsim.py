@@ -7,6 +7,9 @@
     - finger torque limits: the Menagerie model has none. LEAP uses Dynamixel XC330-M288-T
       servos run at a 600-750 mA current limit (Shaw et al., RSS 2023); FINGER_TORQUE is a
       conservative estimate of the torque at that current (to be verified).
+    - compliant, damped palm and fingertip contacts (SKIN_*): the Menagerie hand is nearly rigid
+      (solref 0.0001); a padded palm / fingertips give way a few mm and damp the impact of a
+      caught ball. solmix makes these parameters dominate MuJoCo's per-contact averaging.
 * HandSim: arm tracking (position servos + inverse-dynamics feed-forward, as in v2), hand
   postures (position targets for the 16 finger joints), ball placement and contact
   bookkeeping (palm / finger / other), and the 180 deg/s arm joint-speed check.
@@ -25,11 +28,28 @@ ARM_JOINTS = ("shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist
 FINGERS = ("if", "mf", "rf")
 FINGER_TORQUE = 0.5  # N m, estimated XC330-M288-T torque at the LEAP current limit (unverified)
 ARM_SPEED_LIMIT = np.pi  # rad/s, UR5e datasheet
+SKIN_SOLREF = (0.006, 1.2)  # time constant (s), damping ratio (> 1: no rebound)
+SKIN_SOLIMP = (0.9, 0.95, 0.004)  # softer impedance, 4 mm transition width
+SKIN_SOLMIX = 100.0
+SKIN_GEOMS = ("leap_palm_collision_", "leap_if_tip", "leap_mf_tip", "leap_rf_tip", "leap_th_tip")
 Q_READY = np.array([0.302, -1.649, -2.206, -0.857, -1.571, -1.873])  # v1/v2 "ready": flange up at (0.45, 0, 0.43)
 
 
-def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE) -> mujoco.MjModel:
+def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE, skin: bool = True,
+               pedestal: float = 0.0) -> mujoco.MjModel:
+    """pedestal > 0: the robot base stands on a box this high (m) -- the stretched-out arm, where the
+    hand moves fastest vertically, is then high enough to throw, catch and give way below."""
     spec = mujoco.MjSpec.from_file(str(scene))
+    if pedestal > 0:
+        spec.body("base").pos[2] += pedestal
+        spec.worldbody.add_geom(name="pedestal", type=mujoco.mjtGeom.mjGEOM_BOX, size=[0.1, 0.1, pedestal / 2],
+                                pos=[0, 0, pedestal / 2], rgba=[0.35, 0.35, 0.38, 1])
+    if skin:
+        for geom in spec.geoms:
+            if geom.name.startswith(SKIN_GEOMS):
+                geom.solref = list(SKIN_SOLREF)
+                geom.solimp = list(SKIN_SOLIMP) + [0.5, 2.0]
+                geom.solmix = SKIN_SOLMIX
     for body in spec.bodies:
         if body.name.startswith("leap_"):
             body.gravcomp = 1.0
@@ -70,10 +90,12 @@ class HandSim:
         self.ball_radius = float(m.geom_size[self.ball_geom][0])
         self.palm = m.body("leap_palm").id
         self.ground = m.geom("ground").id
+        # the pedestal (if any) counts as ground: the ball is lost if it gets there
+        self.ground_geoms = {g for g in (self.ground, mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_GEOM, "pedestal")) if g >= 0}
         self.palm_geoms = {g for g in range(m.ngeom) if m.geom_bodyid[g] == self.palm}
         self.hand_geoms = {g for g in range(m.ngeom) if m.body(m.geom_bodyid[g]).name.startswith("leap_")}
         self.arm_geoms = {g for g in range(m.ngeom)
-                          if g not in self.hand_geoms and g not in (self.ground, self.ball_geom)}
+                          if g not in self.hand_geoms and g not in self.ground_geoms and g != self.ball_geom}
         # Arm servos: force = kp (ctrl - q) - kd qd
         self.kp = m.actuator_gainprm[self.arm_act, 0].copy()
         self.kd = -m.actuator_biasprm[self.arm_act, 2].copy()
@@ -131,7 +153,7 @@ class HandSim:
                 out.palm = True
             elif other in self.hand_geoms:
                 out.finger = True
-            elif other == self.ground:
+            elif other in self.ground_geoms:
                 out.ground = True
             elif other in self.arm_geoms:
                 out.arm = True
