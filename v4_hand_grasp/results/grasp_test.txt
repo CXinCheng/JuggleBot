@@ -1,0 +1,20 @@
+saved v4_hand_grasp\results\postures.png (flat | cradle | grasp)
+ball: radius 42.5 mm, mass 120 g; hand mass 0.746 kg; V = 0.9 m/s
+flat   up 2.0 g / down 0.5 g: HELD    | excursion   1.1 mm | finger torque 0.33 x limit | arm speed 0.89 | arm force 0.49
+flat   up 2.0 g / down 1.5 g: THROWN , left the hand 96 ms into the stroke, 114 ms in the air | excursion   1.9 mm | finger torque 0.33 x limit | arm speed 0.89 | arm force 0.49
+flat   up 2.0 g / down 3.0 g: THROWN , left the hand 78 ms into the stroke, 151 ms in the air | excursion   2.5 mm | finger torque 0.49 x limit | arm speed 0.89 | arm force 0.66
+flat   up 3.0 g / down 0.5 g: HELD    | excursion   1.3 mm | finger torque 0.42 x limit | arm speed 0.90 | arm force 0.74
+flat   up 3.0 g / down 1.5 g: THROWN , left the hand 73 ms into the stroke, 113 ms in the air | excursion   2.2 mm | finger torque 0.42 x limit | arm speed 0.90 | arm force 0.74
+flat   up 3.0 g / down 3.0 g: THROWN , left the hand 55 ms into the stroke, 150 ms in the air | excursion   3.2 mm | finger torque 0.50 x limit | arm speed 0.90 | arm force 0.74
+cradle up 2.0 g / down 0.5 g: HELD    | excursion   1.1 mm | finger torque 0.19 x limit | arm speed 0.89 | arm force 0.49
+cradle up 2.0 g / down 1.5 g: THROWN , left the hand 95 ms into the stroke, 115 ms in the air | excursion   1.7 mm | finger torque 0.19 x limit | arm speed 0.89 | arm force 0.49
+cradle up 2.0 g / down 3.0 g: THROWN , left the hand 78 ms into the stroke, 152 ms in the air | excursion   2.8 mm | finger torque 0.27 x limit | arm speed 0.89 | arm force 0.67
+cradle up 3.0 g / down 0.5 g: HELD    | excursion   1.3 mm | finger torque 0.25 x limit | arm speed 0.89 | arm force 0.74
+cradle up 3.0 g / down 1.5 g: THROWN , left the hand 72 ms into the stroke, 115 ms in the air | excursion   2.2 mm | finger torque 0.25 x limit | arm speed 0.89 | arm force 0.74
+cradle up 3.0 g / down 3.0 g: THROWN , left the hand 55 ms into the stroke, 151 ms in the air | excursion   3.1 mm | finger torque 0.28 x limit | arm speed 0.89 | arm force 0.74
+grasp  up 2.0 g / down 0.5 g: HELD    | excursion   1.1 mm | finger torque 1.00 x limit | arm speed 0.88 | arm force 0.49
+grasp  up 2.0 g / down 1.5 g: HELD    | excursion   1.1 mm | finger torque 1.00 x limit | arm speed 0.88 | arm force 0.49
+grasp  up 2.0 g / down 3.0 g: HELD    | excursion   1.1 mm | finger torque 1.00 x limit | arm speed 0.88 | arm force 0.68
+grasp  up 3.0 g / down 0.5 g: HELD    | excursion   1.2 mm | finger torque 1.00 x limit | arm speed 0.89 | arm force 0.74
+grasp  up 3.0 g / down 1.5 g: HELD    | excursion   1.2 mm | finger torque 1.00 x limit | arm speed 0.89 | arm force 0.74
+grasp  up 3.0 g / down 3.0 g: HELD    | excursion   1.2 mm | finger torque 1.00 x limit | arm speed 0.89 | arm force 0.74
