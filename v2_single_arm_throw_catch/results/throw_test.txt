@@ -1,0 +1,70 @@
+translate d=0.00 F=0.35 |v|=1.72: plan 1.7s, joint speed 0.90, torque 0.58, lateral 0.00, release at [0.82 0.3  0.38]
+    raw: 10/10 ok | dt_rel 2.9/5.0 ms | dv 23.6/27.3 mm/s (1.4/1.6%) | angle 0.6/0.7 deg | miss 14.0/18.2 mm | wall 0% | speed 0.90 force 0.64
+    cal: miss 10 -> 6 -> 5 -> 4 -> 4 -> 3 mm in 5 corrections, joint speed 0.81, torque 0.60 | 8/10 ok, RECONTACT 2 | dt_rel 13.2/35.0 ms | dv 29.2/99.7 mm/s (1.7/5.9%) | angle 0.8/2.9 deg | miss 11.3/22.3 mm | wall 25% | speed 0.81 force 0.66
+translate d=0.00 F=0.40 |v|=1.96: infeasible (out of reach 319, stroke collision 207, ik 28, collision 14, joint speed 1)
+translate d=0.00 F=0.45 |v|=2.21: infeasible (out of reach 319, stroke collision 214, ik 28, collision 14, joint speed 1)
+translate d=0.00 F=0.50 |v|=2.45: infeasible (out of reach 319, stroke collision 301, ik 28, collision 14, joint speed 1)
+translate d=0.20 F=0.35 |v|=1.81: infeasible (out of reach 336, stroke collision 130, ik 47, rim 37, collision 9, joint speed 3)
+translate d=0.20 F=0.40 |v|=2.02: infeasible (out of reach 380, stroke collision 174, ik 54, joint speed 40, collision 10)
+translate d=0.20 F=0.45 |v|=2.25: infeasible (out of reach 357, stroke collision 202, ik 61, collision 10, joint speed 1)
+translate d=0.20 F=0.50 |v|=2.48: infeasible (out of reach 328, stroke collision 285, ik 53, collision 10, joint speed 1)
+translate d=0.40 F=0.35 |v|=2.06: infeasible (out of reach 400, stroke collision 121, ik 44, joint speed 40, collision 11)
+translate d=0.40 F=0.40 |v|=2.20: infeasible (out of reach 322, stroke collision 138, ik 36, collision 9, joint speed 5)
+translate d=0.40 F=0.45 |v|=2.38: infeasible (out of reach 372, stroke collision 169, ik 48, collision 9, joint speed 1)
+translate d=0.40 F=0.50 |v|=2.58: infeasible (out of reach 336, stroke collision 208, ik 50, collision 8, joint speed 1)
+whip      d=0.00 F=0.35 |v|=1.72: plan 1.8s, joint speed 0.55, torque 0.50, lateral 0.42, release at [0.05 0.75 0.38]
+    raw: 10/10 ok | dt_rel 44.9/47.0 ms | dv 133.8/145.9 mm/s (7.7/8.4%) | angle 4.2/4.6 deg | miss 27.9/31.6 mm | wall 100% | speed 0.55 force 0.55
+    cal: failed (miss 28 -> 17 -> 15 -> 33 mm)
+whip      d=0.00 F=0.40 |v|=1.96: plan 1.7s, joint speed 0.63, torque 0.56, lateral 0.51, release at [0.05 0.75 0.38]
+    raw: 10/10 ok | dt_rel 51.1/54.0 ms | dv 189.6/190.3 mm/s (9.7/9.7%) | angle 5.2/5.2 deg | miss 58.4/58.7 mm | wall 100% | speed 0.63 force 0.63
+    cal: failed (miss 58 mm)
+whip      d=0.00 F=0.45 |v|=2.21: plan 1.8s, joint speed 0.79, torque 0.62, lateral 0.62, release at [0.05 0.75 0.41]
+    raw: 10/10 ok | dt_rel 51.6/55.0 ms | dv 239.6/252.3 mm/s (10.8/11.4%) | angle 5.9/6.2 deg | miss 89.8/94.7 mm | wall 100% | speed 0.79 force 0.69
+    cal: failed (miss 90 mm)
+whip      d=0.00 F=0.50 |v|=2.45: infeasible (out of reach 312, stroke collision 253, ik 28, joint speed 24, collision 20, rim 10)
+whip      d=0.20 F=0.35 |v|=1.81: infeasible (out of reach 321, stroke collision 124, ik 64, rim 40, collision 9)
+whip      d=0.20 F=0.40 |v|=2.02: plan 2.2s, joint speed 0.50, torque 0.63, lateral 0.42, release at [ 0.48 -0.74  0.4 ]
+    raw: 10/10 ok | dt_rel 29.7/32.0 ms | dv 132.3/139.6 mm/s (6.5/6.9%) | angle 3.7/3.9 deg | miss 40.6/44.2 mm | wall 100% | speed 0.50 force 0.68
+    cal: failed (miss 40 -> 12 mm)
+whip      d=0.20 F=0.45 |v|=2.25: plan 2.0s, joint speed 0.57, torque 0.71, lateral 0.53, release at [ 0.48 -0.74  0.4 ]
+    raw: 10/10 ok | dt_rel 33.5/36.0 ms | dv 171.1/182.2 mm/s (7.6/8.1%) | angle 4.2/4.5 deg | miss 62.1/67.3 mm | wall 100% | speed 0.57 force 0.77
+    cal: failed (miss 65 mm)
+whip      d=0.20 F=0.50 |v|=2.48: plan 2.2s, joint speed 0.75, torque 0.77, lateral 0.67, release at [ 0.45 -0.75  0.43]
+    raw: 10/10 ok | dt_rel 37.0/46.0 ms | dv 221.4/241.5 mm/s (8.9/9.7%) | angle 4.9/5.3 deg | miss 94.0/103.6 mm | wall 100% | speed 0.76 force 0.84
+    cal: failed (miss 91 -> 112 mm)
+whip      d=0.40 F=0.35 |v|=2.06: infeasible (out of reach 368, stroke collision 108, ik 92, rim 40, collision 11)
+whip      d=0.40 F=0.40 |v|=2.20: infeasible (out of reach 387, stroke collision 134, ik 101, rim 40, collision 9)
+whip      d=0.40 F=0.45 |v|=2.38: plan 2.8s, joint speed 0.54, torque 0.72, lateral 0.62, release at [ 0.48 -0.74  0.42]
+    raw: 10/10 ok | dt_rel 36.4/39.0 ms | dv 213.3/231.5 mm/s (9.0/9.7%) | angle 5.0/5.4 deg | miss 82.0/89.9 mm | wall 100% | speed 0.54 force 0.77
+    cal: miss 78 -> 10 -> 22 -> 44 -> 40 mm in 4 corrections, joint speed 0.56, torque 0.73 | 10/10 ok | dt_rel 1.2/4.0 ms | dv 16.4/42.0 mm/s (0.8/2.0%) | angle 0.3/1.0 deg | miss 14.5/26.2 mm | wall 100% | speed 0.56 force 0.79
+whip      d=0.40 F=0.50 |v|=2.58: plan 2.9s, joint speed 0.61, torque 0.78, lateral 0.72, release at [ 0.45 -0.74  0.42]
+    raw: 10/10 ok | dt_rel 37.0/38.0 ms | dv 230.3/240.1 mm/s (8.9/9.3%) | angle 5.0/5.2 deg | miss 98.6/103.6 mm | wall 100% | speed 0.61 force 0.84
+    cal: failed (miss 99 mm)
+linewhip  d=0.00 F=0.35 |v|=1.72: plan 1.6s, joint speed 0.58, torque 0.46, lateral 0.18, release at [0.05 0.75 0.38]
+    raw: 8/10 ok, RECONTACT 2 | dt_rel 27.0/27.0 ms | dv 55.5/55.6 mm/s (3.2/3.2%) | angle 1.8/1.8 deg | miss 3.4/4.1 mm | wall 100% | speed 0.58 force 0.51
+    cal: miss 3 mm in 0 corrections, joint speed 0.58, torque 0.46 | 8/10 ok, RECONTACT 2 | dt_rel 0.0/0.0 ms | dv 3.3/3.7 mm/s (0.2/0.3%) | angle 0.0/0.1 deg | miss 3.4/4.1 mm | wall 100% | speed 0.58 force 0.51
+linewhip  d=0.00 F=0.40 |v|=1.96: plan 2.2s, joint speed 0.67, torque 0.53, lateral 0.17, release at [0.05 0.75 0.4 ]
+    raw: 10/10 ok | dt_rel 27.8/28.0 ms | dv 66.9/68.1 mm/s (3.4/3.5%) | angle 1.9/1.9 deg | miss 9.8/10.3 mm | wall 100% | speed 0.68 force 0.58
+    cal: miss 10 -> 3 -> 0 mm in 2 corrections, joint speed 0.70, torque 0.53 | 10/10 ok | dt_rel 0.0/0.0 ms | dv 2.9/4.6 mm/s (0.2/0.3%) | angle 0.1/0.1 deg | miss 1.2/2.3 mm | wall 100% | speed 0.70 force 0.58
+linewhip  d=0.00 F=0.45 |v|=2.21: plan 1.4s, joint speed 0.77, torque 0.58, lateral 0.19, release at [0.05 0.75 0.4 ]
+    raw: 10/10 ok | dt_rel 29.6/30.0 ms | dv 87.1/89.7 mm/s (3.9/4.1%) | angle 2.2/2.2 deg | miss 23.9/25.4 mm | wall 100% | speed 0.77 force 0.64
+    cal: miss 22 -> 5 mm in 1 corrections, joint speed 0.81, torque 0.59 | 10/10 ok | dt_rel 0.3/1.0 ms | dv 5.7/12.2 mm/s (0.3/0.6%) | angle 0.1/0.2 deg | miss 6.7/10.0 mm | wall 100% | speed 0.81 force 0.65
+linewhip  d=0.00 F=0.50 |v|=2.45: infeasible (out of reach 312, stroke collision 253, collision 30, ik 28, joint speed 24)
+linewhip  d=0.20 F=0.35 |v|=1.81: infeasible (out of reach 321, stroke collision 124, ik 64, rim 40, collision 9)
+linewhip  d=0.20 F=0.40 |v|=2.02: plan 1.8s, joint speed 0.49, torque 0.65, lateral 0.28, release at [ 0.47 -0.74  0.4 ]
+    raw: 10/10 ok | dt_rel 9.5/12.0 ms | dv 64.7/70.7 mm/s (3.2/3.5%) | angle 1.2/1.4 deg | miss 19.5/22.7 mm | wall 100% | speed 0.49 force 0.70
+    cal: miss 20 -> 2 -> 1 mm in 2 corrections, joint speed 0.47, torque 0.63 | 10/10 ok | dt_rel 1.0/2.0 ms | dv 6.8/10.9 mm/s (0.4/0.6%) | angle 0.2/0.3 deg | miss 2.3/4.2 mm | wall 100% | speed 0.47 force 0.68
+linewhip  d=0.20 F=0.45 |v|=2.25: plan 1.7s, joint speed 0.65, torque 0.72, lateral 0.28, release at [ 0.48 -0.74  0.4 ]
+    raw: 10/10 ok | dt_rel 10.1/12.0 ms | dv 62.0/63.6 mm/s (2.8/2.8%) | angle 1.1/1.2 deg | miss 18.2/19.3 mm | wall 100% | speed 0.65 force 0.79
+    cal: miss 18 -> 3 -> 1 mm in 2 corrections, joint speed 0.64, torque 0.71 | 10/10 ok | dt_rel 0.8/2.0 ms | dv 7.1/14.8 mm/s (0.3/0.7%) | angle 0.2/0.4 deg | miss 3.2/6.0 mm | wall 100% | speed 0.64 force 0.77
+linewhip  d=0.20 F=0.50 |v|=2.48: plan 1.6s, joint speed 0.86, torque 0.76, lateral 0.26, release at [ 0.43 -0.75  0.43]
+    raw: 10/10 ok | dt_rel 14.6/16.0 ms | dv 56.9/58.8 mm/s (2.3/2.4%) | angle 1.1/1.2 deg | miss 15.1/16.4 mm | wall 100% | speed 0.86 force 0.82
+    cal: miss 18 -> 5 -> 2 mm in 2 corrections, joint speed 0.87, torque 0.76 | 10/10 ok | dt_rel 1.5/3.0 ms | dv 7.8/13.0 mm/s (0.3/0.5%) | angle 0.2/0.3 deg | miss 4.1/7.7 mm | wall 100% | speed 0.87 force 0.82
+linewhip  d=0.40 F=0.35 |v|=2.06: infeasible (out of reach 368, stroke collision 108, ik 92, rim 40, collision 11)
+linewhip  d=0.40 F=0.40 |v|=2.20: infeasible (out of reach 387, stroke collision 134, ik 101, rim 40, collision 9)
+linewhip  d=0.40 F=0.45 |v|=2.38: plan 1.9s, joint speed 0.90, torque 0.75, lateral 0.46, release at [ 0.47 -0.74  0.4 ]
+    raw: 10/10 ok | dt_rel 8.6/9.0 ms | dv 86.9/92.8 mm/s (3.7/3.9%) | angle 1.3/1.5 deg | miss 32.2/35.8 mm | wall 80% | speed 0.90 force 0.82
+    cal: miss 33 -> 3 -> 1 mm in 2 corrections, joint speed 0.84, torque 0.73 | 10/10 ok | dt_rel 0.7/2.0 ms | dv 9.2/24.8 mm/s (0.4/1.1%) | angle 0.2/0.6 deg | miss 4.7/12.6 mm | wall 90% | speed 0.84 force 0.80
+linewhip  d=0.40 F=0.50 |v|=2.58: plan 2.1s, joint speed 0.76, torque 0.78, lateral 0.42, release at [ 0.47 -0.72  0.42]
+    raw: 10/10 ok | dt_rel 8.8/12.0 ms | dv 83.6/85.9 mm/s (3.2/3.3%) | angle 1.1/1.3 deg | miss 34.3/35.5 mm | wall 100% | speed 0.76 force 0.85
+    cal: miss 36 -> 7 -> 3 -> 2 -> 0 mm in 4 corrections, joint speed 0.71, torque 0.76 | 10/10 ok | dt_rel 1.6/3.0 ms | dv 9.4/24.5 mm/s (0.4/1.0%) | angle 0.2/0.6 deg | miss 5.0/12.8 mm | wall 100% | speed 0.71 force 0.83

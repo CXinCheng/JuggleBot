@@ -9,6 +9,10 @@ A plan consists of three phases, all expressed as one joint-space trajectory:
     cushion  : straight line p_c -> p_c + d_cush * v_hat, decelerating to rest
 
 The "static" strategy skips match/cushion: the cup waits motionless at p_c.
+
+v2: an optional torque_ok(segment) -> bool filter on the approach quintic, so the
+joint acceleration limits can be raised for the short juggling flights without
+planning motions the actuators cannot follow.
 """
 
 from dataclasses import dataclass, field
@@ -175,8 +179,9 @@ def cup_axis_for(v_ball: np.ndarray, max_tilt: float) -> np.ndarray:
 
 class CatchPlanner:
     def __init__(self, kin: ArmKinematics, cfg: PlannerConfig, q_nominal: np.ndarray,
-                 shoulder_pos: np.ndarray):
+                 shoulder_pos: np.ndarray, torque_ok=None):
         self.kin, self.cfg, self.q_nominal, self.shoulder = kin, cfg, q_nominal, shoulder_pos
+        self.torque_ok = torque_ok
 
     def _phase_geometry(self, v_ball, cushion: bool):
         cfg = self.cfg
@@ -230,6 +235,8 @@ class CatchPlanner:
             approach = min_time_quintic(t_now, q_now, v_now, a_now, ik.q, cfg.v_max, cfg.a_max)
             if approach.t1 + min_wait > t_match:
                 continue  # cannot get there (and settle) in time
+            if self.torque_ok is not None and not self.torque_ok(approach):
+                continue
             tilt = np.arccos(np.clip(axis[2], -1, 1))
             cost = np.linalg.norm(cfg.joint_weights * (ik.q - q_now)) + cfg.tilt_weight * tilt
             candidates.append((cost, t, p_c, v_b, axis, u, d_pre, d_cush, t_match, ik.q, approach))

@@ -68,6 +68,10 @@ class ArmSim:
         self.kd = -m.actuator_biasprm[:, 2].copy()
         self.force_limit = m.actuator_forcerange[:, 1].copy()
         self.ctrl_lo, self.ctrl_hi = m.actuator_ctrlrange[:, 0].copy(), m.actuator_ctrlrange[:, 1].copy()
+        # Cup cavity in the ball_seat frame (z along the cup axis, 0 = ball resting on the base).
+        walls = sorted(self.cup_walls)
+        self.inner_radius = min(np.linalg.norm(m.geom_pos[g][:2]) - m.geom_size[g][0] for g in walls)
+        self.rim_height = min(m.geom_pos[g][2] + m.geom_size[g][2] for g in walls) - m.site_pos[self.seat][2]
         self.guard = JointSpeedGuard()
         self.max_force_ratio = 0.0
         self.ctrl_clamped = 0  # steps with a servo command outside ctrlrange
@@ -100,6 +104,22 @@ class ArmSim:
         d = self.data
         rot = d.site_xmat[self.seat].reshape(3, 3)
         return rot.T @ (d.qpos[self.ball_qadr:self.ball_qadr + 3] - d.site_xpos[self.seat])
+
+    def ball_relative_velocity(self) -> np.ndarray:
+        """Ball velocity relative to the cup material point at the ball centre (world frame)."""
+        m, d = self.model, self.data
+        cup_vel, ball_vel = np.zeros(6), np.zeros(6)  # [angular; linear] at the body origins
+        mujoco.mj_objectVelocity(m, d, mujoco.mjtObj.mjOBJ_BODY, self.cup_body, cup_vel, 0)
+        mujoco.mj_objectVelocity(m, d, mujoco.mjtObj.mjOBJ_BODY, m.geom_bodyid[self.ball_geom], ball_vel, 0)
+        p_ball = d.qpos[self.ball_qadr:self.ball_qadr + 3]
+        return ball_vel[3:] - (cup_vel[3:] + np.cross(cup_vel[:3], p_ball - d.xpos[self.cup_body]))
+
+    def ball_in_cup(self, tol: float = 0.002) -> bool:
+        """Ball centre inside the cavity: within the wall radius and not above the rim (the cup is
+        shallower than the ball, as in v1)."""
+        p = self.ball_in_cup_frame()
+        return (np.linalg.norm(p[:2]) <= self.inner_radius - self.ball_radius + tol
+                and -tol <= p[2] <= self.rim_height + tol)
 
     def ball_contacts(self) -> BallContacts:
         d = self.data

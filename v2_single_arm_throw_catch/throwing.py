@@ -43,6 +43,7 @@ import numpy as np
 from kinematics import ArmKinematics
 
 WHIP_JOINTS = np.array([0, 1, 2, 3])  # shoulder_pan, shoulder_lift, elbow, wrist_1
+RELEASE_CHECKS = {"rim", "early release", "ball not held", "no release"}  # rest on the analytic release model
 
 
 @dataclass
@@ -430,18 +431,38 @@ class ThrowPlanner:
             out.append((ik.q, p))
         return out
 
-    def _grid(self, center=None, half=None, step=None) -> np.ndarray:
+    def _grid(self, center=None, half=None, step=None, region=None) -> np.ndarray:
         cfg = self.cfg
-        if center is None:
+        if region is not None:
+            lo, hi = region
+            axes = [np.arange(a, b + 1e-9, step) for a, b in zip(lo, hi)]
+        elif center is None:
             axes = [np.arange(lo, hi + 1e-9, cfg.grid_step) for lo, hi in (cfg.grid_x, cfg.grid_y, cfg.grid_z)]
         else:
             axes = [np.arange(c - half, c + half + 1e-9, step) for c in center]
         return np.stack(np.meshgrid(*axes, indexing="ij"), axis=-1).reshape(-1, 3)
 
     def plan(self, mode: str, v_target_fn: Callable[[np.ndarray], np.ndarray],
-             v_nominal: np.ndarray) -> ThrowPlan | None:
+             v_nominal: np.ndarray, region: tuple | None = None,
+             verifier: Callable[[ThrowPlan], bool] | None = None,
+             rank: Callable[[np.ndarray, np.ndarray], float] | None = None,
+             finalize: Callable[[ThrowPlan], ThrowPlan | None] | None = None) -> ThrowPlan | None:
         """Best feasible throw. v_target_fn(p_release) -> required release velocity; v_nominal
-        (the target velocity for a typical release point) fixes the cup axis."""
+        (the target velocity for a typical release point) fixes the cup axis. region = (lo, hi)
+        restricts the release (ball seat) position to a box, searched at refine_step * 2.
+
+        verifier(plan) -> bool, typically a physics rollout: a candidate that fails *only* the
+        checks resting on the analytic release prediction (rim clearance, early release, ball not
+        held) is rebuilt without them and accepted if the verifier passes. For linewhip strokes
+        most such rejections are false (the ball actually leaves later than predicted).
+        Verified plans keep the uncorrected command; calibrate them before use.
+
+        rank(q_start, q_end) -> cost orders the candidates that respect the joint-speed limit
+        (default: fastest first). For juggling, where the stroke ends matters more than speed
+        headroom: the arm has one flight time to get from there to its next catch pose.
+
+        finalize(plan) -> plan or None is a last acceptance step (e.g. calibration in
+        simulation); if it returns None the next candidate is tried."""
         cfg = self.cfg
         rej = Rejections()
         self.last_rejections = rej
@@ -451,15 +472,24 @@ class ThrowPlanner:
         def ratio(q, p):
             """Cheap ranking: joint-speed ratio of the release velocity alone; inf if the stroke ends
             (linearised: q +- qd * s) collide. The fastest poses are low and stretched out, and their
-            acceleration stroke tends to run into the floor."""
+            acceleration stroke tends to run into the floor. With `rank`, candidates within the speed
+            limit are ordered by rank(q_start, q_end) instead (offset by 1 to sort after none)."""
             qd = self.release_velocity(mode, q, v_target_fn(p))[0]
-            for s in (self.profile.s_min, self.profile.s_max):
-                if not self.kin.is_collision_free(q + qd * s):
+            ends = [q + qd * s for s in (self.profile.s_min, self.profile.s_max)]
+            for qe in ends:
+                if not self.kin.is_collision_free(qe):
                     rej.add("stroke collision")
                     return np.inf
-            return np.max(np.abs(qd)) / cfg.v_limit
+            rho = np.max(np.abs(qd)) / cfg.v_limit
+            if rank is None:
+                return rho
+            if rho > cfg.vel_frac:
+                rej.add("joint speed")
+                return np.inf
+            return rank(*ends)
 
-        cands = [(ratio(q, p), q, p) for q, p in self._candidates(axis, self._grid(), rej)]
+        grid = self._grid() if region is None else self._grid(region=region, step=2 * cfg.refine_step)
+        cands = [(ratio(q, p), q, p) for q, p in self._candidates(axis, grid, rej)]
         cands = sorted((c for c in cands if np.isfinite(c[0])), key=lambda c: c[0])
         # Refine around the best few: the fastest poses sit at the edge of the workspace.
         local = []
@@ -469,19 +499,31 @@ class ThrowPlanner:
         cands = sorted((c for c in cands + local if np.isfinite(c[0])), key=lambda c: c[0])
 
         for rho, q_r, p in cands[:cfg.n_verify]:
-            if rho > cfg.vel_frac:
+            if rank is None and rho > cfg.vel_frac:
                 rej.add("joint speed")
                 break  # sorted: the rest is slower still
             plan = None
             v_cmd = v_target_fn(p).copy()
             for _ in range(cfg.n_correct):
-                plan = self.build(mode, q_r, v_cmd, axis, v_target_fn, rej)
+                why = Rejections()
+                plan = self.build(mode, q_r, v_cmd, axis, v_target_fn, why)
+                for k, n in why.counts.items():
+                    rej.counts[k] = rej.counts.get(k, 0) + n
                 if plan is None:
+                    if verifier is not None and why.counts and set(why.counts) <= RELEASE_CHECKS:
+                        loose = self.build(mode, q_r, v_target_fn(p), axis, v_target_fn, check_release=False)
+                        if loose is not None and verifier(loose):
+                            rej.add("verified in simulation")
+                            plan = loose
                     break
                 err = plan.v_target - plan.v_release
                 if np.linalg.norm(err) < 0.005:
                     break
                 v_cmd = v_cmd + err
+            if plan is not None and finalize is not None:
+                plan = finalize(plan)
+                if plan is None:
+                    rej.add("finalize")
             if plan is not None:
                 return plan
         return None
