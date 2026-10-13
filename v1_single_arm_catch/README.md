@@ -9,7 +9,7 @@ Robot Juggling 项目的 Stage 1：一只 UR5e 机械臂在末端装一个杯子
 |---|---|
 | `scene.xml` | 世界：地面、灯光、相机、发射器标记（纯视觉）、小球、`ready` 关键帧。`<include>` 了 `ur5e_cup.xml` |
 | `ur5e_cup.xml` | Menagerie UR5e + 杯形末端执行器（改动见文件头注释） |
-| `assets/universal_robots_ur5e/` | Menagerie 原始 mesh、`LICENSE`（BSD-3），以及未修改的原版 `ur5e.xml` 供对照 |
+| `../assets/universal_robots_ur5e/` | （仓库根目录，各阶段共用）Menagerie 原始 mesh、`LICENSE`（BSD-3），以及未修改的原版 `ur5e.xml` 供对照 |
 | `prediction.py` | 1. 弹道预测：已知重力下对观测位置做最小二乘拟合 |
 | `kinematics.py` | 杯口位置 + 杯轴方向的 5 维 DLS IK、FK、碰撞检查（在独立的 scratch `MjData` 上） |
 | `planning.py` | 2. 接球点选择 + 3. 轨迹生成（quintic / 笛卡尔直线段） |

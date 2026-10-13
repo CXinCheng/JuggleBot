@@ -1,16 +1,16 @@
 <mujoco model="ur5e_cup">
   <!--
     UR5e from MuJoCo Menagerie (universal_robots_ur5e, commit 0059d43), with a cup
-    end-effector. The unmodified original is assets/universal_robots_ur5e/ur5e.xml.
+    end-effector. The unmodified original is ../assets/universal_robots_ur5e/ur5e.xml.
     Changes relative to the original:
-      * meshdir points into assets/universal_robots_ur5e
+      * meshdir points into ../assets/universal_robots_ur5e (shared by all stages)
       * gravcomp="1" on every moving body (ideal gravity compensation)
       * body "cup" (hollow cylinder) attached to wrist_3_link at the original attachment_site pose
         (cup axis = flange normal), plus sites cup_mouth / cup_center
       * <contact><exclude> between the cup and the wrist links it touches
       * removed the spotlight and the "home" keyframe (scene.xml defines "ready")
   -->
-  <compiler angle="radian" meshdir="assets/universal_robots_ur5e" autolimits="true"/>
+  <compiler angle="radian" meshdir="../assets/universal_robots_ur5e" autolimits="true"/>
 
   <default>
     <default class="ur5e">
