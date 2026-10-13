@@ -1,0 +1,193 @@
+<mujoco model="ur5e_cup">
+  <!--
+    UR5e from MuJoCo Menagerie (universal_robots_ur5e, commit 0059d43), with a cup
+    end-effector. The unmodified original is ../assets/universal_robots_ur5e/ur5e.xml.
+    Changes relative to the original:
+      * meshdir points into ../assets/universal_robots_ur5e (shared by all stages)
+      * gravcomp="1" on every moving body (ideal gravity compensation)
+      * body "cup" (hollow cylinder) attached to wrist_3_link at the original attachment_site pose
+        (cup axis = flange normal), plus sites cup_mouth / cup_center
+      * <contact><exclude> between the cup and the wrist links it touches
+      * removed the spotlight and the "home" keyframe (scene.xml defines "ready")
+    v2 (same geometry as v1) adds the site cup/ball_seat: the ball centre when it rests on
+    the cup base, used to predict the release state of a throw.
+  -->
+  <compiler angle="radian" meshdir="../assets/universal_robots_ur5e" autolimits="true"/>
+
+  <default>
+    <default class="ur5e">
+      <material specular="0.5" shininess="0.25"/>
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
+        forcerange="-150 150"/>
+      <default class="size3">
+        <default class="size3_limited">
+          <joint range="-3.1415 3.1415"/>
+          <general ctrlrange="-3.1415 3.1415"/>
+        </default>
+      </default>
+      <default class="size1">
+        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/>
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom type="capsule" group="3"/>
+        <default class="eef_collision">
+          <geom type="cylinder"/>
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+    <default class="cup">
+      <geom type="box" material="cup" size="0.0025 0.00724 0.03" mass="0.006"/>
+      <site size="0.005" rgba="1 1 0 0.5" group="4"/>
+    </default>
+  </default>
+
+  <asset>
+    <material class="ur5e" name="black" rgba="0.033 0.033 0.033 1"/>
+    <material class="ur5e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
+    <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
+    <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/>
+    <material name="cup" rgba="0.15 0.35 0.9 1"/>
+
+    <mesh file="base_0.obj"/>
+    <mesh file="base_1.obj"/>
+    <mesh file="shoulder_0.obj"/>
+    <mesh file="shoulder_1.obj"/>
+    <mesh file="shoulder_2.obj"/>
+    <mesh file="upperarm_0.obj"/>
+    <mesh file="upperarm_1.obj"/>
+    <mesh file="upperarm_2.obj"/>
+    <mesh file="upperarm_3.obj"/>
+    <mesh file="forearm_0.obj"/>
+    <mesh file="forearm_1.obj"/>
+    <mesh file="forearm_2.obj"/>
+    <mesh file="forearm_3.obj"/>
+    <mesh file="wrist1_0.obj"/>
+    <mesh file="wrist1_1.obj"/>
+    <mesh file="wrist1_2.obj"/>
+    <mesh file="wrist2_0.obj"/>
+    <mesh file="wrist2_1.obj"/>
+    <mesh file="wrist2_2.obj"/>
+    <mesh file="wrist3.obj"/>
+  </asset>
+
+  <worldbody>
+    <body name="base" quat="0 0 0 -1" childclass="ur5e">
+      <inertial mass="4.0" pos="0 0 0" diaginertia="0.00443333156 0.00443333156 0.0072"/>
+      <geom mesh="base_0" material="black" class="visual"/>
+      <geom mesh="base_1" material="jointgray" class="visual"/>
+      <body name="shoulder_link" pos="0 0 0.163" gravcomp="1">
+        <inertial mass="3.7" pos="0 0 0" diaginertia="0.0102675 0.0102675 0.00666"/>
+        <joint name="shoulder_pan_joint" class="size3" axis="0 0 1"/>
+        <geom mesh="shoulder_0" material="urblue" class="visual"/>
+        <geom mesh="shoulder_1" material="black" class="visual"/>
+        <geom mesh="shoulder_2" material="jointgray" class="visual"/>
+        <geom class="collision" size="0.06 0.06" pos="0 0 -0.04"/>
+        <body name="upper_arm_link" pos="0 0.138 0" quat="1 0 1 0" gravcomp="1">
+          <inertial mass="8.393" pos="0 0 0.2125" diaginertia="0.133886 0.133886 0.0151074"/>
+          <joint name="shoulder_lift_joint" class="size3"/>
+          <geom mesh="upperarm_0" material="linkgray" class="visual"/>
+          <geom mesh="upperarm_1" material="black" class="visual"/>
+          <geom mesh="upperarm_2" material="jointgray" class="visual"/>
+          <geom mesh="upperarm_3" material="urblue" class="visual"/>
+          <geom class="collision" pos="0 -0.04 0" quat="1 1 0 0" size="0.06 0.06"/>
+          <geom class="collision" size="0.05 0.2" pos="0 0 0.2"/>
+          <body name="forearm_link" pos="0 -0.131 0.425" gravcomp="1">
+            <inertial mass="2.275" pos="0 0 0.196" diaginertia="0.0311796 0.0311796 0.004095"/>
+            <joint name="elbow_joint" class="size3_limited"/>
+            <geom mesh="forearm_0" material="urblue" class="visual"/>
+            <geom mesh="forearm_1" material="linkgray" class="visual"/>
+            <geom mesh="forearm_2" material="black" class="visual"/>
+            <geom mesh="forearm_3" material="jointgray" class="visual"/>
+            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.055 0.06"/>
+            <geom class="collision" size="0.038 0.19" pos="0 0 0.2"/>
+            <body name="wrist_1_link" pos="0 0 0.392" quat="1 0 1 0" gravcomp="1">
+              <inertial mass="1.219" pos="0 0.127 0" diaginertia="0.0025599 0.0025599 0.0021942"/>
+              <joint name="wrist_1_joint" class="size1"/>
+              <geom mesh="wrist1_0" material="black" class="visual"/>
+              <geom mesh="wrist1_1" material="urblue" class="visual"/>
+              <geom mesh="wrist1_2" material="jointgray" class="visual"/>
+              <geom class="collision" pos="0 0.05 0" quat="1 1 0 0" size="0.04 0.07"/>
+              <body name="wrist_2_link" pos="0 0.127 0" gravcomp="1">
+                <inertial mass="1.219" pos="0 0 0.1" diaginertia="0.0025599 0.0025599 0.0021942"/>
+                <joint name="wrist_2_joint" axis="0 0 1" class="size1"/>
+                <geom mesh="wrist2_0" material="black" class="visual"/>
+                <geom mesh="wrist2_1" material="urblue" class="visual"/>
+                <geom mesh="wrist2_2" material="jointgray" class="visual"/>
+                <geom class="collision" size="0.04 0.06" pos="0 0 0.04"/>
+                <geom class="collision" pos="0 0.02 0.1" quat="1 1 0 0" size="0.04 0.04"/>
+                <body name="wrist_3_link" pos="0 0 0.1" gravcomp="1">
+                  <inertial mass="0.1889" pos="0 0.0771683 0" quat="1 0 0 1"
+                    diaginertia="0.000132134 9.90863e-05 9.90863e-05"/>
+                  <joint name="wrist_3_joint" class="size1"/>
+                  <geom material="linkgray" mesh="wrist3" class="visual"/>
+                  <geom class="eef_collision" pos="0 0.08 0" quat="1 1 0 0" size="0.04 0.02"/>
+                  <site name="attachment_site" pos="0 0.1 0" quat="-1 1 0 0"/>
+
+                  <!-- Cup end-effector, sized like a dexterous hand cupped into a bowl
+                       (stand-in for a later hand stage). Frame = attachment_site: origin on
+                       the flange, +z = cup axis (opening direction). Hollow cylinder: inner
+                       diameter 0.10 m, inner depth 0.06 m, base 0.01 m thick, rim at
+                       z = 0.07 m, wall 0.005 m. The wall is a ring of 24 boxes (MuJoCo has
+                       no hollow-cylinder primitive) every 15 deg, with inner faces at
+                       r = 0.05 m; box half-length 0.055 * tan(pi/24) closes the ring at the
+                       outer radius. (<replicate> is not used: it breaks scene.xml's keyframe.)
+                       Total mass 0.2 kg. -->
+                  <body name="cup" pos="0 0.1 0" quat="-1 1 0 0" childclass="cup" gravcomp="1">
+                    <geom name="cup_base" type="cylinder" size="0.055 0.005" pos="0 0 0.005" mass="0.056"/>
+                    <geom name="cup_wall00" pos="0.05250 0.00000 0.04" quat="1.000000 0 0 0.000000"/>
+                    <geom name="cup_wall01" pos="0.05071 0.01359 0.04" quat="0.991445 0 0 0.130526"/>
+                    <geom name="cup_wall02" pos="0.04547 0.02625 0.04" quat="0.965926 0 0 0.258819"/>
+                    <geom name="cup_wall03" pos="0.03712 0.03712 0.04" quat="0.923880 0 0 0.382683"/>
+                    <geom name="cup_wall04" pos="0.02625 0.04547 0.04" quat="0.866025 0 0 0.500000"/>
+                    <geom name="cup_wall05" pos="0.01359 0.05071 0.04" quat="0.793353 0 0 0.608761"/>
+                    <geom name="cup_wall06" pos="0.00000 0.05250 0.04" quat="0.707107 0 0 0.707107"/>
+                    <geom name="cup_wall07" pos="-0.01359 0.05071 0.04" quat="0.608761 0 0 0.793353"/>
+                    <geom name="cup_wall08" pos="-0.02625 0.04547 0.04" quat="0.500000 0 0 0.866025"/>
+                    <geom name="cup_wall09" pos="-0.03712 0.03712 0.04" quat="0.382683 0 0 0.923880"/>
+                    <geom name="cup_wall10" pos="-0.04547 0.02625 0.04" quat="0.258819 0 0 0.965926"/>
+                    <geom name="cup_wall11" pos="-0.05071 0.01359 0.04" quat="0.130526 0 0 0.991445"/>
+                    <geom name="cup_wall12" pos="-0.05250 0.00000 0.04" quat="0.000000 0 0 1.000000"/>
+                    <geom name="cup_wall13" pos="-0.05071 -0.01359 0.04" quat="-0.130526 0 0 0.991445"/>
+                    <geom name="cup_wall14" pos="-0.04547 -0.02625 0.04" quat="-0.258819 0 0 0.965926"/>
+                    <geom name="cup_wall15" pos="-0.03712 -0.03712 0.04" quat="-0.382683 0 0 0.923880"/>
+                    <geom name="cup_wall16" pos="-0.02625 -0.04547 0.04" quat="-0.500000 0 0 0.866025"/>
+                    <geom name="cup_wall17" pos="-0.01359 -0.05071 0.04" quat="-0.608761 0 0 0.793353"/>
+                    <geom name="cup_wall18" pos="0.00000 -0.05250 0.04" quat="-0.707107 0 0 0.707107"/>
+                    <geom name="cup_wall19" pos="0.01359 -0.05071 0.04" quat="-0.793353 0 0 0.608761"/>
+                    <geom name="cup_wall20" pos="0.02625 -0.04547 0.04" quat="-0.866025 0 0 0.500000"/>
+                    <geom name="cup_wall21" pos="0.03712 -0.03712 0.04" quat="-0.923880 0 0 0.382683"/>
+                    <geom name="cup_wall22" pos="0.04547 -0.02625 0.04" quat="-0.965926 0 0 0.258819"/>
+                    <geom name="cup_wall23" pos="0.05071 -0.01359 0.04" quat="-0.991445 0 0 0.130526"/>
+                    <site name="cup_center" pos="0 0 0.04"/>
+                    <site name="cup_mouth" pos="0 0 0.07"/>
+                    <!-- base top (0.01) + ball radius (0.035) -->
+                    <site name="ball_seat" pos="0 0 0.045"/>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <contact>
+    <exclude body1="cup" body2="wrist_2_link"/>
+    <exclude body1="cup" body2="wrist_1_link"/>
+  </contact>
+
+  <actuator>
+    <general class="size3" name="shoulder_pan" joint="shoulder_pan_joint"/>
+    <general class="size3" name="shoulder_lift" joint="shoulder_lift_joint"/>
+    <general class="size3_limited" name="elbow" joint="elbow_joint"/>
+    <general class="size1" name="wrist_1" joint="wrist_1_joint"/>
+    <general class="size1" name="wrist_2" joint="wrist_2_joint"/>
+    <general class="size1" name="wrist_3" joint="wrist_3_joint"/>
+  </actuator>
+</mujoco>
