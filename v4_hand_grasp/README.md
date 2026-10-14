@@ -1,4 +1,4 @@
-# v4 — Stage 4：UR5e + LEAP 灵巧手（E1 握持 / 离手，E2 张开手指抛球，E3 接球与自抛自接）
+# v4 — Stage 4：UR5e + LEAP 灵巧手（E1 握持 / 离手，E2 张开手指抛球，E3 接球与自抛自接，碗状手型）
 
 杯子阶段的双臂实验（v3）已暂停（见 `git stash list`），项目直接转到灵巧手。v4 依次回答：
 
@@ -6,6 +6,7 @@
 - **E2**：握住加速，按设定时刻张开手指离手（两个参数），能否控制抛球？
 - **E3a**：用这只手接发射器抛来的球。
 - **E3b**：单臂、单球、灵巧手，在两点之间连续自抛自接（v2 实验 B 的手版本）。
+- **E3c**：像人一样用"碗状"的手接球（拳峰最低、掌根和手指高于拳峰），与平放的手掌对比。
 
 没有强化学习。
 
@@ -13,7 +14,7 @@
 
 | 文件 | 内容 |
 |---|---|
-| `ur5e_leap.xml` | Menagerie UR5e（同 v1/v2）在法兰处用 `<attach>` 装上 Menagerie LEAP 右手（前缀 `leap_`）。手掌的抓握面朝法兰外侧，掌心中心在法兰轴线上，掌背离法兰约 3 cm。site `ball_seat`（球静置时的球心，沿法兰轴 122 mm）、`catch_point`（再往上 25 mm，接球目标） |
+| `ur5e_leap.xml` | Menagerie UR5e（同 v1/v2）在法兰处用 `<attach>` 装上 Menagerie LEAP 右手（前缀 `leap_`）。手掌的抓握面朝法兰外侧，掌心中心在法兰轴线上，掌背离法兰约 3 cm。site `ball_seat`（球静置时的球心，沿法兰轴 122 mm）、`catch_point`（再往上 25 mm，接球目标）；`bowl_seat`、`bowl_point`（碗状接球，由 `handsim.set_bowl_sites()` 放置，z 轴为碗口方向） |
 | `scene.xml` | 场景：地面、相机（`close`、`throw`，E3b 用 `loop`）、一个球；`cone="elliptic"`、`impratio="100"`（Menagerie LEAP 模型推荐的设置，被 attach 的子模型不会带上这些选项） |
 | `handsim.py` | 仿真封装：`load_model()` 用 MjSpec 设置手的重力补偿、手指力矩上限、手掌和指尖的柔顺接触，以及可选的底座垫高（`pedestal`，E3b）；手臂跟踪（PD + 逆动力学前馈，同 v2）；手型；放球；球的接触分类（掌 / 指 / 臂 / 地面）；180°/s 检查；直线运动段 `LineStroke` |
 | `kinematics.py` | v2 的 IK / FK，任务点可选（默认法兰，接球用 `catch_point`）；5 维：位置 + 掌心法向，绕法向的转动交给零空间 |
@@ -34,9 +35,12 @@ uv run python v4_hand_grasp/grasp_test.py --images v4_hand_grasp/results     # �
 uv run python v4_hand_grasp/hand_throw.py                                    # E2 参数扫描（约 3 分钟）
 uv run python v4_hand_grasp/hand_throw.py --tilt 20 --heading 90 --t-open -0.02 0.02 --T-open 0.03
 uv run python v4_hand_grasp/hand_throw.py --t-open 0.02 --T-open 0.03 --trials 1 --video videos/   # 0.25 倍速录像
-uv run python v4_hand_grasp/hand_catch.py --trials 20                        # E3a：接触后收紧 vs 只托不握
-uv run python v4_hand_grasp/hand_catch.py --trials 20 --obs-noise 0.005 --cushion-dir ball --d-pre 0.05 --d-cush 0.10
-uv run python v4_hand_grasp/hand_juggle.py --obs-noise 0.005                # E3b：10 次运行 × 20 次接球
+uv run python v4_hand_grasp/hand_catch.py --trials 20                        # E3a/E3c：默认碗状手型，接触后收紧 vs 只托不握
+uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat            # E3a：平放手掌
+uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat --obs-noise 0.005 --cushion-dir ball --d-pre 0.05 --d-cush 0.10
+uv run python v4_hand_grasp/hand_catch.py --fingers close --obs-bias 0.03    # 人为 3 cm 落点误差
+uv run python v4_hand_grasp/hand_juggle.py --obs-noise 0.01                  # 自抛自接，默认碗状（yaw 0，出手点 0.9 m）
+uv run python v4_hand_grasp/hand_juggle.py --hand flat --obs-noise 0.005     # E3b：平放手掌（yaw 90，出手点 0.85 m）
 uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/hand_juggle.mp4
 ```
 
@@ -69,6 +73,7 @@ uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/ha
 | cradle 托球 | 手指 mcp = pip = 0.8、dip = 0.48；拇指 th_cmc = 1.2 | 小规模搜索得到：球在掌心时，手指一侧、拇指一侧、掌根一侧都有"墙"（在这些方向移动 6–34 mm 就会碰到）。**LEAP 没有小指，无名指一侧是敞开的**（移动 60 mm 都碰不到） |
 | grasp 握球 | 手指 1.2 / 1.2 / 0.72；拇指 th_cmc 1.2、th_mcp 0.5 | 指令越过接触位置：三根手指、拇指和手掌同时接触球，舵机以力矩上限压住球。更紧的手型（th_cmc 1.6–1.8）会把球从敞开的一侧挤出去；直接以闭合手型放球也会把球弹开，所以要先托住再收紧 |
 | catch 接球 | 托球手型，但手指只弯 0.3 | 托球手型那样立起的手指，会挡开从指尖方向斜着飞来的球（E3a） |
+| bowl 碗状（E3c，默认） | 手指 MCP 1.1、PIP 0.3，拇指同托球；配合掌根抬高 30°；碰掌后收紧到 MCP 1.4、PIP 1.2 | 拳峰最低，球落进掌心和手指之间的折痕（E3c） |
 
 ## E1：握持 / 离手（`results/grasp_test.txt`）
 
@@ -126,7 +131,7 @@ uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/ha
 
 握球手型在四个方向的侧向负载下都能握住，球不会提前掉出。朝指尖、掌根方向，在这个姿态下需要手臂伸缩，1.7 m/s 会超速（1.33 / 1.15 × 180°/s），所以用了较低的速度。
 
-## E3a：接发射器抛来的球（`hand_catch.py`，`results/hand_catch_compare.txt`）
+## E3a：接发射器抛来的球（`hand_catch.py --hand flat`，`results/hand_catch_compare.txt`）
 
 **设置**：
 - 发射器同 v1：从 (1.8, 0, 0.65) 附近抛出，飞行 0.8–1.1 s，到手时球速 4.4–5.8 m/s；目标区域比 v1 高约 7 cm，因为手的接球点比杯口高。
@@ -153,7 +158,7 @@ uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/ha
 4. **有观测噪声时，竖直让位不如沿来球方向缓冲**（13/20 对比 19/20）。推测是因为竖直向下时，手在水平方向不跟随来球，球接触后会在掌面上横向滑动。**[待查]**
 5. 软垫的穿透深度约 11–12 mm，对 4–5 m/s 的冲击来说偏深；真实 LEAP 指尖没有这么厚的垫子。
 
-## E3b：单臂自抛自接循环（`hand_juggle.py`，`results/hand_juggle_noise*.txt`）
+## E3b：单臂自抛自接循环（`hand_juggle.py --hand flat`，`results/hand_juggle_noise*.txt`）
 
 **设置**（v2 实验 B 的手版本）：
 - **底座垫高 0.4 m**（`load_model(pedestal=0.4)`）。手臂水平伸直、大约在肩部高度时，手的竖直速度最快（E2）；接球点比出手点低，接球时手腕挂在手下方，手臂还要向下让位，这些都需要下方留出空间。不垫高时，接球位置会碰到地面。
@@ -201,6 +206,59 @@ uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/ha
 4. **张开手指离手的重复性比杯子差约 3 倍**（离手速度误差均值 45–52 mm/s，最大 144 mm/s；杯子 11–15 / 27 mm/s）：接住后握球的位置每次不同，再加上手指软垫的回弹，这正是 RL 修正可以切入的地方（预测离手速度的偏差，或者修正 t_open / 手速）。
 5. **底座垫高 0.4 m** 让"伸直手臂抛球、在下方接球并让位"这套几何可行。
 
+## E3c：碗状手型接球（`--hand bowl`，现在是 `hand_catch.py` / `hand_juggle.py` 的默认；`results/hand_catch_bowl.txt`、`results/hand_juggle_bowl_*.txt`、`results/hand_juggle*_bias*.txt`）
+
+**动机**：人接球时手呈碗状——拳峰（指根关节）在最低点，掌根和手指都高于拳峰，球落进掌心和手指之间的折痕，手指从上方包住。平放的手掌只能让手指从一侧包住球。
+
+**手型和姿态**（`handsim.set_bowl_sites`）：
+- 接球手型：手指 MCP 1.1 rad（从拳峰竖起）、PIP 0.3；拇指同托球手型；球碰到手掌后收紧（MCP 1.4、PIP 1.2）。
+- 掌根抬高 30°：球在这个碗里静置于掌心坐标 (−35.5, −36, −77) mm，比平放时的座位往拳峰方向 10 mm。20° 时球会滚向敞开的无名指一侧。
+- 新的 site `bowl_point` 的 z 轴为碗口方向（掌心法向往掌根倾斜 30°），IK 和接球规划让碗口对着来球。
+
+**静态测试（手不动，倾斜重力等效于倾斜手）**：
+- 握紧后的包裹度、拉脱力与平放差别很小（包裹度 0.30–0.35，拉脱力 > 20 N）：85 mm 的球几乎和掌面一样长，收紧后总被推到相同位置。
+- **捕获范围**（球以 1.5 / 2.5 m/s 落到掌面上 154 个落点，碰掌即收紧）：平放 120 / 114，碗状（MCP 1.1、30°）**144 / 138**。多出来的全在掌根一侧：平放时球从掌根滚出，碗状时滚回拳峰。
+- **减小球径无帮助**：65 / 75 / 85 mm 的捕获范围相同（碗状 142–143 / 154）；65 mm 球只被中指和手掌接触（LEAP 手指间距 45 mm，三指横跨约 90 mm），拉脱力降到 12–18 N。保留 85 mm。
+- 只把平放手掌的瞄准点往拳峰方向移（`--aim-dx`）无效：手指收紧会把球扫回掌心；移 35 mm 时球先撞手指。
+
+**E3a：发射器来球**（每组 20 次；各配置从各自的预备姿态出发）：
+
+| 手型 | 朝向 | 无噪声 | 5 mm 噪声 | 接触相对速度 | 穿透 |
+|---|---|---|---|---|---|
+| 平放 | yaw 0 / 90 | 20 / 20 | 13 / 17 | 3.0–3.1 m/s | 11 mm |
+| **碗状** | yaw 0 / 90 | 20 / 20 | **20 / 20** | 1.9–2.3 m/s | 6–7 mm |
+
+人为落点误差（`--obs-bias`：所有观测水平偏移，方向随机），接住 /（接住 + 握住但离座位 > 3 cm）：
+
+| 误差 | 平放 yaw 0 | 平放 yaw 90 | 碗状 yaw 0 | 碗状 yaw 90 |
+|---|---|---|---|---|
+| 2 cm | 12 / 15 | 13 / 15 | **17 / 18** | **17 / 20** |
+| 3 cm | 10 / 15 | 11 / 13 | 12 / 18 | 9 / 18 |
+| 4 cm | 5 / 15 | 4 / 13 | **11 / 19** | **9 / 18** |
+
+**E3b：自抛自接**（默认：`--hand bowl`，即 `--yaw 0 --release 0.9 0.23`）：
+- **抛球也用碗状手型**：抛完再把平放的手转成碗状需要手腕转约 0.5 rad，在 0.9 × 180°/s 下约 0.37 s，比抛球结束到接球的时间还长（每个候选接球时刻都差 0.12–0.17 s）。这也更像人。
+- 掌根抬高后手臂构型变了，原出手点需要 1.01 × 180°/s；出手点外移到底座前方 0.9 m、球心高 0.35 m 后为 0.81–0.83。
+- 球过了最高点才换成接球手型（竖起的手指不能碰到上升的球）。
+- **朝向**：yaw 0（手指朝外，倾斜方向垂直于抛球连线）可行；yaw ±90（掌根对着抛球连线）不可行——碗口要朝来球偏约 10°，在抛球平面内对两个方向一加一减，两次接球姿态差约 20°，手腕来不及，规划失败（NO_CATCH_PLAN）。
+
+| 设置 | 平放 yaw 90（E3b 默认） | 碗状 yaw 0 |
+|---|---|---|
+| 0 / 5 / 10 mm 噪声 | 10/10 ×3 | 10/10 ×3 |
+| 长测试 10 mm 噪声（失败 / 接球） | 1 / 952 | **0 / 1000** |
+| 接触相对速度（均值） | 1.3–1.4 m/s | 1.1 m/s |
+| 离手速度误差（均值） | 45–52 mm/s | 42–44 mm/s |
+| **2 cm 落点误差**：接满运行，失败 / 接球 | 0/10，10 / 52 | **7/10，3 / 163** |
+| **3 cm 落点误差** | 0/10，10 / 21 | **8/10，2 / 164** |
+
+关节速度峰值 0.90 × 180°/s，手臂力峰值 0.93–0.96 × 上限。
+
+**发现**：
+1. **碗状手型显著提高对落点误差的容忍度**：自抛自接中，2–3 cm 落点误差下每次抛接的失败率从 16–32 % 降到 1–2 %；发射器来球 4 cm 误差下成功率翻倍。原因是碗的两面墙（抬高的掌根、竖起的手指）把偏离的球导向拳峰折痕，而平放的手掌在掌根一侧没有墙。
+2. 碗状的接触相对速度更低、穿透更浅：球先擦过倾斜的掌面或手指，不是正面撞上平面。
+3. 剩下的失败仍是"握住但偏向无名指外侧的缺口"（掌心坐标 y ≈ −90 mm），LEAP 没有小指这一点碗状手型解决不了。
+4. 碗状手型需要连带改变抛球姿态和出手位置；倾斜方向要垂直于抛球连线。
+
 ## 局限 / 待办
 
 - 手指力矩上限 0.5 N·m 是估计值，需要用 XC330-M288-T 的规格和 LEAP 的电流设置核实。
@@ -208,4 +266,5 @@ uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/ha
 - 手掌和指尖的柔顺参数（6 ms / 1.2）是为接球选的，没有对照真实材料标定。
 - E2 只有一个离手姿态、手的姿态在运动中不变（平移）；手指张开是关节目标的线性插值。
 - E3a 用的是 v1 的高速发射器；有观测噪声时竖直让位的失败原因待查（E3b 中加了先验拟合后，竖直让位也是 10/10）。
+- E3c：碗的参数（MCP 1.1、30°）只在小范围内选过；碗状的离手（张开到平掌）没有单独优化。
 - E3b：只测了一种几何（间距 15 cm、飞行 0.4 s、底座 0.4 m）；接住后没有"重新握球"，球在手中的位置会一次次累积偏差，靠下一次接球重规划吸收；先验的 σ（5 mm、30 mm/s）是按实测量级手选的。

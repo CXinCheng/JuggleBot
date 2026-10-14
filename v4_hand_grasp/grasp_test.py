@@ -41,11 +41,14 @@ AIRTIME = 0.02  # s without hand contact that counts as having left the hand
 BALL_ON_PALM = np.array([-0.046, -0.036, -0.035])  # palm-frame point on the grasping surface (palm centre)
 
 
-def posture(sim: HandSim, curl: float, th_cmc: float, th_mcp: float = 0.0, th_ipl: float = 0.0) -> np.ndarray:
+def posture(sim: HandSim, curl: float, th_cmc: float, th_mcp: float = 0.0, th_ipl: float = 0.0,
+            pip: float | None = None) -> np.ndarray:
+    """Fingers: mcp = curl, pip = pip (default curl), dip = 0.6 pip; thumb joints as given."""
     J = {n: i for i, n in enumerate(sim.hand_joints)}
     q = np.zeros(len(J))
+    pip = curl if pip is None else pip
     for f in ("if", "mf", "rf"):
-        q[J[f"leap_{f}_mcp"]], q[J[f"leap_{f}_pip"]], q[J[f"leap_{f}_dip"]] = curl, curl, 0.6 * curl
+        q[J[f"leap_{f}_mcp"]], q[J[f"leap_{f}_pip"]], q[J[f"leap_{f}_dip"]] = curl, pip, 0.6 * pip
     q[J["leap_th_cmc"]], q[J["leap_th_mcp"]], q[J["leap_th_ipl"]] = th_cmc, th_mcp, th_ipl
     return q
 

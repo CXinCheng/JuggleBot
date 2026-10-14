@@ -1,0 +1,31 @@
+Setup: pedestal 0.4 m, release points [ 0.85  -0.075  0.7  ] / [0.85  0.075 0.7  ] (flange), F 0.4 s, drop 0.1 m, t_open -20 ms, T_open 30 ms; hand yaw 90.0 deg; catch: cushion ball 0.03/0.08 m, obs noise 0 mm, bias 30 mm, release-prior fit
+  A -> B:
+    iter 0: |v_cmd| 1.753 m/s, release v [0.105 0.337 1.64 ], error 118 mm/s, joint speed 0.80, torque 0.69
+    iter 1: |v_cmd| 1.763 m/s, release v [-0.019  0.38   1.651], error 21 mm/s, joint speed 0.79, torque 0.71
+    iter 2: |v_cmd| 1.759 m/s, release v [-0.     0.377  1.654], error 4 mm/s, joint speed 0.77, torque 0.71
+    -> stroke V 1.76 m/s tilted 13.4 deg, release 15 ms after the peak, |v| 1.70 m/s, aim error 4 mm/s, joint speed 0.77 (0.5 s)
+  B -> A:
+    iter 0: |v_cmd| 1.753 m/s, release v [ 0.058 -0.367  1.647], error 68 mm/s, joint speed 0.80, torque 0.71
+    iter 1: |v_cmd| 1.750 m/s, release v [ 0.015 -0.352  1.645], error 20 mm/s, joint speed 0.76, torque 0.72
+    iter 2: |v_cmd| 1.751 m/s, release v [ 1.000e-03 -3.460e-01  1.649e+00], error 4 mm/s, joint speed 0.76, torque 0.73
+    -> stroke V 1.75 m/s tilted 11.8 deg, release 16 ms after the peak, |v| 1.69 m/s, aim error 4 mm/s, joint speed 0.76 (0.5 s)
+  run 1: 1 catches, HIT_ARM (sim 2.9 s, wall 1.4 s)
+  run 2: 4 catches, NOT_CAUGHT (sim 7.7 s, wall 4.6 s) -- ball [25. 20. 12.] mm / 28 mm/s from ball_seat, palm False finger True, touched True, closed True, in palm frame [-24. -11. -84.] mm
+  run 3: 5 catches, HIT_ARM (sim 7.8 s, wall 4.1 s)
+  run 4: 3 catches, HIT_ARM (sim 5.2 s, wall 1.5 s)
+  run 5: 1 catches, NOT_CAUGHT (sim 3.6 s, wall 1.3 s) -- ball [-61.  -9.   3.] mm / 0 mm/s from ball_seat, palm True finger True, touched True, closed True, in palm frame [-66. -95. -76.] mm
+  run 6: 4 catches, HIT_ARM (sim 6.8 s, wall 3.9 s)
+  run 7: 1 catches, HIT_ARM (sim 2.9 s, wall 1.2 s)
+  run 8: 1 catches, NOT_CAUGHT (sim 3.6 s, wall 2.1 s) -- ball [-69.  -8.   2.] mm / 0 mm/s from ball_seat, palm True finger True, touched True, closed True, in palm frame [ -69. -101.  -75.] mm
+  run 9: 0 catches, HIT_ARM (sim 1.7 s, wall 1.7 s)
+  run 10: 1 catches, NOT_CAUGHT (sim 3.6 s, wall 1.7 s) -- ball [-66. -23.   4.] mm / 0 mm/s from ball_seat, palm True finger True, touched True, closed True, in palm frame [-83. -95. -75.] mm
+
+Runs: 10, catches per run: median 1, min 0, max 5 (cap 20); runs reaching the cap: 0/10
+Outcomes: HIT_ARM 6, NOT_CAUGHT 4
+  release timing error |dt|: mean 1.9 ms, max 7.0 ms
+  release velocity error  : mean 57.6 mm/s, max 143.8 mm/s
+  flight (release -> hand) : mean 353.4 ms, max 442.0 ms
+  impact speed (rel. hand) : mean 1.2 m/s, max 1.8 m/s
+  dwell (catch -> release) : mean 896.5 ms, max 1001.0 ms
+  re-plans per catch      : mean 1.32
+  peak arm joint speed 0.91 x 180 deg/s, arm force 0.93 x limit, finger torque 1.00 x limit

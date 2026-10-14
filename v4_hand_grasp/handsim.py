@@ -36,10 +36,12 @@ Q_READY = np.array([0.302, -1.649, -2.206, -0.857, -1.571, -1.873])  # v1/v2 "re
 
 
 def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE, skin: bool = True,
-               pedestal: float = 0.0) -> mujoco.MjModel:
+               pedestal: float = 0.0, ball_diameter: float | None = None) -> mujoco.MjModel:
     """pedestal > 0: the robot base stands on a box this high (m) -- the stretched-out arm, where the
     hand moves fastest vertically, is then high enough to throw, catch and give way below."""
     spec = mujoco.MjSpec.from_file(str(scene))
+    if ball_diameter is not None:  # same mass; the compiler recomputes the inertia
+        spec.geom("ball").size[0] = ball_diameter / 2
     if pedestal > 0:
         spec.body("base").pos[2] += pedestal
         spec.worldbody.add_geom(name="pedestal", type=mujoco.mjtGeom.mjGEOM_BOX, size=[0.1, 0.1, pedestal / 2],
@@ -58,6 +60,50 @@ def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE, skin: 
             act.forcelimited = mujoco.mjtLimited.mjLIMITED_TRUE
             act.forcerange = [-finger_torque, finger_torque]
     return spec.compile()
+
+
+def shift_site_in_palm(model: mujoco.MjModel, site: str, offset_palm) -> None:
+    """Move a hand-fixed site by offset_palm (m, in the LEAP palm body's frame: +x from the heel towards
+    the finger roots, -y towards the open ring-finger side), e.g. to aim catches at the finger roots."""
+    d = mujoco.MjData(model)
+    mujoco.mj_forward(model, d)
+    sid = model.site(site).id
+    R_body = d.xmat[model.site_bodyid[sid]].reshape(3, 3)
+    R_palm = d.xmat[model.body("leap_palm").id].reshape(3, 3)
+    model.site_pos[sid] += R_body.T @ R_palm @ np.asarray(offset_palm, dtype=float)
+
+
+# Bowl catch (E3c): the fingers stand up from the knuckles (MCP), the heel of the palm is raised by
+# BOWL_TILT, so the knuckle line is the lowest point and the ball settles in the crease between palm
+# and fingers. Measured resting ball centre in that bowl (palm frame, LEAP hand, 85 mm ball):
+BOWL_TILT = np.radians(30.0)
+BOWL_SEAT = np.array([-0.0355, -0.036, -0.0771])
+
+
+def set_bowl_sites(model: mujoco.MjModel, tilt: float = BOWL_TILT, seat_palm=BOWL_SEAT, approach: float = 0.025) -> None:
+    """Place bowl_seat at seat_palm and bowl_point approach (m) further out along the bowl axis -- the
+    palm normal tilted by `tilt` towards the heel -- with its z axis on the bowl axis, so the 5-D IK
+    (position + site z axis) aims the bowl's opening at the ball."""
+    d = mujoco.MjData(model)
+    mujoco.mj_forward(model, d)
+    seat = model.site("bowl_seat").id
+    body = model.site_bodyid[seat]
+    R_b, p_b = d.xmat[body].reshape(3, 3), d.xpos[body]
+    palm = model.body("leap_palm").id
+    R_p, p_p = d.xmat[palm].reshape(3, 3), d.xpos[palm]
+    # palm frame: -z = out of the palm, -x = towards the heel
+    a_w = R_p @ np.array([-np.sin(tilt), 0.0, -np.cos(tilt)])
+    seat_w = p_p + R_p @ np.asarray(seat_palm, dtype=float)
+    x_w = R_p @ np.array([1.0, 0.0, 0.0])
+    x_w = x_w - (x_w @ a_w) * a_w
+    x_w /= np.linalg.norm(x_w)
+    R_site = R_b.T @ np.column_stack([x_w, np.cross(a_w, x_w), a_w])
+    quat = np.zeros(4)
+    mujoco.mju_mat2Quat(quat, R_site.flatten())
+    for name, pos in (("bowl_seat", seat_w), ("bowl_point", seat_w + approach * a_w)):
+        sid = model.site(name).id
+        model.site_pos[sid] = R_b.T @ (pos - p_b)
+        model.site_quat[sid] = quat
 
 
 @dataclass

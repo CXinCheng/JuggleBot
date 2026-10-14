@@ -25,16 +25,25 @@ Choices that made the loop reliable (see README, E3b):
     few cm, and the hand (unlike the cup, a funnel) does not forgive that;
   * the stroke decelerates at 2.5 g (3 g saturates shoulder_lift with the arm stretched out, 2 g
     releases too late to get to the catch);
-  * the hand is turned 90 deg about the palm normal (--yaw): the open ring-finger side of the
+  * the flat hand (--hand flat) is turned 90 deg about the palm normal (--yaw): the open ring-finger side of the
     LEAP hand (no little finger) then faces away from the throw line -- a ball arriving with a
     sideways velocity towards that side can be squeezed out of it by the closing fingers.
+
+E3c, --hand bowl (the default): catch -- and throw -- with the hand shaped as a bowl (handsim.set_bowl_sites): fingers
+up from the knuckles, heel raised 30 deg, the knuckle line lowest; the bowl axis faces the ball.
+The throw is from the bowl too: turning a flat throwing hand into the bowl after the stroke takes
+~0.37 s at the joint speed limit, more than the time to the catch. --release then places the
+ball (bowl_seat) 0.122 m above the given point; defaults --release 0.9 0.23 --yaw 0 (with the heel
+raised, the arm needs to reach further out to throw within the speed margin; at yaw +-90 the
+two catches need opposite wrist turns and cannot be planned in time).
 
 A run stops at the first failure or after --cycles catches. Failures: NO_CATCH_PLAN, NO_RELEASE,
 DROPPED (ball on the ground / pedestal), HIT_ARM, NOT_CAUGHT (not resting in the hand in time),
 SPEED_LIMIT (actual arm joint speed above 180 deg/s).
 
 Usage (from the repo root):
-    uv run python v4_hand_grasp/hand_juggle.py                          # 10 runs x 20 catches
+    uv run python v4_hand_grasp/hand_juggle.py                          # 10 runs x 20 catches (bowl hand)
+    uv run python v4_hand_grasp/hand_juggle.py --hand flat              # E3b's flat palm-up hand
     uv run python v4_hand_grasp/hand_juggle.py --obs-noise 0.005
     uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/hand_juggle.mp4
 """
@@ -51,7 +60,7 @@ import numpy as np
 
 from grasp_test import posture, postures
 from hand_throw import BALL_ON_PALM, FREE_CONFIRM, OFFSET, SPEED_MARGIN, release_config
-from handsim import HandSim, LineStroke, Q_READY, load_model
+from handsim import HandSim, LineStroke, Q_READY, load_model, set_bowl_sites, shift_site_in_palm
 from kinematics import ArmKinematics
 from planning import CatchPlanner, Hold, PlannerConfig, Trajectory, min_time_quintic
 from prediction import BallisticPredictor
@@ -66,6 +75,7 @@ CATCH_A_MAX = np.array([40.0, 40.0, 40.0, 60.0, 60.0, 60.0])  # rad/s^2
 CATCH_TORQUE_FRAC = 0.8  # planned (feed-forward) torque; the servo's corrections add up to ~0.1 more
 STROKE_TORQUE_FRAC = 0.9
 CATCH_CURL = 0.3  # rad, finger curl of the catch posture
+BOWL_MCP = 1.1  # rad, knuckle flexion of the bowl catch posture (E3c)
 SEAT_TOL, CAUGHT_SPEED, HOLD_CAUGHT = 0.05, 0.05, 0.1  # m from ball_seat (the grasp may hold it off-centre), m/s relative, s
 CATCH_TIMEOUT = 1.0  # s after the planned catch time
 # Prior on the release state for the ball fit (--prior): the calibrated nominal release, with
@@ -126,9 +136,16 @@ class RunResult:
 class Fingers:
     """Finger targets: the grasp; the E2 opening (grasp -> flat from t_peak + t_open over T_open)."""
 
-    def __init__(self, sim: HandSim, t_open: float, T_open: float):
+    def __init__(self, sim: HandSim, t_open: float, T_open: float, bowl: bool = False):
         self.hands = postures(sim)
         self.hands["catch"] = posture(sim, CATCH_CURL, 1.2)
+        self.hands["catch_grasp"] = self.hands["grasp"]
+        self.hands["settle"] = self.hands["cradle"]  # posture the ball is first placed in
+        if bowl:
+            self.hands["settle"] = posture(sim, BOWL_MCP, 1.2, pip=0.3)  # E3c: fingers up from the knuckles; closing curls them over the ball
+            self.hands["catch"] = posture(sim, BOWL_MCP, 1.2, pip=0.3)
+            self.hands["catch_grasp"] = posture(sim, BOWL_MCP + 0.3, 1.2, 0.5, pip=1.2)
+        self.bowl = bowl
         self.t_open, self.T_open = t_open, T_open
 
     def opening(self, t, t_peak):
@@ -140,7 +157,7 @@ def rollout(sim: HandSim, stroke: LineStroke, fingers: Fingers):
     """Throw from a settled grasp (as E2, no noise); returns (t_release from the stroke start,
     ball position, ball velocity) or None."""
     d = sim.data
-    sim.reset(stroke.q_start, fingers.hands["cradle"])
+    sim.reset(stroke.q_start, fingers.hands["settle"])
     sim.place_ball(BALL_ON_PALM + np.array([0.0, 0.0, -sim.ball_radius - 0.002]))
     shift = 0.9
     while d.time < shift:
@@ -181,8 +198,20 @@ def calibrate_throw(sim, kin, R, target, F, fingers, a_up, a_down, yaw=0.0, iter
     The release jitters by ~+-20 mm/s between nearby commands (the opening fingers), so the update is
     damped and the best iterate is kept if it is within accept (m/s). Returns a LoopThrow or None."""
     g = sim.model.opt.gravity
-    q_r = release_config(kin, R)
-    q_r[5] += yaw  # wrist_3 turns the hand about the flange axis = the palm normal
+    if fingers.bowl:
+        # E3c: throw from the bowl too (bowl axis up, heel raised) -- turning the flat throwing hand
+        # into the tilted bowl after the stroke takes ~0.37 s at the joint speed limit, longer than
+        # the time between the end of the stroke and the catch
+        q_nom = Q_READY + np.array([0, 0, 0, 0, 0, yaw])
+        kb = ArmKinematics(sim.model, "bowl_seat")
+        ik = kb.solve(R + np.array([0.0, 0.0, 0.122]), np.array([0.0, 0.0, 1.0]), q_nom, q_nom)
+        if not ik.success:
+            print("    no bowl release pose")
+            return None
+        q_r = ik.q
+    else:
+        q_r = release_config(kin, R)
+        q_r[5] += yaw  # wrist_3 turns the hand about the flange axis = the palm normal
     need = lambda p: (target - p - 0.5 * g * F ** 2) / F
     v_cmd = need(R + np.array([0.0, 0.0, 0.122]))
     best = (np.inf, None)
@@ -217,15 +246,17 @@ def calibrate_throw(sim, kin, R, target, F, fingers, a_up, a_down, yaw=0.0, iter
 class HandJuggleLoop:
     def __init__(self, sim: HandSim, throws: list[LoopThrow], fingers: Fingers, base_z: float,
                  obs_noise: float, noise_rng: np.random.Generator, cushion_dir: str = "ball",
-                 d_pre: float = 0.03, d_cush: float = 0.08, yaw: float = 0.0, prior: bool = True):
+                 d_pre: float = 0.03, d_cush: float = 0.08, yaw: float = 0.0, prior: bool = True,
+                 obs_bias: float = 0.0):
         self.sim, self.throws, self.fingers = sim, throws, fingers
         self.obs_noise, self.noise_rng, self.prior = obs_noise, noise_rng, prior
+        self.obs_bias = obs_bias  # m, horizontal offset of a throw's observations (random direction per throw)
         m = sim.model
         self.g = m.opt.gravity
         self.seat = m.site("ball_seat").id
         self.obs_every = max(1, round(1.0 / (OBS_RATE * m.opt.timestep)))
         self.force_limit = m.actuator_forcerange[sim.arm_act, 1]
-        kin = ArmKinematics(m, "catch_point")
+        kin = ArmKinematics(m, "bowl_point" if fingers.bowl else "catch_point")
         d0 = mujoco.MjData(m)
         d0.qpos[sim.arm_qadr] = Q_READY
         mujoco.mj_forward(m, d0)
@@ -255,7 +286,7 @@ class HandJuggleLoop:
         sim, d, hands = self.sim, self.sim.data, self.fingers.hands
         res = RunResult()
         first = self.throws[0].stroke
-        sim.reset(first.q_start, hands["cradle"])
+        sim.reset(first.q_start, hands["settle"])
         off = rng.uniform(-OFFSET, OFFSET, 2)
         sim.place_ball(BALL_ON_PALM + np.array([off[0], off[1], -sim.ball_radius - 0.002]))
         while d.time < 0.9:  # settle in the cradle, then grasp
@@ -303,6 +334,8 @@ class HandJuggleLoop:
         obs_t, obs_p, last_fit, step = [], [], -np.inf, 0
         predictor = BallisticPredictor(self.g)
         closed, hold_start = False, None
+        phi = self.noise_rng.uniform(0, 2 * np.pi) if self.obs_bias else 0.0
+        bias = self.obs_bias * np.array([np.cos(phi), np.sin(phi), 0.0])
         while True:
             t = d.time
             locked = t >= catch.t_match - REPLAN_LOCK
@@ -310,7 +343,7 @@ class HandJuggleLoop:
                 if step % self.obs_every == 0:
                     obs_t.append(t)
                     p = sim.ball_state()[0]
-                    obs_p.append(p + (self.noise_rng.normal(0, self.obs_noise, 3) if self.obs_noise else 0.0))
+                    obs_p.append(p + bias + (self.noise_rng.normal(0, self.obs_noise, 3) if self.obs_noise else 0.0))
                 if obs_t and t >= seg.t1 and t >= obs_t[0] + OBS_WINDOW and t - last_fit >= REPLAN_PERIOD:
                     if self.prior:
                         predictor.fit_with_prior(obs_t, obs_p, seg.shift + th.t_release, th.p_release, th.v_release,
@@ -323,12 +356,13 @@ class HandJuggleLoop:
                         if new is not None:
                             catch, traj = new, new.trajectory
                             rec.replans += 1
-            # fingers: open to throw; catch posture once the stroke is over; grasp on palm contact
+            # fingers: open to throw; catch posture once the stroke is over (bowl: once the ball is past
+            # its apex -- the raised fingers must not reach the ball going up); grasp on palm contact
             if state != "free":
                 sim.set_hand(self.fingers.opening(t, t_peak))
             elif closed:
-                sim.set_hand(hands["grasp"])
-            elif t >= seg.t1:
+                sim.set_hand(hands["catch_grasp"])
+            elif t >= seg.t1 and (not self.fingers.bowl or sim.ball_state()[1][2] < 0):
                 sim.set_hand(hands["catch"])
             sim.control_arm(*traj.sample(t))
             sim.step()
@@ -404,8 +438,9 @@ def summarize(results: list[RunResult], cap: int) -> None:
 def main() -> int:
     p = argparse.ArgumentParser(description="v4 E3b: single-arm self throw-catch loop with the LEAP hand.")
     p.add_argument("--pedestal", type=float, default=0.4, help="height of the robot base above the ground (m)")
-    p.add_argument("--release", nargs=2, type=float, default=[0.85, 0.30],
-                   help="x, z of the release points (flange at the peak speed) relative to the robot base (m)")
+    p.add_argument("--release", nargs=2, type=float, default=None,
+                   help="x, z of the release points relative to the robot base (m): the flange at the peak speed, the "
+                        "ball 0.122 m above it (default 0.9 0.23 with the bowl, 0.85 0.30 with the flat hand)")
     p.add_argument("--gap", type=float, default=0.15, help="distance between the two release points, in y (m)")
     p.add_argument("--F", type=float, default=0.40, help="flight time to the target (s)")
     p.add_argument("--drop", type=float, default=0.10, help="target this much below the release ball position (m)")
@@ -420,29 +455,47 @@ def main() -> int:
                    help="the hand gives way along the incoming ball (~10 deg off vertical here) or straight down")
     p.add_argument("--d-pre", type=float, default=0.03, help="m of motion before the contact")
     p.add_argument("--d-cush", type=float, default=0.08, help="m of motion after the contact")
-    p.add_argument("--yaw", type=float, default=90.0,
-                   help="hand turned about the palm normal (deg, wrist_3) from the ready pose's orientation; at 0 the open "
-                        "ring-finger side faces the throw line (+y), at 90 it faces away from it")
+    p.add_argument("--yaw", type=float, default=None,
+                   help="hand turned about the palm normal (deg, wrist_3) from the ready pose's orientation (default 0 "
+                        "with the bowl: fingers pointing away from the robot; 90 with the flat hand: its open "
+                        "ring-finger side then faces away from the throw line)")
     p.add_argument("--no-prior", action="store_true", help="plain least-squares ball fit (v1/v2)")
+    p.add_argument("--hand", choices=["bowl", "flat"], default="bowl",
+                   help="bowl (E3c, default): throw and catch with the hand shaped as a bowl -- fingers up from the "
+                        "knuckles, heel raised by --bowl-tilt, bowl axis facing the ball; flat: the palm-up hand of E3b")
+    p.add_argument("--bowl-tilt", type=float, default=30.0, help="deg")
+    p.add_argument("--obs-bias", type=float, default=0.0,
+                   help="horizontal offset of a throw's ball observations (m, random direction per throw): an aim error")
     p.add_argument("--runs", type=int, default=10)
     p.add_argument("--cycles", type=int, default=20, help="stop a run after this many catches")
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--aim-dx", type=float, default=0.0,
+                   help="aim the catch this far (m) from the palm centre towards the finger roots")
     p.add_argument("--obs-noise", type=float, default=0.0, help="std. dev. of the ball position observations (m)")
     p.add_argument("--video", type=Path, default=None, help="record the first run (mp4, real time, camera 'loop')")
     p.add_argument("--verbose", action="store_true")
     args = p.parse_args()
+    args.bowl = args.hand == "bowl"
+    if args.release is None:
+        args.release = [0.9, 0.23] if args.bowl else [0.85, 0.30]
+    if args.yaw is None:
+        args.yaw = 0.0 if args.bowl else 90.0
 
     sim = HandSim(load_model(pedestal=args.pedestal))
+    if args.aim_dx:
+        shift_site_in_palm(sim.model, "catch_point", (args.aim_dx, 0.0, 0.0))
     kin = ArmKinematics(sim.model)
-    fingers = Fingers(sim, args.t_open, args.T_open)
+    if args.bowl:
+        set_bowl_sites(sim.model, np.radians(args.bowl_tilt))
+    fingers = Fingers(sim, args.t_open, args.T_open, args.bowl)
     base = np.array([0.0, 0.0, args.pedestal])
     x, z = args.release
     R = [base + np.array([x, -args.gap / 2, z]), base + np.array([x, args.gap / 2, z])]
     ball_up = np.array([0.0, 0.0, 0.122 - args.drop])  # ball_seat above the flange, minus the drop
     print(f"Setup: pedestal {args.pedestal} m, release points {R[0].round(3)} / {R[1].round(3)} (flange), "
           f"F {args.F} s, drop {args.drop} m, t_open {1e3 * args.t_open:+.0f} ms, T_open {1e3 * args.T_open:.0f} ms; "
-          f"hand yaw {args.yaw} deg; catch: cushion {args.cushion_dir} {args.d_pre}/{args.d_cush} m, "
-          f"obs noise {1e3 * args.obs_noise:.0f} mm, {'least-squares' if args.no_prior else 'release-prior'} fit")
+          f"hand yaw {args.yaw} deg; catch: {'bowl ' + str(args.bowl_tilt) + ' deg, ' if args.bowl else ''}cushion {args.cushion_dir} {args.d_pre}/{args.d_cush} m, "
+          f"obs noise {1e3 * args.obs_noise:.0f} mm, bias {1e3 * args.obs_bias:.0f} mm, {'least-squares' if args.no_prior else 'release-prior'} fit")
     throws = []
     for i, name in ((0, "A -> B"), (1, "B -> A")):
         t0 = time.perf_counter()
@@ -460,7 +513,7 @@ def main() -> int:
 
     rng, noise_rng = (np.random.default_rng(s) for s in np.random.SeedSequence(args.seed).spawn(2))
     loop = HandJuggleLoop(sim, throws, fingers, args.pedestal, args.obs_noise, noise_rng, args.cushion_dir,
-                          args.d_pre, args.d_cush, np.radians(args.yaw), not args.no_prior)
+                          args.d_pre, args.d_cush, np.radians(args.yaw), not args.no_prior, args.obs_bias)
     results = []
     for i in range(args.runs):
         rec = None

@@ -1,0 +1,44 @@
+Setup: pedestal 0.4 m, release points [ 0.9   -0.075  0.63 ] / [0.9   0.075 0.63 ] (flange), F 0.4 s, drop 0.1 m, t_open -20 ms, T_open 30 ms; hand yaw 0.0 deg; catch: bowl 30.0 deg, cushion ball 0.03/0.08 m, obs noise 10 mm, bias 0 mm, release-prior fit
+  A -> B:
+    iter 0: |v_cmd| 1.753 m/s, release v [0.092 0.353 1.67 ], error 92 mm/s, joint speed 0.85, torque 0.67
+    iter 1: |v_cmd| 1.757 m/s, release v [0.032 0.362 1.673], error 30 mm/s, joint speed 0.80, torque 0.68
+    iter 2: |v_cmd| 1.759 m/s, release v [0.019 0.379 1.672], error 22 mm/s, joint speed 0.80, torque 0.68
+    iter 3: |v_cmd| 1.759 m/s, release v [0.008 0.369 1.673], error 7 mm/s, joint speed 0.81, torque 0.69
+    iter 4: |v_cmd| 1.759 m/s, release v [0.004 0.366 1.674], error 2 mm/s, joint speed 0.81, torque 0.69
+    -> stroke V 1.76 m/s tilted 12.7 deg, release 10 ms after the peak, |v| 1.71 m/s, aim error 2 mm/s, joint speed 0.81 (0.9 s)
+  B -> A:
+    iter 0: |v_cmd| 1.753 m/s, release v [ 0.096 -0.367  1.669], error 95 mm/s, joint speed 0.89, torque 0.69
+    iter 1: |v_cmd| 1.756 m/s, release v [ 0.037 -0.366  1.671], error 34 mm/s, joint speed 0.85, torque 0.71
+    iter 2: |v_cmd| 1.759 m/s, release v [ 0.01  -0.358  1.677], error 13 mm/s, joint speed 0.83, torque 0.71
+    iter 3: |v_cmd| 1.759 m/s, release v [ 0.005 -0.365  1.675], error 4 mm/s, joint speed 0.83, torque 0.71
+    -> stroke V 1.76 m/s tilted 13.0 deg, release 10 ms after the peak, |v| 1.71 m/s, aim error 4 mm/s, joint speed 0.83 (0.8 s)
+  run 1: 50 catches, CAP (sim 59.0 s, wall 42.0 s)
+  run 2: 50 catches, CAP (sim 59.6 s, wall 34.3 s)
+  run 3: 50 catches, CAP (sim 59.3 s, wall 33.2 s)
+  run 4: 50 catches, CAP (sim 59.4 s, wall 26.8 s)
+  run 5: 50 catches, CAP (sim 59.4 s, wall 28.8 s)
+  run 6: 50 catches, CAP (sim 59.5 s, wall 31.4 s)
+  run 7: 50 catches, CAP (sim 59.6 s, wall 31.9 s)
+  run 8: 50 catches, CAP (sim 59.4 s, wall 31.4 s)
+  run 9: 50 catches, CAP (sim 59.1 s, wall 31.2 s)
+  run 10: 50 catches, CAP (sim 59.4 s, wall 29.9 s)
+  run 11: 50 catches, CAP (sim 59.5 s, wall 34.6 s)
+  run 12: 50 catches, CAP (sim 59.8 s, wall 31.6 s)
+  run 13: 50 catches, CAP (sim 59.7 s, wall 29.2 s)
+  run 14: 50 catches, CAP (sim 59.7 s, wall 30.9 s)
+  run 15: 50 catches, CAP (sim 59.3 s, wall 30.5 s)
+  run 16: 50 catches, CAP (sim 59.0 s, wall 28.2 s)
+  run 17: 50 catches, CAP (sim 59.3 s, wall 28.1 s)
+  run 18: 50 catches, CAP (sim 59.2 s, wall 29.3 s)
+  run 19: 50 catches, CAP (sim 59.4 s, wall 27.2 s)
+  run 20: 50 catches, CAP (sim 59.5 s, wall 30.2 s)
+
+Runs: 20, catches per run: median 50, min 50, max 50 (cap 50); runs reaching the cap: 20/20
+Outcomes: CAP 20
+  release timing error |dt|: mean 3.0 ms, max 11.7 ms
+  release velocity error  : mean 43.8 mm/s, max 107.0 mm/s
+  flight (release -> hand) : mean 338.0 ms, max 426.0 ms
+  impact speed (rel. hand) : mean 1.1 m/s, max 1.9 m/s
+  dwell (catch -> release) : mean 843.1 ms, max 977.0 ms
+  re-plans per catch      : mean 2.51
+  peak arm joint speed 0.90 x 180 deg/s, arm force 0.96 x limit, finger torque 1.00 x limit

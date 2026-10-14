@@ -17,13 +17,20 @@ Compliance (user's choice): an ordinary ball; the palm and fingertip contacts ar
 damped (handsim.SKIN_*), and the arm gives way: it starts moving down d_pre before the contact,
 reaches min(0.4 |v_ball|, speed cap) there and stops d_cush lower (planning.cushion_dir = "down").
 
+E3c, --hand bowl (the default): the hand waits shaped as a bowl -- fingers up from the knuckles (mcp 1.1, pip 0.3),
+heel raised --bowl-tilt (30 deg) so the knuckle line is lowest -- and the planner aims the bowl
+axis (bowl_point's z axis, handsim.set_bowl_sites) at the ball; on palm contact the fingers curl
+over it. --obs-bias offsets all observations of a trial horizontally (an aim error). Each
+configuration starts from its own waiting pose (opening up, --yaw).
+
 Outcomes: SUCCESS (the ball rests in the hand -- within SEAT_TOL of ball_seat, slower than
 SPEED_THRESHOLD relative to it for HOLD_DURATION after the arm has stopped), MISSED (never touched
 the hand), BOUNCED_OUT / DROPPED (touched the hand, then lost / on the ground), HIT_ARM, NOT_SETTLED,
 NO_FEASIBLE_TARGET.
 
 Usage (from the repo root):
-    uv run python v4_hand_grasp/hand_catch.py --trials 20
+    uv run python v4_hand_grasp/hand_catch.py --trials 20                 # bowl hand
+    uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat     # E3a's flat palm
     uv run python v4_hand_grasp/hand_catch.py --trials 20 --fingers cradle
     uv run python v4_hand_grasp/hand_catch.py --trials 20 --obs-noise 0.005
 """
@@ -38,7 +45,7 @@ import mujoco
 import numpy as np
 
 from grasp_test import posture, postures
-from handsim import HandSim, Q_READY
+from handsim import HandSim, Q_READY, set_bowl_sites, shift_site_in_palm
 from kinematics import ArmKinematics
 from planning import CatchPlanner, Hold, PlannerConfig, Trajectory
 from prediction import BallisticPredictor
@@ -59,6 +66,7 @@ HOLD_DURATION = 0.5  # s
 TIMEOUT_AFTER_CATCH = 2.0  # s
 MAX_TRIAL_TIME = 5.0
 CLOSE_DELAY = 0.03  # s from first hand contact to closing the fingers
+BOWL_MCP = 1.1  # rad, finger knuckle flexion of the bowl
 
 
 @dataclass
@@ -76,13 +84,22 @@ class CatchResult:
 class HandCatcher:
     def __init__(self, sim: HandSim, fingers: str, obs_noise: float, strategy: str = "cushion",
                  cushion_dir: str = "down", d_pre: float = 0.03, d_cush: float = 0.08, speed_cap: float = 0.7,
-                 catch_curl: float = 0.3, close_on: str = "palm", close_delay: float = 0.0):
+                 catch_curl: float = 0.3, close_on: str = "palm", close_delay: float = 0.0, bowl: bool = False,
+                 yaw: float = 0.0, obs_bias: float = 0.0):
         self.sim, self.fingers, self.obs_noise = sim, fingers, obs_noise
         self.close_on, self.close_delay = close_on, close_delay
+        self.obs_bias = obs_bias  # m, a horizontal offset of all observations (random direction per trial)
         m = sim.model
-        self.kin = ArmKinematics(m, "catch_point")
+        # bowl: the task site's z axis is the bowl axis (handsim.set_bowl_sites must have been called)
+        self.kin = ArmKinematics(m, "bowl_point" if bowl else "catch_point")
         d0 = mujoco.MjData(m)
         d0.qpos[sim.arm_qadr] = Q_READY
+        q_nominal = Q_READY + np.array([0, 0, 0, 0, 0, yaw])  # yaw: which way the fingers point
+        # Waiting pose: the task site where it is at Q_READY, the palm (or bowl) opening straight up
+        ik = self.kin.solve(self.kin.fk(Q_READY)[0], np.array([0.0, 0.0, 1.0]), q_nominal, q_nominal)
+        if not ik.success:
+            raise RuntimeError("no waiting pose")
+        self.q_wait = ik.q
         mujoco.mj_forward(m, d0)
         # Joint speeds planned up to 0.9 x 180 deg/s (v1's planner used the full limit).
         # The hand gives way under the ball: it starts moving down d_pre before the contact, reaches
@@ -90,11 +107,14 @@ class HandCatcher:
         self.planner = CatchPlanner(self.kin, PlannerConfig(strategy=strategy, z_min=0.45, z_min_end=0.33,
                                                             v_max=np.full(6, 0.9 * np.pi), cushion_dir=cushion_dir,
                                                             d_pre=d_pre, d_cush=d_cush, cup_speed_max=speed_cap),
-                                    Q_READY, d0.body("shoulder_link").xpos.copy())
+                                    q_nominal, d0.body("shoulder_link").xpos.copy())
         self.hands = postures(sim)
         # Catching posture: the cradle with the fingers curled catch_curl (0.8 = the cradle). Raised
         # fingers intercept a ball coming in over the fingertips and deflect it.
         self.hands["catch"] = posture(sim, catch_curl, 1.2)
+        if bowl:  # fingers stand up from the knuckles; closing curls them over the ball
+            self.hands["catch"] = posture(sim, BOWL_MCP, 1.2, pip=0.3)
+            self.hands["grasp"] = posture(sim, BOWL_MCP + 0.3, 1.2, 0.5, pip=1.2)
         self.seat = m.site("ball_seat").id
         self.obs_every = max(1, round(1.0 / (OBS_RATE * m.opt.timestep)))
 
@@ -108,7 +128,7 @@ class HandCatcher:
 
     def launch(self, rng):
         sim, d = self.sim, self.sim.data
-        sim.reset(Q_READY, self.hands["catch"])
+        sim.reset(self.q_wait, self.hands["catch"])
         p0 = LAUNCHER_POS + rng.uniform(-LAUNCHER_JITTER, LAUNCHER_JITTER)
         target = np.array([rng.uniform(*THROUGH_X), rng.uniform(*THROUGH_Y), rng.uniform(*THROUGH_Z)])
         T = rng.uniform(*FLIGHT_TIME)
@@ -120,8 +140,10 @@ class HandCatcher:
     def run(self, throw_rng, noise_rng, recorder=None) -> CatchResult:
         sim, d, m = self.sim, self.sim.data, self.sim.model
         self.launch(throw_rng)
+        phi = noise_rng.uniform(0, 2 * np.pi) if self.obs_bias else 0.0
+        bias = self.obs_bias * np.array([np.cos(phi), np.sin(phi), 0.0])
         predictor = BallisticPredictor(m.opt.gravity)
-        traj = Trajectory([Hold(0.0, np.inf, Q_READY)])
+        traj = Trajectory([Hold(0.0, np.inf, self.q_wait)])
         plan, last_fit, step = None, -np.inf, 0
         obs_t, obs_p = [], []
         res = CatchResult("MISSED")
@@ -135,7 +157,7 @@ class HandCatcher:
                 if step % self.obs_every == 0:
                     p = sim.ball_state()[0]
                     obs_t.append(t)
-                    obs_p.append(p + (noise_rng.normal(0, self.obs_noise, 3) if self.obs_noise else 0.0))
+                    obs_p.append(p + bias + (noise_rng.normal(0, self.obs_noise, 3) if self.obs_noise else 0.0))
                 if t >= OBS_WINDOW and t - last_fit >= REPLAN_PERIOD:
                     predictor.fit(obs_t, obs_p)
                     last_fit = t
@@ -211,6 +233,8 @@ def main() -> int:
     p = argparse.ArgumentParser(description="v4 E3a: catching a launched ball with the LEAP hand.")
     p.add_argument("--trials", type=int, default=20)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--aim-dx", type=float, default=0.0,
+                   help="aim the catch this far (m) from the palm centre towards the finger roots")
     p.add_argument("--fingers", choices=["close", "cradle"], nargs="+", default=["close", "cradle"])
     p.add_argument("--strategy", choices=["cushion", "static"], default="cushion")
     p.add_argument("--obs-noise", type=float, default=0.0)
@@ -221,12 +245,25 @@ def main() -> int:
     p.add_argument("--catch-curl", type=float, default=0.3, help="finger curl while catching (0.8 = cradle)")
     p.add_argument("--close-on", choices=["palm", "hand"], default="palm", help="contact that triggers closing")
     p.add_argument("--close-delay", type=float, default=0.0, help="s from that contact to closing")
+    p.add_argument("--obs-bias", type=float, default=0.0,
+                   help="horizontal offset of all ball observations (m, random direction per trial): an aim error")
+    p.add_argument("--hand", choices=["bowl", "flat"], default="bowl",
+                   help="bowl (E3c, default): fingers up from the knuckles, heel raised by --bowl-tilt, the bowl axis "
+                        "faces the ball; flat: the palm-up catch posture of E3a (fingers curled 0.3)")
+    p.add_argument("--bowl-tilt", type=float, default=30.0, help="deg")
+    p.add_argument("--yaw", type=float, default=0.0, help="hand turned about its axis from the ready pose (deg)")
     p.add_argument("--video", type=Path, default=None, help="record the first trial per finger strategy (mp4)")
     args = p.parse_args()
+    args.bowl = args.hand == "bowl"
     sim = HandSim()
+    if args.bowl:
+        set_bowl_sites(sim.model, np.radians(args.bowl_tilt))
+    if args.aim_dx:
+        shift_site_in_palm(sim.model, "catch_point", (args.aim_dx, 0.0, 0.0))
     for fingers in args.fingers:
         catcher = HandCatcher(sim, fingers, args.obs_noise, args.strategy, args.cushion_dir, args.d_pre,
-                              args.d_cush, args.speed_cap, args.catch_curl, args.close_on, args.close_delay)
+                              args.d_cush, args.speed_cap, args.catch_curl, args.close_on, args.close_delay, args.bowl,
+                              np.radians(args.yaw), args.obs_bias)
         throw_rng, noise_rng = (np.random.default_rng(s) for s in np.random.SeedSequence(args.seed).spawn(2))
         rows = []
         for k in range(args.trials):
@@ -236,8 +273,9 @@ def main() -> int:
             rows.append(catcher.run(throw_rng, noise_rng, rec))
             if rec is not None:
                 rec.close()
-        print(f"fingers {fingers:6s} ({args.strategy} {args.cushion_dir} {args.d_pre}/{args.d_cush} m, cap {args.speed_cap} m/s,"
-              f" obs noise {1e3 * args.obs_noise:.0f} mm): {summarize(rows)}", flush=True)
+        print(f"fingers {fingers:6s} ({'bowl ' + str(args.bowl_tilt) + ' deg, ' if args.bowl else ''}yaw {args.yaw} deg, "
+              f"{args.strategy} {args.cushion_dir} {args.d_pre}/{args.d_cush} m, cap {args.speed_cap} m/s,"
+              f" obs noise {1e3 * args.obs_noise:.0f} mm, bias {1e3 * args.obs_bias:.0f} mm): {summarize(rows)}", flush=True)
     return 0
 
 
