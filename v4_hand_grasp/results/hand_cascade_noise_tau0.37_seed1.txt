@@ -1,0 +1,14 @@
+Setup: pedestal 0.4 m, H release [0.8  0.   0.65], O's catch point [0.8  0.35 0.65] (s -0.2, w -0.15, dx 0.0, depth 0.0, drop 0.0 m), F 0.6 s, linewhip 3.0/4.0 g, switch 30 ms, direct catch d_pre/d_cush 0.03/0.03 m, wait 0.02 s, settle 0.01 s, catch accel x2.0, torque 0.9, launch noise 30 mm/s, obs noise 5 mm
+  calibrating H's throw:
+    iter 0: |v_cmd| 3.000 m/s, release v [0.093 0.601 2.911], error 98 mm/s, joint speed 0.89, torque 0.71
+    iter 1: |v_cmd| 2.999 m/s, release v [0.031 0.573 2.917], error 32 mm/s, joint speed 0.88, torque 0.70
+    iter 2: |v_cmd| 3.001 m/s, release v [0.003 0.585 2.889], error 15 mm/s, joint speed 0.87, torque 0.70
+    iter 3: |v_cmd| 3.005 m/s, release v [0.005 0.578 2.907], error 7 mm/s, joint speed 0.88, torque 0.70
+    iter 4: |v_cmd| 3.003 m/s, release v [-0.003  0.576  2.916], error 4 mm/s, joint speed 0.88, torque 0.69
+    -> V 3.00 m/s, release +7 ms after the peak, |v| 2.97 m/s, stroke 0.153 + 0.115 s, joint speed 0.88, torque 0.69
+  cascade: D = 3 tau - F, E = F - tau (nominal, to the catch point)
+    tau 0.370 run 2: 33 throws caught, LATE carry ends -13 ms before the stroke start (need 10)
+    tau 0.370 run 5: 8 throws caught, LATE carry ends -1 ms before the stroke start (need 10)
+  tau 0.370 s (nominal D 0.510, E 0.230): 3/5 runs reached 50 throws; failures {'LATE': 2}; 191 throws caught
+      E 0.230 (0.179-0.264) s, D 0.510 (0.474-0.557) s; spare: carry 97 (min -13) ms, catch approach nan (min nan) ms / peak acc 0.72 (max 0.97)
+      H release dv 58 (max 114) mm/s, miss at O's catch point 34 (max 69) mm; joint speed peak 0.90, arm force peak 1.00 (54 s)

@@ -13,6 +13,9 @@
 * HandSim: arm tracking (position servos + inverse-dynamics feed-forward, as in v2), hand
   postures (position targets for the 16 finger joints), ball placement and contact
   bookkeeping (palm / finger / other), and the 180 deg/s arm joint-speed check.
+* E5: load_model(extra_balls=n) adds balls ball_1 .. ball_n (copies of `ball`, parked on the floor
+  behind the robot, out of view); HandSim.balls lists them all, select_ball(i) makes ball i the one the ball_*
+  methods act on, and ball_contacts(i) reports contacts with another ball separately.
 """
 
 import copy
@@ -36,12 +39,19 @@ Q_READY = np.array([0.302, -1.649, -2.206, -0.857, -1.571, -1.873])  # v1/v2 "re
 
 
 def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE, skin: bool = True,
-               pedestal: float = 0.0, ball_diameter: float | None = None) -> mujoco.MjModel:
+               pedestal: float = 0.0, ball_diameter: float | None = None, extra_balls: int = 0) -> mujoco.MjModel:
     """pedestal > 0: the robot base stands on a box this high (m) -- the stretched-out arm, where the
     hand moves fastest vertically, is then high enough to throw, catch and give way below."""
     spec = mujoco.MjSpec.from_file(str(scene))
     if ball_diameter is not None:  # same mass; the compiler recomputes the inertia
         spec.geom("ball").size[0] = ball_diameter / 2
+    src = spec.geom("ball")
+    for i in range(1, extra_balls + 1):
+        body = spec.worldbody.add_body(name=f"ball_{i}", pos=parked_position(i, src.size[0]))
+        body.add_freejoint(name=f"ball_{i}_free")
+        body.add_geom(name=f"ball_{i}", type=mujoco.mjtGeom.mjGEOM_SPHERE, size=list(src.size), condim=src.condim,
+                      friction=list(src.friction), mass=src.mass, solref=list(src.solref), solimp=list(src.solimp),
+                      material=src.material)
     if pedestal > 0:
         spec.body("base").pos[2] += pedestal
         spec.worldbody.add_geom(name="pedestal", type=mujoco.mjtGeom.mjGEOM_BOX, size=[0.1, 0.1, pedestal / 2],
@@ -60,6 +70,11 @@ def load_model(scene: Path = SCENE, finger_torque: float = FINGER_TORQUE, skin: 
             act.forcelimited = mujoco.mjtLimited.mjLIMITED_TRUE
             act.forcerange = [-finger_torque, finger_torque]
     return spec.compile()
+
+
+def parked_position(i: int, radius: float) -> list:
+    """Where ball i waits on the floor, behind the robot and out of the cameras' view."""
+    return [-2.5, -2.5 + 0.2 * i, radius]
 
 
 def shift_site_in_palm(model: mujoco.MjModel, site: str, offset_palm) -> None:
@@ -112,6 +127,8 @@ class BallContacts:
     finger: bool = False  # any finger or thumb link
     arm: bool = False  # arm links (not the hand)
     ground: bool = False
+    ball: bool = False  # another ball
+
 
     @property
     def hand(self) -> bool:
@@ -130,9 +147,13 @@ class HandSim:
         self.hand_act = np.array([m.actuator(n + "_act").id for n in self.hand_joints])
         self.hand_ctrl_lo = m.actuator_ctrlrange[self.hand_act, 0].copy()
         self.hand_ctrl_hi = m.actuator_ctrlrange[self.hand_act, 1].copy()
-        joint = m.joint("ball_free").id
-        self.ball_qadr, self.ball_dadr = m.jnt_qposadr[joint], m.jnt_dofadr[joint]
-        self.ball_geom = m.geom("ball").id
+        names = ["ball"] + [f"ball_{i}" for i in range(1, m.nbody) if mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, f"ball_{i}") >= 0]
+        self.balls = []  # (qpos adr, dof adr, geom) per ball
+        for name in names:
+            joint = m.joint(f"{name}_free").id
+            self.balls.append((m.jnt_qposadr[joint], m.jnt_dofadr[joint], m.geom(name).id))
+        self.ball_geoms = {b[2] for b in self.balls}
+        self.select_ball(0)
         self.ball_radius = float(m.geom_size[self.ball_geom][0])
         self.palm = m.body("leap_palm").id
         self.ground = m.geom("ground").id
@@ -141,7 +162,7 @@ class HandSim:
         self.palm_geoms = {g for g in range(m.ngeom) if m.geom_bodyid[g] == self.palm}
         self.hand_geoms = {g for g in range(m.ngeom) if m.body(m.geom_bodyid[g]).name.startswith("leap_")}
         self.arm_geoms = {g for g in range(m.ngeom)
-                          if g not in self.hand_geoms and g not in self.ground_geoms and g != self.ball_geom}
+                          if g not in self.hand_geoms and g not in self.ground_geoms and g not in self.ball_geoms}
         # Arm servos: force = kp (ctrl - q) - kd qd
         self.kp = m.actuator_gainprm[self.arm_act, 0].copy()
         self.kd = -m.actuator_biasprm[self.arm_act, 2].copy()
@@ -153,6 +174,20 @@ class HandSim:
         self.speed_peak = 0.0
 
     # ------------------------------------------------------------ state
+    def select_ball(self, i: int) -> None:
+        """Make ball i the one place_ball / ball_state / ball_in_palm / ball_contacts act on."""
+        self.ball_qadr, self.ball_dadr, self.ball_geom = self.balls[i]
+
+    def set_ball_state(self, i: int, p, v) -> None:
+        qa, da, _ = self.balls[i]
+        self.data.qpos[qa:qa + 3] = p
+        self.data.qpos[qa + 3:qa + 7] = (1, 0, 0, 0)
+        self.data.qvel[da:da + 3] = v
+        self.data.qvel[da + 3:da + 6] = 0
+
+    def park_ball(self, i: int) -> None:
+        self.set_ball_state(i, parked_position(i, self.ball_radius), np.zeros(3))
+
     def reset(self, q_arm=Q_READY, hand=None) -> None:
         m, d = self.model, self.data
         mujoco.mj_resetData(m, d)
@@ -188,14 +223,17 @@ class HandSim:
         return (self.data.qpos[self.ball_qadr:self.ball_qadr + 3].copy(),
                 self.data.qvel[self.ball_dadr:self.ball_dadr + 3].copy())
 
-    def ball_contacts(self) -> BallContacts:
+    def ball_contacts(self, ball: int | None = None) -> BallContacts:
         d, out = self.data, BallContacts()
+        geom = self.ball_geom if ball is None else self.balls[ball][2]
         for i in range(d.ncon):
             c = d.contact[i]
-            if self.ball_geom not in (c.geom1, c.geom2):
+            if geom not in (c.geom1, c.geom2):
                 continue
-            other = c.geom2 if c.geom1 == self.ball_geom else c.geom1
-            if other in self.palm_geoms:
+            other = c.geom2 if c.geom1 == geom else c.geom1
+            if other in self.ball_geoms:
+                out.ball = True
+            elif other in self.palm_geoms:
                 out.palm = True
             elif other in self.hand_geoms:
                 out.finger = True

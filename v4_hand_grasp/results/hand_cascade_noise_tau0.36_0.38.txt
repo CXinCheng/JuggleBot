@@ -1,0 +1,22 @@
+Setup: pedestal 0.4 m, H release [0.8  0.   0.65], O's catch point [0.8  0.35 0.65] (s -0.2, w -0.15, dx 0.0, depth 0.0, drop 0.0 m), F 0.6 s, linewhip 3.0/4.0 g, switch 30 ms, direct catch d_pre/d_cush 0.03/0.03 m, wait 0.02 s, settle 0.01 s, catch accel x2.0, torque 0.9, launch noise 30 mm/s, obs noise 5 mm
+  calibrating H's throw:
+    iter 0: |v_cmd| 3.000 m/s, release v [0.093 0.601 2.911], error 98 mm/s, joint speed 0.89, torque 0.71
+    iter 1: |v_cmd| 2.999 m/s, release v [0.031 0.573 2.917], error 32 mm/s, joint speed 0.88, torque 0.70
+    iter 2: |v_cmd| 3.001 m/s, release v [0.003 0.585 2.889], error 15 mm/s, joint speed 0.87, torque 0.70
+    iter 3: |v_cmd| 3.005 m/s, release v [0.005 0.578 2.907], error 7 mm/s, joint speed 0.88, torque 0.70
+    iter 4: |v_cmd| 3.003 m/s, release v [-0.003  0.576  2.916], error 4 mm/s, joint speed 0.88, torque 0.69
+    -> V 3.00 m/s, release +7 ms after the peak, |v| 2.97 m/s, stroke 0.153 + 0.115 s, joint speed 0.88, torque 0.69
+  cascade: D = 3 tau - F, E = F - tau (nominal, to the catch point)
+    tau 0.360 run 3: 35 throws caught, LATE carry ends -19 ms before the stroke start (need 10)
+    tau 0.360 run 5: 9 throws caught, LATE carry ends +5 ms before the stroke start (need 10)
+  tau 0.360 s (nominal D 0.480, E 0.240): 3/5 runs reached 50 throws; failures {'LATE': 2}; 194 throws caught
+      E 0.233 (0.208-0.275) s, D 0.487 (0.466-0.512) s; spare: carry 76 (min -19) ms, catch approach nan (min nan) ms / peak acc 0.70 (max 0.93)
+      H release dv 54 (max 111) mm/s, miss at O's catch point 32 (max 65) mm; joint speed peak 0.90, arm force peak 1.00 (56 s)
+    tau 0.380 run 1: 0 throws caught, NO_CATCH_PLAN from the switch: {'joint speed': 16, 'torque': 7}; from the stroke end: {'joint speed': 14}
+    tau 0.380 run 2: 0 throws caught, NO_CATCH_PLAN from the switch: {'joint speed': 16, 'torque': 7}; from the stroke end: {'joint speed': 14}
+    tau 0.380 run 3: 0 throws caught, NO_CATCH_PLAN from the switch: {'joint speed': 16, 'torque': 7}; from the stroke end: {'joint speed': 14}
+    tau 0.380 run 4: 0 throws caught, NO_CATCH_PLAN from the switch: {'joint speed': 16, 'torque': 7}; from the stroke end: {'joint speed': 14}
+    tau 0.380 run 5: 0 throws caught, NO_CATCH_PLAN from the switch: {'joint speed': 16, 'torque': 7}; from the stroke end: {'joint speed': 14}
+  tau 0.380 s (nominal D 0.540, E 0.220): 0/5 runs reached 50 throws; failures {'NO_CATCH_PLAN': 5}; 0 throws caught
+      E nan (nan-nan) s, D nan (nan-nan) s; spare: carry 200 (min 200) ms, catch approach nan (min nan) ms / peak acc nan (max nan)
+      H release dv nan (max nan) mm/s, miss at O's catch point nan (max nan) mm; joint speed peak 0.24, arm force peak 0.11 (1 s)

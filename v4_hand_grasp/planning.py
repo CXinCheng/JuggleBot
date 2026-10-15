@@ -15,8 +15,12 @@ joint acceleration limits can be raised for the short juggling flights without
 planning motions the actuators cannot follow.
 v4: PlannerConfig.cushion_dir = "down" runs the match / cushion lines straight down
 instead of along the incoming ball (the hand gives way under the ball).
+v4 E5: strategy "direct" -- no rest before the catch: one quintic from the current (possibly
+moving) state straight to the catch pose, arriving with the cushion speed along the ball, then
+the cushion line. For catches right after a throw, when the arm is still moving fast the other way.
 """
 
+from collections import Counter
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -187,6 +191,7 @@ class CatchPlanner:
                  shoulder_pos: np.ndarray, torque_ok=None):
         self.kin, self.cfg, self.q_nominal, self.shoulder = kin, cfg, q_nominal, shoulder_pos
         self.torque_ok = torque_ok
+        self.rejections = Counter()  # direct strategy: why candidates were dropped in the last plan()
 
     def _phase_geometry(self, v_ball, cushion: bool):
         cfg = self.cfg
@@ -204,6 +209,8 @@ class CatchPlanner:
         no cushioned catch is feasible falls back to a static catch.
         """
         min_wait = self.cfg.min_wait if min_wait is None else min_wait
+        if self.cfg.strategy == "direct":
+            return self._plan_direct(pred, t_now, state)
         for cushion in ((True, False) if self.cfg.strategy == "cushion" else (False,)):
             plan = self._plan(pred, t_now, state, min_wait, cushion)
             if plan is not None:
@@ -261,6 +268,81 @@ class CatchPlanner:
             return CatchPlan(t, p_c, v_b, axis, u, q_pre, q_end, t_match, Trajectory(segments),
                              len(times), len(candidates))
         return None
+
+    def _plan_direct(self, pred, t_now, state) -> CatchPlan | None:
+        cfg = self.cfg
+        q_now, v_now, a_now = state
+        rej = self.rejections = Counter()
+        t_low = pred.time_at_height(cfg.z_min)
+        if t_low is None:
+            rej["below z_min"] += 1
+            return None
+        times = np.arange(t_now + cfg.earliest_catch, t_low + 1e-9, cfg.candidate_dt)
+        seed = q_now
+        candidates = []
+        for t in times:
+            p_c, v_b = pred.predict(t)
+            if v_b[2] >= 0 or not cfg.z_min <= p_c[2] <= cfg.z_max:
+                rej["rising / height"] += 1
+                continue
+            v_hat = self._line_dir(v_b)
+            axis = cup_axis_for(v_b, cfg.max_tilt)
+            u = min(cfg.alpha * np.linalg.norm(v_b), cfg.cup_speed_max)
+            if (p_c + cfg.d_cush * v_hat)[2] < cfg.z_min_end or np.linalg.norm(p_c - self.shoulder) > cfg.max_reach:
+                rej["reach / cushion height"] += 1
+                continue
+            ik = self.kin.solve(p_c, axis, seed, self.q_nominal)
+            if not ik.success or not self.kin.is_collision_free(ik.q):
+                rej["IK / collision"] += 1
+                continue
+            seed = ik.q
+            jp, jr = self.kin.jacobian(ik.q)
+            jac = np.vstack([jp, (np.eye(3) - np.outer(axis, axis)) @ jr])  # keep the axis, as the cushion line does
+            qd_c = np.linalg.pinv(jac, rcond=1e-6) @ np.concatenate([u * v_hat, np.zeros(3)])
+            approach = Quintic(t_now, t - t_now, q_now, v_now, a_now, ik.q, qd_c, np.zeros_like(q_now))
+            vp, ap = approach.peaks()
+            if np.any(vp > cfg.v_max):
+                rej["joint speed"] += 1
+                continue
+            if np.any(ap > cfg.a_max):
+                rej["joint acceleration"] += 1
+                continue
+            if self.torque_ok is not None and not self.torque_ok(approach):
+                rej["torque"] += 1
+                continue
+            tilt = np.arccos(np.clip(axis[2], -1, 1))
+            cost = np.linalg.norm(cfg.joint_weights * (ik.q - q_now)) + cfg.tilt_weight * tilt
+            candidates.append((cost, t, p_c, v_b, axis, u, ik.q, approach))
+        candidates.sort(key=lambda c: c[0])
+        for cost, t, p_c, v_b, axis, u, q_c, approach in candidates:
+            dense = self._cushion_line(t, p_c, v_b, axis, u, q_c)
+            if dense is None:
+                rej["cushion line"] += 1
+                continue
+            q_end = dense.qs[-1]
+            segments = [approach, dense, Hold(dense.t1, np.inf, q_end)]
+            return CatchPlan(t, p_c, v_b, axis, u, q_c, q_end, t, Trajectory(segments), len(times), len(candidates))
+        return None
+
+    def _cushion_line(self, t_c, p_c, v_b, axis, u, q_c) -> Dense | None:
+        """IK-resolve the cushion line from p_c (speed u along the ball) to rest d_cush further on."""
+        cfg = self.cfg
+        v_hat = self._line_dir(v_b)
+        t_k = 2 * cfg.d_cush / u
+        cushion = Quintic(t_c, t_k, 0.0, u, 0.0, cfg.d_cush, 0.0, 0.0)
+        qs, q = [], q_c
+        for t in np.arange(t_c, t_c + t_k + 1e-9, cfg.dense_dt):
+            ik = self.kin.solve(p_c + cushion.sample(t)[0] * v_hat, axis, q, None, max_iters=30)
+            if not ik.success:
+                return None
+            q = ik.q
+            qs.append(q)
+        dense = Dense(t_c, cfg.dense_dt, qs)
+        if np.any(np.max(np.abs(dense.qds), axis=0) > cfg.v_max * 1.05):
+            return None
+        if not self.kin.is_collision_free(dense.qs[-1]):
+            return None
+        return dense
 
     def _line_dir(self, v_b: np.ndarray) -> np.ndarray:
         if self.cfg.cushion_dir == "down":
