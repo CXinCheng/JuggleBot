@@ -1,0 +1,36 @@
+<mujoco model="ur5e_leap_world">
+  <!-- Base scene for the UR5e + LEAP stages from v5 on (jugglebot.hands.model): ground, light,
+       cameras, materials. The arms (ur5e_leap_right.xml / ur5e_leap_left.xml), their pedestals and
+       the balls are added through MjSpec. Options as v4: elliptic cone + high impratio (recommended
+       by the Menagerie LEAP model; an attached model does not bring its options along). -->
+  <compiler angle="radian"/>
+  <option timestep="0.001" integrator="implicitfast" cone="elliptic" impratio="100"/>
+
+  <statistic extent="2.0" center="0.6 0 0.7"/>
+
+  <visual>
+    <global azimuth="150" elevation="-20" offwidth="1280" offheight="720"/>
+    <headlight ambient="0.4 0.4 0.4" diffuse="0.6 0.6 0.6" specular="0.1 0.1 0.1"/>
+  </visual>
+
+  <asset>
+    <texture type="skybox" colorspace="auto" name="sky" builtin="gradient" rgb1="0.6 0.8 1" rgb2="0.1 0.2 0.3" width="256" height="1536"/>
+    <texture type="2d" colorspace="auto" name="grid" builtin="checker" rgb1="0.85 0.85 0.85" rgb2="0.7 0.7 0.7" width="512" height="512"/>
+    <material name="ground" texture="grid" texrepeat="8 8" reflectance="0.1"/>
+    <material name="pedestal" rgba="0.35 0.35 0.38 1"/>
+    <material name="ball0" rgba="0.9 0.1 0.1 1"/>
+    <material name="ball1" rgba="0.95 0.75 0.1 1"/>
+    <material name="ball2" rgba="0.15 0.45 0.9 1"/>
+    <material name="ball3" rgba="0.2 0.75 0.3 1"/>
+  </asset>
+
+  <worldbody>
+    <geom name="ground" size="3 3 0.1" type="plane" material="ground" solref="0.003 0.5" solimp="0.95 0.99"/>
+    <light pos="0 0 2.5" dir="0 0 -1" type="directional"/>
+    <!-- single arm (v4's cameras, pedestal 0.4 m) -->
+    <camera name="loop" pos="1.6 -1.0 1.15" xyaxes="0.832 0.555 0 -0.125 0.187 0.975"/>
+    <!-- two arms side by side, facing +x -->
+    <camera name="front" pos="2.4 0 1.2" xyaxes="0 1 0 -0.2 0 1"/>
+    <camera name="three_quarter" pos="2.0 -1.4 1.4" xyaxes="0.573 0.82 0 -0.27 0.19 0.944"/>
+  </worldbody>
+</mujoco>

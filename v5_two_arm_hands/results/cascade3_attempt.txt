@@ -1,0 +1,9 @@
+Setup: cascade3, bases at y = -+0.3 m on 0.4 m pedestals, turned 14.5 deg inwards, F 0.57 s, tau 0.345 s, s 0.2 m, w 0.15 m, obs noise 0 mm
+  r_: throw point [ 0.775 -0.1    0.65 ] (arm frame [ 0.8  -0.    0.65]) -> [0.775 0.25  0.65 ]; calibrating
+    V 2.87 m/s, release +10 ms after the peak, joint speed 0.83, torque 0.72
+  l_: throw point [0.775 0.1   0.65 ] (arm frame [0.8  0.   0.65]) -> [ 0.775 -0.25   0.65 ]; calibrating
+    V 2.85 m/s, release +5 ms after the peak, joint speed 0.82, torque 0.74
+  run 1: caught {'r_': 4, 'l_': 3}, LATE(r_) r_ carry ends -80 ms before the stroke start
+  0/1 runs completed 10 throws per hand; failures {'LATE(r_)': 1}; 7 catches
+      E 0.245 (0.233-0.281) s, D 0.449 (0.434-0.457) s, carry spare 182 (min -80) ms, throws put off 0 (max 0 ms)
+      release dv 26 (max 75) mm/s, miss at the catch point 13 (max 44) mm; joint speed peak 0.91, arm force peak 1.00 (7 s)
