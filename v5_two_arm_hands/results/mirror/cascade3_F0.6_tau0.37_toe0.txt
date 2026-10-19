@@ -1,0 +1,13 @@
+Setup: cascade3, bases at y = -+0.3 m on 0.4 m pedestals, turned 0.0 deg inwards, F 0.6 s, tau 0.37 s, s 0.2 m, w 0.15 m, obs noise 0 mm
+  r_: throw point [ 0.8  -0.1   0.65] (arm frame [0.8  0.2  0.65]) -> [0.8  0.25 0.65]; calibrating
+    V 3.00 m/s, release +7 ms after the peak, joint speed 0.88, torque 0.78
+  l_: throw point [0.8  0.1  0.65] (arm frame [ 0.8  -0.2   0.65]) -> [ 0.8  -0.25  0.65]; calibrating
+    V 3.00 m/s, release +7 ms after the peak, joint speed 0.88, torque 0.78
+  run 1: caught {'r_': 0, 'l_': 0}, NO_CATCH_PLAN(r_) r_ catch 0: from the switch {'joint speed': 18, 'torque': 6}, from the stroke end {'joint speed': 15}
+  run 2: caught {'r_': 0, 'l_': 0}, NO_CATCH_PLAN(r_) r_ catch 0: from the switch {'joint speed': 18, 'torque': 6}, from the stroke end {'joint speed': 15}
+  run 3: caught {'r_': 0, 'l_': 0}, NO_CATCH_PLAN(r_) r_ catch 0: from the switch {'joint speed': 18, 'torque': 6}, from the stroke end {'joint speed': 15}
+  run 4: caught {'r_': 0, 'l_': 0}, NO_CATCH_PLAN(r_) r_ catch 0: from the switch {'joint speed': 18, 'torque': 6}, from the stroke end {'joint speed': 15}
+  run 5: caught {'r_': 0, 'l_': 0}, NO_CATCH_PLAN(r_) r_ catch 0: from the switch {'joint speed': 18, 'torque': 6}, from the stroke end {'joint speed': 15}
+  0/5 runs completed 30 throws per hand; failures {'NO_CATCH_PLAN(r_)': 5}; 0 catches
+      E nan (nan-nan) s, D nan (nan-nan) s, carry spare 460 (min 460) ms, throws put off 0 (max 0 ms)
+      release dv nan (max nan) mm/s, miss at the catch point nan (max nan) mm; joint speed peak 0.23, arm force peak 0.10 (3 s)

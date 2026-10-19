@@ -2,7 +2,7 @@
 
 Two kinds of model, both built through MjSpec from assets/ur5e_leap_hands/:
 
-* load_arm(side): ONE arm (ur5e_leap_right.xml or ur5e_leap_left.xml) with its base at
+* load_arm(side): ONE arm (ur5e_leap_right.xml, or its mirror image for the left) with its base at
   (0, 0, pedestal), names without prefix -- v4's single-arm model. Planning (kinematics, catch
   planning, throw calibration, inverse dynamics) runs on it, in the arm's own base frame.
 * load_world(arms): several arms in one scene, each with a prefix (r_, l_, ...) at its base
@@ -13,10 +13,17 @@ Two kinds of model, both built through MjSpec from assets/ur5e_leap_hands/:
 Both apply v4's changes (handsim.load_model) to every LEAP body / geom / actuator ("leap_" in
 the name): gravity compensation, finger torque limits, compliant palm / fingertip contacts.
 
-The left hand is Menagerie's left_hand.xml mounted as the mirror image of the right hand across
-the hand_mount plane y = 0 (ur5e_leap_left.xml); in its palm frame a point of the right hand
-maps to MIRROR @ p + MIRROR_T (fingertips agree to 2 mm for equal flexion angles; the abduction
-joints rot / th_axl change sign).
+The two arms are exact mirror images of each other across the base's xz plane (mirror_spec):
+* right: a MIRRORED UR5e with the LEAP right hand (ur5e_leap_right.xml with only the arm reflected).
+  The UR5e's lateral link offsets then point to its right, so the two wrists stay outboard -- with
+  the original UR5e on the right (and its mirror on the left) both wrists point inwards and collide
+  when the hands are close (cascade3: hands 0.2 m apart). The hand is turned about the flange axis
+  so that at Q_READY the palm has v4's pose exactly (_remount_hand).
+* left: the mirror image of the right arm (= the original UR5e with the mirrored hand, a left hand).
+The same joint angles (arm and fingers) give mirrored poses. A mirrored UR5e is not a product --
+an idealisation, like the arms of a humanoid -- but its kinematics, dynamics and limits are the
+UR5e's, and both hands have the same reach and timing windows (v5 first used two identical UR5e with
+Menagerie's left hand). In the palm frame a point of the right hand maps to MIRROR @ p.
 """
 
 from dataclasses import dataclass
@@ -26,7 +33,7 @@ import mujoco
 import numpy as np
 
 ASSETS = Path(__file__).resolve().parents[3] / "assets" / "ur5e_leap_hands"
-ARM_XML = {"right": ASSETS / "ur5e_leap_right.xml", "left": ASSETS / "ur5e_leap_left.xml"}
+ARM_XML = ASSETS / "ur5e_leap_right.xml"  # v4's arm; both arms are built from it (_arm_spec)
 WORLD_XML = ASSETS / "world.xml"
 
 FINGER_TORQUE = 0.5  # N m, estimated XC330-M288-T torque at the LEAP current limit (unverified)
@@ -37,18 +44,82 @@ SKIN_SUFFIXES = ("palm_collision_", "if_tip", "mf_tip", "rf_tip", "th_tip")  # a
 BALL_RADIUS, BALL_MASS = 0.0425, 0.12  # 85 mm / 120 g (v4)
 PEDESTAL_HALF = 0.1  # m, half side of the pedestal box
 
-# right palm frame -> left palm frame
+# right <-> left arm (base frame, and every body frame of the arm and hand)
 MIRROR = np.diag([1.0, -1.0, 1.0])
-MIRROR_T = np.array([-0.0759, -0.0908, 0.026])
-# abduction joints change sign between the hands (order of the 16 LEAP joints)
-LEAP_JOINTS = ("if_mcp", "if_rot", "if_pip", "if_dip", "mf_mcp", "mf_rot", "mf_pip", "mf_dip",
-               "rf_mcp", "rf_rot", "rf_pip", "rf_dip", "th_cmc", "th_axl", "th_mcp", "th_ipl")
+Q_READY = np.array([0.302, -1.649, -2.206, -0.857, -1.571, -1.873])  # v1/v2 "ready": flange up
 
 
 def palm_point(side: str, p_right) -> np.ndarray:
     """A point given in the RIGHT hand's palm frame, in `side`'s palm frame."""
     p = np.asarray(p_right, dtype=float)
-    return p.copy() if side == "right" else MIRROR @ p + MIRROR_T
+    return p.copy() if side == "right" else MIRROR @ p
+
+
+def _is_hand(e) -> bool:
+    return e.name == "hand_offset" or e.name.startswith("leap_") or (e.parent is not None and e.parent.name.startswith("leap_"))
+
+
+def mirror_spec(spec: mujoco.MjSpec, hand: bool = True, arm: bool = True) -> mujoco.MjSpec:
+    """Reflect a model across its world xz plane, in place (hand / arm = False: leave the LEAP
+    hand subtree / the rest as it is). Every frame (p, R) becomes (M p, M R M), a proper rotation,
+    so in every body's local coordinates the reflection is M too; meshes get a negative y scale
+    (MuJoCo then flips their faces). A hinge's motion maps as M R(a, q) M = R(-M a, q): with the
+    axis -M a the joint angle stays the same."""
+    def pos(p):
+        return [p[0], -p[1], p[2]]
+
+    def quat(q):
+        return [q[0], -q[1], q[2], -q[3]]
+
+    def chosen(e):
+        return hand if _is_hand(e) else arm
+
+    for b in spec.bodies:
+        if b.name != "world" and chosen(b):
+            b.pos, b.quat, b.ipos, b.iquat = pos(b.pos), quat(b.quat), pos(b.ipos), quat(b.iquat)
+    for e in (*spec.frames, *spec.geoms, *spec.sites, *spec.cameras):
+        if chosen(e):
+            e.pos, e.quat = pos(e.pos), quat(e.quat)
+    for j in spec.joints:
+        if chosen(j):
+            j.pos, j.axis = pos(j.pos), list(-MIRROR @ np.asarray(j.axis))
+    for mesh in spec.meshes:
+        if hand if mesh.name.startswith("leap_") else arm:
+            mesh.scale = pos(mesh.scale)
+    return spec
+
+
+def _rot(quat) -> np.ndarray:
+    R = np.zeros(9)
+    mujoco.mju_quat2Mat(R, np.asarray(quat, dtype=float))
+    return R.reshape(3, 3)
+
+
+def _remount_hand(spec: mujoco.MjSpec, H: np.ndarray, h: np.ndarray) -> None:
+    """After mirror_spec(hand=False): move the hand (frame hand_offset, in hand_mount coordinates)
+    so that the palm is where the original model had it for the same joint angles, given the
+    original hand_mount pose (H, h) at those angles. The mirrored hand_mount is (M H M, M h); for a
+    flange in the base's xz plane (Q_READY) this turns the hand about the flange axis only."""
+    f = spec.frame("hand_offset")
+    Hm, hm = MIRROR @ H @ MIRROR, MIRROR @ h
+    R = Hm.T @ H @ _rot(f.quat)
+    f.pos = list(Hm.T @ (h + H @ np.asarray(f.pos) - hm))
+    q = np.zeros(4)
+    mujoco.mju_mat2Quat(q, R.flatten())
+    f.quat = list(q)
+
+
+def _arm_spec(side: str) -> mujoco.MjSpec:
+    """The right arm (mirrored UR5e, LEAP right hand) or its mirror image (see the module doc)."""
+    m = mujoco.MjSpec.from_file(str(ARM_XML)).compile()
+    d = mujoco.MjData(m)
+    d.qpos[:6] = Q_READY
+    mujoco.mj_kinematics(m, d)
+    flange = m.site("flange").id  # at the hand_mount origin, same axes
+    spec = mujoco.MjSpec.from_file(str(ARM_XML))
+    mirror_spec(spec, hand=False)
+    _remount_hand(spec, d.site_xmat[flange].reshape(3, 3).copy(), d.site_xpos[flange].copy())
+    return spec if side == "right" else mirror_spec(spec)
 
 
 def _tweak(spec: mujoco.MjSpec, finger_torque: float, skin: bool) -> None:
@@ -92,7 +163,7 @@ def load_arm(side: str = "right", pedestal: float = 0.4, n_balls: int = 1, finge
     """Single-arm model (names as in v4: shoulder_pan_joint, leap_palm, ball_seat, ..., balls ball,
     ball_1, ...) with the base on a pedestal of the given height."""
     spec = mujoco.MjSpec.from_file(str(WORLD_XML))
-    arm = mujoco.MjSpec.from_file(str(ARM_XML[side]))
+    arm = _arm_spec(side)
     frame = spec.worldbody.add_frame(pos=[0.0, 0.0, pedestal])
     frame.attach_body(arm.body("base"), "", "")
     if pedestal > 0:
@@ -117,7 +188,7 @@ def load_world(arms: list[ArmPlacement], pedestal: float = 0.4, n_balls: int = 2
     """Several arms on pedestals and n_balls balls (ball0 ... , parked) in one scene."""
     spec = mujoco.MjSpec.from_file(str(WORLD_XML))
     for a in arms:
-        arm = mujoco.MjSpec.from_file(str(ARM_XML[a.side]))
+        arm = _arm_spec(a.side)
         frame = spec.worldbody.add_frame(pos=[a.base[0], a.base[1], pedestal],
                                          quat=[np.cos(a.yaw / 2), 0.0, 0.0, np.sin(a.yaw / 2)])
         frame.attach_body(arm.body("base"), a.prefix, "")

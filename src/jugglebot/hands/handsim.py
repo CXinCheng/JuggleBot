@@ -17,19 +17,16 @@ from dataclasses import dataclass
 import mujoco
 import numpy as np
 
-from .model import FINGER_TORQUE, load_arm, palm_point, parked_position
+from .model import FINGER_TORQUE, MIRROR, Q_READY, load_arm, palm_point, parked_position
 
 ARM_JOINTS = ("shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint")
 ARM_SPEED_LIMIT = np.pi  # rad/s, UR5e datasheet
-Q_READY = np.array([0.302, -1.649, -2.206, -0.857, -1.571, -1.873])  # v1/v2 "ready": flange up
 # Right-hand palm frame (v4): ball resting on the flat palm / in the cradle; bowl seat (E3c)
 BALL_ON_PALM = np.array([-0.046, -0.036, -0.035])
 BOWL_TILT = np.radians(30.0)
 BOWL_SEAT = np.array([-0.0355, -0.036, -0.0771])
-# The UR5e is not mirror-symmetric (lateral link offsets), so a mirrored hand pose generally needs
-# other joint angles (found by IK). At Q_READY, though, the flange lies in the base's xz plane: the
-# left arm at the same angles holds its hand as the exact mirror image of the right one (6-D IK
-# check, 1e-7) -- Q_READY serves as the null-space nominal of both arms.
+# Q_READY (model, v1/v2 "ready": flange up): the right arm holds the palm as in v4; the left arm is
+# the right one's mirror image (same joint angles, mirrored pose), so it is the nominal of both.
 Q_READY_LEFT = Q_READY.copy()
 
 
@@ -42,7 +39,7 @@ def shift_site_in_palm(model: mujoco.MjModel, site: str, offset_palm, side: str 
     towards the finger roots, -y towards the open ring-finger side; mirrored for the left hand)."""
     off = np.asarray(offset_palm, dtype=float)
     if side == "left":
-        off = np.diag([1.0, -1.0, 1.0]) @ off
+        off = MIRROR @ off
     d = mujoco.MjData(model)
     mujoco.mj_forward(model, d)
     sid = model.site(site).id

@@ -1,6 +1,6 @@
 <mujoco model="ur5e_leap_world">
   <!-- Base scene for the UR5e + LEAP stages from v5 on (jugglebot.hands.model): ground, light,
-       cameras, materials. The arms (ur5e_leap_right.xml / ur5e_leap_left.xml), their pedestals and
+       cameras, materials. The arms (ur5e_leap_right.xml and its mirror image), their pedestals and
        the balls are added through MjSpec. Options as v4: elliptic cone + high impratio (recommended
        by the Menagerie LEAP model; an attached model does not bring its options along). -->
   <compiler angle="radian"/>

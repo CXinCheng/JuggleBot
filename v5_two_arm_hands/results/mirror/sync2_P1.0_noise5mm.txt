@@ -1,0 +1,13 @@
+Setup: sync2, bases at y = -+0.35 m on 0.4 m pedestals, turned 9.4 deg inwards, F 0.5 s, period 1.0 s, w 0.2 m, depth 0.12 m, obs noise 5 mm
+  r_: throw point [ 0.91 -0.2   0.65] (arm frame [ 0.922 -0.     0.65 ]) -> [0.91 0.2  0.65]; calibrating
+    V 2.59 m/s, release +9 ms after the peak, joint speed 0.66, torque 0.88
+  l_: throw point [0.79 0.2  0.65] (arm frame [ 0.804 -0.02   0.65 ]) -> [ 0.79 -0.2   0.65]; calibrating
+    V 2.58 m/s, release +7 ms after the peak, joint speed 0.70, torque 0.74
+  run 1: caught {'r_': 1, 'l_': 1}, LATE(r_) r_ carry ends -125 ms before the stroke start
+  run 2: caught {'r_': 1, 'l_': 1}, LATE(r_) r_ carry ends -118 ms before the stroke start
+  run 3: caught {'r_': 1, 'l_': 1}, LATE(r_) r_ carry ends -153 ms before the stroke start
+  run 4: caught {'r_': 1, 'l_': 1}, LATE(r_) r_ carry ends -138 ms before the stroke start
+  run 5: caught {'r_': 1, 'l_': 1}, LATE(r_) r_ carry ends -125 ms before the stroke start
+  0/5 runs completed 20 throws per hand; failures {'LATE(r_)': 5}; 10 catches
+      E 0.523 (0.475-0.568) s, D nan (nan-nan) s, carry spare 69 (min -153) ms, throws put off 25 (max 33 ms)
+      release dv 14 (max 20) mm/s, miss at the catch point 6 (max 8) mm; joint speed peak 0.81, arm force peak 0.85 (10 s)

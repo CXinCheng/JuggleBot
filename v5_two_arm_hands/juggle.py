@@ -2,7 +2,8 @@
 exchange (S1) and the three-ball cascade, from one generic throw-event table.
 
 Layout: both bases face +x on 0.4 m pedestals, the right arm (r_, right hand) at y = -Y, the left
-arm (l_, left hand) at y = +Y. Each arm is planned in its own base frame on its single-arm model
+arm (l_, left hand) at y = +Y; the left arm (UR5e + hand) is the exact mirror image of the right one
+(jugglebot.hands.model.mirror_spec). Each arm is planned in its own base frame on its single-arm model
 (jugglebot.hands); the joint trajectories run in the shared scene.
 
 Patterns (world points, ball centres; x0, z0 = work point, relative to the pedestal top for z):
