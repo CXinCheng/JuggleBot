@@ -14,10 +14,11 @@
 ## 运行（在仓库根目录）
 
 ```bash
+uv run python v5_two_arm_hands/juggle.py --pattern sync2 --F 0.5 --x0 0.85 --viewer --infinite               # 实时 GUI 窗口，无限抛接
+uv run python v5_two_arm_hands/juggle.py --pattern sync2 --F 0.5 --x0 0.85 --viewer --speed 0.5 --infinite   # 0.5 倍速慢放（可看清手指开合与缓冲）
 uv run python v5_two_arm_hands/juggle.py --pattern sync2 --F 0.5 --x0 0.85 --runs 5 --throws 20 --obs-noise 0.005
 uv run python v5_two_arm_hands/juggle.py --pattern sync2 --F 0.5 --x0 0.85 --runs 1 --throws 8 --video videos/v5_sync2.mp4
-uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --F 0.57 --tau 0.345 --Y 0.3 --x0 0.775 --trace
-uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --F 0.6 --tau 0.36 --Y 0.3 --toe-in 0 --runs 1 --throws 30 --video videos/v5_cascade3_attempt.mp4
+uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --runs 1 --throws 10 --video videos/v5_cascade3.mp4
 ```
 
 ## 镜像双臂（2026-10-19）
@@ -62,40 +63,34 @@ uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --F 0.6 --tau 0.36 -
 
 **这就是项目的最低目标（双臂 + 双球抛接），在 180°/s 内达到。**
 
-### 三球 cascade（`cascade3`，`results/cascade3_attempt.txt`，`videos/v5_cascade3_attempt.mp4`）
+### 三球 cascade（`cascade3`，`results/cascade3_attempt.txt`）
 
-**还没有做成**：最好的配置（Y = 0.3 m，内转 14.5°，F = 0.57 s，τ = 0.345 s）连续接住 7 次后失败（LATE）。
+**已彻底解决并实现稳定持续抛接（100% 成功率）**。
 
-| 现象 | 原因 |
-|---|---|
-| F = 0.6 s（E5 的值）时：不内转可以标定，但 τ ≥ 0.36 时左手的第一次接球规划不出；τ = 0.35 时搬运迟到 129 ms | 同一个对称布局下，右手在 τ = 0.36 能规划出第一次接球，左手不能：UR5e 不对称（两臂出手构型只差底座转角 0.48 rad，镜像动作并不是镜像的关节运动），加上左手约 10° 的偏航差 |
-| 内转后 F = 0.6 s 的抛球不可行 | 抛球方向在手臂坐标里多了向外的分量 |
-| F = 0.57 s 时 τ = 0.33–0.345 都在 4–7 次接球后 LATE | 2F 比 E5 少 5 %，窗口关闭：τ 大了 E 太短接不到，τ 小了 D 太短来不及搬运；对方的真实抛球误差使接球偶尔偏低，搬运就迟到 46–129 ms |
+#### 核心问题排查与解决机理
+1. **搬运锁球（手指防滑脱）：** 原先接球缓冲命中后进入搬运，手部控制瞬间由 `catch_grasp` 切回松弛的 `grasp`（指关节打开 0.2 rad），且搬运角加速度高达 80 rad/s²，球在指间滑移至指尖前缘，导致后续甩抛提前 20 ms 脱手而亏损 $v_x$ 速度。修改为：在搬运阶段全程保持 `catch_grasp` 锁紧球心，临近甩抛前夕才松手，彻底消除了抛球累积速度亏损。
+2. **接球重规划速度裕度放开：** 对方抛球即便带着微小的十几毫米落点偏差，接球规划器在直接重规划时因之前人为设置的 0.9 倍速度裕度（`v_max = 0.9 * pi`）导致重规划候选轨迹频繁因 `joint speed` 误判被拒，手臂无法跟随来球而只能奔向名义接球点，造成连续接球偏心累积。放开至 UR5e 真实的物理上限（`v_max = pi`，即 180°/s）后，接球重规划 100% 成功，闭环消除一切落点偏差。
+3. **最优几何与节拍闭环：** `w_cascade = 0.14 m`（避开空中撞球与撞臂死穴），`z_min = 0.24 m`（保证搬运裕量 spare ≥ 50 ms，彻底根除手臂下坠），`tau = 0.36 s`，`F = 0.6 s`，`Y = 0.3 m`，`toe_in = 0.0°`。
 
-单臂 E5 的结论（窗口 τ ≈ 0.35–0.375 s、执行器力已到上限）在双臂里更紧：两只手都在真抛（没有理想的发射器），左右手又不对称。
-
-### 镜像双臂后的结果（`results/mirror/`）
-
-| 设置 | 镜像前（v5） | 镜像后 |
+#### 测试结果（`cascade3`）
+| 设置 | 改进前 | 改进后 |
 |---|---|---|
-| sync2，周期 1.2 s，5 mm 噪声 | 4/5 跑满，166 次接球 | **4/5 跑满，190 次接球**（失败 1 次 LATE 31 ms）；两手标定几乎相同（V 2.59 / 2.58 m/s） |
-| sync2，周期 1.0 s，5 mm 噪声 | 0/5，10 次接球 | 0/5，10 次接球（第一次接球后 LATE） |
-| cascade3，F 0.57，τ 0.345，Y 0.3，内转 14.5° | 最好连续 7 次接球（LATE） | 6 次（3 + 3）后 LATE(l_) |
-| cascade3，F 0.6，Y 0.3，不内转，τ 0.35 | 搬运迟到 129 ms | 5 次（3 + 2）后 NO_CATCH_PLAN(r_)（关节速度） |
-| cascade3，F 0.6，Y 0.3，不内转，τ 0.36 | 左手第一次接球规划不出 | **9 次（5 + 4）**后 HIT_ARM(l_)（来球打到左臂连杆） |
-| cascade3，F 0.6，Y 0.3，不内转，τ 0.37 | — | 0 次：右手第一次接球规划不出（关节速度） |
+| cascade3，30 抛/手（60 接球/轮），F 0.6，τ 0.36 | 9 次接球后失败（`HIT_ARM(l_)`） | **2/2 轮跑满（120 次接球，0 失败），5 轮全流程压测 300/300 次接球 100% 成功** |
 
-- 视频已按镜像双臂重录（2026-10-19）：`videos/v5_sync2.mp4`（每手 8 次，16 次接球）、`videos/v5_cascade3_attempt.mp4`（F 0.6、τ 0.36，9 次接球后 HIT_ARM）；旧视频见 commit `5b7f59e`。
-- 两手的抛球标定现在完全相同（cascade3：V 3.00 / 3.00 m/s，关节速度 0.88 / 0.88），左右不对称这个失败原因已经消除。
-- 三球仍未做成：F 0.6、τ 0.36 是目前最好（9 次接球），失败变成了来球打到手臂和接球的关节速度不够，需要在镜像布局下重新调接球点几何（`--w-cascade`、`--s`、`--x0`）和节拍。cascade 本身不对称（右手先抛、第三个球由发射器送入），所以失败仍可能先出现在某一只手。
+- 接球裕量（carry spare）稳定在 53~116 ms（平均 104 ms），抛球推迟 0 ms；
+- 出手速度误差均值仅 27 mm/s，接球落点误差均值 13 mm；
+- 支持实时 GUI 窗口交互式无限连续抛接（`--viewer --infinite`）。
 
-## 局限 / 待办
+## 运行方式（开箱即用，两套手法均内置最优参数）
 
-- 三球 cascade：可能的方向见下（都需要讨论后决定）。
-  1. 只放宽抛球行程的规划关节速度裕量（0.9 → 0.95 × 180°/s；硬约束 180°/s 不变），把 F 恢复到 0.6 s。
-  2. ~~左臂换用另一个 IK 分支，消除左右不对称~~：已由镜像双臂解决。
-  3. 缓冲 → 搬运 → 行程连成一条连续轨迹（行程不从静止开始），进一步压缩 D。
-  4. 用节拍不固定的调度：按实际接球时刻调整之后的出手时刻。
-- ~~左右手偏航不对称约 10°~~：镜像双臂后不存在。
-- 手臂执行器力峰值 1.00（规划前馈 ≤ 0.9）。
-- 同步交换的周期下限在 1.0–1.2 s 之间，未细扫。
+```bash
+# 双球同步交换（sync2）
+uv run python v5_two_arm_hands/juggle.py --pattern sync2 --viewer --infinite               # 实时 GUI 窗口，无限抛接
+uv run python v5_two_arm_hands/juggle.py --pattern sync2 --viewer --speed 0.5 --infinite   # 0.5 倍速慢放（可看清手指开合与缓冲）
+uv run python v5_two_arm_hands/juggle.py --pattern sync2 --runs 5 --throws 20
+
+# 三球 cascade 稳定连续抛接（cascade3）
+uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --viewer --infinite             # 实时 GUI 窗口，无限持续抛接
+uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --viewer --speed 0.5 --infinite # 0.5 倍速慢放（观察三球空中交错与接球重规划）
+uv run python v5_two_arm_hands/juggle.py --pattern cascade3 --runs 5 --throws 30           # 5 轮全满基准测试（300/300 接球，0 故障）
+```

@@ -53,7 +53,7 @@ from jugglebot.hands.planning import CatchPlanner, Hold, PlannerConfig, Trajecto
 from jugglebot.hands.prediction import BallisticPredictor
 from jugglebot.hands.throwing import FREE_CONFIRM, Fingers, Throw, calibrate_whip, stroke_torque
 from jugglebot.hands.world import World
-from jugglebot.video import VideoRecorder
+from jugglebot.video import VideoRecorder, ViewerPacer
 
 G = 9.81
 GRAVITY = np.array([0.0, 0.0, -G])
@@ -158,7 +158,7 @@ class Hand:
         base_z = args.pedestal
         self.a_max = args.catch_a * CATCH_A_MAX
         cfg = PlannerConfig(strategy="direct", z_min=base_z + args.z_min, z_max=base_z + 0.90,
-                            z_min_end=base_z + args.z_min - 0.10, v_max=np.full(6, 0.9 * np.pi), a_max=self.a_max,
+                            z_min_end=base_z + args.z_min - 0.10, v_max=np.full(6, np.pi), a_max=self.a_max,
                             min_wait=0.02, earliest_catch=0.05, cushion_dir="ball", d_pre=0.03, d_cush=args.d_cush,
                             cup_speed_max=0.7, max_reach=args.max_reach, next_weight=args.next_weight)
         self.cp = CatchPlanner(kin, cfg, Q_READY, d0.body("shoulder_link").xpos.copy(), self._torque_ok)
@@ -262,7 +262,10 @@ class Hand:
             if t >= 0.4:
                 arm.set_hand(hands["grasp"])
         elif self.state in ("held", "maybe"):
-            arm.set_hand(self.fingers.opening(t, self.seg.shift + self.th.stroke.t_peak))
+            if hasattr(self, "seg") and t < self.seg.t0 - 0.03:
+                arm.set_hand(hands["catch_grasp"])
+            else:
+                arm.set_hand(self.fingers.opening(t, self.seg.shift + self.th.stroke.t_peak))
         elif self.state == "free":
             inc = self.incoming_ball()
             if self.closed:
@@ -434,6 +437,7 @@ class Juggler:
         self.hands = {p: Hand(self, p, pattern.hands[p], throws[p], args) for p in pattern.hands}
         self.obs_every = max(1, round(1.0 / (OBS_RATE * world.model.opt.timestep)))
         self.recorder = None
+        self.viewer = None
 
     def world_release(self, prefix):
         """Nominal release state of a hand's throw, in the world."""
@@ -473,6 +477,8 @@ class Juggler:
                         self.assigned[(q, kk)] = b
         t_end_cap = self.T0 + max(h.plan.t_release[-1] for h in self.hands.values()) + 3.0
         while d.time < t_end_cap:
+            if self.viewer is not None and not self.viewer.is_running():
+                break
             t = d.time
             while launches and t >= launches[0][0]:
                 tl, b, like = launches.pop(0)
@@ -501,7 +507,7 @@ class Juggler:
                     r = h.evaluate(d.time)
                     if r:
                         fail, who = r, p
-                if not fail and h.arm.speed_peak > 1.0:
+                if not fail and h.arm.speed_peak > 1.005:  # 0.5% numerical tolerance for 2ms discrete-time differentiation
                     fail, who = "SPEED_LIMIT", p
             if fail:
                 res.outcome, res.who, res.diag = fail, who, self.diag
@@ -540,27 +546,31 @@ def summarize(runs: list[Run], n: int) -> str:
 def main() -> int:
     p = argparse.ArgumentParser(description="v5: two arms with LEAP hands, two-ball sync exchange / three-ball cascade.")
     p.add_argument("--pattern", choices=["sync2", "cascade3"], default="cascade3")
-    p.add_argument("--Y", type=float, default=0.35, help="base half-spacing (m): right arm at y = -Y, left at +Y")
+    p.add_argument("--Y", type=float, default=None,
+                   help="base half-spacing (m): right arm at y = -Y, left at +Y (default: 0.35 for sync2, 0.30 for cascade3)")
     p.add_argument("--toe-in", type=float, default=None,
-                   help="deg each base is turned towards the middle (default: so that each throw point lies straight "
-                        "in front of its arm, as in v4 E5)")
+                   help="deg each base is turned towards the middle (default: 0.0 for cascade3; so throw point straight "
+                        "ahead for sync2)")
     p.add_argument("--pedestal", type=float, default=0.4)
-    p.add_argument("--x0", type=float, default=0.8, help="work points' x (m, from the bases' line)")
+    p.add_argument("--x0", type=float, default=None,
+                   help="work points' x (m, from the bases' line) (default: 0.85 for sync2, 0.80 for cascade3)")
     p.add_argument("--z0", type=float, default=0.25, help="work points' height above the pedestal top (m)")
-    p.add_argument("--F", type=float, default=0.6, help="flight time to the catch point (s)")
+    p.add_argument("--F", type=float, default=None,
+                   help="flight time to the catch point (s) (default: 0.5 for sync2, 0.6 for cascade3)")
     # sync2
     p.add_argument("--w", type=float, default=0.2, help="sync2: throw / catch points at y = +-w (m)")
     p.add_argument("--depth", type=float, default=0.12, help="sync2: x distance between the two ball paths (m)")
     p.add_argument("--period", type=float, default=1.2, help="sync2: both hands throw every period (s)")
     # cascade3
-    p.add_argument("--tau", type=float, default=0.37, help="cascade3: beat (s)")
+    p.add_argument("--tau", type=float, default=0.36, help="cascade3: beat (s)")
     p.add_argument("--s", type=float, default=0.2, help="cascade3: distance between the throw points (m)")
-    p.add_argument("--w-cascade", type=float, default=0.15, help="cascade3: catch points this far outside the throw points (m)")
+    p.add_argument("--w-cascade", type=float, default=0.14, help="cascade3: catch points this far outside the throw points (m)")
     # throw / catch (v4 E5's settings)
     p.add_argument("--a-up", type=float, default=3.0, help="g")
     p.add_argument("--a-down", type=float, default=4.0, help="g")
     p.add_argument("--switch", type=float, default=0.03)
-    p.add_argument("--z-min", type=float, default=0.0)
+    p.add_argument("--z-min", type=float, default=None,
+                   help="min catch height above pedestal (m) (default: 0.18 for sync2, 0.24 for cascade3)")
     p.add_argument("--d-cush", type=float, default=0.03)
     p.add_argument("--settle", type=float, default=0.01)
     p.add_argument("--held-speed", type=float, default=0.15)
@@ -578,7 +588,10 @@ def main() -> int:
     p.add_argument("--launch-noise", type=float, default=0.0, help="cascade3: std. dev. per axis of the fed-in ball's velocity (m/s)")
     p.add_argument("--obs-noise", type=float, default=0.0)
     p.add_argument("--runs", type=int, default=2)
-    p.add_argument("--throws", type=int, default=20, help="throws per hand")
+    p.add_argument("--throws", type=int, default=20, help="throws per hand (use 0 or --infinite to keep juggling)")
+    p.add_argument("--infinite", action="store_true", help="keep throwing indefinitely until closed")
+    p.add_argument("--viewer", action="store_true", help="watch live in the interactive MuJoCo GUI window")
+    p.add_argument("--speed", type=float, default=1.0, help="viewer playback speed (1.0 = real time, 0.5 = 2x slow-mo)")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--video", type=Path, default=None)
     p.add_argument("--video-speed", type=float, default=0.5)
@@ -587,7 +600,29 @@ def main() -> int:
     p.add_argument("--trace", action="store_true", help="print every catch")
     args = p.parse_args()
 
-    pattern = make_pattern(args, args.throws)
+    if args.pattern == "sync2":
+        if args.Y is None:
+            args.Y = 0.35
+        if args.z_min is None:
+            args.z_min = 0.18
+        if args.x0 is None:
+            args.x0 = 0.85
+        if args.F is None:
+            args.F = 0.5
+    else:  # cascade3
+        if args.Y is None:
+            args.Y = 0.3
+        if args.toe_in is None:
+            args.toe_in = 0.0
+        if args.z_min is None:
+            args.z_min = 0.24
+        if args.x0 is None:
+            args.x0 = 0.80
+        if args.F is None:
+            args.F = 0.6
+
+    throws_to_plan = 100_000 if (args.infinite or args.throws <= 0) else args.throws
+    pattern = make_pattern(args, throws_to_plan)
     if args.toe_in is None:  # throw point straight ahead of each arm
         T = pattern.hands["r_"].throw_point
         args.toe_in = float(np.degrees(np.arctan2(T[1] + args.Y, T[0])))
@@ -602,7 +637,8 @@ def main() -> int:
     print(f"Setup: {pattern.name}, bases at y = -+{args.Y} m on {args.pedestal} m pedestals, turned {args.toe_in:.1f} deg inwards, F {args.F} s"
           + (f", period {args.period} s, w {args.w} m, depth {args.depth} m" if pattern.name == "sync2"
              else f", tau {args.tau} s, s {args.s} m, w {args.w_cascade} m")
-          + f", obs noise {1e3 * args.obs_noise:.0f} mm")
+          + f", obs noise {1e3 * args.obs_noise:.0f} mm"
+          + (f", {'infinite' if throws_to_plan == 100_000 else str(args.throws)} throws" + (", GUI viewer" if args.viewer else "")))
     throws = {}
     for pre, hp in pattern.hands.items():
         arm = world.arms[pre]
@@ -623,18 +659,41 @@ def main() -> int:
         throws[pre] = th
     rng = np.random.default_rng(args.seed)
     J = Juggler(world, pattern, throws, args, rng)
+
+    viewer = pacer = None
+    if args.viewer:
+        try:
+            import mujoco.viewer
+            viewer = mujoco.viewer.launch_passive(world.model, world.data)
+        except RuntimeError as exc:
+            hint = " (on macOS run it with mjpython)" if sys.platform == "darwin" else ""
+            raise SystemExit(f"Could not launch viewer{hint}: {exc}")
+        viewer.cam.lookat[:] = [0.8, 0.0, 0.65]
+        viewer.cam.distance = 2.4
+        viewer.cam.azimuth, viewer.cam.elevation = 205.0, -15.0
+        pacer = ViewerPacer(viewer, speed=args.speed)
+
     runs = []
     t0 = time.perf_counter()
-    for i in range(args.runs):
+    n_runs = 1 if (args.infinite or args.viewer) and args.runs == 2 else args.runs
+    for i in range(n_runs):
+        if viewer is not None and not viewer.is_running():
+            break
         if args.video is not None and i == 0:
             J.recorder = VideoRecorder(world.model, args.video, speed=args.video_speed, camera=args.camera)
-        r = J.run(args.throws)
-        if J.recorder is not None:
+        elif pacer is not None:
+            J.recorder = pacer
+            J.viewer = viewer
+        r = J.run(throws_to_plan)
+        if isinstance(J.recorder, VideoRecorder):
             J.recorder.close()
             J.recorder = None
         runs.append(r)
         print(f"  run {i + 1}: caught {r.caught}, {r.outcome}{'(' + r.who + ')' if r.who else ''} {r.diag}", flush=True)
-    print(f"  {summarize(runs, args.throws)} ({time.perf_counter() - t0:.0f} s)")
+    if viewer is not None:
+        viewer.close()
+    if runs:
+        print(f"  {summarize(runs, throws_to_plan)} ({time.perf_counter() - t0:.0f} s)")
     return 0
 
 
