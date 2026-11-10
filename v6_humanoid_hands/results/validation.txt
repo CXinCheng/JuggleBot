@@ -1,0 +1,36 @@
+test_ball_palm_contact_zero_gap (__main__.TestLeapHandCradleContact.test_ball_palm_contact_zero_gap)
+Assert that balls in the holding state physically contact the palm surface (no floating). ...       OK: Runtime physics, LEAP gains/damping/limits, gravity compensation and all hand contacts match v5.
+ok
+test_both_hands_ball_seated_in_palm_center (__main__.TestLeapHandCradleContact.test_both_hands_ball_seated_in_palm_center)
+Assert that balls in holding state are dead-centered in palm cradle (no wrist or fingertip offsets). ... ok
+test_cascade3_zero_drop_benchmark (__main__.TestLeapHandCradleContact.test_cascade3_zero_drop_benchmark)
+Assert that 30 consecutive cascade throws complete with zero ball drops. ... [Benchmark] Verifying 30 released-and-caught flights with pure contact and finger support...
+[Progress] 10 releases | 7 complete flights | sim time 3.163 s
+[Progress] 20 releases | 17 complete flights | sim time 6.367 s
+[Progress] 30 releases | 28 complete flights | sim time 9.570 s
+      Success: True | validated flights: 30 | drops: 0 | ball contacts: 0 | minimum center distance: 93.4 mm
+      Releases by hand: {'right': 16, 'left': 16} | catches by hand: {'right': 15, 'left': 15} | completed requested flights by throwing hand: {'right': 15, 'left': 15}
+      Separation-to-palm-contact time: 492-554 ms
+      Execution demand: peak speed 25.156 rad/s (rh_mf_mcp), peak actuator torque 43.082 Nm (waist_pitch_joint), max near-force-limit fraction 19.5%; hardware limits unverified
+ok
+test_lateral_caging_funnel (__main__.TestLeapHandCradleContact.test_lateral_caging_funnel)
+Assert that the 4 digits form a concave 3D cradle around the ball. ... ok
+test_three_balls_continuous_cascade_no_drop (__main__.TestLeapHandCradleContact.test_three_balls_continuous_cascade_no_drop)
+Regression test for the 3rd ball drop bug: assert all 3 balls maintain active play. ... [Progress] 10 releases | 7 complete flights | sim time 3.163 s
+[Progress] 20 releases | 17 complete flights | sim time 6.367 s
+[Progress] 30 releases | 28 complete flights | sim time 9.570 s
+[Progress] 40 releases | 37 complete flights | sim time 12.776 s
+[Progress] 50 releases | 47 complete flights | sim time 15.979 s
+[Benchmark] Verifying 50 released-and-caught flights with pure contact and finger support...
+      Success: True | validated flights: 50 | drops: 0 | ball contacts: 0 | minimum center distance: 93.4 mm
+      Releases by hand: {'right': 26, 'left': 26} | catches by hand: {'right': 25, 'left': 25} | completed requested flights by throwing hand: {'right': 25, 'left': 25}
+      Separation-to-palm-contact time: 492-576 ms
+      Execution demand: peak speed 25.299 rad/s (lh_rf_mcp), peak actuator torque 43.082 Nm (waist_pitch_joint), max near-force-limit fraction 23.0%; hardware limits unverified
+ok
+test_thumb_active_opposition_and_wrap (__main__.TestLeapHandCradleContact.test_thumb_active_opposition_and_wrap)
+Assert that thumb actively articulates across palm from flat release to grasp stabilization. ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 1727.404s
+
+OK

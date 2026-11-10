@@ -1,0 +1,16 @@
+==================================================
+    JuggleBot Stage v6: Upper-Body G1 + LEAP    
+==================================================
+[1/4] Compiling Upper-Body Unitree G1 with full-size LEAP Hands in world scene...
+      OK: Compiled successfully! (Bodies: 58, Joints: 52, Actuators: 49)
+      OK: Original geometry, masses, inertias and joint axes/limits preserved; no equalities.
+[2/4] Verifying 7-DOF Redundant Kinematics (FK / DLS IK with nullspace projection)...
+      OK: Right 7-DOF Arm IK passed (pos_err: 3.03e-07 m, 3 iters).
+      OK: Left 7-DOF Arm IK passed (pos_err: 3.03e-07 m, 3 iters).
+[3/4] Setting Ready Postures for G1 Dual Arms & LEAP Hands...
+      OK: Level ready palms, real initial ball contact, no deep penetration.
+[4/4] Comparing effective runtime simulation and hand settings with v5...
+      OK: Runtime physics, LEAP gains/damping/limits, gravity compensation and all hand contacts match v5.
+
+>>> ALL STAGE v6 VERIFICATION CHECKS PASSED! <<<
+

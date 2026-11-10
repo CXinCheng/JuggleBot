@@ -1,0 +1,84 @@
+v6 partial receive-position prediction noise: saved experiment summary
+Generated from a completed JSONL by v6_humanoid_hands.summarize_noise.
+This is an experiment summary, not a unit-test transcript or hardware validation.
+
+Validate the archived experiment and regenerate derived reports from the repository root:
+uv run python -m v6_humanoid_hands.summarize_noise --input v6_humanoid_hands/results/noise_sensitivity.jsonl --output v6_humanoid_hands/results/noise_sensitivity.txt --csv-output v6_humanoid_hands/results/noise_trials.csv --execution-output v6_humanoid_hands/results/execution_demand.csv --overwrite
+
+To regenerate the experiment, first back up or remove the existing JSONL:
+uv run python -m v6_humanoid_hands.evaluate_noise --noise-mm 0 1 3 5 10 --seeds 0 1 --throws 30 --timeout 23 --jobs 1 --output v6_humanoid_hands/results/noise_sensitivity.jsonl
+The archived JSONL is retained with its derived TXT/CSV files in results/.
+Evaluation refuses an existing JSONL. After evaluation, regenerate the derived reports with the command above.
+To compare experiments, choose distinct JSONL filenames and matching report input/output paths.
+
+Completed trials: 10
+Requested released-and-caught flights per trial: 30
+Simulated timeout per trial: 23.0 s
+Independent worker processes: 1
+MuJoCo version: 3.15.0
+Timestep: 0.001 s
+Ball diameter / mass: 0.085 m / 0.12 kg
+Alternating throw interval / target flight: 0.32 s / 0.53 s
+Noise values are Gaussian position standard deviations in mm, not bounded errors.
+Only part of receive-position prediction is perturbed. Velocity and rollout initialization use truth.
+No sensor sampling, latency, dropout or actuator-error model is included.
+
+Per-trial results (completed flights exclude the initially airborne ball):
+std_mm  seed  completed/requested  outcome                       drops  ball_contacts
+     0     0         30/30         success                           0              0
+     0     1         30/30         success                           0              0
+     1     0          4/30         reception_planning_rejected       0              0
+     1     1          4/30         reception_planning_rejected       0              0
+     3     0          4/30         reception_planning_rejected       0              0
+     3     1         21/30         reception_planning_rejected       0              0
+     5     0          7/30         reception_planning_rejected       0              0
+     5     1         13/30         reception_planning_rejected       0              0
+    10     0          1/30         reception_planning_rejected       0              0
+    10     1         25/30         drop                              1              0
+
+Group summaries:
+std=0 mm: 2/2 completed the requested task; outcomes={"success": 2}
+std=1 mm: 0/2 completed the requested task; outcomes={"reception_planning_rejected": 2}
+std=3 mm: 0/2 completed the requested task; outcomes={"reception_planning_rejected": 2}
+std=5 mm: 0/2 completed the requested task; outcomes={"reception_planning_rejected": 2}
+std=10 mm: 0/2 completed the requested task; outcomes={"drop": 1, "reception_planning_rejected": 1}
+
+Stop details:
+std=1 mm, seed=0: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 1, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 1.9249999999998988}
+std=1 mm, seed=1: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 1, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 1.9199999999998993}
+std=3 mm, seed=0: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 1, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 1.9619999999998947}
+std=3 mm, seed=1: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 1, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 7.6810000000009}
+std=5 mm, seed=0: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 2, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 3.1659999999997623}
+std=5 mm, seed=1: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 2, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 5.0990000000000375}
+std=10 mm, seed=0: NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+  {"ball": 2, "reason": "NO_FEASIBLE_RECEPTION", "side": "left", "time": 1.2679999999999712}
+std=10 mm, seed=1: DROPPED: ball 1 at 9.071, throws=27
+  {"ball": 1, "height": 0.39787498188728565, "reason": "DROPPED", "time": 9.071000000000412}
+
+Interpretation:
+- Planning rejection, simulated timeout, actual drop and ball-ball collision are distinct outcomes.
+- Empirical fractions from a small seed set do not establish population success probabilities.
+- Zero-noise seeds do not create distinct perturbation conditions.
+- This experiment does not replace the independent zero-noise 30/50-flight regression log.
+
+Recorded optimizer-input SHA-256:
+5eb956e707d67f69c2f5f52a0e556d3b604163d0bf9d8bc8b7d814186ccb82d6
+
+Recorded source SHA-256 at experiment start:
+__init__.py: b0efda2269afd9ffd58ff5237229c196235ea5f3048e289086522faae51c4bc5
+cascade.py: 1c61e9902224cb707f4aafee52ca0d322e66cb7f8626ef96282b93976e350c72
+contact_control.py: e4c7092fcef2cc76b44e39ff3b994d953755b8dd97a218c7b4e268776334c223
+evaluate_noise.py: af7f1a0d363da8dfbc481dd9c534f4cc852acad7d035a44a0ea51694ae261d9a
+juggle.py: 3b06ab4bbace3da8d527dc4b037b72692c8cf2c401a0f98d0a4a5690853cd10f
+kinematics.py: d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15
+logging.py: 6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09
+metrics.py: 2b3fc325a4b81bc7d6eef10d18c3d8976533be57d69e380302476562b0c0d3af
+model.py: a5a97aed52a4931587a72b8649b0b88d4b31ce912e73f206aa7b91b3aa5cf4da
+planning.py: 853826ffc3e7d085a405a57e4022e705eb1c32a8d8e5378539d60f1b4f079816
+throwing.py: 4fa85b48b7ba0492a3bfd4b9f63f8dbc4ebe18e29334f54f1dc3707349cf9a58
