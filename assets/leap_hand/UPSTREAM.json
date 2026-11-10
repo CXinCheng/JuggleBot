@@ -1,0 +1,8 @@
+{
+  "repository": "https://github.com/google-deepmind/mujoco_menagerie",
+  "commit": "71f066ad0be9cd271f7ed58c030243ef157af9f4",
+  "path": "leap_hand",
+  "scale": 1.0,
+  "legacy_import_commit": "0059d43",
+  "layout_note": "Existing v4/v5 mesh bytes and right-hand physics retained; meshdir restored to ./assets/. Official left XML and provenance shared with v6."
+}
