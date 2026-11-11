@@ -1,0 +1,15 @@
+v7 feasibility: 2+1 start (one hand holds two balls), right hand, v6 G1 + LEAP model
+=========================================================================================
+Method: single hand, arm servo-held with full gravity compensation; hand motion replayed as an effective
+gravity R(t)^T (g - a(t)) taken from the real v6 cascade (record_v6_throw.py). Rotational inertial terms ignored.
+
+1. Hold. Wrist-shell pocket grasp (hold2b) is NOT usable: ball B rests on the G1 wrist link and is carried away with A at release.
+   Caged grasp (hold2c/d, 4 runs converge): A on palm centre (y~-0.01), B pinched by index+middle+ring distal links at
+   (y~0.065, z~0.063 above seat), grip 24-28 N. Pulses (+-x,+-y 8, -z 12, +z 20 m/s^2) and tilt 5/18 deg: drift <= 1 mm.
+2. Throw A while keeping B (replay of v6 second right stroke): B drift 1.8-2.0 mm, A leaves at 0.90 s with world
+   velocity (-0.3, 0.65, 2.4) m/s vs v6 (-0.08, 0.55, 2.1) -> needs re-tuning of throw parameters (~0.2 m/s lateral).
+   A and B touch at rest (gap 0, force ~5.5 N): violates v6's "zero ball-ball contact" criterion by design.
+3. Re-seat B into cradle during empty return (fingers hold->open->cradle, v6 return motion):
+   only ~2% (6/360, 7/360) of random timing parameter sets succeed (err<3 cm, speed<5 cm/s, >=3 contacts);
+   feasible but tight; needs optimisation / feedback.
+Not done: left hand, ending (receive 2nd ball with first ball moved aside), throw B afterwards, full-body integration.

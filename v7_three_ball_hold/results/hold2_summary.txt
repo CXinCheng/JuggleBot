@@ -1,0 +1,8 @@
+Two-ball resting grasp on one LEAP hand (v6 G1 model, rigid gravcomp arm, palm pitched 10 deg fingers-down)
+sep-CMA-ES, 3 runs (right s0, right s1, left s0), 70 gens x 48.
+All three converge to the same arrangement: ball A cupped by fingers/palm at seat (0,0,.022);
+ball B resting on the palm heel at y=-0.086, z=0.008 (only 1 palm contact, ~1 N), pressed against ball A.
+Robustness (right s1 / left s0, half-sine 0.12 s hand-acceleration pulses, max survived, m/s^2):
+ +z 30, -z 18, +y(finger) 10, -y(heel) 30, lateral x: 2..8 (hand-side dependent)
+Tilt envelope: re-settled from scratch only passes at the 10 deg it was optimised for (-5..30 others fail).
+Static feasibility: yes (narrow). Dynamic margin: poor laterally (< 1 g).
