@@ -13,3 +13,9 @@ gravity R(t)^T (g - a(t)) taken from the real v6 cascade (record_v6_throw.py). R
    only ~2% (6/360, 7/360) of random timing parameter sets succeed (err<3 cm, speed<5 cm/s, >=3 contacts);
    feasible but tight; needs optimisation / feedback.
 Not done: left hand, ending (receive 2nd ball with first ball moved aside), throw B afterwards, full-body integration.
+
+4. Ending catch (alpha parked in wrist pocket, beta caught in palm), v6 final-approach motion replayed, beta guided on its
+   recorded hand-frame path until 1.07 s: beta lands and rests in the palm in all offset cases; alpha is ejected sideways by
+   ~+8 m/s^2 lateral effective gravity in the failures. Pocket posture hold2b: 11/75 ok; after finger-posture optimisation
+   (search_end.py): 9/25 ok within +-1 cm offsets, ~0 at +-2 cm. Finger-cage alpha version is infeasible (beta path crosses alpha).
+   Not done: actively moving alpha from the cradle to the pocket; left hand; full-body integration.
