@@ -1,0 +1,19 @@
+Arm reachability of the fingertip-ending catch (end_reach.py scan). Right G1 arm, v6 IK/limits, no waist motion.
+Grid: seat touchdown position x 0.24..0.36, y -0.30..-0.14, z 0.80..0.96 (5x5x5=125 points, step 0.04; printed as /100 in the
+log because the last row/col is cut by arange rounding), constant-velocity straight approach over the last 0.10 s.
+Pass = IK succeeds along the whole approach, min joint-limit margin > 0.03 rad, peak joint speed from Jacobian < 15 rad/s.
+Ball world velocity at touchdown = v6 recorded ball 1 at 1.10 s; hand velocity v_hand = v_ball - v_rel * R_h d_local.
+tilt  0.0: vertical v_rel 1.0: ok 12/100  v_hand [-0.08, -0.6, -1.67]
+tilt  0.0: vertical v_rel 1.5: ok 33/100  v_hand [-0.08, -0.6, -1.17]
+tilt  0.0: heel60   v_rel 1.0: ok 18/100  v_hand [-0.58, -0.6, -1.81]
+tilt  0.0: heel60   v_rel 1.5: ok 36/100  v_hand [-0.83, -0.6, -1.37]
+tilt 10.0: vertical v_rel 1.0: ok 7/100   v_hand [0.1, -0.6, -1.69]
+tilt 10.0: vertical v_rel 1.5: ok 22/100  v_hand [0.18, -0.6, -1.19]
+tilt 10.0: heel60   v_rel 1.0: ok 16/100  v_hand [-0.42, -0.6, -1.73]
+tilt 10.0: heel60   v_rel 1.5: ok 41/100  v_hand [-0.59, -0.6, -1.26]
+tilt 20.0: vertical v_rel 1.0: ok 0/100   v_hand [0.26, -0.6, -1.73]
+tilt 20.0: vertical v_rel 1.5: ok 9/100   v_hand [0.44, -0.6, -1.26]
+tilt 20.0: heel60   v_rel 1.0: ok 7/100   v_hand [-0.25, -0.6, -1.69]
+tilt 20.0: heel60   v_rel 1.5: ok 26/100  v_hand [-0.34, -0.6, -1.19]
+Single-point check at the v6 recorded catch (Tc=1.10, seat (0.315,-0.228,0.894), tilt 10): only heel60 / v_rel 1.5 passes
+the full 0.15 s approach (peak qdot 9.3 rad/s, margin 0.01 rad -> at a joint limit); others fail the earlier approach poses.
