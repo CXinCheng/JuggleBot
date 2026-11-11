@@ -13,21 +13,22 @@ from search_hold2c import non_hand_contacts
 from replay_throw import load_rec, g_local_series
 from feaslib import R
 
-_P = None; _GL = None; _K0 = None; _OPEN = None
+_P = None; _GL = None; _K0 = None; _OPEN = None; _ROT = None; _VH = None
+V6_LAUNCH = np.array([-0.08, 0.55, 2.1])  # v6 world launch velocity (m/s)
 
 
 def _init(side):
-    global _P, _GL, _K0, _OPEN
+    global _P, _GL, _K0, _OPEN, _ROT, _VH
     _P = Problem(side, 10.0)
     t, ps, rot, ctrl, acc = load_rec()
-    _GL = g_local_series(t, rot, acc)
+    _GL = g_local_series(t, rot, acc); _ROT = rot; _VH = np.gradient(ps, t[1] - t[0], axis=0)
     _K0 = int(0.74 / (t[1] - t[0]))
     f = _P.rig.fingers
     _OPEN = np.array([d in ("if", "mf") for d in f.actuator_digits])
 
 
-def evaluate(x, detail=False, gl=None, open_mask=None, prob=None):
-    P = prob or _P; GL = gl if gl is not None else _GL; mask = open_mask if open_mask is not None else _OPEN
+def evaluate(x, detail=False, gl=None, open_mask=None, prob=None, rot_=None, vh_=None):
+    P = prob or _P; ROT = rot_ if rot_ is not None else _ROT; VH = vh_ if vh_ is not None else _VH; GL = gl if gl is not None else _GL; mask = open_mask if open_mask is not None else _OPEN
     t_open = float(np.clip(x[21], 0.78, 0.90))
     rig = P.simulate(x[:21], T=0.6)
     ms = P.metrics(rig)
@@ -51,7 +52,7 @@ def evaluate(x, detail=False, gl=None, open_mask=None, prob=None):
     # scoop with index+middle release
     restore(rig, s0)
     f = rig.fingers; ctrl0 = np.clip(x[:16], rig.ctrl_lo, rig.ctrl_hi); flat = f.get_ctrl_array("flat")
-    maxF = 0.0
+    maxF = 0.0; leave = None
     for k in range(int(0.74 / 0.001), int(1.15 / 0.001)):
         tt = k / 1000.0
         a = np.clip((tt - t_open) / 0.05, 0, 1); a = a ** 3 * (10 - 15 * a + 6 * a * a)
@@ -60,9 +61,17 @@ def evaluate(x, detail=False, gl=None, open_mask=None, prob=None):
         rig.set_gravity_local(GL[k]); rig.step(1)
         if k % 5 == 0:
             maxF = max(maxF, rig.ball_ball_contact_force(0, 1))
+        if leave is None and k > 780 and rig.ball_hand_contacts(1)[0] == 0:
+            leave = (tt, ROT[k] @ rig.ball_vel_local(1) + VH[k])
     wR = np.linalg.norm(rig.ball_local(0) - refs[0]); upT = rig.ball_local(1)[2]
     rep["scoop"] = (float(upT), float(wR), float(maxF))
     c += min(wR, 0.4) * 25 + 2.0 * max(0.0, 0.15 - upT)
+    if leave is None:
+        c += 6.0
+    else:
+        tl, vl = leave
+        c += 3.0 * min(np.linalg.norm(vl - V6_LAUNCH), 2.5) + 40.0 * max(0.0, t_open + 0.005 - tl) + 10.0 * max(0.0, abs(tl - 0.905) - 0.03)
+        rep["launch"] = (float(tl), *[float(u) for u in vl])
     rig.set_gravity_local(base)
     return (c, rep) if detail else c
 
@@ -100,11 +109,11 @@ def main():
             print(f"[{time.time()-t0:5.0f}s] gen {g:3d} best {best[0]:.3f} genbest {costs[o[0]]:.3f} med {np.median(costs):.2f}", flush=True)
             Path(a.out).write_text(json.dumps(dict(side=a.side, tilt_deg=10.0, cost=best[0], x=best[1].tolist())))
     t, ps, rot, ctrl, acc = load_rec(); gl = g_local_series(t, rot, acc)
-    c, rep = evaluate(best[1], detail=True, gl=gl, open_mask=np.array([d in ("if", "mf") for d in prob.rig.fingers.actuator_digits]), prob=prob)
+    c, rep = evaluate(best[1], detail=True, gl=gl, rot_=rot, vh_=np.gradient(ps, t[1] - t[0], axis=0), open_mask=np.array([d in ("if", "mf") for d in prob.rig.fingers.actuator_digits]), prob=prob)
     print("FINAL", c, {k: tuple(round(float(u), 3) for u in v) for k, v in rep.items()})
     rig = prob.simulate(best[1][:21], T=0.6)
     for i, m in enumerate(prob.metrics(rig)):
-        print("T" if i == 0 else "R", m["pos"].round(4), m["n"], round(m["f"], 2), m["parts"])
+        print("R(retained,palm)" if i == 0 else "T(thrown)", m["pos"].round(4), m["n"], round(m["f"], 2), m["parts"])
 
 
 if __name__ == "__main__":
