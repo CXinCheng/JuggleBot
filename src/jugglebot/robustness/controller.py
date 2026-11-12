@@ -19,7 +19,7 @@ class ObservedCascade(ContactCascade):
     def __init__(self, *args, observation_mode='truth',
                  observation_period_s=DEFAULT_OBSERVATION_PERIOD_S,
                  observation_max_age_s=DEFAULT_OBSERVATION_MAX_AGE_S,
-                 normalize_reception_input=False, early_recovery=True, **kwargs):
+                  normalize_reception_input=False, early_recovery=True, perception=None, **kwargs):
         super().__init__(*args, **kwargs)
         # The inherited split step is used only with one-step integrators.
         # A generic observer can use position_step_s=0 with full RK4 stepping.
@@ -31,7 +31,7 @@ class ObservedCascade(ContactCascade):
         self.ball_observer = BallObserver(self.balls, mode=observation_mode,
                                          sample_period_s=observation_period_s,
                                          max_age_s=observation_max_age_s,
-                                         position_step_s=position_step_s)
+                                          position_step_s=position_step_s, perception=perception)
         self.ball_observer.update(self.data)
         self.normalize_reception_input = normalize_reception_input
         self._use_execution_forecasts = False

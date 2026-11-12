@@ -1,14 +1,15 @@
 """v7 timestamped world-frame ball observations and position-only estimation.
 
 All times are seconds on the simulation clock. Sampling and receipt times are
-distinct even though the current source has no transport delay. This module
-does not modify physics, add noise, or read velocities in sampled mode.
+distinct. Sampled measurements can pass through seeded noise and transport;
+the source never modifies physics or reads velocities in sampled mode.
 """
 from collections import deque
 from dataclasses import dataclass, replace
 import math
 
 import numpy as np
+from .perception import PerceptionConfig, FrameTransport
 
 DEFAULT_OBSERVATION_PERIOD_S = 1/60
 DEFAULT_OBSERVATION_MAX_AGE_S = .05
@@ -165,7 +166,7 @@ class BallObserver:
     """
 
     def __init__(self, ball_addresses, mode='truth', sample_period_s=DEFAULT_OBSERVATION_PERIOD_S,
-                 max_age_s=DEFAULT_OBSERVATION_MAX_AGE_S, position_step_s=0.):
+                 max_age_s=DEFAULT_OBSERVATION_MAX_AGE_S, position_step_s=0., perception=None):
         if mode not in ('truth', 'sampled'):
             raise ValueError("observation mode must be 'truth' or 'sampled'")
         if not math.isfinite(sample_period_s) or sample_period_s <= 0:
@@ -175,6 +176,10 @@ class BallObserver:
         if not math.isfinite(position_step_s) or position_step_s < 0:
             raise ValueError('position_step_s must be finite and nonnegative')
         self.mode = mode
+        self.perception = perception if perception is not None else PerceptionConfig()
+        if mode == 'truth' and self.perception.enabled:
+            raise ValueError('Perception disturbances require sampled observation mode')
+        self.transport = FrameTransport(self.perception)
         self.sample_period_s = float(sample_period_s)
         self.max_age_s = float(max_age_s)
         self.position_step_s = float(position_step_s)
@@ -184,6 +189,7 @@ class BallObserver:
         self.reset()
 
     def reset(self):
+        self.transport.reset()
         for estimator in self.estimators:
             estimator.reset()
         self.observations = ()
@@ -203,16 +209,19 @@ class BallObserver:
         self._last_update_s = now
         if self._origin_s is None:
             self._origin_s = now
-        if (self.mode == 'sampled' and
-                now + 1e-12 < self._origin_s + self._next_sample * self.sample_period_s):
-            return False
-        self.observations = self.source.read(data, include_velocity=self.mode == 'truth')
-        if self.mode == 'sampled':
-            for estimator, observation in zip(self.estimators, self.observations):
-                estimator.update(observation)
-            # Skipped periods are not backfilled with fabricated measurements.
+        if self.mode == 'truth':
+            self.observations = self.source.read(data, include_velocity=True)
+            return True
+        due = now + 1e-12 >= self._origin_s + self._next_sample * self.sample_period_s
+        if due:
+            self.transport.submit(self.source.read(data))
             self._next_sample = math.floor((now-self._origin_s + 1e-12) / self.sample_period_s) + 1
-        return True
+        frames = self.transport.receive(now)
+        for frame in frames:
+            self.observations = frame
+            for estimator, observation in zip(self.estimators, frame):
+                estimator.update(observation)
+        return bool(frames)
 
     def estimate(self, ball_id, now_s):
         if not 0 <= ball_id < len(self.estimators):
@@ -238,7 +247,7 @@ class BallObserver:
                             last.position_m, last.velocity_m_s, None, last.valid)
 
     def conditions(self):
-        return dict(mode=self.mode, frame='world', clock='simulation_seconds',
+        result = dict(mode=self.mode, frame='world', clock='simulation_seconds',
                     sample_period_s=self.sample_period_s if self.mode == 'sampled' else None,
                     max_age_s=self.max_age_s if self.mode == 'sampled' else None,
                     position_step_s=self.position_step_s if self.mode == 'sampled' else None,
@@ -249,3 +258,6 @@ class BallObserver:
                     estimator='three_position_backward_difference' if self.mode == 'sampled' else 'truth',
                     scope='live reception prediction', rollout_input='simulation_truth',
                     contact_and_safety_input='simulation_truth')
+        if self.mode == 'sampled':
+            result['perception'] = self.transport.conditions()
+        return result

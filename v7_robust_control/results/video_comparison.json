@@ -1,0 +1,75 @@
+{
+  "input": "v7_robust_control/results/perception_trials.jsonl",
+  "input_sha256": "9678c40b9f7e2e97e74ba0434d1b5ffb34652da5f418741ba148f23676e9f32a",
+  "output": "videos/v7_perception_before_rl.mp4",
+  "cases": [
+    "baseline",
+    "noise_3mm",
+    "combined"
+  ],
+  "seed": 0,
+  "speed": 1.0,
+  "fps": 60,
+  "duration_s": 10.25,
+  "end_hold_s": 0.0,
+  "end_behavior": "Final frames held and labelled after each episode stops; no simulated continuation.",
+  "trials": [
+    {
+      "case": "baseline",
+      "seed": 0,
+      "video": {
+        "path": "videos/v7_before_rl_baseline_seed0.mp4",
+        "fps": 60,
+        "speed": 1.0,
+        "frames": 615
+      },
+      "result": {
+        "success": true,
+        "validated_flights": 30,
+        "requested_throws": 30,
+        "time": 10.235999999999766,
+        "drops": 0,
+        "ball_contacts": 0,
+        "error": null
+      }
+    },
+    {
+      "case": "noise_3mm",
+      "seed": 0,
+      "video": {
+        "path": "videos/v7_before_rl_noise_3mm_seed0.mp4",
+        "fps": 60,
+        "speed": 1.0,
+        "frames": 17
+      },
+      "result": {
+        "success": false,
+        "validated_flights": 0,
+        "requested_throws": 30,
+        "time": 0.2790000000000002,
+        "drops": 0,
+        "ball_contacts": 0,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw"
+      }
+    },
+    {
+      "case": "combined",
+      "seed": 0,
+      "video": {
+        "path": "videos/v7_before_rl_combined_seed0.mp4",
+        "fps": 60,
+        "speed": 1.0,
+        "frames": 18
+      },
+      "result": {
+        "success": false,
+        "validated_flights": 0,
+        "requested_throws": 30,
+        "time": 0.2870000000000002,
+        "drops": 0,
+        "ball_contacts": 0,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw"
+      }
+    }
+  ]
+}

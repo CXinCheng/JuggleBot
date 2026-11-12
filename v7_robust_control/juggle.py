@@ -7,6 +7,7 @@ from pathlib import Path
 
 from jugglebot.robustness.controller import ObservedCascade
 from jugglebot.robustness.observation import DEFAULT_OBSERVATION_PERIOD_S, DEFAULT_OBSERVATION_MAX_AGE_S
+from jugglebot.robustness.perception import PerceptionConfig
 
 
 def experiment_record(result, requested_flights, simulated_timeout_s):
@@ -32,6 +33,11 @@ def main():
     parser.add_argument('--observation-period', type=float, default=DEFAULT_OBSERVATION_PERIOD_S)
     parser.add_argument('--observation-max-age', type=float, default=DEFAULT_OBSERVATION_MAX_AGE_S)
     parser.add_argument('--output', type=Path, help='Optional new JSON path for the complete experiment record.')
+    parser.add_argument('--noise-mm', type=float, default=0., help='Per-axis Gaussian position standard deviation in mm.')
+    parser.add_argument('--delay-ms', type=float, default=0., help='Fixed frame transport delay in ms.')
+    parser.add_argument('--dropout', type=float, default=0., help='Whole-frame dropout probability, between 0 and 1.')
+    parser.add_argument('--seed', type=int, default=0)
+    parser.add_argument('--video', type=Path, help='Optional new MP4 path, including failed episodes.')
     args = parser.parse_args()
     if args.throws < 1:
         parser.error('--throws must be positive')
@@ -43,17 +49,43 @@ def main():
         parser.error('--observation-period must be positive and finite; --observation-max-age must be finite and at least the period')
     if args.output is not None and args.output.exists():
         parser.error('--output must name a new file')
+    try:
+        perception = PerceptionConfig(args.noise_mm/1000., args.delay_ms/1000., args.dropout, args.seed)
+        if args.observation_mode == 'truth' and perception.enabled:
+            raise ValueError('Perception disturbances require sampled observation mode')
+    except ValueError as error:
+        parser.error(str(error))
+    if args.video is not None and args.video.exists():
+        parser.error('--video must name a new file')
     timeout = args.timeout if args.timeout is not None else max(30., .6*args.throws+5.)
     record = None
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         record = experiment_record(None, args.throws, timeout)
-    controller = ObservedCascade(observation_mode=args.observation_mode,
+    factory = ObservedCascade
+    extra = {}
+    if perception.enabled or args.seed:
+        extra['perception'] = perception
+    if args.video is not None:
+        from jugglebot.robustness.evaluation import EvaluatedCascade
+        from jugglebot.video import VideoRecorder
+        from v6_humanoid_hands.juggle import cascade_camera
+        factory = EvaluatedCascade
+        extra['recorder_factory'] = lambda model: VideoRecorder(model, args.video, camera=cascade_camera())
+    controller = factory(observation_mode=args.observation_mode,
                                  observation_period_s=args.observation_period,
-                                 observation_max_age_s=args.observation_max_age)
+                                 observation_max_age_s=args.observation_max_age, **extra)
     controller.progress_interval = 10
     print(f'[Setup] v7 | observation: {args.observation_mode} | requested flights: {args.throws}', flush=True)
-    result = controller.run_continuous(args.throws, timeout, guard=True)
+    try:
+        result = controller.run_continuous(args.throws, timeout, guard=True)
+    finally:
+        if args.video is not None:
+            controller.recorder.close()
+    if record is not None and (perception.enabled or args.video is not None):
+        record['experiment'] = 'v7 perception disturbance evaluation'
+        if args.video is not None:
+            record['video'] = dict(path=args.video.as_posix(), frames=controller.recorder.frames, fps=60, speed=1.)
     summary = {key: result[key] for key in (
         'success', 'validated_flights', 'throws', 'time', 'drops', 'ball_contacts', 'error', 'failure_event')}
     summary['ball_observation'] = result['conditions']['ball_observation']
