@@ -1,0 +1,9 @@
+noise 1 mm seed 2: success=False releases=9 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=128s
+noise 1 mm seed 0: success=False releases=11 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=282s
+noise 3 mm seed 1: success=False releases=11 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=424s
+noise 1 mm seed 1: success=False releases=18 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=742s
+noise 5 mm seed 2: success=False releases=9 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=327s
+noise 3 mm seed 0: success=False releases=19 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=841s
+noise 5 mm seed 0: success=False releases=15 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=772s
+noise 5 mm seed 1: success=False releases=20 error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw wall=1257s
+noise 3 mm seed 2: success=False releases=10 error=DROPPED: ball 0 at 3.774, throws=10 wall=2165s

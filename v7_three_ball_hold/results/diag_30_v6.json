@@ -1,0 +1,5696 @@
+{
+ "failure": null,
+ "last_plans": [
+  {
+   "time": 9.234,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 9.700000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.022066218473960297,
+    "contact_time": 9.43400000000021
+   }
+  },
+  {
+   "time": 9.57,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.028852042083675943,
+    0.04650516553746317,
+    0.03201052045110185,
+    0.022535085940310035,
+    0.03439142355940627
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.0300000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.013521200508468743,
+    "contact_time": 9.775000000000022
+   }
+  },
+  {
+   "time": 9.875,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.015685564275570316,
+    0.008091977084216027,
+    0.029377972562479957,
+    0.03089431341207624,
+    -0.016317086279135074
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.340000000000002,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.011551734765927794,
+    "contact_time": 10.068999999999859
+   }
+  },
+  {
+   "time": 10.206,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.674999999999882,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.020659856783647346,
+    "contact_time": 10.37299999999969
+   }
+  }
+ ],
+ "events_tail": [
+  {
+   "time": 9.875,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.015685564275570316,
+    0.008091977084216027,
+    0.029377972562479957,
+    0.03089431341207624,
+    -0.016317086279135074
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.340000000000002,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.011551734765927794,
+    "contact_time": 10.068999999999859
+   }
+  },
+  {
+   "time": 9.875,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 10.085,
+   "point": [
+    0.292,
+    -0.214,
+    0.86
+   ]
+  },
+  {
+   "time": 9.935,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 29,
+   "palm_touch_time": 9.775000000000022,
+   "contact_settle_time": 0.15999999999991132,
+   "cushion_depth": 0.07548958564081487,
+   "palm_drop_at_settle": 0.06997539308647927,
+   "incoming_ball_speed": 2.3134467327089085,
+   "touch_palm_vertical_velocity": -1.7085375638663387,
+   "initial_relative_speed": 0.5059066017540237,
+   "settled_relative_speed": 0.074224951435563,
+   "settled_ball_speed": 1.6305316942171695,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -5.674877457108318e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022143251225428935,
+   "tangent_offset": 0.01286766473070325
+  },
+  {
+   "time": 10.03,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0163,
+    0.0069
+   ],
+   "timing_error": 0.0111,
+   "score": 0.02848,
+   "objective_components": [
+    0.01630565538471601,
+    0.0069310485478071004,
+    0.022295791008358767,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5615696222472308,
+    -0.7832085863832627,
+    3.5970742590357023,
+    0.014854604413737765
+   ],
+   "predicted_release_velocity": [
+    -0.013230002267494982,
+    -0.5430577864284432,
+    2.3975427966159755
+   ],
+   "predicted_release_time": 10.198999999999787
+  },
+  {
+   "time": 10.035,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0082,
+    0.0028
+   ],
+   "timing_error": 0.0063,
+   "score": 0.01537,
+   "objective_components": [
+    0.008194732146252548,
+    0.002796251315371062,
+    0.012699625244290802,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.6082805318748808,
+    -0.8143732204112102,
+    3.5144102080739774,
+    0.014854604413737765
+   ],
+   "predicted_release_velocity": [
+    -0.025429603660686455,
+    -0.5506133584169726,
+    2.366137075966756
+   ],
+   "predicted_release_time": 10.205999999999783
+  },
+  {
+   "time": 10.035,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0145,
+    -0.0054,
+    0.0218
+   ],
+   "velocity": [
+    0.02,
+    0.006,
+    0.046
+   ]
+  },
+  {
+   "time": 10.069,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 30,
+   "contact_distance": -8.998462611657654e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022179546257886474,
+   "tangent_offset": 0.022930057973193935
+  },
+  {
+   "time": 10.069,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 10.34
+  },
+  {
+   "time": 10.206,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 32,
+   "separation_time": 10.19299999999979,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3215033104571284,
+    0.07095964927014782,
+    0.9874377090073755
+   ],
+   "velocity": [
+    -0.025429603660686455,
+    -0.5506133584169726,
+    2.366137075966756
+   ]
+  },
+  {
+   "time": 10.206,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.674999999999882,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.020659856783647346,
+    "contact_time": 10.37299999999969
+   }
+  },
+  {
+   "time": 10.206,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 10.384,
+   "point": [
+    0.301,
+    0.222,
+    0.86
+   ]
+  },
+  {
+   "time": 10.21,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 30,
+   "palm_touch_time": 10.068999999999859,
+   "contact_settle_time": 0.14099999999992185,
+   "cushion_depth": 0.07710653487824204,
+   "palm_drop_at_settle": 0.07710653487824204,
+   "incoming_ball_speed": 2.2386673594432707,
+   "touch_palm_vertical_velocity": -1.5698567579425557,
+   "initial_relative_speed": 0.9819998370647509,
+   "settled_relative_speed": 0.01817965946090342,
+   "settled_ball_speed": 0.7393725366321371,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -8.998462611657654e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022179546257886474,
+   "tangent_offset": 0.022930057973193935
+  }
+ ],
+ "events": [
+  {
+   "time": 0.1,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    -0.0139,
+    -0.0083
+   ],
+   "timing_error": 0.0014,
+   "score": 0.01641,
+   "objective_components": [
+    -0.013850984936100708,
+    -0.008341735845136339,
+    0.0028016720293493336,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.08596325186138344,
+    0.9242822132137698,
+    4.245268846633667,
+    -0.22275755923768775
+   ],
+   "predicted_release_velocity": [
+    -0.07746740269285954,
+    0.5513453901840393,
+    2.270771828586768
+   ],
+   "predicted_release_time": 0.2790000000000002
+  },
+  {
+   "time": 0.1,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    -0.0002,
+    0.0011,
+    0.022
+   ],
+   "velocity": [
+    0.014,
+    -0.003,
+    0.011
+   ]
+  },
+  {
+   "time": 0.279,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 1,
+   "separation_time": 0.2670000000000002,
+   "confirmation_delay": 0.01200000000000001,
+   "position": [
+    0.326385648786456,
+    -0.07471099243956335,
+    1.0261165193941655
+   ],
+   "velocity": [
+    -0.07746740269285954,
+    0.5513453901840393,
+    2.270771828586768
+   ]
+  },
+  {
+   "time": 0.279,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    0.015249161012197322,
+    0.005563544385911657,
+    -0.02282785678508704,
+    -0.06326822535919642,
+    -0.08
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 0.74,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.0381892096039656,
+    "contact_time": 0.5000000000000003
+   }
+  },
+  {
+   "time": 0.279,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 0.479,
+   "point": [
+    0.4,
+    -0.22,
+    0.86
+   ]
+  },
+  {
+   "time": 0.42,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    -0.0069,
+    -0.0171
+   ],
+   "timing_error": -0.0015,
+   "score": 0.01864,
+   "objective_components": [
+    -0.0068916093136554,
+    -0.017054749618162862,
+    -0.002993767158423699,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.14599912723777148,
+    -0.8561997426289502,
+    4.341472023332925,
+    -0.08489199439219883
+   ],
+   "predicted_release_velocity": [
+    -0.07802607139421157,
+    -0.5968347982159411,
+    2.262405746995535
+   ],
+   "predicted_release_time": 0.5980000000000004
+  },
+  {
+   "time": 0.42,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0002,
+    -0.0004,
+    0.0223
+   ],
+   "velocity": [
+    -0.002,
+    0.0,
+    0.003
+   ]
+  },
+  {
+   "time": 0.5,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 0,
+   "contact_distance": -8.891686839062468e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021786505320033095,
+   "tangent_offset": 0.016780579814737705
+  },
+  {
+   "time": 0.5,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 0.74
+  },
+  {
+   "time": 0.598,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 2,
+   "separation_time": 0.5860000000000004,
+   "confirmation_delay": 0.01200000000000001,
+   "position": [
+    0.3334090997235258,
+    0.071212283648743,
+    1.0222940578495596
+   ],
+   "velocity": [
+    -0.07802607139421157,
+    -0.5968347982159411,
+    2.262405746995535
+   ]
+  },
+  {
+   "time": 0.598,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.011781907746096108,
+    -0.006954433686048053,
+    0.01688630317658169,
+    0.04919811628045111,
+    -0.06077161686561367
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 1.06,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.019797684444312253,
+    "contact_time": 0.7800000000000006
+   }
+  },
+  {
+   "time": 0.598,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 0.798,
+   "point": [
+    0.286,
+    0.211,
+    0.86
+   ]
+  },
+  {
+   "time": 0.678,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 0,
+   "palm_touch_time": 0.5000000000000003,
+   "contact_settle_time": 0.17800000000000016,
+   "cushion_depth": 0.03896047449608697,
+   "palm_drop_at_settle": -0.003874195213267706,
+   "incoming_ball_speed": 2.407902412209562,
+   "touch_palm_vertical_velocity": -1.068335170980354,
+   "initial_relative_speed": 0.7610876308392348,
+   "settled_relative_speed": 0.04946836055071384,
+   "settled_ball_speed": 1.4884465519754568,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -8.891686839062468e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021786505320033095,
+   "tangent_offset": 0.016780579814737705
+  },
+  {
+   "time": 0.74,
+   "kind": "plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    -0.001,
+    -0.0104
+   ],
+   "timing_error": 0.0064,
+   "score": 0.01657,
+   "objective_components": [
+    -0.0010116810465415904,
+    -0.01043337211009096,
+    0.012834922416548933,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.2510026155117154,
+    0.6889761872780442,
+    3.632598602620793,
+    -0.05368277224094169
+   ],
+   "predicted_release_velocity": [
+    -0.01498447133393232,
+    0.5777369277648744,
+    2.3324918484695614
+   ],
+   "predicted_release_time": 0.9120000000000007
+  },
+  {
+   "time": 0.74,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 2,
+   "offset": [
+    0.0088,
+    -0.0153,
+    0.0208
+   ],
+   "velocity": [
+    0.278,
+    0.074,
+    -0.061
+   ]
+  },
+  {
+   "time": 0.78,
+   "kind": "touch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 1,
+   "contact_distance": -4.254775546345263e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02392938515646633,
+   "tangent_offset": 0.0201516237039326
+  },
+  {
+   "time": 0.78,
+   "kind": "carry",
+   "side": "left",
+   "ball": 0,
+   "next_throw": 1.06
+  },
+  {
+   "time": 0.912,
+   "kind": "release",
+   "side": "right",
+   "ball": 2,
+   "count": 3,
+   "separation_time": 0.9000000000000007,
+   "confirmation_delay": 0.01200000000000001,
+   "position": [
+    0.30684643736794737,
+    -0.09340870501481463,
+    1.0080426156433453
+   ],
+   "velocity": [
+    -0.01498447133393232,
+    0.5777369277648744,
+    2.3324918484695614
+   ]
+  },
+  {
+   "time": 0.912,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.005085265774123762,
+    -0.019075762778157104,
+    0.01647649053610593,
+    -0.02174635955465037,
+    -0.007724020292302673
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 1.3800000000000003,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.01722394963097068,
+    "contact_time": 1.1009999999999895
+   }
+  },
+  {
+   "time": 0.912,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 1,
+   "impact": 1.114,
+   "point": [
+    0.293,
+    -0.237,
+    0.86
+   ]
+  },
+  {
+   "time": 0.956,
+   "kind": "catch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 1,
+   "palm_touch_time": 0.7800000000000006,
+   "contact_settle_time": 0.17600000000000016,
+   "cushion_depth": 0.08431358611598228,
+   "palm_drop_at_settle": 0.08431358611598228,
+   "incoming_ball_speed": 2.2009117093476918,
+   "touch_palm_vertical_velocity": -1.6348990122529565,
+   "initial_relative_speed": 0.7944675809708355,
+   "settled_relative_speed": 0.03397453269728192,
+   "settled_ball_speed": 0.9169016569864438,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -4.254775546345263e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02392938515646633,
+   "tangent_offset": 0.0201516237039326
+  },
+  {
+   "time": 1.06,
+   "kind": "plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0135,
+    -0.0078
+   ],
+   "timing_error": 0.0016,
+   "score": 0.01593,
+   "objective_components": [
+    0.013539816071444832,
+    -0.0077552707906698715,
+    0.003210696418333603,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5363770215180458,
+    -0.8461865912986186,
+    3.4683551048682704,
+    -0.1398843569548724
+   ],
+   "predicted_release_velocity": [
+    -0.04419536918660033,
+    -0.5826587081754561,
+    2.3467744003105455
+   ],
+   "predicted_release_time": 1.2309999999999752
+  },
+  {
+   "time": 1.06,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 0,
+   "offset": [
+    0.0205,
+    -0.0038,
+    0.0203
+   ],
+   "velocity": [
+    0.025,
+    0.036,
+    0.016
+   ]
+  },
+  {
+   "time": 1.101,
+   "kind": "touch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 2,
+   "contact_distance": -0.0003372369754951754,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021862763024504912,
+   "tangent_offset": 0.007295334314066257
+  },
+  {
+   "time": 1.101,
+   "kind": "carry",
+   "side": "right",
+   "ball": 1,
+   "next_throw": 1.38
+  },
+  {
+   "time": 1.231,
+   "kind": "release",
+   "side": "left",
+   "ball": 0,
+   "count": 4,
+   "separation_time": 1.2179999999999767,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.3364597708976944,
+    0.07441465144976665,
+    0.9844573877311914
+   ],
+   "velocity": [
+    -0.04419536918660033,
+    -0.5826587081754561,
+    2.3467744003105455
+   ]
+  },
+  {
+   "time": 1.231,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.008144937555400113,
+    0.010395201672030297,
+    0.007048531761310835,
+    0.04342451190891261,
+    -0.05781498753883637
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 1.7000000000000002,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.03199732951256315,
+    "contact_time": 1.4279999999999535
+   }
+  },
+  {
+   "time": 1.231,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 2,
+   "impact": 1.436,
+   "point": [
+    0.299,
+    0.209,
+    0.86
+   ]
+  },
+  {
+   "time": 1.27,
+   "kind": "catch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 2,
+   "palm_touch_time": 1.1009999999999895,
+   "contact_settle_time": 0.1689999999999814,
+   "cushion_depth": 0.08620018056662171,
+   "palm_drop_at_settle": 0.08620018056662171,
+   "incoming_ball_speed": 2.7389803673671667,
+   "touch_palm_vertical_velocity": -1.649174512843731,
+   "initial_relative_speed": 1.049056159263466,
+   "settled_relative_speed": 0.048667594066514885,
+   "settled_ball_speed": 1.2810510078210111,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0003372369754951754,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021862763024504912,
+   "tangent_offset": 0.007295334314066257
+  },
+  {
+   "time": 1.38,
+   "kind": "plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0133,
+    -0.0064
+   ],
+   "timing_error": 0.006,
+   "score": 0.01896,
+   "objective_components": [
+    0.013276032469723198,
+    -0.0063817973291689645,
+    0.011931658742595497,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.06285196541893437,
+    0.6775662718786171,
+    4.213038504818208,
+    -0.1872529720206393
+   ],
+   "predicted_release_velocity": [
+    -0.04134523626072008,
+    0.5671221072142533,
+    2.3073145671845268
+   ],
+   "predicted_release_time": 1.558999999999939
+  },
+  {
+   "time": 1.38,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 1,
+   "offset": [
+    0.0046,
+    -0.0119,
+    0.0214
+   ],
+   "velocity": [
+    -0.0,
+    -0.055,
+    0.06
+   ]
+  },
+  {
+   "time": 1.428,
+   "kind": "touch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 3,
+   "contact_distance": -0.0001850387349376023,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02408451363038266,
+   "tangent_offset": 0.008729130425321436
+  },
+  {
+   "time": 1.428,
+   "kind": "carry",
+   "side": "left",
+   "ball": 2,
+   "next_throw": 1.7
+  },
+  {
+   "time": 1.559,
+   "kind": "release",
+   "side": "right",
+   "ball": 1,
+   "count": 5,
+   "separation_time": 1.5459999999999405,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.334898178241363,
+    -0.08296728048326979,
+    1.017137757626367
+   ],
+   "velocity": [
+    -0.04134523626072008,
+    0.5671221072142533,
+    2.3073145671845268
+   ]
+  },
+  {
+   "time": 1.559,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.0025757206586711004,
+    0.013617135604579167,
+    0.014455507940806129,
+    0.0315224714998342,
+    -0.07625319979591932
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 2.0200000000000005,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.0172468047850989,
+    "contact_time": 1.7399999999999192
+   }
+  },
+  {
+   "time": 1.559,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 0,
+   "impact": 1.749,
+   "point": [
+    0.314,
+    -0.227,
+    0.86
+   ]
+  },
+  {
+   "time": 1.656,
+   "kind": "catch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 3,
+   "palm_touch_time": 1.4279999999999535,
+   "contact_settle_time": 0.2279999999999749,
+   "cushion_depth": 0.08377996118376607,
+   "palm_drop_at_settle": 0.07135276236217702,
+   "incoming_ball_speed": 2.630576272396179,
+   "touch_palm_vertical_velocity": -1.6581162507807115,
+   "initial_relative_speed": 0.9722143367052158,
+   "settled_relative_speed": 0.044236489111865014,
+   "settled_ball_speed": 0.3147643669050887,
+   "supporting_digits": [
+    "if",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0001850387349376023,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02408451363038266,
+   "tangent_offset": 0.008729130425321436
+  },
+  {
+   "time": 1.7,
+   "kind": "plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0023,
+    -0.0153
+   ],
+   "timing_error": -0.004,
+   "score": 0.01741,
+   "objective_components": [
+    0.002308857347303239,
+    -0.015254588323042356,
+    -0.008056823204817265,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.15157258135899215,
+    -0.8103036826154042,
+    3.5728012827035998,
+    0.040160600187688224
+   ],
+   "predicted_release_velocity": [
+    -0.05934171905835622,
+    -0.604841229494325,
+    2.2608343271970903
+   ],
+   "predicted_release_time": 1.877999999999904
+  },
+  {
+   "time": 1.7,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 2,
+   "offset": [
+    -0.0027,
+    0.0074,
+    0.0228
+   ],
+   "velocity": [
+    0.024,
+    0.053,
+    0.08
+   ]
+  },
+  {
+   "time": 1.74,
+   "kind": "touch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 4,
+   "contact_distance": -0.0006860283653877877,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02161053330069717,
+   "tangent_offset": 0.024836759342734667
+  },
+  {
+   "time": 1.74,
+   "kind": "carry",
+   "side": "right",
+   "ball": 0,
+   "next_throw": 2.02
+  },
+  {
+   "time": 1.867,
+   "kind": "catch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 4,
+   "palm_touch_time": 1.7399999999999192,
+   "contact_settle_time": 0.126999999999986,
+   "cushion_depth": 0.07493248926841567,
+   "palm_drop_at_settle": 0.07493248926841567,
+   "incoming_ball_speed": 1.5293546319869482,
+   "touch_palm_vertical_velocity": -1.5996414641258543,
+   "initial_relative_speed": 0.497061531540706,
+   "settled_relative_speed": 0.006545909563557794,
+   "settled_ball_speed": 0.52021281749763,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0006860283653877877,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02161053330069717,
+   "tangent_offset": 0.024836759342734667
+  },
+  {
+   "time": 1.878,
+   "kind": "release",
+   "side": "left",
+   "ball": 2,
+   "count": 6,
+   "separation_time": 1.8649999999999054,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.3327494732309119,
+    0.07501177789901449,
+    1.0132571907918535
+   ],
+   "velocity": [
+    -0.05934171905835622,
+    -0.604841229494325,
+    2.2608343271970903
+   ]
+  },
+  {
+   "time": 1.878,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.0026915027126691886,
+    0.014495912653695011,
+    0.0038565309125489244,
+    0.07032789806590369,
+    0.008110300649663556
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 2.3400000000000003,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.017241134768537197,
+    "contact_time": 2.0819999999998817
+   }
+  },
+  {
+   "time": 1.878,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 1,
+   "impact": 2.081,
+   "point": [
+    0.313,
+    0.213,
+    0.86
+   ]
+  },
+  {
+   "time": 2.02,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.002,
+    -0.0145
+   ],
+   "timing_error": -0.0034,
+   "score": 0.01618,
+   "objective_components": [
+    0.0020110667939917115,
+    -0.01451045783846358,
+    -0.0068794670683383075,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5006062941319386,
+    0.624473907449201,
+    3.2333459190358327,
+    -0.15242974752624502
+   ],
+   "predicted_release_velocity": [
+    -0.059408950708418055,
+    0.5725254021153822,
+    2.3275559269525354
+   ],
+   "predicted_release_time": 2.18999999999987
+  },
+  {
+   "time": 2.02,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    0.0184,
+    -0.0047,
+    0.0189
+   ],
+   "velocity": [
+    0.006,
+    -0.066,
+    0.054
+   ]
+  },
+  {
+   "time": 2.082,
+   "kind": "touch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 5,
+   "contact_distance": -0.0007211579075293711,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021478842092470644,
+   "tangent_offset": 0.003976166462350343
+  },
+  {
+   "time": 2.082,
+   "kind": "carry",
+   "side": "left",
+   "ball": 1,
+   "next_throw": 2.34
+  },
+  {
+   "time": 2.19,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 7,
+   "separation_time": 2.1769999999998713,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.3325211433502624,
+    -0.08853675590729704,
+    0.9806248004096284
+   ],
+   "velocity": [
+    -0.059408950708418055,
+    0.5725254021153822,
+    2.3275559269525354
+   ]
+  },
+  {
+   "time": 2.19,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.006951472438099351,
+    0.01390119075242562,
+    0.020360112286669587,
+    -0.05429014737428137,
+    -0.07337364228924163
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 2.6600000000000006,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.02063406645608927,
+    "contact_time": 2.3749999999998495
+   }
+  },
+  {
+   "time": 2.19,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 2.39,
+   "point": [
+    0.302,
+    -0.235,
+    0.86
+   ]
+  },
+  {
+   "time": 2.242,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 5,
+   "palm_touch_time": 2.0819999999998817,
+   "contact_settle_time": 0.15999999999998238,
+   "cushion_depth": 0.07869554721362049,
+   "palm_drop_at_settle": 0.07416354120058999,
+   "incoming_ball_speed": 2.8800081503750357,
+   "touch_palm_vertical_velocity": -1.6455295293879444,
+   "initial_relative_speed": 1.1801464982139824,
+   "settled_relative_speed": 0.05885278075671608,
+   "settled_ball_speed": 1.281209749238302,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "th"
+   ],
+   "contact_distance": -0.0007211579075293711,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021478842092470644,
+   "tangent_offset": 0.003976166462350343
+  },
+  {
+   "time": 2.34,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0083,
+    0.0062
+   ],
+   "timing_error": 0.0073,
+   "score": 0.0179,
+   "objective_components": [
+    0.00831569606713578,
+    0.006244759346579226,
+    0.01457035181216515,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.45697180515273567,
+    -0.5964926774918994,
+    3.7589898347797353,
+    -0.13217731484835776
+   ],
+   "predicted_release_velocity": [
+    -0.026567980551250148,
+    -0.5608112892264292,
+    2.3857765355805234
+   ],
+   "predicted_release_time": 2.5099999999998346
+  },
+  {
+   "time": 2.34,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0194,
+    0.0023,
+    0.0205
+   ],
+   "velocity": [
+    0.116,
+    0.061,
+    0.139
+   ]
+  },
+  {
+   "time": 2.375,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 6,
+   "contact_distance": -9.505349050879797e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02213896172564138,
+   "tangent_offset": 0.024769166709125864
+  },
+  {
+   "time": 2.375,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 2.66
+  },
+  {
+   "time": 2.507,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 6,
+   "palm_touch_time": 2.3749999999998495,
+   "contact_settle_time": 0.13199999999998546,
+   "cushion_depth": 0.07130309609174501,
+   "palm_drop_at_settle": 0.07130309609174501,
+   "incoming_ball_speed": 2.4647801869800547,
+   "touch_palm_vertical_velocity": -1.531673405736625,
+   "initial_relative_speed": 1.1197014862439112,
+   "settled_relative_speed": 0.01466991823652479,
+   "settled_ball_speed": 0.6200781294420472,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -9.505349050879797e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02213896172564138,
+   "tangent_offset": 0.024769166709125864
+  },
+  {
+   "time": 2.51,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 8,
+   "separation_time": 2.496999999999836,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.32224489442391735,
+    0.08026980476877542,
+    0.9797343379058119
+   ],
+   "velocity": [
+    -0.026567980551250148,
+    -0.5608112892264292,
+    2.3857765355805234
+   ]
+  },
+  {
+   "time": 2.51,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 2.9800000000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.01715650034542685,
+    "contact_time": 2.6999999999998137
+   }
+  },
+  {
+   "time": 2.51,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 2.703,
+   "point": [
+    0.302,
+    0.205,
+    0.86
+   ]
+  },
+  {
+   "time": 2.66,
+   "kind": "plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    -0.0062,
+    -0.0042
+   ],
+   "timing_error": -0.0032,
+   "score": 0.00987,
+   "objective_components": [
+    -0.006223407843316153,
+    -0.0042333813174401935,
+    -0.006379772517377091,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5387030601922514,
+    0.6552464890719962,
+    3.3292843342515273,
+    -0.16415702927888465
+   ],
+   "predicted_release_velocity": [
+    -0.07032479982988157,
+    0.5896255071213776,
+    2.3276388285035057
+   ],
+   "predicted_release_time": 2.8299999999997993
+  },
+  {
+   "time": 2.66,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 2,
+   "offset": [
+    0.0183,
+    -0.0032,
+    0.019
+   ],
+   "velocity": [
+    -0.005,
+    -0.034,
+    0.057
+   ]
+  },
+  {
+   "time": 2.7,
+   "kind": "touch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 7,
+   "contact_distance": -0.0006103258304303236,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023322596882421158,
+   "tangent_offset": 0.008079673029499052
+  },
+  {
+   "time": 2.7,
+   "kind": "carry",
+   "side": "left",
+   "ball": 0,
+   "next_throw": 2.98
+  },
+  {
+   "time": 2.83,
+   "kind": "release",
+   "side": "right",
+   "ball": 2,
+   "count": 9,
+   "separation_time": 2.8169999999998008,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.32991018555611035,
+    -0.08718893019625451,
+    0.9812597145588502
+   ],
+   "velocity": [
+    -0.07032479982988157,
+    0.5896255071213776,
+    2.3276388285035057
+   ]
+  },
+  {
+   "time": 2.83,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.008750597343411645,
+    -0.007933676079195512,
+    0.010000000000000002,
+    0.029286603317105215,
+    0.03450373767460302
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 3.3000000000000007,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.012817970449808497,
+    "contact_time": 3.0279999999997775
+   }
+  },
+  {
+   "time": 2.83,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 1,
+   "impact": 3.034,
+   "point": [
+    0.308,
+    -0.213,
+    0.86
+   ]
+  },
+  {
+   "time": 2.839,
+   "kind": "catch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 7,
+   "palm_touch_time": 2.6999999999998137,
+   "contact_settle_time": 0.1389999999999847,
+   "cushion_depth": 0.08620917281365836,
+   "palm_drop_at_settle": 0.08563616181438727,
+   "incoming_ball_speed": 2.4891138534229182,
+   "touch_palm_vertical_velocity": -1.7030440272470257,
+   "initial_relative_speed": 0.9002362703523649,
+   "settled_relative_speed": 0.024076062824982352,
+   "settled_ball_speed": 0.6627883943650383,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0006103258304303236,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023322596882421158,
+   "tangent_offset": 0.008079673029499052
+  },
+  {
+   "time": 2.98,
+   "kind": "plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0079,
+    0.0024
+   ],
+   "timing_error": 0.0028,
+   "score": 0.01024,
+   "objective_components": [
+    0.007856543489653256,
+    0.0023509221865777585,
+    0.005589561771489615,
+    0.0025121439695130476,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.188011436997042,
+    -0.9304429446377206,
+    4.7735522571138045,
+    -0.23002534284716025
+   ],
+   "predicted_release_velocity": [
+    -0.06616984926434058,
+    -0.5382743655274462,
+    2.2687458337544006
+   ],
+   "predicted_release_time": 3.1629999999997627
+  },
+  {
+   "time": 2.98,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 0,
+   "offset": [
+    0.013,
+    -0.0059,
+    0.0221
+   ],
+   "velocity": [
+    0.057,
+    0.059,
+    0.107
+   ]
+  },
+  {
+   "time": 3.028,
+   "kind": "touch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 8,
+   "contact_distance": -0.0002336031010236883,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02196639689897635,
+   "tangent_offset": 0.0061902988548986895
+  },
+  {
+   "time": 3.028,
+   "kind": "carry",
+   "side": "right",
+   "ball": 1,
+   "next_throw": 3.3
+  },
+  {
+   "time": 3.163,
+   "kind": "release",
+   "side": "left",
+   "ball": 0,
+   "count": 10,
+   "separation_time": 3.149999999999764,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.342251285789254,
+    0.062143128072330744,
+    1.0282830992860608
+   ],
+   "velocity": [
+    -0.06616984926434058,
+    -0.5382743655274462,
+    2.2687458337544006
+   ]
+  },
+  {
+   "time": 3.163,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.00842727192218696,
+    0.025847163096242146,
+    0.004639738058782482,
+    0.08222101231273334,
+    0.08
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 3.6200000000000006,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.010273940170559794,
+    "contact_time": 3.3089999999997466
+   }
+  },
+  {
+   "time": 3.163,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 2,
+   "impact": 3.343,
+   "point": [
+    0.294,
+    0.215,
+    0.86
+   ]
+  },
+  {
+   "time": 3.166,
+   "kind": "catch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 8,
+   "palm_touch_time": 3.0279999999997775,
+   "contact_settle_time": 0.1379999999999848,
+   "cushion_depth": 0.0801811641468183,
+   "palm_drop_at_settle": 0.07994307858944649,
+   "incoming_ball_speed": 2.412401481045681,
+   "touch_palm_vertical_velocity": -1.6425169933294375,
+   "initial_relative_speed": 0.8626820017372137,
+   "settled_relative_speed": 0.11826437414168463,
+   "settled_ball_speed": 0.713352987970738,
+   "supporting_digits": [
+    "mf",
+    "th"
+   ],
+   "contact_distance": -0.0002336031010236883,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02196639689897635,
+   "tangent_offset": 0.0061902988548986895
+  },
+  {
+   "time": 3.3,
+   "kind": "plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0145,
+    -0.0118
+   ],
+   "timing_error": 0.0007,
+   "score": 0.01868,
+   "objective_components": [
+    0.014450237619787754,
+    -0.011754882088387514,
+    0.0013680847397146145,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.07413843580163137,
+    0.90713016338683,
+    4.412348049301696,
+    -0.21719707913970315
+   ],
+   "predicted_release_velocity": [
+    -0.03902816294791505,
+    0.5361249811655424,
+    2.2668816060234396
+   ],
+   "predicted_release_time": 3.4809999999997276
+  },
+  {
+   "time": 3.3,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 1,
+   "offset": [
+    0.0039,
+    0.0032,
+    0.0217
+   ],
+   "velocity": [
+    0.026,
+    -0.044,
+    0.072
+   ]
+  },
+  {
+   "time": 3.309,
+   "kind": "touch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 9,
+   "contact_distance": -0.00011982175492858405,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022080178245071504,
+   "tangent_offset": 0.01634960217423706
+  },
+  {
+   "time": 3.309,
+   "kind": "carry",
+   "side": "left",
+   "ball": 2,
+   "next_throw": 3.62
+  },
+  {
+   "time": 3.481,
+   "kind": "release",
+   "side": "right",
+   "ball": 1,
+   "count": 11,
+   "separation_time": 3.467999999999729,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.33465449478093395,
+    -0.0692982295536299,
+    1.023295712308079
+   ],
+   "velocity": [
+    -0.03902816294791505,
+    0.5361249811655424,
+    2.2668816060234396
+   ]
+  },
+  {
+   "time": 3.481,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.0029312891284424677,
+    -0.0012861008040658912,
+    0.02942844914507209,
+    -0.04312214490596275,
+    -0.08
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 3.940000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.008983340828028428,
+    "contact_time": 3.658999999999708
+   }
+  },
+  {
+   "time": 3.481,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 0,
+   "impact": 3.682,
+   "point": [
+    0.308,
+    -0.217,
+    0.86
+   ]
+  },
+  {
+   "time": 3.509,
+   "kind": "catch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 9,
+   "palm_touch_time": 3.3089999999997466,
+   "contact_settle_time": 0.19999999999997797,
+   "cushion_depth": 0.1168977819422472,
+   "palm_drop_at_settle": 0.1168977819422472,
+   "incoming_ball_speed": 2.444567486218594,
+   "touch_palm_vertical_velocity": -1.7286983845328332,
+   "initial_relative_speed": 0.9478526859505995,
+   "settled_relative_speed": 0.07317545193757635,
+   "settled_ball_speed": 0.9226109241475868,
+   "supporting_digits": [
+    "if",
+    "th"
+   ],
+   "contact_distance": -0.00011982175492858405,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022080178245071504,
+   "tangent_offset": 0.01634960217423706
+  },
+  {
+   "time": 3.62,
+   "kind": "plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    -0.011,
+    -0.0052
+   ],
+   "timing_error": -0.004,
+   "score": 0.01453,
+   "objective_components": [
+    -0.011021792870227587,
+    -0.005183976761560238,
+    -0.007926514101976645,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.39159935554839315,
+    -0.6975070496045095,
+    4.089310671378481,
+    -0.20260104992396957
+   ],
+   "predicted_release_velocity": [
+    -0.10436426800169796,
+    -0.6032511745429149,
+    2.261099167154967
+   ],
+   "predicted_release_time": 3.7979999999996927
+  },
+  {
+   "time": 3.62,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 2,
+   "offset": [
+    0.0018,
+    0.0158,
+    0.0223
+   ],
+   "velocity": [
+    0.011,
+    0.039,
+    0.04
+   ]
+  },
+  {
+   "time": 3.659,
+   "kind": "touch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 10,
+   "contact_distance": -0.0010154780079562609,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021184521992043796,
+   "tangent_offset": 0.014054990756843832
+  },
+  {
+   "time": 3.659,
+   "kind": "carry",
+   "side": "right",
+   "ball": 0,
+   "next_throw": 3.94
+  },
+  {
+   "time": 3.785,
+   "kind": "catch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 10,
+   "palm_touch_time": 3.658999999999708,
+   "contact_settle_time": 0.12599999999998612,
+   "cushion_depth": 0.07446551743492003,
+   "palm_drop_at_settle": 0.07446551743492003,
+   "incoming_ball_speed": 2.653036057277775,
+   "touch_palm_vertical_velocity": -1.5356087350998275,
+   "initial_relative_speed": 1.0759833603031164,
+   "settled_relative_speed": 0.02714765606159678,
+   "settled_ball_speed": 0.5079508312254098,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0010154780079562609,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021184521992043796,
+   "tangent_offset": 0.014054990756843832
+  },
+  {
+   "time": 3.798,
+   "kind": "release",
+   "side": "left",
+   "ball": 2,
+   "count": 12,
+   "separation_time": 3.784999999999694,
+   "confirmation_delay": 0.012999999999998568,
+   "position": [
+    0.34252091126562145,
+    0.08430604100610342,
+    1.013301909413254
+   ],
+   "velocity": [
+    -0.10436426800169796,
+    -0.6032511745429149,
+    2.261099167154967
+   ]
+  },
+  {
+   "time": 3.798,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0276,
+    -0.0014,
+    -0.0081,
+    0.0,
+    0.0
+   ],
+   "score": 0.028765289233080114,
+   "parameters": [
+    -0.010576690263840336,
+    -0.014271561320077198,
+    0.010505008684045934,
+    0.07352430128909182,
+    -0.05018762696412368
+   ],
+   "diagnostics": {
+    "centered": false,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 4.260000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.017565260155964716,
+    "contact_time": 4.010999999999674
+   }
+  },
+  {
+   "time": 3.798,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 1,
+   "impact": 3.998,
+   "point": [
+    0.314,
+    0.208,
+    0.86
+   ]
+  },
+  {
+   "time": 3.94,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0153,
+    -0.0078
+   ],
+   "timing_error": -0.0043,
+   "score": 0.01931,
+   "objective_components": [
+    0.0153470444380992,
+    -0.00777716791065472,
+    -0.008526291392350505,
+    0.0019924742980332866,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.4887863897140545,
+    0.6568436994227569,
+    3.981384158778742,
+    -0.2156057115055093
+   ],
+   "predicted_release_velocity": [
+    -0.007186238343125423,
+    0.5930554752187204,
+    2.300272896990258
+   ],
+   "predicted_release_time": 4.1109999999997076
+  },
+  {
+   "time": 3.94,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    0.0114,
+    -0.013,
+    0.0205
+   ],
+   "velocity": [
+    0.016,
+    -0.01,
+    0.017
+   ]
+  },
+  {
+   "time": 4.011,
+   "kind": "touch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 11,
+   "contact_distance": -0.00010988556460123089,
+   "contact_body": "lh_palm",
+   "palm_side": 0.024197776379207895,
+   "tangent_offset": 0.022387057315236544
+  },
+  {
+   "time": 4.011,
+   "kind": "carry",
+   "side": "left",
+   "ball": 1,
+   "next_throw": 4.26
+  },
+  {
+   "time": 4.111,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 13,
+   "separation_time": 4.0989999999997035,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.31903887991877394,
+    -0.09245162217717767,
+    0.9951198874401652
+   ],
+   "velocity": [
+    -0.007186238343125423,
+    0.5930554752187204,
+    2.300272896990258
+   ]
+  },
+  {
+   "time": 4.111,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    0.025,
+    -0.015,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 4.580000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.019452499339453803,
+    "contact_time": 4.29899999999977
+   }
+  },
+  {
+   "time": 4.111,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 4.31,
+   "point": [
+    0.289,
+    -0.225,
+    0.86
+   ]
+  },
+  {
+   "time": 4.187,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 11,
+   "palm_touch_time": 4.010999999999674,
+   "contact_settle_time": 0.17600000000005878,
+   "cushion_depth": 0.07965259485459375,
+   "palm_drop_at_settle": 0.07121871104081379,
+   "incoming_ball_speed": 1.958179095547177,
+   "touch_palm_vertical_velocity": -1.727376943942635,
+   "initial_relative_speed": 0.3603170397755559,
+   "settled_relative_speed": 0.11080281610137864,
+   "settled_ball_speed": 0.9627152318299478,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.00010988556460123089,
+   "contact_body": "lh_palm",
+   "palm_side": 0.024197776379207895,
+   "tangent_offset": 0.022387057315236544
+  },
+  {
+   "time": 4.26,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0016,
+    -0.0116
+   ],
+   "timing_error": 0.0018,
+   "score": 0.01225,
+   "objective_components": [
+    0.00162277456955634,
+    -0.011582672572306829,
+    0.003658112451283113,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.22299710353802504,
+    -0.672748341783431,
+    3.9536527614995833,
+    -0.09080429658825825
+   ],
+   "predicted_release_velocity": [
+    -0.07990182590137317,
+    -0.5813105260631495,
+    2.3643405929626082
+   ],
+   "predicted_release_time": 4.431999999999815
+  },
+  {
+   "time": 4.26,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0318,
+    -0.0016,
+    0.0139
+   ],
+   "velocity": [
+    0.128,
+    0.066,
+    0.169
+   ]
+  },
+  {
+   "time": 4.299,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 12,
+   "contact_distance": -0.0008986469991726781,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02130135300082734,
+   "tangent_offset": 0.006500715472923451
+  },
+  {
+   "time": 4.299,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 4.58
+  },
+  {
+   "time": 4.432,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 14,
+   "separation_time": 4.419999999999811,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.34315806531857235,
+    0.07059942956512907,
+    0.978687185915307
+   ],
+   "velocity": [
+    -0.07990182590137317,
+    -0.5813105260631495,
+    2.3643405929626082
+   ]
+  },
+  {
+   "time": 4.432,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010199288608214488,
+    0.0032194084810654904,
+    0.035780857195655366,
+    0.04996695980994667,
+    0.018579641030985295
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 4.9,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.041311246341657615,
+    "contact_time": 4.6109999999998745
+   }
+  },
+  {
+   "time": 4.432,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 4.644,
+   "point": [
+    0.231,
+    0.198,
+    0.86
+   ]
+  },
+  {
+   "time": 4.469,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 12,
+   "palm_touch_time": 4.29899999999977,
+   "contact_settle_time": 0.17000000000005677,
+   "cushion_depth": 0.08521429400553537,
+   "palm_drop_at_settle": 0.08507347166507861,
+   "incoming_ball_speed": 2.7234142293052024,
+   "touch_palm_vertical_velocity": -1.7267363543358258,
+   "initial_relative_speed": 1.0041902830582599,
+   "settled_relative_speed": 0.0105732201285104,
+   "settled_ball_speed": 1.1942737939643666,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0008986469991726781,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02130135300082734,
+   "tangent_offset": 0.006500715472923451
+  },
+  {
+   "time": 4.58,
+   "kind": "plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0114,
+    0.0069
+   ],
+   "timing_error": -0.0071,
+   "score": 0.01954,
+   "objective_components": [
+    0.011395575613885822,
+    0.006887885449080172,
+    -0.014298169823932616,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.4077307326430343,
+    0.6707351539047901,
+    4.102083817181233,
+    -0.1960782854695201
+   ],
+   "predicted_release_velocity": [
+    -0.018543841100074718,
+    0.6034506504101995,
+    2.2791306268283056
+   ],
+   "predicted_release_time": 4.752999999999922
+  },
+  {
+   "time": 4.58,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 2,
+   "offset": [
+    0.0115,
+    -0.0073,
+    0.0204
+   ],
+   "velocity": [
+    -0.001,
+    -0.05,
+    0.063
+   ]
+  },
+  {
+   "time": 4.611,
+   "kind": "touch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 13,
+   "contact_distance": -0.0006588961651135122,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023643867702510226,
+   "tangent_offset": 0.013685351010857936
+  },
+  {
+   "time": 4.611,
+   "kind": "carry",
+   "side": "left",
+   "ball": 0,
+   "next_throw": 4.9
+  },
+  {
+   "time": 4.753,
+   "kind": "release",
+   "side": "right",
+   "ball": 2,
+   "count": 15,
+   "separation_time": 4.740999999999918,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.320868713809106,
+    -0.08138543152343697,
+    0.998055298453596
+   ],
+   "velocity": [
+    -0.018543841100074718,
+    0.6034506504101995,
+    2.2791306268283056
+   ]
+  },
+  {
+   "time": 4.753,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 5.220000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.02406872077277922,
+    "contact_time": 4.938999999999984
+   }
+  },
+  {
+   "time": 4.753,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 1,
+   "impact": 4.951,
+   "point": [
+    0.302,
+    -0.231,
+    0.86
+   ]
+  },
+  {
+   "time": 4.795,
+   "kind": "catch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 13,
+   "palm_touch_time": 4.6109999999998745,
+   "contact_settle_time": 0.18400000000006145,
+   "cushion_depth": 0.0955035230464143,
+   "palm_drop_at_settle": 0.0955035230464143,
+   "incoming_ball_speed": 2.561571639892738,
+   "touch_palm_vertical_velocity": -1.3551934081057668,
+   "initial_relative_speed": 1.148666933650359,
+   "settled_relative_speed": 0.10845805639430126,
+   "settled_ball_speed": 1.4457240684112025,
+   "supporting_digits": [
+    "if",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0006588961651135122,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023643867702510226,
+   "tangent_offset": 0.013685351010857936
+  },
+  {
+   "time": 4.9,
+   "kind": "plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0139,
+    -0.0073
+   ],
+   "timing_error": 0.0035,
+   "score": 0.01718,
+   "objective_components": [
+    0.013928340970555786,
+    -0.0073040497332193255,
+    0.006922974987413566,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.33687120670151244,
+    -0.7294790834017515,
+    4.1566306056103235,
+    -0.015716903118224348
+   ],
+   "predicted_release_velocity": [
+    -0.08650254200522962,
+    -0.5976940006502719,
+    2.2872870620892827
+   ],
+   "predicted_release_time": 5.080000000000031
+  },
+  {
+   "time": 4.9,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 0,
+   "offset": [
+    0.0106,
+    0.0154,
+    0.0224
+   ],
+   "velocity": [
+    -0.013,
+    0.024,
+    -0.004
+   ]
+  },
+  {
+   "time": 4.939,
+   "kind": "touch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 14,
+   "contact_distance": -0.00021515090446420915,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022027885324068828,
+   "tangent_offset": 0.020433179510783286
+  },
+  {
+   "time": 4.939,
+   "kind": "carry",
+   "side": "right",
+   "ball": 1,
+   "next_throw": 5.22
+  },
+  {
+   "time": 5.054,
+   "kind": "catch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 14,
+   "palm_touch_time": 4.938999999999984,
+   "contact_settle_time": 0.1150000000000384,
+   "cushion_depth": 0.07692634532799492,
+   "palm_drop_at_settle": 0.07692634532799492,
+   "incoming_ball_speed": 2.674491761797804,
+   "touch_palm_vertical_velocity": -1.6058812489063397,
+   "initial_relative_speed": 1.0204090283889637,
+   "settled_relative_speed": 0.11285632641733517,
+   "settled_ball_speed": 0.46620737425113856,
+   "supporting_digits": [
+    "mf",
+    "th"
+   ],
+   "contact_distance": -0.00021515090446420915,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022027885324068828,
+   "tangent_offset": 0.020433179510783286
+  },
+  {
+   "time": 5.08,
+   "kind": "release",
+   "side": "left",
+   "ball": 0,
+   "count": 16,
+   "separation_time": 5.068000000000027,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.3590360851965893,
+    0.08437035291193364,
+    1.0233457030943283
+   ],
+   "velocity": [
+    -0.08650254200522962,
+    -0.5976940006502719,
+    2.2872870620892827
+   ]
+  },
+  {
+   "time": 5.08,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0191,
+    -0.0178,
+    -0.0029,
+    0.0,
+    0.0
+   ],
+   "score": 0.026269924506489115,
+   "parameters": [
+    -0.019768791093004362,
+    -0.01143848190387016,
+    0.03338120737541654,
+    -0.12,
+    -0.043104800584494556
+   ],
+   "diagnostics": {
+    "centered": false,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 5.54,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.031227609253159514,
+    "contact_time": 5.267000000000094
+   }
+  },
+  {
+   "time": 5.08,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 2,
+   "impact": 5.263,
+   "point": [
+    0.311,
+    0.227,
+    0.86
+   ]
+  },
+  {
+   "time": 5.22,
+   "kind": "plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    -0.0135,
+    -0.0107
+   ],
+   "timing_error": -0.0048,
+   "score": 0.01967,
+   "objective_components": [
+    -0.013462428409877603,
+    -0.010669744411829413,
+    -0.009577504239427714,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.37690585919959113,
+    0.7911384087197728,
+    3.7532986601033493,
+    -0.10891969451116888
+   ],
+   "predicted_release_velocity": [
+    -0.08026071483509949,
+    0.542196214426548,
+    2.2501589388217442
+   ],
+   "predicted_release_time": 5.404000000000139
+  },
+  {
+   "time": 5.22,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 1,
+   "offset": [
+    0.0141,
+    0.0008,
+    0.0199
+   ],
+   "velocity": [
+    -0.006,
+    -0.048,
+    0.066
+   ]
+  },
+  {
+   "time": 5.267,
+   "kind": "touch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 15,
+   "contact_distance": -0.00020765929884342116,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023604062918838535,
+   "tangent_offset": 0.012698053635026291
+  },
+  {
+   "time": 5.267,
+   "kind": "carry",
+   "side": "left",
+   "ball": 2,
+   "next_throw": 5.54
+  },
+  {
+   "time": 5.404,
+   "kind": "release",
+   "side": "right",
+   "ball": 1,
+   "count": 17,
+   "separation_time": 5.392000000000135,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.32772827320640724,
+    -0.06893094021364314,
+    1.0194003982621738
+   ],
+   "velocity": [
+    -0.08026071483509949,
+    0.542196214426548,
+    2.2501589388217442
+   ]
+  },
+  {
+   "time": 5.404,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 5.86,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.025089476951558748,
+    "contact_time": 5.597000000000204
+   }
+  },
+  {
+   "time": 5.404,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 0,
+   "impact": 5.601,
+   "point": [
+    0.314,
+    -0.227,
+    0.86
+   ]
+  },
+  {
+   "time": 5.419,
+   "kind": "catch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 15,
+   "palm_touch_time": 5.267000000000094,
+   "contact_settle_time": 0.15200000000005076,
+   "cushion_depth": 0.090536657573272,
+   "palm_drop_at_settle": 0.090536657573272,
+   "incoming_ball_speed": 2.0799388456322654,
+   "touch_palm_vertical_velocity": -1.7133970095944346,
+   "initial_relative_speed": 0.5640499390266815,
+   "settled_relative_speed": 0.0340574878925192,
+   "settled_ball_speed": 0.8882070023210965,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.00020765929884342116,
+   "contact_body": "lh_palm",
+   "palm_side": 0.023604062918838535,
+   "tangent_offset": 0.012698053635026291
+  },
+  {
+   "time": 5.54,
+   "kind": "plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    -0.0028,
+    -0.016
+   ],
+   "timing_error": 0.002,
+   "score": 0.01676,
+   "objective_components": [
+    -0.002847636427670941,
+    -0.016035853533051564,
+    0.003947205642820251,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.486650394744355,
+    -0.7642322384673687,
+    3.7617502294100698,
+    -0.0009447617011323559
+   ],
+   "predicted_release_velocity": [
+    -0.07061614294307281,
+    -0.5705559414778638,
+    2.3612315907821757
+   ],
+   "predicted_release_time": 5.7100000000002415
+  },
+  {
+   "time": 5.54,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 2,
+   "offset": [
+    0.0231,
+    -0.0179,
+    0.0191
+   ],
+   "velocity": [
+    0.04,
+    0.049,
+    0.126
+   ]
+  },
+  {
+   "time": 5.597,
+   "kind": "touch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 16,
+   "contact_distance": -0.0005282477266932983,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02167175227330679,
+   "tangent_offset": 0.01613872966858997
+  },
+  {
+   "time": 5.597,
+   "kind": "carry",
+   "side": "right",
+   "ball": 0,
+   "next_throw": 5.86
+  },
+  {
+   "time": 5.71,
+   "kind": "release",
+   "side": "left",
+   "ball": 2,
+   "count": 18,
+   "separation_time": 5.6980000000002375,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.33387089383579005,
+    0.06063817496835265,
+    0.980699248775687
+   ],
+   "velocity": [
+    -0.07061614294307281,
+    -0.5705559414778638,
+    2.3612315907821757
+   ]
+  },
+  {
+   "time": 5.71,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    0.012885353217430019,
+    0.012801655972128012,
+    0.034868904262720865,
+    -0.008843601775957598,
+    0.047387732052267706
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 6.18,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.029016818610059423,
+    "contact_time": 5.888000000000301
+   }
+  },
+  {
+   "time": 5.71,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 1,
+   "impact": 5.917,
+   "point": [
+    0.287,
+    0.209,
+    0.86
+   ]
+  },
+  {
+   "time": 5.773,
+   "kind": "catch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 16,
+   "palm_touch_time": 5.597000000000204,
+   "contact_settle_time": 0.17600000000005878,
+   "cushion_depth": 0.0846096139968211,
+   "palm_drop_at_settle": 0.07836285819845379,
+   "incoming_ball_speed": 2.8492220060400024,
+   "touch_palm_vertical_velocity": -1.6882431605557868,
+   "initial_relative_speed": 1.1175634478362442,
+   "settled_relative_speed": 0.04960969372677181,
+   "settled_ball_speed": 1.4848490713833304,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0005282477266932983,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02167175227330679,
+   "tangent_offset": 0.01613872966858997
+  },
+  {
+   "time": 5.86,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    -0.0045,
+    0.0014
+   ],
+   "timing_error": -0.0051,
+   "score": 0.01126,
+   "objective_components": [
+    -0.004522439289398106,
+    0.0014169178519617132,
+    -0.010215677973827386,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5366191012947426,
+    0.6591510148864799,
+    3.110089826087077,
+    0.019383374441731403
+   ],
+   "predicted_release_velocity": [
+    -0.04051230096206892,
+    0.5865589577923012,
+    2.3332314362380284
+   ],
+   "predicted_release_time": 6.032000000000349
+  },
+  {
+   "time": 5.86,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    0.013,
+    -0.0064,
+    0.0202
+   ],
+   "velocity": [
+    0.047,
+    -0.066,
+    0.104
+   ]
+  },
+  {
+   "time": 5.888,
+   "kind": "touch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 17,
+   "contact_distance": -0.001016486943338779,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021183513056661177,
+   "tangent_offset": 0.009805299489333476
+  },
+  {
+   "time": 5.888,
+   "kind": "carry",
+   "side": "left",
+   "ball": 1,
+   "next_throw": 6.18
+  },
+  {
+   "time": 6.032,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 19,
+   "separation_time": 6.020000000000345,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.3162560022986498,
+    -0.07942457357171295,
+    0.9759051856288441
+   ],
+   "velocity": [
+    -0.04051230096206892,
+    0.5865589577923012,
+    2.3332314362380284
+   ]
+  },
+  {
+   "time": 6.032,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 6.5,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.025631538710807915,
+    "contact_time": 6.227000000000414
+   }
+  },
+  {
+   "time": 6.032,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 6.229,
+   "point": [
+    0.297,
+    -0.236,
+    0.86
+   ]
+  },
+  {
+   "time": 6.085,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 17,
+   "palm_touch_time": 5.888000000000301,
+   "contact_settle_time": 0.1970000000000658,
+   "cushion_depth": 0.10107908074414418,
+   "palm_drop_at_settle": 0.10107908074414418,
+   "incoming_ball_speed": 2.557308802838908,
+   "touch_palm_vertical_velocity": -1.41911216332764,
+   "initial_relative_speed": 1.1068265795969785,
+   "settled_relative_speed": 0.018001048207977377,
+   "settled_ball_speed": 0.9102036630655408,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.001016486943338779,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021183513056661177,
+   "tangent_offset": 0.009805299489333476
+  },
+  {
+   "time": 6.18,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0135,
+    0.0044
+   ],
+   "timing_error": -0.0163,
+   "score": 0.03564,
+   "objective_components": [
+    0.013496817540281203,
+    0.004381702701486773,
+    -0.03269308911975011,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.20525918917834768,
+    -1.1307086112202975,
+    3.7025381947402094,
+    0.02064574781554747
+   ],
+   "predicted_release_velocity": [
+    -0.046504037029320065,
+    -0.5656012500698372,
+    2.2059764264232564
+   ],
+   "predicted_release_time": 6.356000000000457
+  },
+  {
+   "time": 6.185,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    -0.0164,
+    -0.017
+   ],
+   "timing_error": -0.0083,
+   "score": 0.02891,
+   "objective_components": [
+    -0.016447711865524184,
+    -0.01703575615893707,
+    -0.01658505264984389,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.20825918917834768,
+    -1.1307086112202975,
+    3.7025381947402094,
+    -0.05135425218445253
+   ],
+   "predicted_release_velocity": [
+    -0.0994375059121533,
+    -0.5980745974228533,
+    2.2471734939715597
+   ],
+   "predicted_release_time": 6.362000000000459
+  },
+  {
+   "time": 6.19,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    -0.0038,
+    -0.0103
+   ],
+   "timing_error": -0.0071,
+   "score": 0.018,
+   "objective_components": [
+    -0.0037532447697063986,
+    -0.01029146376800752,
+    -0.014284316075312553,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.20484192316057642,
+    -1.1471572069452223,
+    3.973435810764129,
+    -0.05135425218445253
+   ],
+   "predicted_release_velocity": [
+    -0.07610649807430173,
+    -0.5804293396922624,
+    2.244116995044503
+   ],
+   "predicted_release_time": 6.367000000000461
+  },
+  {
+   "time": 6.19,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0035,
+    -0.0033,
+    0.0223
+   ],
+   "velocity": [
+    -0.016,
+    0.022,
+    0.02
+   ]
+  },
+  {
+   "time": 6.227,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 18,
+   "contact_distance": -0.0006751389115172285,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02152486108848279,
+   "tangent_offset": 0.017314082751860645
+  },
+  {
+   "time": 6.227,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 6.5
+  },
+  {
+   "time": 6.367,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 20,
+   "separation_time": 6.355000000000457,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.33512635659584233,
+    0.06622541611880751,
+    1.0159612134766791
+   ],
+   "velocity": [
+    -0.07610649807430173,
+    -0.5804293396922624,
+    2.244116995044503
+   ]
+  },
+  {
+   "time": 6.367,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.03063666304516985,
+    0.03717240720498881,
+    0.04,
+    -0.038147054697852206,
+    0.08
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 6.8300000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.029275493457328987,
+    "contact_time": 6.548000000000521
+   }
+  },
+  {
+   "time": 6.367,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 6.544,
+   "point": [
+    0.296,
+    0.221,
+    0.86
+   ]
+  },
+  {
+   "time": 6.386,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 18,
+   "palm_touch_time": 6.227000000000414,
+   "contact_settle_time": 0.1590000000000531,
+   "cushion_depth": 0.08123881331554339,
+   "palm_drop_at_settle": 0.07890127615915365,
+   "incoming_ball_speed": 2.7708372723501764,
+   "touch_palm_vertical_velocity": -1.6260720853290085,
+   "initial_relative_speed": 1.1073395620329292,
+   "settled_relative_speed": 0.05807630268912863,
+   "settled_ball_speed": 1.4626634406340493,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0006751389115172285,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02152486108848279,
+   "tangent_offset": 0.017314082751860645
+  },
+  {
+   "time": 6.5,
+   "kind": "plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0114,
+    0.0043
+   ],
+   "timing_error": 0.0001,
+   "score": 0.01219,
+   "objective_components": [
+    0.011398722132339223,
+    0.004329145284780095,
+    0.00013467512187625985,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.4153048349306547,
+    0.6926533358696674,
+    3.2874653160377525,
+    -0.20820954238635475
+   ],
+   "predicted_release_velocity": [
+    -0.04008201080191466,
+    0.5749879966917266,
+    2.352414938747495
+   ],
+   "predicted_release_time": 6.6740000000005635
+  },
+  {
+   "time": 6.5,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 2,
+   "offset": [
+    0.0166,
+    -0.0016,
+    0.0194
+   ],
+   "velocity": [
+    0.027,
+    -0.066,
+    0.096
+   ]
+  },
+  {
+   "time": 6.548,
+   "kind": "touch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 19,
+   "contact_distance": -6.0514275420038566e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02411562080371388,
+   "tangent_offset": 0.015892277086685423
+  },
+  {
+   "time": 6.548,
+   "kind": "carry",
+   "side": "left",
+   "ball": 0,
+   "next_throw": 6.83
+  },
+  {
+   "time": 6.674,
+   "kind": "release",
+   "side": "right",
+   "ball": 2,
+   "count": 21,
+   "separation_time": 6.6620000000005595,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.33216390275257573,
+    -0.07355335529079791,
+    0.9800620792883816
+   ],
+   "velocity": [
+    -0.04008201080191466,
+    0.5749879966917266,
+    2.352414938747495
+   ]
+  },
+  {
+   "time": 6.674,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    0.0017148649471516305,
+    -0.02661323728577174,
+    0.003942749131939573,
+    -0.03413233918133757,
+    -0.047711059446132076
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 7.14,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.033533605820326676,
+    "contact_time": 6.876000000000631
+   }
+  },
+  {
+   "time": 6.674,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 1,
+   "impact": 6.877,
+   "point": [
+    0.296,
+    -0.23,
+    0.86
+   ]
+  },
+  {
+   "time": 6.804,
+   "kind": "catch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 19,
+   "palm_touch_time": 6.548000000000521,
+   "contact_settle_time": 0.2560000000000855,
+   "cushion_depth": 0.0924996267923609,
+   "palm_drop_at_settle": 0.09248722171836876,
+   "incoming_ball_speed": 2.206986130156692,
+   "touch_palm_vertical_velocity": -1.6102828297589384,
+   "initial_relative_speed": 0.47106502784092835,
+   "settled_relative_speed": 0.026332500624039988,
+   "settled_ball_speed": 0.06260810452086468,
+   "supporting_digits": [
+    "if",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -6.0514275420038566e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02411562080371388,
+   "tangent_offset": 0.015892277086685423
+  },
+  {
+   "time": 6.83,
+   "kind": "plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0085,
+    -0.0097
+   ],
+   "timing_error": -0.0001,
+   "score": 0.01293,
+   "objective_components": [
+    0.008515965530450198,
+    -0.009734147136118865,
+    -0.00012848605407134173,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.1532962147979359,
+    -0.8214539448831009,
+    3.8029586771460426,
+    -0.16662972491648675
+   ],
+   "predicted_release_velocity": [
+    -0.05347987717530618,
+    -0.5918464762377873,
+    2.2769570072814616
+   ],
+   "predicted_release_time": 7.009000000000675
+  },
+  {
+   "time": 6.83,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 0,
+   "offset": [
+    -0.0022,
+    0.0086,
+    0.0228
+   ],
+   "velocity": [
+    -0.008,
+    0.045,
+    0.029
+   ]
+  },
+  {
+   "time": 6.876,
+   "kind": "touch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 20,
+   "contact_distance": -4.6308689600274566e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022153691310399747,
+   "tangent_offset": 0.014097795250447088
+  },
+  {
+   "time": 6.876,
+   "kind": "carry",
+   "side": "right",
+   "ball": 1,
+   "next_throw": 7.14
+  },
+  {
+   "time": 7.009,
+   "kind": "release",
+   "side": "left",
+   "ball": 0,
+   "count": 22,
+   "separation_time": 6.997000000000671,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.33621510619806333,
+    0.07680430554587866,
+    1.0187853330011976
+   ],
+   "velocity": [
+    -0.05347987717530618,
+    -0.5918464762377873,
+    2.2769570072814616
+   ]
+  },
+  {
+   "time": 7.009,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 7.470000000000399,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.020389923025248922,
+    "contact_time": 7.169000000000729
+   }
+  },
+  {
+   "time": 7.009,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 2,
+   "impact": 7.191,
+   "point": [
+    0.311,
+    0.224,
+    0.86
+   ]
+  },
+  {
+   "time": 7.044,
+   "kind": "catch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 20,
+   "palm_touch_time": 6.876000000000631,
+   "contact_settle_time": 0.1680000000000561,
+   "cushion_depth": 0.09124923896115644,
+   "palm_drop_at_settle": 0.08876591595036942,
+   "incoming_ball_speed": 2.810808180684124,
+   "touch_palm_vertical_velocity": -1.6686588371220938,
+   "initial_relative_speed": 1.1198386957867357,
+   "settled_relative_speed": 0.04951164040846736,
+   "settled_ball_speed": 1.4464412470635535,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -4.6308689600274566e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022153691310399747,
+   "tangent_offset": 0.014097795250447088
+  },
+  {
+   "time": 7.14,
+   "kind": "plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0072,
+    0.0085
+   ],
+   "timing_error": -0.0009,
+   "score": 0.01131,
+   "objective_components": [
+    0.007215445552963384,
+    0.00850757890762771,
+    -0.0018635399442143985,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.0002449167203874558,
+    0.6533489919651262,
+    4.238970628879772,
+    -0.04342087934329046
+   ],
+   "predicted_release_velocity": [
+    -0.021430330692888435,
+    0.5765552195004797,
+    2.3011723740072667
+   ],
+   "predicted_release_time": 7.3180000000007785
+  },
+  {
+   "time": 7.14,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 1,
+   "offset": [
+    0.0065,
+    -0.0052,
+    0.0211
+   ],
+   "velocity": [
+    0.139,
+    -0.112,
+    0.183
+   ]
+  },
+  {
+   "time": 7.169,
+   "kind": "touch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 21,
+   "contact_distance": -0.0003775745750543222,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02287596335116301,
+   "tangent_offset": 0.010654978124856917
+  },
+  {
+   "time": 7.169,
+   "kind": "carry",
+   "side": "left",
+   "ball": 2,
+   "next_throw": 7.47
+  },
+  {
+   "time": 7.318,
+   "kind": "release",
+   "side": "right",
+   "ball": 1,
+   "count": 23,
+   "separation_time": 7.3060000000007745,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.31829638871324756,
+    -0.06961080795282629,
+    1.0038354884259597
+   ],
+   "velocity": [
+    -0.021430330692888435,
+    0.5765552195004797,
+    2.3011723740072667
+   ]
+  },
+  {
+   "time": 7.318,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 7.779999999999999,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.024396405605556865,
+    "contact_time": 7.523000000000847
+   }
+  },
+  {
+   "time": 7.318,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 0,
+   "impact": 7.526,
+   "point": [
+    0.309,
+    -0.229,
+    0.86
+   ]
+  },
+  {
+   "time": 7.408,
+   "kind": "catch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 21,
+   "palm_touch_time": 7.169000000000729,
+   "contact_settle_time": 0.23900000000007982,
+   "cushion_depth": 0.1027648428541933,
+   "palm_drop_at_settle": 0.1027648428541933,
+   "incoming_ball_speed": 2.5690281366404126,
+   "touch_palm_vertical_velocity": -1.570349713956733,
+   "initial_relative_speed": 0.9785302222504153,
+   "settled_relative_speed": 0.026870562674957597,
+   "settled_ball_speed": 0.4615080663964867,
+   "supporting_digits": [
+    "if",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0003775745750543222,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02287596335116301,
+   "tangent_offset": 0.010654978124856917
+  },
+  {
+   "time": 7.47,
+   "kind": "plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0124,
+    0.0036
+   ],
+   "timing_error": -0.0068,
+   "score": 0.01871,
+   "objective_components": [
+    0.012387661278429496,
+    0.003627408588800951,
+    -0.013549861870433055,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.18835303876305476,
+    -0.6894251857407752,
+    3.600571342939036,
+    -0.10662972491648677
+   ],
+   "predicted_release_velocity": [
+    -0.04444737870251134,
+    -0.5921153279841844,
+    2.258544561445159
+   ],
+   "predicted_release_time": 7.646000000000888
+  },
+  {
+   "time": 7.47,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 2,
+   "offset": [
+    -0.0003,
+    0.0134,
+    0.0222
+   ],
+   "velocity": [
+    -0.002,
+    0.043,
+    0.063
+   ]
+  },
+  {
+   "time": 7.523,
+   "kind": "touch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 22,
+   "contact_distance": -0.0005479869913418145,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02165201300865819,
+   "tangent_offset": 0.0144965300517244
+  },
+  {
+   "time": 7.523,
+   "kind": "carry",
+   "side": "right",
+   "ball": 0,
+   "next_throw": 7.78
+  },
+  {
+   "time": 7.646,
+   "kind": "release",
+   "side": "left",
+   "ball": 2,
+   "count": 24,
+   "separation_time": 7.634000000000884,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.33511027552536926,
+    0.08633160803183018,
+    1.0096024050229322
+   ],
+   "velocity": [
+    -0.04444737870251134,
+    -0.5921153279841844,
+    2.258544561445159
+   ]
+  },
+  {
+   "time": 7.646,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.008135548660898932,
+    0.008237520134572528,
+    0.01861686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 8.1100000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.01953790630003455,
+    "contact_time": 7.8150000000009445
+   }
+  },
+  {
+   "time": 7.646,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 1,
+   "impact": 7.834,
+   "point": [
+    0.307,
+    0.228,
+    0.86
+   ]
+  },
+  {
+   "time": 7.695,
+   "kind": "catch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 22,
+   "palm_touch_time": 7.523000000000847,
+   "contact_settle_time": 0.17200000000005744,
+   "cushion_depth": 0.08517011735626134,
+   "palm_drop_at_settle": 0.08083614851224952,
+   "incoming_ball_speed": 2.828512938827527,
+   "touch_palm_vertical_velocity": -1.6583974829251045,
+   "initial_relative_speed": 1.121157146976433,
+   "settled_relative_speed": 0.048410637563373216,
+   "settled_ball_speed": 1.564920907954888,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0005479869913418145,
+   "contact_body": "rh_palm",
+   "palm_side": 0.02165201300865819,
+   "tangent_offset": 0.0144965300517244
+  },
+  {
+   "time": 7.78,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    -0.0087,
+    -0.0014
+   ],
+   "timing_error": 0.0031,
+   "score": 0.01072,
+   "objective_components": [
+    -0.008699499246601128,
+    -0.0013573436718455067,
+    0.00610664921536852,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.4746466419874087,
+    0.62874400535317,
+    3.2347963611843817,
+    -0.09297246058316257
+   ],
+   "predicted_release_velocity": [
+    -0.05190699843703812,
+    0.564496787786551,
+    2.3770920018040944
+   ],
+   "predicted_release_time": 7.953000000000991
+  },
+  {
+   "time": 7.78,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    0.0151,
+    -0.0069,
+    0.0198
+   ],
+   "velocity": [
+    0.083,
+    -0.064,
+    0.128
+   ]
+  },
+  {
+   "time": 7.815,
+   "kind": "touch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 23,
+   "contact_distance": -0.0002261629149713229,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02329742566065472,
+   "tangent_offset": 0.00773329426867168
+  },
+  {
+   "time": 7.815,
+   "kind": "carry",
+   "side": "left",
+   "ball": 1,
+   "next_throw": 8.11
+  },
+  {
+   "time": 7.953,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 25,
+   "separation_time": 7.941000000000987,
+   "confirmation_delay": 0.012000000000004007,
+   "position": [
+    0.31834681485942323,
+    -0.07549027167838408,
+    0.9753989711121859
+   ],
+   "velocity": [
+    -0.05190699843703812,
+    0.564496787786551,
+    2.3770920018040944
+   ]
+  },
+  {
+   "time": 7.953,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 8.42,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf"
+    ],
+    "stable_age_s": 0.02100000000000001,
+    "settled_relative_speed": 0.01996904406998488,
+    "contact_time": 8.151000000000922
+   }
+  },
+  {
+   "time": 7.953,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 8.157,
+   "point": [
+    0.312,
+    -0.216,
+    0.86
+   ]
+  },
+  {
+   "time": 8.068,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 23,
+   "palm_touch_time": 7.8150000000009445,
+   "contact_settle_time": 0.2530000000000232,
+   "cushion_depth": 0.09767475037916562,
+   "palm_drop_at_settle": 0.09760663414413917,
+   "incoming_ball_speed": 2.638256681394725,
+   "touch_palm_vertical_velocity": -1.558879878161449,
+   "initial_relative_speed": 1.0241403929417754,
+   "settled_relative_speed": 0.034038637651937376,
+   "settled_ball_speed": 0.18968056511270498,
+   "supporting_digits": [
+    "if",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0002261629149713229,
+   "contact_body": "lh_palm",
+   "palm_side": 0.02329742566065472,
+   "tangent_offset": 0.00773329426867168
+  },
+  {
+   "time": 8.11,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    -0.005,
+    0.0092
+   ],
+   "timing_error": -0.0002,
+   "score": 0.01052,
+   "objective_components": [
+    -0.005011604434773609,
+    0.00923637055140783,
+    -0.00044985133795250043,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.16455160057841023,
+    -0.7019762645403556,
+    3.7486631962681423,
+    -0.0700193875335212
+   ],
+   "predicted_release_velocity": [
+    -0.0727372090982758,
+    -0.5715361047507311,
+    2.272221931861772
+   ],
+   "predicted_release_time": 8.289000000000845
+  },
+  {
+   "time": 8.11,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    -0.0027,
+    0.0112,
+    0.0227
+   ],
+   "velocity": [
+    0.008,
+    0.049,
+    0.064
+   ]
+  },
+  {
+   "time": 8.151,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 24,
+   "contact_distance": -0.00023690491501916766,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021963095084980896,
+   "tangent_offset": 0.017168154424023627
+  },
+  {
+   "time": 8.151,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 8.42
+  },
+  {
+   "time": 8.254,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 24,
+   "palm_touch_time": 8.151000000000922,
+   "contact_settle_time": 0.10299999999994291,
+   "cushion_depth": 0.07829931114356892,
+   "palm_drop_at_settle": 0.07829931114356892,
+   "incoming_ball_speed": 2.7601314643302954,
+   "touch_palm_vertical_velocity": -1.6252643765682318,
+   "initial_relative_speed": 1.0869321948675255,
+   "settled_relative_speed": 0.15492110940177922,
+   "settled_ball_speed": 0.2566242998273563,
+   "supporting_digits": [
+    "mf",
+    "th"
+   ],
+   "contact_distance": -0.00023690491501916766,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021963095084980896,
+   "tangent_offset": 0.017168154424023627
+  },
+  {
+   "time": 8.289,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 26,
+   "separation_time": 8.276000000000852,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3325771722036196,
+    0.08459198356683482,
+    1.017984364157012
+   ],
+   "velocity": [
+    -0.0727372090982758,
+    -0.5715361047507311,
+    2.272221931861772
+   ]
+  },
+  {
+   "time": 8.289,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 8.7500000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.020925506703282096,
+    "contact_time": 8.455000000000753
+   }
+  },
+  {
+   "time": 8.289,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 8.473,
+   "point": [
+    0.291,
+    0.218,
+    0.86
+   ]
+  },
+  {
+   "time": 8.42,
+   "kind": "plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    -0.0168,
+    0.001
+   ],
+   "timing_error": -0.0031,
+   "score": 0.01792,
+   "objective_components": [
+    -0.01677632361886472,
+    0.0009673974040147193,
+    -0.006228409361107801,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.48536308001773376,
+    0.8480861543051188,
+    3.4537291497304246,
+    -0.007219463112833231
+   ],
+   "predicted_release_velocity": [
+    -0.07073466945672777,
+    0.5674329784828194,
+    2.266918620805546
+   ],
+   "predicted_release_time": 8.603000000000671
+  },
+  {
+   "time": 8.42,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 2,
+   "offset": [
+    0.0132,
+    -0.0049,
+    0.0202
+   ],
+   "velocity": [
+    0.015,
+    -0.056,
+    0.078
+   ]
+  },
+  {
+   "time": 8.455,
+   "kind": "touch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 25,
+   "contact_distance": -0.000192878775479563,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022908007039907224,
+   "tangent_offset": 0.007753169788186582
+  },
+  {
+   "time": 8.455,
+   "kind": "carry",
+   "side": "left",
+   "ball": 0,
+   "next_throw": 8.75
+  },
+  {
+   "time": 8.603,
+   "kind": "release",
+   "side": "right",
+   "ball": 2,
+   "count": 27,
+   "separation_time": 8.590000000000678,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3195732182515645,
+    -0.07062835003411516,
+    1.012668306768444
+   ],
+   "velocity": [
+    -0.07073466945672777,
+    0.5674329784828194,
+    2.266918620805546
+   ]
+  },
+  {
+   "time": 8.603,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 9.06,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.019174851360505892,
+    "contact_time": 8.798000000000563
+   }
+  },
+  {
+   "time": 8.603,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 1,
+   "impact": 8.805,
+   "point": [
+    0.295,
+    -0.21,
+    0.86
+   ]
+  },
+  {
+   "time": 8.679,
+   "kind": "catch",
+   "side": "left",
+   "ball": 0,
+   "release_id": 25,
+   "palm_touch_time": 8.455000000000753,
+   "contact_settle_time": 0.22399999999987585,
+   "cushion_depth": 0.09428522942049278,
+   "palm_drop_at_settle": 0.09428522942049278,
+   "incoming_ball_speed": 2.6098371331368835,
+   "touch_palm_vertical_velocity": -1.5872292445742693,
+   "initial_relative_speed": 0.9690408398864918,
+   "settled_relative_speed": 0.036471053209825195,
+   "settled_ball_speed": 0.605534956791583,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.000192878775479563,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022908007039907224,
+   "tangent_offset": 0.007753169788186582
+  },
+  {
+   "time": 8.75,
+   "kind": "plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.001,
+    -0.0025
+   ],
+   "timing_error": -0.0061,
+   "score": 0.01252,
+   "objective_components": [
+    0.0010238379843013345,
+    -0.002533736773011136,
+    -0.01221956428762594,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.1471554524928799,
+    -0.8205703527054757,
+    4.256555097681002,
+    -0.012906504241258172
+   ],
+   "predicted_release_velocity": [
+    -0.05939045410711753,
+    -0.5728774863468863,
+    2.2384292964069816
+   ],
+   "predicted_release_time": 8.92900000000049
+  },
+  {
+   "time": 8.75,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 0,
+   "offset": [
+    0.0006,
+    -0.0006,
+    0.0222
+   ],
+   "velocity": [
+    0.005,
+    0.044,
+    0.067
+   ]
+  },
+  {
+   "time": 8.798,
+   "kind": "touch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 26,
+   "contact_distance": -0.0003413540296666323,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021858645970333317,
+   "tangent_offset": 0.020010606858404185
+  },
+  {
+   "time": 8.798,
+   "kind": "carry",
+   "side": "right",
+   "ball": 1,
+   "next_throw": 9.06
+  },
+  {
+   "time": 8.929,
+   "kind": "release",
+   "side": "left",
+   "ball": 0,
+   "count": 28,
+   "separation_time": 8.916000000000498,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3313658400216649,
+    0.07014376703165853,
+    1.0189566052120884
+   ],
+   "velocity": [
+    -0.05939045410711753,
+    -0.5728774863468863,
+    2.2384292964069816
+   ]
+  },
+  {
+   "time": 8.929,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 9.3900000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.02890295346144285,
+    "contact_time": 9.096000000000398
+   }
+  },
+  {
+   "time": 8.929,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 2,
+   "impact": 9.116,
+   "point": [
+    0.283,
+    0.221,
+    0.86
+   ]
+  },
+  {
+   "time": 8.971,
+   "kind": "catch",
+   "side": "right",
+   "ball": 1,
+   "release_id": 26,
+   "palm_touch_time": 8.798000000000563,
+   "contact_settle_time": 0.17299999999990412,
+   "cushion_depth": 0.07678466458282762,
+   "palm_drop_at_settle": 0.07426231623128932,
+   "incoming_ball_speed": 2.781394551670543,
+   "touch_palm_vertical_velocity": -1.5608611695539962,
+   "initial_relative_speed": 1.170507806362779,
+   "settled_relative_speed": 0.005755284282177747,
+   "settled_ball_speed": 1.3031525786338825,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.0003413540296666323,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021858645970333317,
+   "tangent_offset": 0.020010606858404185
+  },
+  {
+   "time": 9.06,
+   "kind": "plan",
+   "side": "right",
+   "ball": 1,
+   "error": [
+    0.0185,
+    -0.0067
+   ],
+   "timing_error": 0.0,
+   "score": 0.01966,
+   "objective_components": [
+    0.018468739102024345,
+    -0.006734668296414809,
+    8.032946397951157e-05,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.2983815280489902,
+    0.6719811382021312,
+    4.02657268224301,
+    -0.06615596382751424
+   ],
+   "predicted_release_velocity": [
+    -0.009230887805864191,
+    0.5728373614488416,
+    2.3025415148074715
+   ],
+   "predicted_release_time": 9.234000000000322
+  },
+  {
+   "time": 9.06,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 1,
+   "offset": [
+    0.0107,
+    -0.0071,
+    0.0205
+   ],
+   "velocity": [
+    0.03,
+    -0.042,
+    0.063
+   ]
+  },
+  {
+   "time": 9.096,
+   "kind": "touch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 27,
+   "contact_distance": -0.00020807940662487256,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021991920593375198,
+   "tangent_offset": 0.010662628685816258
+  },
+  {
+   "time": 9.096,
+   "kind": "carry",
+   "side": "left",
+   "ball": 2,
+   "next_throw": 9.39
+  },
+  {
+   "time": 9.234,
+   "kind": "release",
+   "side": "right",
+   "ball": 1,
+   "count": 29,
+   "separation_time": 9.221000000000329,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.32324147885379095,
+    -0.08291459202456634,
+    1.0030498150772573
+   ],
+   "velocity": [
+    -0.009230887805864191,
+    0.5728373614488416,
+    2.3025415148074715
+   ]
+  },
+  {
+   "time": 9.234,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.010812137887272946,
+    -0.030317567758162578,
+    0.010287028359458673,
+    0.013408161846281293,
+    -0.027921744633236188
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 9.700000000000001,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.022066218473960297,
+    "contact_time": 9.43400000000021
+   }
+  },
+  {
+   "time": 9.234,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 0,
+   "impact": 9.439,
+   "point": [
+    0.301,
+    -0.222,
+    0.86
+   ]
+  },
+  {
+   "time": 9.282,
+   "kind": "catch",
+   "side": "left",
+   "ball": 2,
+   "release_id": 27,
+   "palm_touch_time": 9.096000000000398,
+   "contact_settle_time": 0.18599999999989691,
+   "cushion_depth": 0.09510196431019613,
+   "palm_drop_at_settle": 0.09510196431019613,
+   "incoming_ball_speed": 2.229346348844155,
+   "touch_palm_vertical_velocity": -1.6531529069369937,
+   "initial_relative_speed": 0.8195911693506875,
+   "settled_relative_speed": 0.05652040902077994,
+   "settled_ball_speed": 0.9654859227343696,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -0.00020807940662487256,
+   "contact_body": "lh_palm",
+   "palm_side": 0.021991920593375198,
+   "tangent_offset": 0.010662628685816258
+  },
+  {
+   "time": 9.39,
+   "kind": "plan",
+   "side": "left",
+   "ball": 2,
+   "error": [
+    -0.0081,
+    0.0053
+   ],
+   "timing_error": -0.0012,
+   "score": 0.00999,
+   "objective_components": [
+    -0.008121322055540559,
+    0.005313736718417644,
+    -0.0023569973524408816,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    0.31417991825392466,
+    -0.9169292213492442,
+    4.7835745333758215,
+    -0.14886734321743048
+   ],
+   "predicted_release_velocity": [
+    -0.08669439209222808,
+    -0.5260888072725423,
+    2.2553012872469935
+   ],
+   "predicted_release_time": 9.570000000000135
+  },
+  {
+   "time": 9.39,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 2,
+   "offset": [
+    0.0038,
+    -0.0162,
+    0.022
+   ],
+   "velocity": [
+    -0.005,
+    0.044,
+    0.066
+   ]
+  },
+  {
+   "time": 9.434,
+   "kind": "touch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 28,
+   "contact_distance": -0.0006429757401605202,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021557024259839543,
+   "tangent_offset": 0.015271243321992848
+  },
+  {
+   "time": 9.434,
+   "kind": "carry",
+   "side": "right",
+   "ball": 0,
+   "next_throw": 9.7
+  },
+  {
+   "time": 9.548,
+   "kind": "catch",
+   "side": "right",
+   "ball": 0,
+   "release_id": 28,
+   "palm_touch_time": 9.43400000000021,
+   "contact_settle_time": 0.11399999999993682,
+   "cushion_depth": 0.08015622848944703,
+   "palm_drop_at_settle": 0.08015622848944703,
+   "incoming_ball_speed": 2.776024431842279,
+   "touch_palm_vertical_velocity": -1.6463386612795206,
+   "initial_relative_speed": 1.0835567824998706,
+   "settled_relative_speed": 0.11920644761267311,
+   "settled_ball_speed": 0.49174241613894504,
+   "supporting_digits": [
+    "if",
+    "th"
+   ],
+   "contact_distance": -0.0006429757401605202,
+   "contact_body": "rh_palm",
+   "palm_side": 0.021557024259839543,
+   "tangent_offset": 0.015271243321992848
+  },
+  {
+   "time": 9.57,
+   "kind": "release",
+   "side": "left",
+   "ball": 2,
+   "count": 30,
+   "separation_time": 9.557000000000142,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3365975094298255,
+    0.0566816551153807,
+    1.0240493871977607
+   ],
+   "velocity": [
+    -0.08669439209222808,
+    -0.5260888072725423,
+    2.2553012872469935
+   ]
+  },
+  {
+   "time": 9.57,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.028852042083675943,
+    0.04650516553746317,
+    0.03201052045110185,
+    0.022535085940310035,
+    0.03439142355940627
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.0300000000004,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.022000000000000013,
+    "settled_relative_speed": 0.013521200508468743,
+    "contact_time": 9.775000000000022
+   }
+  },
+  {
+   "time": 9.57,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 1,
+   "impact": 9.75,
+   "point": [
+    0.318,
+    0.213,
+    0.86
+   ]
+  },
+  {
+   "time": 9.7,
+   "kind": "plan",
+   "side": "right",
+   "ball": 0,
+   "error": [
+    0.0006,
+    0.0026
+   ],
+   "timing_error": -0.0072,
+   "score": 0.01459,
+   "objective_components": [
+    0.0006498481119728283,
+    0.0026282895414383722,
+    -0.014333941802516348,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.3447947304614361,
+    0.7985213721128861,
+    3.908253867437069,
+    -0.19542087934329044
+   ],
+   "predicted_release_velocity": [
+    -0.04168009786291565,
+    0.5870139443823527,
+    2.2665621912756944
+   ],
+   "predicted_release_time": 9.874999999999966
+  },
+  {
+   "time": 9.7,
+   "kind": "stroke",
+   "side": "right",
+   "ball": 0,
+   "offset": [
+    0.0125,
+    -0.0044,
+    0.0203
+   ],
+   "velocity": [
+    0.021,
+    -0.042,
+    0.068
+   ]
+  },
+  {
+   "time": 9.775,
+   "kind": "touch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 29,
+   "contact_distance": -5.674877457108318e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022143251225428935,
+   "tangent_offset": 0.01286766473070325
+  },
+  {
+   "time": 9.775,
+   "kind": "carry",
+   "side": "left",
+   "ball": 1,
+   "next_throw": 10.03
+  },
+  {
+   "time": 9.875,
+   "kind": "release",
+   "side": "right",
+   "ball": 0,
+   "count": 31,
+   "separation_time": 9.861999999999973,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3218997386585554,
+    -0.07665080784622107,
+    1.0016869970130435
+   ],
+   "velocity": [
+    -0.04168009786291565,
+    0.5870139443823527,
+    2.2665621912756944
+   ]
+  },
+  {
+   "time": 9.875,
+   "kind": "return_plan",
+   "side": "right",
+   "ball": 2,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.015685564275570316,
+    0.008091977084216027,
+    0.029377972562479957,
+    0.03089431341207624,
+    -0.016317086279135074
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.340000000000002,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "mf",
+     "rf",
+     "th"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.011551734765927794,
+    "contact_time": 10.068999999999859
+   }
+  },
+  {
+   "time": 9.875,
+   "kind": "prepare",
+   "side": "right",
+   "ball": 2,
+   "impact": 10.085,
+   "point": [
+    0.292,
+    -0.214,
+    0.86
+   ]
+  },
+  {
+   "time": 9.935,
+   "kind": "catch",
+   "side": "left",
+   "ball": 1,
+   "release_id": 29,
+   "palm_touch_time": 9.775000000000022,
+   "contact_settle_time": 0.15999999999991132,
+   "cushion_depth": 0.07548958564081487,
+   "palm_drop_at_settle": 0.06997539308647927,
+   "incoming_ball_speed": 2.3134467327089085,
+   "touch_palm_vertical_velocity": -1.7085375638663387,
+   "initial_relative_speed": 0.5059066017540237,
+   "settled_relative_speed": 0.074224951435563,
+   "settled_ball_speed": 1.6305316942171695,
+   "supporting_digits": [
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -5.674877457108318e-05,
+   "contact_body": "lh_palm",
+   "palm_side": 0.022143251225428935,
+   "tangent_offset": 0.01286766473070325
+  },
+  {
+   "time": 10.03,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0163,
+    0.0069
+   ],
+   "timing_error": 0.0111,
+   "score": 0.02848,
+   "objective_components": [
+    0.01630565538471601,
+    0.0069310485478071004,
+    0.022295791008358767,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.5615696222472308,
+    -0.7832085863832627,
+    3.5970742590357023,
+    0.014854604413737765
+   ],
+   "predicted_release_velocity": [
+    -0.013230002267494982,
+    -0.5430577864284432,
+    2.3975427966159755
+   ],
+   "predicted_release_time": 10.198999999999787
+  },
+  {
+   "time": 10.035,
+   "kind": "plan",
+   "side": "left",
+   "ball": 1,
+   "error": [
+    0.0082,
+    0.0028
+   ],
+   "timing_error": 0.0063,
+   "score": 0.01537,
+   "objective_components": [
+    0.008194732146252548,
+    0.002796251315371062,
+    0.012699625244290802,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "command": [
+    -0.6082805318748808,
+    -0.8143732204112102,
+    3.5144102080739774,
+    0.014854604413737765
+   ],
+   "predicted_release_velocity": [
+    -0.025429603660686455,
+    -0.5506133584169726,
+    2.366137075966756
+   ],
+   "predicted_release_time": 10.205999999999783
+  },
+  {
+   "time": 10.035,
+   "kind": "stroke",
+   "side": "left",
+   "ball": 1,
+   "offset": [
+    0.0145,
+    -0.0054,
+    0.0218
+   ],
+   "velocity": [
+    0.02,
+    0.006,
+    0.046
+   ]
+  },
+  {
+   "time": 10.069,
+   "kind": "touch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 30,
+   "contact_distance": -8.998462611657654e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022179546257886474,
+   "tangent_offset": 0.022930057973193935
+  },
+  {
+   "time": 10.069,
+   "kind": "carry",
+   "side": "right",
+   "ball": 2,
+   "next_throw": 10.34
+  },
+  {
+   "time": 10.206,
+   "kind": "release",
+   "side": "left",
+   "ball": 1,
+   "count": 32,
+   "separation_time": 10.19299999999979,
+   "confirmation_delay": 0.012999999999992795,
+   "position": [
+    0.3215033104571284,
+    0.07095964927014782,
+    0.9874377090073755
+   ],
+   "velocity": [
+    -0.025429603660686455,
+    -0.5506133584169726,
+    2.366137075966756
+   ]
+  },
+  {
+   "time": 10.206,
+   "kind": "return_plan",
+   "side": "left",
+   "ball": 0,
+   "error": [
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "score": 0.0,
+   "parameters": [
+    -0.009135548660898933,
+    0.008237520134572528,
+    0.01761686701523571,
+    -0.09340001880927315,
+    -0.03294164382510179
+   ],
+   "diagnostics": {
+    "centered": true,
+    "timely": true,
+    "captured": true,
+    "ready_for_next_throw": true,
+    "next_throw_time": 10.674999999999882,
+    "collision_free": true,
+    "first_forbidden_contact": null,
+    "supporting_digits": [
+     "if",
+     "rf"
+    ],
+    "stable_age_s": 0.02000000000000001,
+    "settled_relative_speed": 0.020659856783647346,
+    "contact_time": 10.37299999999969
+   }
+  },
+  {
+   "time": 10.206,
+   "kind": "prepare",
+   "side": "left",
+   "ball": 0,
+   "impact": 10.384,
+   "point": [
+    0.301,
+    0.222,
+    0.86
+   ]
+  },
+  {
+   "time": 10.21,
+   "kind": "catch",
+   "side": "right",
+   "ball": 2,
+   "release_id": 30,
+   "palm_touch_time": 10.068999999999859,
+   "contact_settle_time": 0.14099999999992185,
+   "cushion_depth": 0.07710653487824204,
+   "palm_drop_at_settle": 0.07710653487824204,
+   "incoming_ball_speed": 2.2386673594432707,
+   "touch_palm_vertical_velocity": -1.5698567579425557,
+   "initial_relative_speed": 0.9819998370647509,
+   "settled_relative_speed": 0.01817965946090342,
+   "settled_ball_speed": 0.7393725366321371,
+   "supporting_digits": [
+    "if",
+    "mf",
+    "rf",
+    "th"
+   ],
+   "contact_distance": -8.998462611657654e-05,
+   "contact_body": "rh_palm",
+   "palm_side": 0.022179546257886474,
+   "tangent_offset": 0.022930057973193935
+  }
+ ]
+}

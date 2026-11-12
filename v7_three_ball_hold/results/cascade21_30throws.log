@@ -1,0 +1,52 @@
+wall 787.8s
+success False
+error NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw
+throws 18
+catches 16
+validated_flights 16
+time 5.947000000000321
+ball_contacts 0
+drops 0
+min_height 0.7965817934013542
+min_surface_gap_m 0.0036742773230966086
+events:
+{'time': 0.3, 'kind': 'plan', 'side': 'right', 'ball': 2, 'error': [0.0, 0.0]}
+{'time': 0.3, 'kind': 'stroke', 'side': 'right', 'ball': 2}
+{'time': 0.473, 'kind': 'release', 'side': 'right', 'ball': 2, 'count': 1}
+{'time': 0.473, 'kind': 'carry', 'side': 'right', 'ball': 0}
+{'time': 0.62, 'kind': 'plan', 'side': 'left', 'ball': 1, 'error': [-0.0036, 0.0189], 'timing_error': 0.002, 'score': 0.02}
+{'time': 0.62, 'kind': 'stroke', 'side': 'left', 'ball': 1}
+{'time': 0.749, 'kind': 'carry', 'side': 'right', 'ball': 0}
+{'time': 0.799, 'kind': 'release', 'side': 'left', 'ball': 1, 'count': 2}
+{'time': 0.799, 'kind': 'return_plan', 'side': 'left', 'ball': 2, 'error': [0.0, 0.0, 0.0, 0.0, 0.0], 'score': 0.0}
+{'time': 0.799, 'kind': 'prepare', 'side': 'left', 'ball': 2}
+{'time': 0.94, 'kind': 'plan', 'side': 'right', 'ball': 0, 'error': [-0.0101, 0.0122], 'timing_error': -0.004, 'score': 0.018}
+{'time': 0.94, 'kind': 'stroke', 'side': 'right', 'ball': 0}
+{'time': 0.986, 'kind': 'touch', 'side': 'left', 'ball': 2}
+{'time': 0.986, 'kind': 'carry', 'side': 'left', 'ball': 2}
+{'time': 1.127, 'kind': 'release', 'side': 'right', 'ball': 0, 'count': 3}
+{'time': 1.127, 'kind': 'return_plan', 'side': 'right', 'ball': 1, 'error': [0.0, 0.0, 0.0, 0.0, 0.0], 'score': 0.0}
+{'time': 1.127, 'kind': 'prepare', 'side': 'right', 'ball': 1}
+{'time': 1.161, 'kind': 'catch', 'side': 'left', 'ball': 2}
+{'time': 1.26, 'kind': 'plan', 'side': 'left', 'ball': 2, 'error': [-0.0062, 0.0064], 'timing_error': -0.002, 'score': 0.01}
+{'time': 1.26, 'kind': 'stroke', 'side': 'left', 'ball': 2}
+{'time': 1.306, 'kind': 'touch', 'side': 'right', 'ball': 1}
+{'time': 1.306, 'kind': 'carry', 'side': 'right', 'ball': 1}
+{'time': 1.439, 'kind': 'release', 'side': 'left', 'ball': 2, 'count': 4}
+{'time': 1.439, 'kind': 'return_plan', 'side': 'left', 'ball': 0, 'error': [0.0, 0.0, 0.0, 0.0, 0.0], 'score': 0.0}
+{'time': 1.439, 'kind': 'prepare', 'side': 'left', 'ball': 0}
+{'time': 1.492, 'kind': 'catch', 'side': 'right', 'ball': 1}
+{'time': 1.58, 'kind': 'plan', 'side': 'right', 'ball': 1, 'error': [-0.0042, -0.0156], 'timing_error': 0.001, 'score': 0.016}
+{'time': 1.58, 'kind': 'stroke', 'side': 'right', 'ball': 1}
+{'time': 1.635, 'kind': 'touch', 'side': 'left', 'ball': 0}
+{'time': 1.635, 'kind': 'carry', 'side': 'left', 'ball': 0}
+{'time': 1.759, 'kind': 'release', 'side': 'right', 'ball': 1, 'count': 5}
+{'time': 1.759, 'kind': 'return_plan', 'side': 'right', 'ball': 2, 'error': [0.0, 0.0, 0.0, 0.0, 0.0], 'score': 0.0}
+{'time': 1.759, 'kind': 'prepare', 'side': 'right', 'ball': 2}
+{'time': 1.819, 'kind': 'catch', 'side': 'left', 'ball': 0}
+{'time': 1.9, 'kind': 'plan', 'side': 'left', 'ball': 0, 'error': [0.0138, -0.0081], 'timing_error': -0.004, 'score': 0.018}
+{'time': 1.9, 'kind': 'stroke', 'side': 'left', 'ball': 0}
+{'time': 1.944, 'kind': 'touch', 'side': 'right', 'ball': 2}
+{'time': 1.944, 'kind': 'carry', 'side': 'right', 'ball': 2}
+{'time': 2.073, 'kind': 'catch', 'side': 'right', 'ball': 2}
+{'time': 2.076, 'kind': 'release', 'side': 'left', 'ball': 0, 'count': 6}
