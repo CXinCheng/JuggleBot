@@ -1,0 +1,1097 @@
+{
+  "schema_version": 1,
+  "experiment": "v7 zero-perturbation observation baseline",
+  "requested_flights": 30,
+  "simulated_timeout_s": 30.0,
+  "source_sha256": {
+    "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
+    "src/jugglebot/humanoid/cascade.py": "3cc7a1ab3aee6d496e375401674a4c9664e790f8cea2e3bf20488efdf029adcb",
+    "src/jugglebot/humanoid/contact_control.py": "7a2f2eac399afa01b9d11b52b4f27d142034c5bc024dd9cee8343943b8e501e5",
+    "src/jugglebot/humanoid/kinematics.py": "d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15",
+    "src/jugglebot/humanoid/logging.py": "6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09",
+    "src/jugglebot/humanoid/metrics.py": "2b3fc325a4b81bc7d6eef10d18c3d8976533be57d69e380302476562b0c0d3af",
+    "src/jugglebot/humanoid/model.py": "2e723b461ea404026be03535a5aec6eab822911410edbc5bdb9ab2b1ec8fb156",
+    "src/jugglebot/humanoid/planning.py": "5b9a846c9ad60450846598c76e14fdda2357d41c4e7f5d09669f6eaec6d70c8c",
+    "src/jugglebot/humanoid/throwing.py": "e787456478c77f5e027d7bdc8f516530f7b7b9629dbbad3662ea543ce2187b26",
+    "src/jugglebot/robustness/__init__.py": "84b5af642034caf19ffa6d00c3c03f90d3e218aa757bc5f92b33f25395664281",
+    "src/jugglebot/robustness/controller.py": "ef8be8f66fd00467649e6ffecfa449ca1c972dc86bef8e9056d799cb549bb670",
+    "src/jugglebot/robustness/observation.py": "63c0e9ffe86969f86f526f4bf30a2690240f4f808a4ad2fab1bb1269902212be",
+    "v7_robust_control/juggle.py": "ba1820af45f5d441b9b321816e222157fc1bc4e0d44a6686b0e8d38f071a820d",
+    "v7_robust_control/verify_baselines.py": "41638379570a55454683943ca740932bd2bf5ed6fc82abc7a509a2963a39b68c"
+  },
+  "optimizer_inputs_sha256": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
+  "result": {
+    "success": true,
+    "error": null,
+    "requested_throws": 30,
+    "throws": 32,
+    "catches": 30,
+    "total_catches_with_initial": 31,
+    "releases_by_hand": {
+      "right": 16,
+      "left": 16
+    },
+    "catches_by_hand": {
+      "right": 15,
+      "left": 15
+    },
+    "completed_requested_by_throwing_hand": {
+      "right": 15,
+      "left": 15
+    },
+    "initial_airborne_catches": 1,
+    "counting": "global release IDs; catches exclude initial airborne ball unless explicitly noted",
+    "failure_event": null,
+    "flight_target_s": 0.53,
+    "conditions": {
+      "mujoco_version": "3.15.0",
+      "timestep_s": 0.001,
+      "gravity_m_s2": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "ball_count": 3,
+      "ball_diameter_m": 0.085,
+      "ball_mass_kg": 0.12,
+      "finger_position_gain": 3.0,
+      "finger_velocity_gain": 0.01,
+      "finger_force_limit_nm": [
+        -0.5,
+        0.5
+      ],
+      "hand_material_rgba": {
+        "rh_black": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.20000000298023224,
+          1.0
+        ],
+        "rh_white": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "lh_black": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.20000000298023224,
+          1.0
+        ],
+        "lh_white": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "soft_finger_links": false,
+      "observation": "Sampled position estimates for live reception; truth for contact, safety and rollouts",
+      "partial_prediction_noise_m": 0.0,
+      "observation_noise_seed": 0,
+      "source_positions_m": {
+        "right": [
+          0.33,
+          -0.14,
+          0.82
+        ],
+        "left": [
+          0.33,
+          0.14,
+          0.82
+        ]
+      },
+      "catch_positions_m": {
+        "right": [
+          0.3,
+          -0.22,
+          0.86
+        ],
+        "left": [
+          0.3,
+          0.22,
+          0.86
+        ]
+      },
+      "wrist_seat_offsets_m": {
+        "right": [
+          0.1350000000000002,
+          -1.8648277366750676e-17,
+          0.07000000000000009
+        ],
+        "left": [
+          0.13500000000000018,
+          2.42861286636753e-17,
+          0.07000000000000019
+        ]
+      },
+      "palm_mount_quaternions_wxyz": {
+        "right": [
+          0.0,
+          0.9990482215818577,
+          0.0,
+          0.043619387365336
+        ],
+        "left": [
+          0.0,
+          0.9990482215818577,
+          0.0,
+          0.043619387365336
+        ]
+      },
+      "initial_ball_states": [
+        {
+          "position_m": [
+            0.3299938699122762,
+            -0.1400007948188888,
+            0.8420123659181115
+          ],
+          "velocity_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position_m": [
+            0.32999386945398407,
+            0.14000079809505553,
+            0.8420123673850062
+          ],
+          "velocity_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "position_m": [
+            0.4576,
+            0.14960000000000004,
+            1.0241879999999999
+          ],
+          "velocity_m_s": [
+            -0.12,
+            -0.77,
+            2.058800000000001
+          ]
+        }
+      ],
+      "palm_seat_surfaces_m": {
+        "right": [
+          -0.046,
+          -0.036,
+          -0.034
+        ],
+        "left": [
+          -0.1218,
+          -0.0545,
+          -0.0078
+        ]
+      },
+      "throw_interval_s": 0.32,
+      "flight_target_s": 0.53,
+      "torso_stand_height_m": 0.75,
+      "planned_apex_limit_m": 1.29,
+      "scoop_acceleration_duration_s": 0.14,
+      "scoop_braking_duration_s": 0.1,
+      "post_release_braking_preview_s": 0.08,
+      "scoop_end_angle_rad": 0.7,
+      "throw_palm_back_tilt": 0.18,
+      "throw_lateral_palm_lean": 0.2,
+      "throw_command_fields": [
+        "vx",
+        "vy",
+        "vz",
+        "fore_aft_normal_bias",
+        "finger_release_lead_s"
+      ],
+      "default_finger_release_lead_s": 0.0,
+      "finger_release_lead_limit_s": 0.025,
+      "loaded_source_tilt_deg": 10.0,
+      "initial_hold_tilt_duration_s": 0.08,
+      "throw_ready_margin_s": 0.005,
+      "minimum_loaded_recovery_s": 0.24,
+      "elbow_lateral_posture_gain": 8.0,
+      "wrist_throw_lookahead_s": 0.02,
+      "waist_yaw_stiffness": 1800.0,
+      "digit_contact_memory_s": 0.004,
+      "capture_force_feedback_delay_s": 0.07,
+      "capture_relative_speed_ratio": 0.4,
+      "release_confirmation_s": 0.012,
+      "ball_observation": {
+        "mode": "sampled",
+        "frame": "world",
+        "clock": "simulation_seconds",
+        "sample_period_s": 0.016666666666666666,
+        "max_age_s": 0.05,
+        "position_step_s": 0.001,
+        "interval_clock": "integer_physics_ticks",
+        "velocity_convention": "semi_implicit_endpoint",
+        "estimator": "three_position_backward_difference",
+        "scope": "live reception prediction",
+        "rollout_input": "simulation_truth",
+        "contact_and_safety_input": "simulation_truth",
+        "reception_requires_acceleration": true
+      },
+      "reception_input_precision": {
+        "position_resolution_m": null,
+        "velocity_resolution_m_s": null
+      },
+      "additional_throw_guesses": {
+        "source": "recent_executed_same_hand_launches",
+        "max_guesses": 8,
+        "release_timing": "current_indexed_input",
+        "acceptance": "unchanged_full_physics_certificate"
+      },
+      "reception_forecast": {
+        "initial": "explicit_forecast_or_previous_command",
+        "retry": "explicit_forecast_or_indexed_execution_or_previous_command",
+        "max_retries": 1,
+        "attempted_retries": 1
+      },
+      "release_timing_search": {
+        "candidates": "half_indexed_lead_then_zero",
+        "motion": "unchanged_best_four_parameter_command",
+        "max_trials_per_plan": 2,
+        "attempted_trials": 0,
+        "accepted_trials": 0,
+        "acceptance": "unchanged_full_physics_objective_and_safety_limits"
+      },
+      "reception_tilt_search": {
+        "trigger": "receiver_wrist_pitch_limit_with_centered_timely_captured_ready_ball",
+        "default_amplitude_deg": 5.0,
+        "max_amplitude_deg": 7.5,
+        "max_trials_per_plan": 2,
+        "attempted_trials": 0,
+        "accepted_trials": 0,
+        "acceptance": "zero_error_full_physics_certificate_and_unchanged_safety_limits"
+      },
+      "reception_refinement": {
+        "trigger": "captured_ball_after_failed_indexed_forecast_retry",
+        "max_retries": 1,
+        "attempted_retries": 0,
+        "finite_difference": [
+          0.001,
+          0.001,
+          0.001,
+          0.006,
+          0.006
+        ],
+        "acceptance": "unchanged_reception_acceptance_and_safety_limits"
+      },
+      "early_recovery": {
+        "enabled": true,
+        "active": false,
+        "activation": "late_confirmed_catch_after_loaded_recovery",
+        "lateness_trigger_s": 0.035,
+        "intercept_window_s": [
+          0.025,
+          0.3
+        ],
+        "starts": 0,
+        "finger_control": "existing_release_curve_until_confirmation",
+        "flight_counting": "unchanged_contact_separation_confirmation"
+      }
+    },
+    "flight_time_range_s": [
+      0.4949999999999455,
+      0.5359999999999412
+    ],
+    "mean_flight_time_s": 0.5159999999999932,
+    "validated_flights": 30,
+    "guard": true,
+    "guard_throws": 2,
+    "time": 10.235999999999766,
+    "min_distance": 0.09503132560286917,
+    "min_surface_gap_m": 0.010031325602869165,
+    "min_height": 0.7881394001313426,
+    "ball_contacts": 0,
+    "drops": 0,
+    "airborne_physics_checks": 21291,
+    "style": {
+      "wrist_angle_p95_deg": 25.557922074198828,
+      "wrist_angle_rms_deg": 18.980157610000937,
+      "max_elbow_out_m": 0.07563693605333445,
+      "elbow_out_p95_m": 0.06845198909832936,
+      "wrist_pitch_p95_deg": 26.807260481600363,
+      "wrist_pitch_max_deg": 37.686204899145444,
+      "torso_range_deg": [
+        1.6924443957514728,
+        1.0775406958126084,
+        1.264278704970921
+      ]
+    },
+    "execution": {
+      "samples": 10236,
+      "sample_period_s": 0.001,
+      "scope": "live steps only; hinge joint actuators; excludes passive and constraint forces",
+      "near_limit_definition": "within 1% of configured actuator force range",
+      "hardware_limits_verified": false,
+      "actuators": [
+        {
+          "actuator": "waist_yaw_joint",
+          "joint": "waist_yaw_joint",
+          "peak_speed_rad_s": 0.770372506602006,
+          "peak_actuator_torque_nm": 31.642398631081853,
+          "rms_actuator_torque_nm": 10.609392661335653,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "waist_roll_joint",
+          "joint": "waist_roll_joint",
+          "peak_speed_rad_s": 0.23141262406146257,
+          "peak_actuator_torque_nm": 18.7710207139393,
+          "rms_actuator_torque_nm": 7.982279003632625,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "waist_pitch_joint",
+          "joint": "waist_pitch_joint",
+          "peak_speed_rad_s": 0.4580043628700762,
+          "peak_actuator_torque_nm": 43.082488311765374,
+          "rms_actuator_torque_nm": 15.938300102848505,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_shoulder_pitch_joint",
+          "joint": "left_shoulder_pitch_joint",
+          "peak_speed_rad_s": 7.628757502166222,
+          "peak_actuator_torque_nm": 25.000000000000114,
+          "rms_actuator_torque_nm": 12.37511342484933,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_shoulder_roll_joint",
+          "joint": "left_shoulder_roll_joint",
+          "peak_speed_rad_s": 2.0093974107850565,
+          "peak_actuator_torque_nm": 25.00000000000003,
+          "rms_actuator_torque_nm": 3.9248826952893103,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_shoulder_yaw_joint",
+          "joint": "left_shoulder_yaw_joint",
+          "peak_speed_rad_s": 4.0908839746934165,
+          "peak_actuator_torque_nm": 17.419333738756336,
+          "rms_actuator_torque_nm": 5.4220349232379474,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_elbow_joint",
+          "joint": "left_elbow_joint",
+          "peak_speed_rad_s": 14.994301257311834,
+          "peak_actuator_torque_nm": 25.000000000000114,
+          "rms_actuator_torque_nm": 10.963494764878655,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_wrist_roll_joint",
+          "joint": "left_wrist_roll_joint",
+          "peak_speed_rad_s": 3.9430799210543284,
+          "peak_actuator_torque_nm": 17.537773867568717,
+          "rms_actuator_torque_nm": 1.49340264248117,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_wrist_pitch_joint",
+          "joint": "left_wrist_pitch_joint",
+          "peak_speed_rad_s": 13.039940255439495,
+          "peak_actuator_torque_nm": 5.000000000000114,
+          "rms_actuator_torque_nm": 3.234227061436082,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "left_wrist_yaw_joint",
+          "joint": "left_wrist_yaw_joint",
+          "peak_speed_rad_s": 3.2902397230460108,
+          "peak_actuator_torque_nm": 5.000000000000114,
+          "rms_actuator_torque_nm": 2.4462777834141862,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_shoulder_pitch_joint",
+          "joint": "right_shoulder_pitch_joint",
+          "peak_speed_rad_s": 8.601789353088204,
+          "peak_actuator_torque_nm": 25.000000000000057,
+          "rms_actuator_torque_nm": 10.81587937993758,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_shoulder_roll_joint",
+          "joint": "right_shoulder_roll_joint",
+          "peak_speed_rad_s": 1.640671785325308,
+          "peak_actuator_torque_nm": 25.000000000000014,
+          "rms_actuator_torque_nm": 4.2047272067598565,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_shoulder_yaw_joint",
+          "joint": "right_shoulder_yaw_joint",
+          "peak_speed_rad_s": 4.964601602555819,
+          "peak_actuator_torque_nm": 15.326228922744235,
+          "rms_actuator_torque_nm": 5.970557667169086,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_elbow_joint",
+          "joint": "right_elbow_joint",
+          "peak_speed_rad_s": 14.722270328684193,
+          "peak_actuator_torque_nm": 25.000000000000227,
+          "rms_actuator_torque_nm": 11.399217695879909,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_wrist_roll_joint",
+          "joint": "right_wrist_roll_joint",
+          "peak_speed_rad_s": 3.4701276300857677,
+          "peak_actuator_torque_nm": 9.665172299453218,
+          "rms_actuator_torque_nm": 1.6872547394864776,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_wrist_pitch_joint",
+          "joint": "right_wrist_pitch_joint",
+          "peak_speed_rad_s": 13.23687197554619,
+          "peak_actuator_torque_nm": 5.000000000000114,
+          "rms_actuator_torque_nm": 3.2972199690051776,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "right_wrist_yaw_joint",
+          "joint": "right_wrist_yaw_joint",
+          "peak_speed_rad_s": 2.8223275117836732,
+          "peak_actuator_torque_nm": 5.000000000000114,
+          "rms_actuator_torque_nm": 2.4625133735139935,
+          "configured_torque_range_nm": null,
+          "near_force_limit_fraction": null
+        },
+        {
+          "actuator": "rh_if_mcp_act",
+          "joint": "rh_if_mcp",
+          "peak_speed_rad_s": 19.617781533084667,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.26586445548717264,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.12973817897616258
+        },
+        {
+          "actuator": "rh_if_rot_act",
+          "joint": "rh_if_rot",
+          "peak_speed_rad_s": 17.395592695620724,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.16868941817892424,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.057053536537710045
+        },
+        {
+          "actuator": "rh_if_pip_act",
+          "joint": "rh_if_pip",
+          "peak_speed_rad_s": 22.905845201734916,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.2038694670411864,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.08196561156701837
+        },
+        {
+          "actuator": "rh_if_dip_act",
+          "joint": "rh_if_dip",
+          "peak_speed_rad_s": 16.021598212112888,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.1328091350594064,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.008010941774130519
+        },
+        {
+          "actuator": "rh_mf_mcp_act",
+          "joint": "rh_mf_mcp",
+          "peak_speed_rad_s": 26.04460228374976,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.27267159154378756,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.17057444314185227
+        },
+        {
+          "actuator": "rh_mf_rot_act",
+          "joint": "rh_mf_rot",
+          "peak_speed_rad_s": 15.80378269221542,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.0989148728802915,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0011723329425556857
+        },
+        {
+          "actuator": "rh_mf_pip_act",
+          "joint": "rh_mf_pip",
+          "peak_speed_rad_s": 20.1356629871461,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.1738086309818749,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.04425556858147714
+        },
+        {
+          "actuator": "rh_mf_dip_act",
+          "joint": "rh_mf_dip",
+          "peak_speed_rad_s": 13.513201982361068,
+          "peak_actuator_torque_nm": 0.44374937759790467,
+          "rms_actuator_torque_nm": 0.1021179804736731,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0
+        },
+        {
+          "actuator": "rh_rf_mcp_act",
+          "joint": "rh_rf_mcp",
+          "peak_speed_rad_s": 17.755436934440493,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.23102110448465846,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.07473622508792498
+        },
+        {
+          "actuator": "rh_rf_rot_act",
+          "joint": "rh_rf_rot",
+          "peak_speed_rad_s": 18.23166145248166,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.17671805978138222,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.07424775302852676
+        },
+        {
+          "actuator": "rh_rf_pip_act",
+          "joint": "rh_rf_pip",
+          "peak_speed_rad_s": 22.95578652378469,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.23884119368606008,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1769245799140289
+        },
+        {
+          "actuator": "rh_rf_dip_act",
+          "joint": "rh_rf_dip",
+          "peak_speed_rad_s": 17.633670333667887,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.1639156168755525,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.05441578741695975
+        },
+        {
+          "actuator": "rh_th_cmc_act",
+          "joint": "rh_th_cmc",
+          "peak_speed_rad_s": 22.839162498535135,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.2742335615726777,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.19314185228604924
+        },
+        {
+          "actuator": "rh_th_axl_act",
+          "joint": "rh_th_axl",
+          "peak_speed_rad_s": 16.73323997171868,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.12072793467656803,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0048847205939820245
+        },
+        {
+          "actuator": "rh_th_mcp_act",
+          "joint": "rh_th_mcp",
+          "peak_speed_rad_s": 14.987804237082578,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.1310166768530206,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.009671746776084409
+        },
+        {
+          "actuator": "rh_th_ipl_act",
+          "joint": "rh_th_ipl",
+          "peak_speed_rad_s": 19.989838579272213,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.22271240379559468,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.17233294255568582
+        },
+        {
+          "actuator": "lh_if_mcp_act",
+          "joint": "lh_if_mcp",
+          "peak_speed_rad_s": 24.355010611786696,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.27817271937296384,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.14996092223524815
+        },
+        {
+          "actuator": "lh_if_rot_act",
+          "joint": "lh_if_rot",
+          "peak_speed_rad_s": 14.594786879671739,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.2460522661050575,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1942164908167253
+        },
+        {
+          "actuator": "lh_if_pip_act",
+          "joint": "lh_if_pip",
+          "peak_speed_rad_s": 22.63846252638629,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.21485976825159117,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.07620164126611957
+        },
+        {
+          "actuator": "lh_if_dip_act",
+          "joint": "lh_if_dip",
+          "peak_speed_rad_s": 15.856487856237703,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.13247912921059365,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0010746385306760454
+        },
+        {
+          "actuator": "lh_mf_mcp_act",
+          "joint": "lh_mf_mcp",
+          "peak_speed_rad_s": 22.438335682753728,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.27942588283570213,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1052168815943728
+        },
+        {
+          "actuator": "lh_mf_rot_act",
+          "joint": "lh_mf_rot",
+          "peak_speed_rad_s": 17.24208518729195,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.24939620506670865,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.13726064869089488
+        },
+        {
+          "actuator": "lh_mf_pip_act",
+          "joint": "lh_mf_pip",
+          "peak_speed_rad_s": 23.748707097810012,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.21475540713840674,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1354044548651817
+        },
+        {
+          "actuator": "lh_mf_dip_act",
+          "joint": "lh_mf_dip",
+          "peak_speed_rad_s": 18.911511238185707,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.15190239010111617,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.04249706916764361
+        },
+        {
+          "actuator": "lh_rf_mcp_act",
+          "joint": "lh_rf_mcp",
+          "peak_speed_rad_s": 24.58152375283418,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.2782563004819793,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1618796404845643
+        },
+        {
+          "actuator": "lh_rf_rot_act",
+          "joint": "lh_rf_rot",
+          "peak_speed_rad_s": 17.07250504752925,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.23692393761075928,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.17047674872997265
+        },
+        {
+          "actuator": "lh_rf_pip_act",
+          "joint": "lh_rf_pip",
+          "peak_speed_rad_s": 23.101775435587186,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.23359583083062954,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.1385306760453302
+        },
+        {
+          "actuator": "lh_rf_dip_act",
+          "joint": "lh_rf_dip",
+          "peak_speed_rad_s": 16.135176437228733,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.14112190260222574,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.003419304415787417
+        },
+        {
+          "actuator": "lh_th_cmc_act",
+          "joint": "lh_th_cmc",
+          "peak_speed_rad_s": 22.41905611168723,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.2743492822449599,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.18835482610394685
+        },
+        {
+          "actuator": "lh_th_axl_act",
+          "joint": "lh_th_axl",
+          "peak_speed_rad_s": 10.36111314935061,
+          "peak_actuator_torque_nm": 0.3562257600074304,
+          "rms_actuator_torque_nm": 0.08433206853818852,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0
+        },
+        {
+          "actuator": "lh_th_mcp_act",
+          "joint": "lh_th_mcp",
+          "peak_speed_rad_s": 14.433270771641807,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.11201392765649774,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.0016608050019538882
+        },
+        {
+          "actuator": "lh_th_ipl_act",
+          "joint": "lh_th_ipl",
+          "peak_speed_rad_s": 19.422274398970973,
+          "peak_actuator_torque_nm": 0.5,
+          "rms_actuator_torque_nm": 0.23613746483547454,
+          "configured_torque_range_nm": [
+            -0.5,
+            0.5
+          ],
+          "near_force_limit_fraction": 0.19558421258304026
+        }
+      ]
+    },
+    "grasp_assistance": false,
+    "grasp_constraints": 0,
+    "contact_only_checks": 30708,
+    "max_joint_limit_violation": 0.0,
+    "max_height": 1.28988970724727,
+    "max_palm_height": 1.0558601781574561,
+    "minimum_shoulder_above_elbow": 0.15712919525191593,
+    "maximum_self_penetration": 0.003289522286124281,
+    "min_upstroke": 0.1308892163398182,
+    "min_upstroke_vertical_ratio": 1.6952402056506488,
+    "min_throw_palm_up": 0.9310104519902889,
+    "min_throw_fingers_forward": 0.9333010310532626,
+    "palm_ranges": {
+      "right": {
+        "ymin": -0.2622409683852867,
+        "ymax": -0.03634550051430732,
+        "zmin": 0.7742075090322287,
+        "zmax": 1.040552262669065
+      },
+      "left": {
+        "ymin": 0.035295869788611905,
+        "ymax": 0.2506230035932113,
+        "zmin": 0.7711149541642408,
+        "zmax": 1.0558601781574561
+      }
+    },
+    "stroke_metrics": [
+      {
+        "side": "right",
+        "rise": 0.1720483274616348,
+        "sideways": 0.08471013958481688,
+        "vertical": 0.1720746221810706
+      },
+      {
+        "side": "left",
+        "rise": 0.17526888298021415,
+        "sideways": 0.07948171534429105,
+        "vertical": 0.17526888298021415
+      },
+      {
+        "side": "right",
+        "rise": 0.15092721983071666,
+        "sideways": 0.06303750315016093,
+        "vertical": 0.1536711711893476
+      },
+      {
+        "side": "left",
+        "rise": 0.13345228610067073,
+        "sideways": 0.07872175615929927,
+        "vertical": 0.1344693777351047
+      },
+      {
+        "side": "right",
+        "rise": 0.17014696483868585,
+        "sideways": 0.06116993875361508,
+        "vertical": 0.17014696483868585
+      },
+      {
+        "side": "left",
+        "rise": 0.16868921444531815,
+        "sideways": 0.07532151875922716,
+        "vertical": 0.16868921444531815
+      },
+      {
+        "side": "right",
+        "rise": 0.1308892163398182,
+        "sideways": 0.059214402204156996,
+        "vertical": 0.1308892163398182
+      },
+      {
+        "side": "left",
+        "rise": 0.13799085013721923,
+        "sideways": 0.05810287878940844,
+        "vertical": 0.13799085013721923
+      },
+      {
+        "side": "right",
+        "rise": 0.1309665936482638,
+        "sideways": 0.06175574001615511,
+        "vertical": 0.1309665936482638
+      },
+      {
+        "side": "left",
+        "rise": 0.18117586112211181,
+        "sideways": 0.08690985839568266,
+        "vertical": 0.18117586112211181
+      },
+      {
+        "side": "right",
+        "rise": 0.1756248255165086,
+        "sideways": 0.09019304394265962,
+        "vertical": 0.1756248255165086
+      },
+      {
+        "side": "left",
+        "rise": 0.17350762470232506,
+        "sideways": 0.06395055154985962,
+        "vertical": 0.17350762470232506
+      },
+      {
+        "side": "right",
+        "rise": 0.15065753449967045,
+        "sideways": 0.0610140390937982,
+        "vertical": 0.15102588969037134
+      },
+      {
+        "side": "left",
+        "rise": 0.17797928933354157,
+        "sideways": 0.0946402312298798,
+        "vertical": 0.17797928933354157
+      },
+      {
+        "side": "right",
+        "rise": 0.15911249472764288,
+        "sideways": 0.06797038573869063,
+        "vertical": 0.15911249472764288
+      },
+      {
+        "side": "left",
+        "rise": 0.18196675712709187,
+        "sideways": 0.07657965021620118,
+        "vertical": 0.18196675712709187
+      },
+      {
+        "side": "right",
+        "rise": 0.1586032419224095,
+        "sideways": 0.07883738526263656,
+        "vertical": 0.1586032419224095
+      },
+      {
+        "side": "left",
+        "rise": 0.1826254309839661,
+        "sideways": 0.0896302512075143,
+        "vertical": 0.1826254309839661
+      },
+      {
+        "side": "right",
+        "rise": 0.15483545496990603,
+        "sideways": 0.07023097363665398,
+        "vertical": 0.15483545496990603
+      },
+      {
+        "side": "left",
+        "rise": 0.18175762597862433,
+        "sideways": 0.08773111375840578,
+        "vertical": 0.18175762597862433
+      },
+      {
+        "side": "right",
+        "rise": 0.1720477608881612,
+        "sideways": 0.07795728534121125,
+        "vertical": 0.1720477608881612
+      },
+      {
+        "side": "left",
+        "rise": 0.16845112657613326,
+        "sideways": 0.07164447448444088,
+        "vertical": 0.16898475764840004
+      },
+      {
+        "side": "right",
+        "rise": 0.1669709656906151,
+        "sideways": 0.06266508684190791,
+        "vertical": 0.1669709656906151
+      },
+      {
+        "side": "left",
+        "rise": 0.1718763635530166,
+        "sideways": 0.07298089207259868,
+        "vertical": 0.1718763635530166
+      },
+      {
+        "side": "right",
+        "rise": 0.1532727653866458,
+        "sideways": 0.06722402085665669,
+        "vertical": 0.1532727653866458
+      },
+      {
+        "side": "left",
+        "rise": 0.1698794216523466,
+        "sideways": 0.061349746613890366,
+        "vertical": 0.1713600248588718
+      },
+      {
+        "side": "right",
+        "rise": 0.15422818043759645,
+        "sideways": 0.08211168915729591,
+        "vertical": 0.15422818043759645
+      },
+      {
+        "side": "left",
+        "rise": 0.1676074880590419,
+        "sideways": 0.06810547777582163,
+        "vertical": 0.1676074880590419
+      },
+      {
+        "side": "right",
+        "rise": 0.13558292871483468,
+        "sideways": 0.06327003651195848,
+        "vertical": 0.13558292871483468
+      },
+      {
+        "side": "left",
+        "rise": 0.16942850286343114,
+        "sideways": 0.06385491420529692,
+        "vertical": 0.16942850286343114
+      },
+      {
+        "side": "right",
+        "rise": 0.15745771687630572,
+        "sideways": 0.0802546388641028,
+        "vertical": 0.15745771687630572
+      },
+      {
+        "side": "left",
+        "rise": 0.15127382266344036,
+        "sideways": 0.06882188009835007,
+        "vertical": 0.15127382266344036
+      }
+    ]
+  },
+  "continuous_checkpoints": [
+    30,
+    50
+  ]
+}

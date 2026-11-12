@@ -24,6 +24,7 @@ INITIAL_AIRBORNE_LANDING_VELOCITY_M_S = np.array([-.12, -.77, -2.65])
 INITIAL_AIRBORNE_FORWARD_OFFSET_M = .10
 RELEASE_CONFIRMATION_S = .012
 MAX_FINGER_RELEASE_LEAD_S = .025  # Bounded actuator timing; positive opens earlier.
+MAX_RECEPTION_TILT_SCALE = 1.5
 DEFAULT_OBSERVATION_NOISE_STD_M = 0.0
 # Contact/motion calibration for the default G1/LEAP Hand, 85 mm / 120 g ball.
 # These are reference-controller parameters, not measured ball state or replay data.
@@ -32,6 +33,9 @@ CATCH_CUSHION_DURATION_S = .12
 CAPTURE_BRAKING_DURATION_S = .08
 MIN_CATCH_RECOVERY_DURATION_S = .24
 MAX_RECEPTION_SETTLE_FORECAST_S = .30
+RECEPTION_TIMELINESS_WINDOW_S = .035
+RECEPTION_MIN_APPROACH_S = .025
+RECEPTION_MAX_APPROACH_S = .30
 LOADED_RECOVERY_TILT_DEG = -8.0
 LOADED_SOURCE_TILT_DEG = 10.0
 INITIAL_HOLD_TILT_DURATION_S = .08
@@ -212,6 +216,11 @@ class ContactCascade(DualArmDynamics):
         self.min_throw_palm_up = 1.0
         self.min_throw_fingers_forward = 1.0
 
+    def reception_ball_state(self, ball_id):
+        """Position/velocity input for reception; subclasses may override it."""
+        q, v = self.balls[ball_id]
+        return self.data.qpos[q:q+3], self.data.qvel[v:v+3]
+
     def set_optimizer_inputs(self, inputs):
         """Keep forecast guesses independent of live optimizer warm starts.
 
@@ -337,6 +346,37 @@ class ContactCascade(DualArmDynamics):
             closest = min(closest,float(np.linalg.norm(relative+time*speed)))
         return closest
 
+    def additional_throw_guesses(self, side):
+        """Optional four-parameter motion guesses; v6 uses only its existing search."""
+        return ()
+
+    def throw_release_lead_candidates(self, side, release_lead):
+        """Optional actuator-timing trials; v6 retains its indexed timing."""
+        return ()
+
+    def try_throw_release_timing(self, side, ball, command, path, error, release_lead, evaluate):
+        """Accept a timing change only after the same complete physics evaluation."""
+        original = command, path, error, release_lead
+        if np.linalg.norm(error) <= .02:
+            return original
+        for candidate in self.throw_release_lead_candidates(side, release_lead):
+            candidate = float(candidate)
+            if not np.isfinite(candidate) or abs(candidate) > MAX_FINGER_RELEASE_LEAD_S:
+                raise ValueError('Finger release timing candidate exceeds its configured bound')
+            try:
+                trial_error, trial_path = evaluate(command, release_lead_override=candidate)
+            except ValueError as failure:
+                self.log('release_timing_trial', side, ball, lead_s=candidate,
+                         accepted=False, reason=str(failure))
+                continue
+            score = float(np.linalg.norm(trial_error))
+            accepted = np.isfinite(score) and score <= .02
+            self.log('release_timing_trial', side, ball, lead_s=candidate,
+                     accepted=bool(accepted), score=score if np.isfinite(score) else None)
+            if accepted:
+                return command, trial_path, trial_error, candidate
+        return original
+
     def plan_throw(self, side):
         """Optimize an actuator-driven launch using private physics rollouts restored before returning to the live state."""
         live = self.__dict__.copy()
@@ -355,11 +395,11 @@ class ContactCascade(DualArmDynamics):
         input_command = np.asarray(self.execution_warm.get(input_key, self.warm.get(input_key, self.commands[side])), dtype=float)
         release_lead = float(input_command[4]) if input_command.size == 5 else 0.
 
-        def evaluate(command):
+        def evaluate(command, release_lead_override=None):
             mujoco.mj_copyData(hand['kin'].data, self.model, initial)
             path = ThrowPath(hand['kin'], start, command[:3], initial_q, hand['catch_p'], bank=command[3], initial_axis=initial_axis, catch_q=hand['catch_q'])
             path.planned_time = initial_time
-            path.finger_release_lead_s = release_lead
+            path.finger_release_lead_s = release_lead if release_lead_override is None else release_lead_override
             trial = mujoco.MjData(self.model)
             mujoco.mj_copyData(trial, self.model, initial)
             self.data = trial
@@ -453,6 +493,16 @@ class ContactCascade(DualArmDynamics):
                 feasible.append((float(np.linalg.norm(ep)), candidate.copy(), ep, pp))
                 if feasible[-1][0] < .02:
                     break
+            if not feasible:
+                for candidate in self.additional_throw_guesses(side):
+                    candidate = np.asarray(candidate, dtype=float)
+                    try:
+                        ep, pp = evaluate(candidate)
+                    except ValueError:
+                        continue
+                    feasible.append((float(np.linalg.norm(ep)), candidate.copy(), ep, pp))
+                    if feasible[-1][0] < .02:
+                        break
             if not feasible:
                 self.last_plan_error = float('inf')
                 self.log('plan_rejected', side, ball, reason='no feasible contact release',
@@ -598,6 +648,20 @@ class ContactCascade(DualArmDynamics):
                 if best[0] < 0.015 or not improved:
                     break
             _, command, path, error = best
+        if best[0] > .02:
+            for candidate in self.additional_throw_guesses(side):
+                candidate = np.asarray(candidate, dtype=float)
+                try:
+                    ep, pp = evaluate(candidate)
+                except ValueError:
+                    continue
+                if np.linalg.norm(ep) < best[0]:
+                    best = (np.linalg.norm(ep), candidate.copy(), pp, ep.copy())
+                if best[0] < .02:
+                    break
+            _, command, path, error = best
+        command, path, error, release_lead = self.try_throw_release_timing(
+            side, ball, command, path, error, release_lead, evaluate)
         self.commands[side] = command
         hand['retry_throw_key'] = key
         hand['retry_throw_command'] = command.copy()
@@ -616,13 +680,15 @@ class ContactCascade(DualArmDynamics):
             upper[4] = RECEIVE_INWARD_BANK
         return lower, upper
 
-    def reception_reference(self, side, parameters):
+    def reception_reference(self, side, parameters, tilt_scale=1.):
         """Build an offset catch at the current physical palm pose.
 
         The live optimizer and forecasts use the same reference construction.
         Only actuator references are returned; no ball state is changed.
         """
         hand = self.hands[side]
+        if not np.isfinite(tilt_scale) or not 1. <= tilt_scale <= MAX_RECEPTION_TILT_SCALE:
+            raise ValueError('Reception recovery tilt exceeds its configured bound')
         parameters = np.asarray(parameters, dtype=float)
         data = self.data
         _, nominal_stop = hand['reception']
@@ -636,6 +702,9 @@ class ContactCascade(DualArmDynamics):
             data.qpos[hand['kin'].qpos_adr].copy(),
             nominal_stop.start + parameters[:3], nominal_stop.velocity,
             axis=axis, nominal=hand['catch_q'], empty_arc=True)
+        if tilt_scale != 1.:
+            path.tilt_amplitude *= tilt_scale
+            path.reception_tilt_scale = float(tilt_scale)
         stop = SmoothStop(nominal_stop.t0, nominal_stop.duration,
                           nominal_stop.start + parameters[:3],
                           nominal_stop.velocity, self.gravity_m_s2)
@@ -647,6 +716,38 @@ class ContactCascade(DualArmDynamics):
         hand['approach_joint'] = path
         hand['approach_axis'] = axis
         hand['receiving_end'] = stop.sample(stop.t1)[0]
+
+    def reception_tilt_scale_candidates(self, side, diagnostics):
+        """Optional recovery references; v6 keeps its existing five-degree tilt."""
+        return ()
+
+    def reception_difference_steps(self, diagnostics):
+        return (RECEPTION_FINE_DIFFERENCE if diagnostics.get('captured') and diagnostics.get('timely')
+                and diagnostics.get('ready_for_next_throw') else RECEPTION_FINITE_DIFFERENCE)
+
+    def try_reception_tilt(self, side, ball, parameters, error, path, stop, axis, evaluate):
+        original = error, path, stop, axis
+        fields = ('centered', 'timely', 'captured', 'ready_for_next_throw', 'collision_free')
+        diagnostics = getattr(path, 'catch_diagnostics', {})
+        if all(diagnostics.get(field, False) for field in fields):
+            return original
+        for scale in self.reception_tilt_scale_candidates(side, diagnostics):
+            scale = float(scale)
+            if not np.isfinite(scale) or not 1. <= scale <= MAX_RECEPTION_TILT_SCALE:
+                raise ValueError('Reception recovery tilt exceeds its configured bound')
+            try:
+                trial_error, trial_path, trial_stop, trial_axis = evaluate(parameters, tilt_scale_override=scale)
+            except ValueError as failure:
+                self.log('reception_tilt_trial', side, ball, scale=scale, accepted=False, reason=str(failure))
+                continue
+            score = float(np.linalg.norm(trial_error))
+            trial_diagnostics = getattr(trial_path, 'catch_diagnostics', {})
+            accepted = score == 0. and all(trial_diagnostics.get(field, False) for field in fields)
+            self.log('reception_tilt_trial', side, ball, scale=scale, accepted=accepted,
+                     score=score if np.isfinite(score) else None, diagnostics=trial_diagnostics)
+            if accepted:
+                return trial_error, trial_path, trial_stop, trial_axis
+        return original
 
     def plan_reception(self, side):
         live = self.__dict__.copy()
@@ -660,7 +761,7 @@ class ContactCascade(DualArmDynamics):
         lower, upper = self.reception_bounds(side)
         inward_bank = RECEIVE_INWARD_BANK if side == 'right' else -RECEIVE_INWARD_BANK
 
-        def evaluate(parameters):
+        def evaluate(parameters, tilt_scale_override=None):
             trial = mujoco.MjData(self.model)
             mujoco.mj_copyData(trial, self.model, original)
             self.data = trial
@@ -692,7 +793,10 @@ class ContactCascade(DualArmDynamics):
                         first_forbidden_contact = self.failure_event
 
             try:
-                path, stop, axis = self.reception_reference(side, parameters)
+                if tilt_scale_override is None:
+                    path, stop, axis = self.reception_reference(side, parameters)
+                else:
+                    path, stop, axis = self.reception_reference(side, parameters, tilt_scale=tilt_scale_override)
                 h = self.hands[side]
                 self.apply_reception_reference(h, path, stop, axis)
                 while trial.time < pre_time - 1e-08:
@@ -724,7 +828,7 @@ class ContactCascade(DualArmDynamics):
                              trial.time <= next_throw+1e-8 and
                              (len(self.balls) != 3 or actual['throw_time'] <= next_throw+1e-8) and
                              self.ready_for_throw(side))
-                timely = touched and abs(actual.get('contact_time', -10.) - impact) < .035
+                timely = touched and abs(actual.get('contact_time', -10.) - impact) < RECEPTION_TIMELINESS_WINDOW_S
                 path.catch_diagnostics = dict(
                     centered=bool(centered), timely=bool(timely), captured=bool(captured),
                     ready_for_next_throw=ready, next_throw_time=float(next_throw),
@@ -779,8 +883,7 @@ class ContactCascade(DualArmDynamics):
             error = best[2].copy()
             columns = []
             diagnostics = getattr(best[3], 'catch_diagnostics', {})
-            steps = (RECEPTION_FINE_DIFFERENCE if diagnostics.get('captured') and diagnostics.get('timely') and diagnostics.get('ready_for_next_throw')
-                     else RECEPTION_FINITE_DIFFERENCE)
+            steps = self.reception_difference_steps(diagnostics)
             for i, step in enumerate(steps):
                 pp = parameters.copy()
                 pp[i] = np.clip(pp[i]+step, lower[i], upper[i])
@@ -819,10 +922,13 @@ class ContactCascade(DualArmDynamics):
         _, parameters, error, path, stop, axis = best
         if path is None:
             raise ValueError('no reachable reception path')
+        error, path, stop, axis = self.try_reception_tilt(
+            side, hand['incoming'], parameters, error, path, stop, axis, evaluate)
         diagnostics = getattr(path, 'catch_diagnostics', {})
+        profile = (dict(tilt_scale=path.reception_tilt_scale) if hasattr(path, 'reception_tilt_scale') else {})
         self.log('return_plan', side, hand['incoming'], error=error.round(4).tolist(),
                  score=float(np.linalg.norm(error)), parameters=parameters.tolist(),
-                  diagnostics=diagnostics)
+                   diagnostics=diagnostics, **profile)
         if not all(diagnostics.get(key, False) for key in ('captured', 'collision_free', 'ready_for_next_throw')):
             self.failure_event = dict(reason='NO_FEASIBLE_RECEPTION', time=float(self.data.time), side=side,
                                       ball=hand['incoming'])
@@ -904,14 +1010,15 @@ class ContactCascade(DualArmDynamics):
                 for i, target in list(self.targets.items()):
                     if target != side:
                         continue
-                    q, v = self.balls[i]
-                    p = d.qpos[q:q + 3]
-                    vel = d.qvel[v:v + 3]
+                    state = self.reception_ball_state(i)
+                    if state is None:
+                        continue
+                    p, vel = state
                     if self.obs_noise and (not self.silent):
                         p = p + self.rng.normal(0, self.obs_noise, 3)
                     disc = vel[2] ** 2 + 2 * self.gravity_m_s2 * (p[2] - h['catch_p'][2] - SUPPORTED_BALL_CENTER_OFFSET_M)
                     dt = (vel[2] + np.sqrt(max(0, disc))) / self.gravity_m_s2
-                    if 0.025 < dt < 0.3:
+                    if RECEPTION_MIN_APPROACH_S < dt < RECEPTION_MAX_APPROACH_S:
                         catch = h['catch_p'].copy()
                         catch[:2] = p[:2] + vel[:2] * dt
                         speed = vel.copy() * RECEIVE_TANGENTIAL_VELOCITY_RATIO
