@@ -17,6 +17,7 @@ from jugglebot.humanoid.cascade import ContactCascade
 HOLD = Path(__file__).parent / "results" / "hold2f_right_s20.json"
 CALIBRATION = Path(__file__).parent / "results" / "first_throw_calibration.json"
 CALIBRATION2 = Path(__file__).parent / "results" / "second_throw_calibration.json"
+SEEDS_FILE = Path(__file__).parent / "results" / "seeds_2plus1.json"   # optimizer seeds recalibrated on the 2+1 timeline (calibrate21.py)
 T_OPEN_AGE_S = 0.114      # finger-opening start measured from stroke start (from the replay: 0.847 s vs stroke ~0.733 s)
 OPEN_DURATION_S = 0.05
 SETTLE_S = 0.2           # delay of the whole throwing schedule so that the pinch can close
@@ -28,7 +29,7 @@ def smooth(a):
 
 
 class TwoPlusOneCascade(ContactCascade):
-    def __init__(self, hold_file=HOLD, t_open_age=None, calibration=CALIBRATION, **kw):
+    def __init__(self, hold_file=HOLD, t_open_age=None, calibration=CALIBRATION, seeds=None, seeds_file=SEEDS_FILE, **kw):
         kw.setdefault("n_balls", 3)
         super().__init__(**kw)
         cal = json.loads(Path(calibration).read_text()) if calibration and Path(calibration).exists() else None
@@ -39,6 +40,12 @@ class TwoPlusOneCascade(ContactCascade):
         if calibration and cal2.exists():     # collision-free seed for the retained ball's throw (calibrate_second_throw.py)
             cmd2 = np.asarray(json.loads(cal2.read_text())['command'], float)
             self.warm['throw:right:2'] = cmd2; self.execution_warm['throw:right:2'] = cmd2
+        if seeds is None and seeds_file and Path(seeds_file).exists():
+            seeds = json.loads(Path(seeds_file).read_text())
+        if seeds:      # live optimizer guesses recalibrated on this timeline; the two hand-calibrated first-hand throws keep their own seeds
+            for key, val in seeds.get("execution", {}).items():
+                if key not in ("throw:right:0", "throw:right:2"):
+                    self.execution_warm[key] = val
         if t_open_age is None:
             t_open_age = cal['t_open_age'] if cal is not None else T_OPEN_AGE_S
         m, d = self.model, self.data

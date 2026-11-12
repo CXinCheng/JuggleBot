@@ -1,0 +1,9 @@
+[iter 0] wall 501s success=False error=NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw throws=18 validated=16 changed_seeds=32 retried_throws=3
+    retry throw:left:13: attempts=2 first_score=0.023 final=0.019
+    retry throw:left:15: attempts=3 first_score=0.067 final=0.015
+    retry throw:left:17: attempts=4 first_score=0.041 final=0.018
+[iter 1] wall 631s success=True error=None throws=31 validated=30 changed_seeds=34 retried_throws=3
+    retry throw:left:27: attempts=2 first_score=0.080 final=0.011
+    retry throw:right:20: attempts=2 first_score=0.026 final=0.018
+    retry throw:right:28: attempts=3 first_score=0.061 final=0.020
+ACCEPTED: the seeds used by iteration 1 reproduce a successful 30-flight run from scratch
