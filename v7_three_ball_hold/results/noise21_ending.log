@@ -1,0 +1,42 @@
+noise 1 mm seed 2: success=True releases=8 error=None wall=100s
+noise 1 mm seed 0: success=True releases=8 error=None wall=273s
+noise 1 mm seed 1: success=True releases=8 error=None wall=274s
+noise 3 mm seed 2: success=True releases=8 error=None wall=303s
+noise 3 mm seed 0: success=True releases=8 error=None wall=350s
+noise 3 mm seed 1: success=True releases=8 error=None wall=366s
+noise 5 mm seed 0: success=True releases=8 error=None wall=385s
+noise 5 mm seed 2: success=True releases=8 error=None wall=238s
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 113, in spawn_main
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 122, in spawn_main
+    new_handle = reduction.duplicate(pipe_handle,
+    exitcode = _main(fd, parent_sentinel)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\reduction.py", line 79, in duplicate
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 132, in _main
+    self = reduction.pickle.load(from_parent)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\connection.py", line 1167, in rebuild_pipe_connection
+    return _winapi.DuplicateHandle(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+    handle = dh.detach()
+             ^^^^^^^^^^^
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\reduction.py", line 131, in detach
+    return _winapi.DuplicateHandle(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\spawn.py", line 113, in spawn_main
+    new_handle = reduction.duplicate(pipe_handle,
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Cai\AppData\Local\Programs\Python\Python312\Lib\multiprocessing\reduction.py", line 79, in duplicate
+    return _winapi.DuplicateHandle(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [WinError 5] Access is denied
+noise 5 mm seed 1: success=True releases=8 error=None wall=345s
