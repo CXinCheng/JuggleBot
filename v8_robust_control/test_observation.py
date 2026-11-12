@@ -386,7 +386,7 @@ class TestControllerObservation(unittest.TestCase):
         self.assertEqual(controller.forecast_retry_count, 0)
         self.assertEqual(controller.failure_event['reason'], 'POSE_LIMIT')
 
-    def test_v6_stays_independent_and_v7_truth_matches_moving_baseline(self):
+    def test_v6_stays_independent_and_v8_truth_matches_moving_baseline(self):
         baseline = BaselineCascade()
         observed = ContactCascade(normalize_reception_input=False)
         self.assertFalse(hasattr(baseline, 'ball_observer'))

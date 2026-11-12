@@ -1,4 +1,4 @@
-"""Run the v7 timestamped-observation contact-controller experiment."""
+"""Run the v8 timestamped-observation contact-controller experiment."""
 import argparse
 import hashlib
 import json
@@ -17,7 +17,7 @@ def experiment_record(result, requested_flights, simulated_timeout_s):
     for package in ('humanoid', 'robustness'):
         source_files.extend((root / 'src' / 'jugglebot' / package).glob('*.py'))
     seed_file = root / 'src/jugglebot/humanoid/leap_cascade_seed_plans.json'
-    return dict(schema_version=1, experiment='v7 zero-perturbation observation baseline',
+    return dict(schema_version=1, experiment='v8 zero-perturbation observation baseline',
                 requested_flights=requested_flights, simulated_timeout_s=simulated_timeout_s,
                 source_sha256={path.relative_to(root).as_posix(): hashlib.sha256(path.read_bytes()).hexdigest()
                                for path in sorted(source_files)},
@@ -76,14 +76,14 @@ def main():
                                  observation_period_s=args.observation_period,
                                  observation_max_age_s=args.observation_max_age, **extra)
     controller.progress_interval = 10
-    print(f'[Setup] v7 | observation: {args.observation_mode} | requested flights: {args.throws}', flush=True)
+    print(f'[Setup] v8 | observation: {args.observation_mode} | requested flights: {args.throws}', flush=True)
     try:
         result = controller.run_continuous(args.throws, timeout, guard=True)
     finally:
         if args.video is not None:
             controller.recorder.close()
     if record is not None and (perception.enabled or args.video is not None):
-        record['experiment'] = 'v7 perception disturbance evaluation'
+        record['experiment'] = 'v8 perception disturbance evaluation'
         if args.video is not None:
             record['video'] = dict(path=args.video.as_posix(), frames=controller.recorder.frames, fps=60, speed=1.)
     summary = {key: result[key] for key in (

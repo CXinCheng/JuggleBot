@@ -1,4 +1,4 @@
-# v7 — 感知扰动与控制评估
+# v8 — 感知扰动与控制评估
 
 为 G1 上身与双 LEAP Hand 三球抛接仿真提供球观测、状态估计、感知扰动和基线评估。物理模型与规划初值复用 [v6](../v6_humanoid_hands/README.md)，抛接通过手与球的物理接触实现。
 
@@ -8,8 +8,8 @@
 
 ```bash
 uv sync
-uv run python -m v7_robust_control.juggle --throws 1 --observation-mode truth
-uv run python -m v7_robust_control.juggle --throws 1 --observation-mode sampled
+uv run python -m v8_robust_control.juggle --throws 1 --observation-mode truth
+uv run python -m v8_robust_control.juggle --throws 1 --observation-mode sampled
 ```
 
 | 参数 | 默认值 | 含义 |
@@ -64,7 +64,7 @@ uv run python -m v7_robust_control.juggle --throws 1 --observation-mode sampled
 ## 验证
 
 ```bash
-uv run python -m unittest discover -s v7_robust_control -t . -v
+uv run python -m unittest discover -s v8_robust_control -t . -v
 uv run python -m unittest v6_humanoid_hands.test_evaluation -v
 ```
 
@@ -73,8 +73,8 @@ uv run python -m unittest v6_humanoid_hands.test_evaluation -v
 运行零扰动基线：
 
 ```bash
-uv run python -m v7_robust_control.verify_baselines --observation-mode truth --output-dir v7_robust_control/results
-uv run python -m v7_robust_control.verify_baselines --observation-mode sampled --output-dir v7_robust_control/results
+uv run python -m v8_robust_control.verify_baselines --observation-mode truth --output-dir v8_robust_control/results
+uv run python -m v8_robust_control.verify_baselines --observation-mode sampled --output-dir v8_robust_control/results
 ```
 
 每种模式连续运行至 50 次完整飞行，并保存 30 次和 50 次检查点。验收失败时保存失败结果并返回非零退出码。重新运行前需更换输出目录，或移走已有的同名文件。
@@ -90,23 +90,23 @@ uv run python -m v7_robust_control.verify_baselines --observation-mode sampled -
 | [truth，50 次](results/truth_baseline50.json) | 50/50 | 52 | 0 | 0 | 16.620 s |
 | [sampled，50 次](results/sampled_baseline50.json) | 50/50 | 52 | 0 | 0 | 16.671 s |
 
-结果文件包含完成次数、掉球与碰撞计数、运行配置，以及对应源码和规划初值的 SHA-256 校验值。感知扰动评估包含独立运行的零扰动对照。
+各结果文件记录验收指标、运行配置，以及源码和规划初值的 SHA-256 校验值。
 
 ## 感知扰动评估
 
 单次扰动实验：
 
 ```bash
-uv run python -m v7_robust_control.juggle --observation-mode sampled --throws 30 --noise-mm 3 --delay-ms 20 --dropout 0.1 --seed 0
+uv run python -m v8_robust_control.juggle --observation-mode sampled --throws 30 --noise-mm 3 --delay-ms 20 --dropout 0.1 --seed 0
 ```
 
-结果显示在终端。需要单独留档时，可添加 `--output <新文件路径>`；批量评估统一保存为 JSONL。
+默认在终端显示结果；添加 `--output <新文件路径>` 可保存单次实验 JSON。
 
 评估位置噪声、延迟、丢帧及组合条件：
 
 ```bash
-uv run python -m v7_robust_control.evaluate_perception --seeds 0 1 --throws 30 --jobs 3 --output v7_robust_control/results/perception_trials.jsonl --video-cases baseline noise_3mm combined
-uv run python -m v7_robust_control.summarize_perception --input v7_robust_control/results/perception_trials.jsonl --output v7_robust_control/results/perception_sensitivity.md --csv-output v7_robust_control/results/perception_trials.csv --overwrite
+uv run python -m v8_robust_control.evaluate_perception --seeds 0 1 --throws 30 --jobs 3 --output v8_robust_control/results/perception_trials.jsonl --video-cases baseline noise_3mm combined
+uv run python -m v8_robust_control.summarize_perception --input v8_robust_control/results/perception_trials.jsonl --output v8_robust_control/results/perception_sensitivity.md --csv-output v8_robust_control/results/perception_trials.csv --overwrite
 ```
 
 | 扰动 | 测试范围 |
@@ -116,40 +116,38 @@ uv run python -m v7_robust_control.summarize_perception --input v7_robust_contro
 | 整帧丢失概率 | 0、5%、15%、30% |
 | 组合条件 | 3 mm 噪声、20 ms 延迟、10% 丢帧 |
 
-单项测试每次只改变一种扰动。所有条件使用同一控制器、初始物理状态、采样周期和测量有效期；每种条件运行指定的全部种子。扰动范围用于仿真敏感性分析，未经真实传感器标定。
+单项测试每次只改变一种扰动。各条件使用相同的控制器、初始物理状态、采样周期和测量有效期，并运行 `--seeds` 指定的全部种子。扰动范围用于仿真敏感性分析，未经真实传感器标定。
 
-JSONL 保存实验配置、逐次结果、感知序列校验值和估计误差。汇总程序校验试验完整性、计数和配置一致性后生成报告与 CSV。估计误差仅用于评估，控制器不读取误差统计。中断实验保留已完成的试验，不生成完整报告。
+JSONL 保存配置、逐次结果、感知序列校验值和估计误差。汇总程序检查试验完整性、计数和配置一致性后生成报告与 CSV。中断实验保留已完成的记录，汇总程序要求输入包含全部试验。
 
-成功要求完成全部目标飞行，并通过接稳、碰撞和姿态检查。规划器未找到可行接球方案时，以 `NO_FEASIBLE_RECEPTION` 终止实验。报告中的完成飞行数、规划失败、实际掉球和实际碰撞分别统计；零掉球不表示任务成功。
+成功要求完成全部目标飞行，并通过接稳、碰撞和姿态检查。未找到可行接球方案时，以 `NO_FEASIBLE_RECEPTION` 终止实验。规划失败、实际掉球和实际碰撞分别统计。
 
 评估结果：[退化报告](results/perception_sensitivity.md)、[逐次指标](results/perception_trials.csv)、[原始记录](results/perception_trials.jsonl)。
 
 ## 视频
 
-对照演示：[感知扰动对照视频](../videos/v7_perception_before_rl.mp4)。视频标注配置、种子、最终完成次数和停止原因；配置与原始数据关联信息见 [video_comparison.json](results/video_comparison.json)。
+演示：[感知扰动对照视频](../videos/v8_perception_before_rl.mp4)。画面标注配置、种子、完成次数和停止原因；对应试验信息见 [video_comparison.json](results/video_comparison.json)。
 
-`--video-cases` 为选定条件的第一个种子录制原始视频，文件名为 `videos/v7_before_rl_<配置>_seed<种子>.mp4`。单次实验可通过 `--video` 指定视频路径。
+`--video-cases` 为选定条件的第一个种子录制原始视频，文件名为 `videos/v8_before_rl_<配置>_seed<种子>.mp4`。单次实验可通过 `--video` 指定视频路径。
 
-原始视频以 60 fps 记录实际执行过程，时长由实验停止时刻决定。规划试算不录入视频；未找到可行接球方案时，实验在执行该方案前终止，因此这类片段可能短于一秒，球尚未落地。
+原始视频以 60 fps 记录实际执行过程，不包含规划试算。接球规划失败时，试验立即终止，因此视频可能短于一秒，球尚未落地。
 
 | 原始视频（种子 0） | 仿真停止时刻 | 完成飞行 | 结果 |
 | --- | --- | --- | --- |
-| [零扰动](../videos/v7_before_rl_baseline_seed0.mp4) | 10.236 s | 30/30 | 完成 |
-| [3 mm 位置噪声](../videos/v7_before_rl_noise_3mm_seed0.mp4) | 0.279 s | 0/30 | 接球规划失败 |
-| [组合扰动](../videos/v7_before_rl_combined_seed0.mp4) | 0.287 s | 0/30 | 接球规划失败 |
+| [零扰动](../videos/v8_before_rl_baseline_seed0.mp4) | 10.236 s | 30/30 | 完成 |
+| [3 mm 位置噪声](../videos/v8_before_rl_noise_3mm_seed0.mp4) | 0.279 s | 0/30 | 接球规划失败 |
+| [组合扰动](../videos/v8_before_rl_combined_seed0.mp4) | 0.287 s | 0/30 | 接球规划失败 |
 
 视频的帧数、播放速率和试验结果保存在原始评估 JSONL 中。
 
 生成带配置和结果标注的并排视频：
 
 ```bash
-uv run python -m v7_robust_control.compare_videos --input v7_robust_control/results/perception_trials.jsonl --cases baseline noise_3mm combined --seed 0 --output videos/v7_perception_before_rl.mp4 --metadata-output v7_robust_control/results/video_comparison.json
+uv run python -m v8_robust_control.compare_videos --input v8_robust_control/results/perception_trials.jsonl --cases baseline noise_3mm combined --seed 0 --output videos/v8_perception_before_rl.mp4 --metadata-output v8_robust_control/results/video_comparison.json
 ```
 
-各片段按正常速度播放，默认在最长片段结束时结束。较早停止的片段在其余片段播放期间定格，并显示 `STOPPED - final frame held`。需要结尾停留时可指定 `--hold-seconds`，默认值为 `0`。定格只延长展示时间，仿真已在标注时刻终止。
+并排视频按正常速度播放，时长与最长片段一致。提前终止的片段定格并显示 `STOPPED - final frame held`，仿真停止时刻保持不变。`--hold-seconds` 可额外设置结尾停留时间，默认为 `0` 秒。
 
 `--cases` 指定单个配置时可生成单独的展示片段。`--output` 指定视频路径，`--metadata-output` 指定结果目录中的 JSON 路径；两者均须为新文件。
-
-上述结果每种配置包含两个随机种子。策略性能比较应使用未参与训练或调参的独立测试集，保持配置、种子和镜头一致。
 
 本实现支持感知扰动评估。执行器延迟、物理参数随机化和 RL 不在当前实现范围内。

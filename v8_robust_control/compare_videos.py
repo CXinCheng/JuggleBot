@@ -53,12 +53,12 @@ def main():
     for row in chosen:
         command += ['-i',row['video']['path']]
     args.output.parent.mkdir(parents=True,exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='v7_captions_') as temp:
+    with tempfile.TemporaryDirectory(prefix='v8_captions_') as temp:
         filters = []
         for index,row in enumerate(chosen):
             c,r = row['perception'],row['result']
             reason = 'completed' if r['success'] else (r.get('failure_event') or {}).get('reason','failed')
-            label = (f"V7 classical controller | {row['case']} | seed {row['seed']}\n"
+            label = (f"Classical controller | {row['case']} | seed {row['seed']}\n"
                      f"sigma {c['noise_std_m']*1000:g} mm | delay {c['delay_s']*1000:g} ms | dropout {c['dropout_probability']*100:g}%\n"
                      f"Result: {r['validated_flights']}/{r['requested_throws']} flights | drops {r['drops']} | ball collisions {r['ball_contacts']}\n"
                      f"Stop: {reason} at {r['time']:.3f} s")

@@ -47,7 +47,7 @@ def validate(rows):
 
 def reports(rows):
     manifest,trials = validate(rows)
-    text = ['# v7 感知扰动基线','',
+    text = ['# 感知扰动评估结果','',
             f"每次请求 {manifest['requested_flights']} 次完整飞行；测试种子：{', '.join(map(str,manifest['seeds']))}。",
             '控制器参数固定，使用位置采样与三点状态估计。噪声为各坐标轴独立高斯噪声，延迟为固定 FIFO 交付延迟，丢帧按整帧独立采样。',
             '接触、安全检查和私有规划试算使用仿真真值。以下结果属于仿真敏感性评估，扰动范围未经真实传感器标定。','',

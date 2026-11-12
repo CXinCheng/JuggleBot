@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from unittest.mock import patch, Mock
 
-from v7_robust_control.juggle import main
+from v8_robust_control.juggle import main
 
 
 class TestExperimentOutput(unittest.TestCase):
@@ -23,7 +23,7 @@ class TestExperimentOutput(unittest.TestCase):
         controller.run_continuous.return_value = result
         argv = ['juggle', '--throws', '30', '--observation-mode', 'sampled', '--output', str(destination)]
         with (patch.object(sys, 'argv', argv),
-              patch('v7_robust_control.juggle.ObservedCascade', return_value=controller),
+              patch('v8_robust_control.juggle.ObservedCascade', return_value=controller),
               contextlib.redirect_stdout(io.StringIO())):
             if success:
                 main()
@@ -52,7 +52,7 @@ class TestExperimentOutput(unittest.TestCase):
             destination = Path(directory) / 'baseline.json'
             destination.write_text('original', encoding='utf-8')
             with (patch.object(sys, 'argv', ['juggle', '--output', str(destination)]),
-                  patch('v7_robust_control.juggle.ObservedCascade') as constructor,
+                  patch('v8_robust_control.juggle.ObservedCascade') as constructor,
                   contextlib.redirect_stderr(io.StringIO())):
                 with self.assertRaises(SystemExit) as stopped:
                     main()

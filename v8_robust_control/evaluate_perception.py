@@ -1,4 +1,4 @@
-"""Evaluate the fixed v7 controller under position noise, delay and frame dropout."""
+"""Evaluate the fixed v8 controller under position noise, delay and frame dropout."""
 import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import asdict
@@ -87,13 +87,13 @@ def main():
     work = []
     for case in chosen:
         for seed in args.seeds:
-            video = args.video_dir/f'v7_before_rl_{case["name"]}_seed{seed}.mp4' if case['name'] in args.video_cases and seed == args.seeds[0] else None
+            video = args.video_dir/f'v8_before_rl_{case["name"]}_seed{seed}.mp4' if case['name'] in args.video_cases and seed == args.seeds[0] else None
             if video and video.exists():
                 parser.error(f'Video already exists: {video}')
             work.append((case,seed,args.throws,timeout,args.observation_period,args.observation_max_age,str(video) if video else None))
     hashes,seed_hash = source_fingerprints()
-    manifest = dict(kind='experiment',schema_version=1,experiment='v7 perception sensitivity',
-                    controller='fixed_v7_classical_contact',cases=chosen,seeds=args.seeds,
+    manifest = dict(kind='experiment',schema_version=1,experiment='v8 perception sensitivity',
+                    controller='fixed_v8_classical_contact',cases=chosen,seeds=args.seeds,
                     requested_flights=args.throws,simulated_timeout_s=timeout,jobs=args.jobs,
                     observation_period_s=args.observation_period,observation_max_age_s=args.observation_max_age,
                     source_sha256=hashes,optimizer_inputs_sha256=seed_hash,

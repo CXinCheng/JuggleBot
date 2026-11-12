@@ -31,7 +31,7 @@ def main():
     args.output_dir.mkdir(parents=True, exist_ok=True)
     controller = ObservedCascade(observation_mode=args.observation_mode)
     controller.progress_interval = 10
-    print(f'[Setup] v7 | observation: {args.observation_mode} | checkpoints: 30, 50', flush=True)
+    print(f'[Setup] v8 | observation: {args.observation_mode} | checkpoints: 30, 50', flush=True)
     for count in CHECKPOINTS:
         record = records[count]
         result = controller.run_continuous(count, record['simulated_timeout_s'], guard=True)

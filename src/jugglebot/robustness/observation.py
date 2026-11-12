@@ -1,4 +1,4 @@
-"""v7 timestamped world-frame ball observations and position-only estimation.
+"""v8 timestamped world-frame ball observations and position-only estimation.
 
 All times are seconds on the simulation clock. Sampling and receipt times are
 distinct. Sampled measurements can pass through seeded noise and transport;

@@ -62,7 +62,7 @@ class TestPerceptionEvaluation(unittest.TestCase):
         for flags in (['--noise-mm','-1'],['--observation-mode','truth','--delay-ms','20'],
                       ['--dropout','nan'],['--seed','-1']):
             with self.subTest(flags=flags), patch.object(sys,'argv',['juggle',*flags]), \
-                    patch('v7_robust_control.juggle.ObservedCascade') as constructor, \
+                    patch('v8_robust_control.juggle.ObservedCascade') as constructor, \
                     contextlib.redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit) as error:
                     main()

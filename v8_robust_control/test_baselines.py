@@ -26,7 +26,7 @@ class TestBaselineCheckpoints(unittest.TestCase):
 
             controller.run_continuous.side_effect = run
             with (patch.object(sys, 'argv', ['verify', '--observation-mode', 'sampled', '--output-dir', directory]),
-                  patch('v7_robust_control.verify_baselines.ObservedCascade', return_value=controller) as construct,
+                  patch('v8_robust_control.verify_baselines.ObservedCascade', return_value=controller) as construct,
                   contextlib.redirect_stdout(io.StringIO())):
                 main()
             construct.assert_called_once_with(observation_mode='sampled')
@@ -35,7 +35,7 @@ class TestBaselineCheckpoints(unittest.TestCase):
             records = [json.loads((Path(directory)/f'sampled_baseline{count}.json').read_text()) for count in (30,50)]
             self.assertEqual([record['result']['metrics']['count'] for record in records], [30,50])
             self.assertEqual(records[0]['source_sha256'], records[1]['source_sha256'])
-            self.assertIn('v7_robust_control/verify_baselines.py', records[0]['source_sha256'])
+            self.assertIn('v8_robust_control/verify_baselines.py', records[0]['source_sha256'])
             self.assertEqual(records[0]['continuous_checkpoints'], [30,50])
 
     def test_existing_checkpoint_rejects_the_whole_run_before_construction(self):
@@ -43,7 +43,7 @@ class TestBaselineCheckpoints(unittest.TestCase):
             existing = Path(directory)/'truth_baseline50.json'
             existing.write_text('original', encoding='utf-8')
             with (patch.object(sys, 'argv', ['verify', '--output-dir', directory]),
-                  patch('v7_robust_control.verify_baselines.ObservedCascade') as construct,
+                  patch('v8_robust_control.verify_baselines.ObservedCascade') as construct,
                   contextlib.redirect_stderr(io.StringIO())):
                 with self.assertRaises(SystemExit) as stopped:
                     main()
@@ -58,7 +58,7 @@ class TestBaselineCheckpoints(unittest.TestCase):
             result = dict(success=False, validated_flights=23, failure_event=dict(reason='NO_FEASIBLE_RECEPTION'))
             controller.run_continuous.return_value = result
             with (patch.object(sys, 'argv', ['verify', '--output-dir', directory]),
-                  patch('v7_robust_control.verify_baselines.ObservedCascade', return_value=controller),
+                  patch('v8_robust_control.verify_baselines.ObservedCascade', return_value=controller),
                   contextlib.redirect_stdout(io.StringIO())):
                 with self.assertRaises(SystemExit) as stopped:
                     main()

@@ -29,9 +29,9 @@ class TestVideoPresentation(unittest.TestCase):
                        video=dict(path=str(raw),frames=17,fps=60,speed=1.))
             argv=['compare','--input',str(source),'--cases','noise_3mm',
                   '--output',str(output),'--metadata-output',str(metadata),'--font',str(Path(__file__))]
-            with patch.object(sys,'argv',argv), patch('v7_robust_control.compare_videos.validate',return_value=({},[trial])), \
-                    patch('v7_robust_control.compare_videos.imageio_ffmpeg.get_ffmpeg_exe',return_value='ffmpeg'), \
-                    patch('v7_robust_control.compare_videos.subprocess.run') as run:
+            with patch.object(sys,'argv',argv), patch('v8_robust_control.compare_videos.validate',return_value=({},[trial])), \
+                    patch('v8_robust_control.compare_videos.imageio_ffmpeg.get_ffmpeg_exe',return_value='ffmpeg'), \
+                    patch('v8_robust_control.compare_videos.subprocess.run') as run:
                 main()
             record=json.loads(metadata.read_text(encoding='utf-8'))
             self.assertAlmostEqual(record['duration_s'],17/60)
@@ -47,7 +47,7 @@ class TestVideoPresentation(unittest.TestCase):
                       ['--metadata-output','input.jsonl'],['--metadata-output','movie.mp4']):
             with self.subTest(extra=extra), patch.object(sys,'argv',['compare','--input','input.jsonl',
                  '--output','movie.mp4','--metadata-output','metadata.json',*extra]), \
-                    patch('v7_robust_control.compare_videos.subprocess.run') as run, \
+                    patch('v8_robust_control.compare_videos.subprocess.run') as run, \
                     contextlib.redirect_stderr(io.StringIO()):
                 with self.assertRaises(SystemExit) as error:
                     main()

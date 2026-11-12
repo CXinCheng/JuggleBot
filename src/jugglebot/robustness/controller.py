@@ -1,4 +1,4 @@
-"""v7 observation adapter over the v6 contact-physics reference controller."""
+"""v8 observation adapter over the v6 contact-physics reference controller."""
 import numpy as np
 import mujoco
 

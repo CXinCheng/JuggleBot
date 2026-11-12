@@ -1,7 +1,7 @@
 {
-  "input": "v7_robust_control/results/perception_trials.jsonl",
-  "input_sha256": "9678c40b9f7e2e97e74ba0434d1b5ffb34652da5f418741ba148f23676e9f32a",
-  "output": "videos/v7_perception_before_rl.mp4",
+  "input": "v8_robust_control/results/perception_trials.jsonl",
+  "input_sha256": "475cab61e4e10ec6e25b39d74161c39c8897637a7aba1a78a5c7bed3004f633d",
+  "output": "videos/v8_perception_before_rl.mp4",
   "cases": [
     "baseline",
     "noise_3mm",
@@ -18,7 +18,7 @@
       "case": "baseline",
       "seed": 0,
       "video": {
-        "path": "videos/v7_before_rl_baseline_seed0.mp4",
+        "path": "videos/v8_before_rl_baseline_seed0.mp4",
         "fps": 60,
         "speed": 1.0,
         "frames": 615
@@ -37,7 +37,7 @@
       "case": "noise_3mm",
       "seed": 0,
       "video": {
-        "path": "videos/v7_before_rl_noise_3mm_seed0.mp4",
+        "path": "videos/v8_before_rl_noise_3mm_seed0.mp4",
         "fps": 60,
         "speed": 1.0,
         "frames": 17
@@ -56,7 +56,7 @@
       "case": "combined",
       "seed": 0,
       "video": {
-        "path": "videos/v7_before_rl_combined_seed0.mp4",
+        "path": "videos/v8_before_rl_combined_seed0.mp4",
         "fps": 60,
         "speed": 1.0,
         "frames": 18
