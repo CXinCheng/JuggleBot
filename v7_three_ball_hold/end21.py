@@ -12,8 +12,10 @@ from pathlib import Path
 import numpy as np, mujoco
 from jugglebot.humanoid import cascade as C
 from jugglebot.humanoid.contact_control import CartesianPalmMotion, SmoothStop
-from cascade21 import TwoPlusOneCascade, smooth
-import search_catch_tip as S
+if __package__:
+    from .cascade21 import TwoPlusOneCascade, smooth
+else:
+    from cascade21 import TwoPlusOneCascade, smooth
 
 CATCH = Path(__file__).parent / "results" / "catchtipM_az0_el90.json"
 T_IMPACT_OPT = 0.086        # impact time in search_catch_tip.run for 2.5 m/s relative speed, 0.25 m start distance
@@ -22,7 +24,6 @@ HOLD_AFTER_S = 0.8
 
 class EndingCascade(TwoPlusOneCascade):
     ELBOW_OUT_END_M = 0.12
-    _elbow_v6 = C.MAX_ELBOW_OUT_M
     T_START_S = 0.50        # start the maneuver when the last ball is predicted to land within this time
     PREP_S = 0.15           # cradle -> Ka transition time
     ARRIVE_EARLY_S = 0.10   # the palm path ends this long before impact (then holds / follows the stop profile)
@@ -39,6 +40,11 @@ class EndingCascade(TwoPlusOneCascade):
         self.stopped = False
         self.end = None
         self.end_result = None
+        target = json.loads((Path(__file__).parent / 'results/pinky_A.json').read_text())['x']
+        self.catch_target_local = np.array([target[18], target[19], target[20] + .022])
+
+    def elbow_out_limit(self, side):
+        return self.ELBOW_OUT_END_M if self.end is not None else super().elbow_out_limit(side)
 
     def _goal_rotation(self):
         normal = C.LOADED_SOURCE_AXIS / np.linalg.norm(C.LOADED_SOURCE_AXIS)
@@ -57,9 +63,6 @@ class EndingCascade(TwoPlusOneCascade):
             self._maybe_start_end()
         if self.end is not None:
             self._end_control()
-        # Deviation from v6, ending phase only: the fingertip slot sits ~9 cm behind the palm origin, so the palm is closer to the torso
-        # than in a v6 catch and the elbow flares out slightly further. Relax the v6 comfort limit (elbow_out < 0.10 m) to ELBOW_OUT_END_M.
-        C.MAX_ELBOW_OUT_M = self.ELBOW_OUT_END_M if self.end is not None else self._elbow_v6
         super().step()
         if self.end is not None:
             self._end_monitor()
@@ -75,6 +78,10 @@ class EndingCascade(TwoPlusOneCascade):
                 return i
         return None
 
+    def minimum_ending_horizon_s(self):
+        """Require positive approach duration after the early-arrival offset."""
+        return max(0.05, self.ARRIVE_EARLY_S)
+
     def _maybe_start_end(self):
         m, d = self.model, self.data
         h = self.hands["right"]
@@ -83,15 +90,16 @@ class EndingCascade(TwoPlusOneCascade):
         if a is None or h["mode"] not in ("hold", "carry"):
             return
         Rm = self._goal_rotation()
-        off = Rm @ S.B_TGT
-        q, v = self.balls[a]
-        p = d.qpos[q:q + 3].copy()
-        vel = d.qvel[v:v + 3].copy()
+        off = Rm @ self.catch_target_local
+        state = self.reception_ball_state(a)
+        if state is None:
+            return
+        p, vel = state
         g = self.gravity_m_s2
         zb = h["catch_p"][2] + off[2]
         disc = vel[2] ** 2 + 2 * g * (p[2] - zb)
         dt = (vel[2] + np.sqrt(max(0.0, disc))) / g
-        if not (0.05 < dt < self.T_START_S):
+        if not (self.minimum_ending_horizon_s() < dt < self.T_START_S):
             return
         land = p + np.r_[vel[:2] * dt, 0.0]
         goal = np.r_[land[:2] - off[:2], h["catch_p"][2]]

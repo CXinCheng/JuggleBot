@@ -5,7 +5,7 @@ import numpy as np
 from .controller import ObservedCascade
 
 
-class EvaluatedCascade(ObservedCascade):
+class EvaluationTelemetry:
     def __init__(self, *args, recorder_factory=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.recorder = recorder_factory(self.model) if recorder_factory else None
@@ -51,6 +51,10 @@ class EvaluatedCascade(ObservedCascade):
                     max_position_error_m=self.max_position_error if n else None,
                     max_velocity_error_m_s=self.max_velocity_error if n else None,
                     max_measurement_age_s=self.max_measurement_age if n else None)
+
+
+class EvaluatedCascade(EvaluationTelemetry, ObservedCascade):
+    pass
 
 
 def hide_sites(scene):

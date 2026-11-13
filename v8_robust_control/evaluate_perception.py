@@ -26,18 +26,25 @@ def cases():
     return rows
 
 
-def run_trial(case, seed, throws, timeout, sample_period_s, max_age_s, video_path=None):
+def run_trial(case, seed, throws, timeout, sample_period_s, max_age_s, video_path=None, task='cascade'):
     config = PerceptionConfig(**{key:case[key] for key in ('noise_std_m','delay_s','dropout_probability')},seed=seed)
     recorder_factory = None
     if video_path:
         from jugglebot.video import VideoRecorder
         from v6_humanoid_hands.juggle import cascade_camera
         recorder_factory = lambda model: VideoRecorder(model, Path(video_path), camera=cascade_camera())
-    controller = EvaluatedCascade(observation_mode='sampled',perception=config,
+    factory = EvaluatedCascade
+    extra = {}
+    if task == 'complete':
+        from .complete_task import EvaluatedCompleteCascade
+        factory = EvaluatedCompleteCascade
+        extra['throws'] = throws
+    controller = factory(observation_mode='sampled',perception=config,
                                  observation_period_s=sample_period_s, observation_max_age_s=max_age_s,
-                                 recorder_factory=recorder_factory)
+                                 recorder_factory=recorder_factory, **extra)
     try:
-        result = controller.run_continuous(throws,timeout,guard=True)
+        result = (controller.run_complete(timeout) if task == 'complete'
+                  else controller.run_continuous(throws,timeout,guard=True))
     finally:
         if controller.recorder:
             controller.recorder.close()
@@ -48,9 +55,15 @@ def run_trial(case, seed, throws, timeout, sample_period_s, max_age_s, video_pat
     return row
 
 
-def source_fingerprints():
+def source_fingerprints(task='cascade'):
     root = Path(__file__).resolve().parents[1]
-    record = experiment_record(None,1,30.)
+    if task == 'complete':
+        from .complete_task import complete_record
+        record = complete_record(None, 30, 40.)
+        # Include every task calibration file in the during-run change check.
+        record['source_sha256'].update(record['task_inputs_sha256'])
+    else:
+        record = experiment_record(None,1,30.)
     for name in ('evaluate_perception.py','summarize_perception.py'):
         path = Path(__file__).with_name(name)
         record['source_sha256'][path.relative_to(root).as_posix()] = hashlib.sha256(path.read_bytes()).hexdigest()
@@ -59,6 +72,7 @@ def source_fingerprints():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--task',choices=('cascade','complete'),default='cascade')
     parser.add_argument('--cases',nargs='+',choices=[c['name'] for c in cases()],default=[c['name'] for c in cases()])
     parser.add_argument('--seeds',nargs='+',type=int,default=[0,1])
     parser.add_argument('--throws',type=int,default=30)
@@ -72,6 +86,8 @@ def main():
     args = parser.parse_args()
     if args.throws < 1 or args.jobs < 1 or any(s < 0 for s in args.seeds):
         parser.error('throws and jobs must be positive; seeds must be nonnegative')
+    if args.task == 'complete' and (args.throws < 4 or args.throws % 2):
+        parser.error('Complete task requires an even --throws >= 4')
     if len(set(args.seeds)) != len(args.seeds) or len(set(args.cases)) != len(args.cases):
         parser.error('Duplicate seeds or cases')
     if not set(args.video_cases).issubset(args.cases):
@@ -87,13 +103,15 @@ def main():
     work = []
     for case in chosen:
         for seed in args.seeds:
-            video = args.video_dir/f'v8_before_rl_{case["name"]}_seed{seed}.mp4' if case['name'] in args.video_cases and seed == args.seeds[0] else None
+            prefix = 'v8_complete_before_rl' if args.task == 'complete' else 'v8_before_rl'
+            video = args.video_dir/f'{prefix}_{case["name"]}_seed{seed}.mp4' if case['name'] in args.video_cases and seed == args.seeds[0] else None
             if video and video.exists():
                 parser.error(f'Video already exists: {video}')
-            work.append((case,seed,args.throws,timeout,args.observation_period,args.observation_max_age,str(video) if video else None))
-    hashes,seed_hash = source_fingerprints()
+            work.append((case,seed,args.throws,timeout,args.observation_period,args.observation_max_age,str(video) if video else None,args.task))
+    hashes,seed_hash = source_fingerprints(args.task)
     manifest = dict(kind='experiment',schema_version=1,experiment='v8 perception sensitivity',
                     controller='fixed_v8_classical_contact',cases=chosen,seeds=args.seeds,
+                    task=args.task,
                     requested_flights=args.throws,simulated_timeout_s=timeout,jobs=args.jobs,
                     observation_period_s=args.observation_period,observation_max_age_s=args.observation_max_age,
                     source_sha256=hashes,optimizer_inputs_sha256=seed_hash,
@@ -116,7 +134,7 @@ def main():
                     row = future.result()
                     write(row)
                     print(f"[Result] {row['case']} seed {row['seed']}: {row['result']['validated_flights']}/{args.throws}, success={row['result']['success']}",flush=True)
-        after,_ = source_fingerprints()
+        after,_ = source_fingerprints(args.task)
         if after != hashes:
             raise RuntimeError('Runtime sources changed during evaluation; no completion marker written')
         write(dict(kind='complete',trials=len(work)))

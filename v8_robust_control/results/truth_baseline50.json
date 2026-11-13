@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "experiment": "v7 zero-perturbation observation baseline",
+  "experiment": "v8 zero-perturbation observation baseline",
   "requested_flights": 50,
   "simulated_timeout_s": 35.0,
   "source_sha256": {
     "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
-    "src/jugglebot/humanoid/cascade.py": "3cc7a1ab3aee6d496e375401674a4c9664e790f8cea2e3bf20488efdf029adcb",
+    "src/jugglebot/humanoid/cascade.py": "47903e49d916eb11660961040ac77bcfad73d973053770ff51e06b25030ab432",
     "src/jugglebot/humanoid/contact_control.py": "7a2f2eac399afa01b9d11b52b4f27d142034c5bc024dd9cee8343943b8e501e5",
     "src/jugglebot/humanoid/kinematics.py": "d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15",
     "src/jugglebot/humanoid/logging.py": "6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09",
@@ -13,11 +13,13 @@
     "src/jugglebot/humanoid/model.py": "2e723b461ea404026be03535a5aec6eab822911410edbc5bdb9ab2b1ec8fb156",
     "src/jugglebot/humanoid/planning.py": "5b9a846c9ad60450846598c76e14fdda2357d41c4e7f5d09669f6eaec6d70c8c",
     "src/jugglebot/humanoid/throwing.py": "e787456478c77f5e027d7bdc8f516530f7b7b9629dbbad3662ea543ce2187b26",
-    "src/jugglebot/robustness/__init__.py": "84b5af642034caf19ffa6d00c3c03f90d3e218aa757bc5f92b33f25395664281",
-    "src/jugglebot/robustness/controller.py": "ef8be8f66fd00467649e6ffecfa449ca1c972dc86bef8e9056d799cb549bb670",
-    "src/jugglebot/robustness/observation.py": "63c0e9ffe86969f86f526f4bf30a2690240f4f808a4ad2fab1bb1269902212be",
-    "v7_robust_control/juggle.py": "ba1820af45f5d441b9b321816e222157fc1bc4e0d44a6686b0e8d38f071a820d",
-    "v7_robust_control/verify_baselines.py": "41638379570a55454683943ca740932bd2bf5ed6fc82abc7a509a2963a39b68c"
+    "src/jugglebot/robustness/__init__.py": "79474c60c1bc67b396052492cebab1f6c11868ca5cbb421fb877e6d7dd7f8e2f",
+    "src/jugglebot/robustness/controller.py": "41928aca7ef055fa098004e0864ad0c500ffee8446396ab45b4bcfb68edb7e4b",
+    "src/jugglebot/robustness/evaluation.py": "056cb1586c8237658e7f5b9e13b23b740a91b01d0cf616e6cf19b084ee7b9461",
+    "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
+    "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
+    "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
+    "v8_robust_control/verify_baselines.py": "ccbaaea2cd5d9d34c75d865b41700452c267c7f99d65770c8f41779ab6228dac"
   },
   "optimizer_inputs_sha256": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
   "result": {

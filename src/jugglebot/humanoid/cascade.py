@@ -1242,6 +1242,9 @@ class ContactCascade(DualArmDynamics):
                 raise RuntimeError(f'{reason}: {self.failure_event["geoms"]}')
         self.check_pose_limits()
 
+    def elbow_out_limit(self, side):
+        return MAX_ELBOW_OUT_M
+
     def check_pose_limits(self):
         """Stop a failed recovery before the arms leave the validated workspace.
 
@@ -1270,8 +1273,9 @@ class ContactCascade(DualArmDynamics):
                 fail(side, 'shoulder_elbow_clearance_m', clearance, MIN_SHOULDER_ELBOW_CLEARANCE_M)
             elbow_out = (abs(data.xpos[model.body(side+'_elbow_link').id, 1])
                          - abs(data.xpos[model.body(side+'_shoulder_pitch_link').id, 1]))
-            if elbow_out >= MAX_ELBOW_OUT_M:
-                fail(side, 'elbow_out_m', elbow_out, MAX_ELBOW_OUT_M)
+            elbow_limit = self.elbow_out_limit(side)
+            if elbow_out >= elbow_limit:
+                fail(side, 'elbow_out_m', elbow_out, elbow_limit)
             names = ARM_JOINTS_RIGHT if side == 'right' else ARM_JOINTS_LEFT
             ranges = model.jnt_range[[model.joint(name).id for name in names]]
             q = data.qpos[hand['kin'].qpos_adr]

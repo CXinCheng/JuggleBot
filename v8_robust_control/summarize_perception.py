@@ -4,6 +4,7 @@ import csv
 from dataclasses import asdict
 import io
 import json
+import math
 from pathlib import Path
 from statistics import mean
 
@@ -38,6 +39,28 @@ def validate(rows):
             raise ValueError('Guarded pure-contact trials required')
         if result['success'] and (count != manifest['requested_flights'] or result['drops'] or result['ball_contacts']):
             raise ValueError('Inconsistent successful result')
+        if manifest.get('task') == 'complete':
+            if result.get('task') != 'three_ball_start_cascade_finish':
+                raise ValueError('Complete task result required')
+            if result['success']:
+                initial, final = result.get('initial_hold'), result.get('final_hold')
+                if (not initial or not initial['ok'] or not final or not final['ok']
+                        or initial['continuous_support_s'] < .05 - 1e-12
+                        or len(initial['balls']) != 3
+                        or final['continuous_support_s'] < .8 - 1e-12
+                        or len(final['balls']) != 3
+                        or not all(b['contact'] and b['relative_speed_m_s'] < .15 for b in final['balls'].values())
+                        or result['airborne_at_end'] or result['throws'] != manifest['requested_flights']):
+                    raise ValueError('Successful complete task lacks continuous three-ball support')
+                for support in (initial, final):
+                    balls = support['balls']
+                    if (set(balls) != {'0','1','2'}
+                            or sorted(b['hand'] for b in balls.values()) != ['left','right','right']
+                            or not all(b['contact'] and b['relative_speed_m_s'] < .15
+                                       and b['height_m'] > .4
+                                       and math.sqrt(sum(x*x for x in b['local_m'])) < .16
+                                       for b in balls.values())):
+                        raise ValueError('Invalid three-ball support geometry or speed')
         if transport['sampled_frames'] != transport['dropped_frames']+transport['delivered_frames']+transport['pending_frames']:
             raise ValueError('Frame accounting mismatch')
         if len(transport['trace_sha256']) != 64:
@@ -59,12 +82,20 @@ def reports(rows):
         text.append(f"| {case['name']} | {case['noise_std_m']*1000:g} | {case['delay_s']*1000:g} | {case['dropout_probability']:g} | {success}/{len(selected)} | {mean(r['result']['validated_flights'] for r in selected):.1f} | {sum(r['result']['drops'] for r in selected)} | {sum(r['result']['ball_contacts'] for r in selected)} |")
     text += ['', '各条件的试验次数有限；成功次数用于描述本次实验，不作为总体成功概率的精确估计。',
              '规划拒绝、姿态越限和数据过期造成的失败均保留在逐次结果中。估计误差仅统计实时空中球的有效估计，按物理步采样；无效估计单独计数。','']
+    if manifest.get('task') == 'complete':
+        text[2:2] = ['任务包含三球 2+1 开局、级联和 2+1 收尾。成功要求全部目标飞行完成，且三球连续 0.8 s 接触承托、相对手掌速度低于 0.15 m/s；初始持球连续稳定至少 0.05 s。', '']
+        text += ['球球碰撞列仅统计禁止的接触。首次确认释放前允许的开局球对承托接触，其持续步数与峰值力在逐次 CSV 和原始记录中单独列出。', '']
     stream = io.StringIO(newline='')
     writer = csv.writer(stream,lineterminator='\n')
-    writer.writerow(['case','seed','noise_std_mm','delay_ms','dropout_probability','success','complete_flights','requested_flights','drops','ball_collisions','failure','position_rmse_m','velocity_rmse_m_s','invalid_estimates','perception_trace_sha256'])
+    complete_task = manifest.get('task') == 'complete'
+    extra_headers = ['initial_support_s','final_support_s','supported_pair_contact_steps','supported_pair_force_max_n'] if complete_task else []
+    writer.writerow(['case','seed','noise_std_mm','delay_ms','dropout_probability','success','complete_flights','requested_flights','drops','ball_collisions','failure','position_rmse_m','velocity_rmse_m_s','invalid_estimates','perception_trace_sha256']+extra_headers)
     for row in trials:
         r,e,c = row['result'],row['estimation'],row['perception']
-        writer.writerow([row['case'],row['seed'],c['noise_std_m']*1000,c['delay_s']*1000,c['dropout_probability'],r['success'],r['validated_flights'],manifest['requested_flights'],r['drops'],r['ball_contacts'],(r.get('failure_event') or {}).get('reason') or r.get('error') or '',e['position_rmse_m'],e['velocity_rmse_m_s'],e['invalid_samples'],r['conditions']['ball_observation']['perception']['trace_sha256']])
+        extra = [(r.get('initial_hold') or {}).get('continuous_support_s'),
+                 (r.get('final_hold') or {}).get('continuous_support_s'),
+                 r.get('supported_pair_contact_steps'),r.get('supported_pair_force_max_n')] if complete_task else []
+        writer.writerow([row['case'],row['seed'],c['noise_std_m']*1000,c['delay_s']*1000,c['dropout_probability'],r['success'],r['validated_flights'],manifest['requested_flights'],r['drops'],r['ball_contacts'],(r.get('failure_event') or {}).get('reason') or r.get('error') or '',e['position_rmse_m'],e['velocity_rmse_m_s'],e['invalid_samples'],r['conditions']['ball_observation']['perception']['trace_sha256']]+extra)
     return '\n'.join(text),stream.getvalue()
 
 

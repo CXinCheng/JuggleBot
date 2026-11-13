@@ -1,6 +1,6 @@
 # v8 — 感知扰动与控制评估
 
-为 G1 上身与双 LEAP Hand 三球抛接仿真提供球观测、状态估计、感知扰动和基线评估。物理模型与规划初值复用 [v6](../v6_humanoid_hands/README.md)，抛接通过手与球的物理接触实现。
+为 G1 上身与双 LEAP Hand 三球抛接仿真提供球观测、状态估计、感知扰动和基线评估。物理模型复用 [v6](../v6_humanoid_hands/README.md)，完整任务的三球开局与收尾复用 [v7](../v7_three_ball_hold/README.md)。抛接通过手与球的物理接触实现。
 
 ## 运行
 
@@ -26,7 +26,17 @@ uv run python -m v8_robust_control.juggle --throws 1 --observation-mode sampled
 | `--output` | 无 | 实验 JSON 的保存路径，须为新文件 |
 | `--video` | 无 | 保存正常速度 MP4，路径须为新文件 |
 
-一次完整飞行从球离手开始，到确认接稳结束。初始空中球的接球不计入，释放总数可能超过目标飞行数。任务失败返回非零退出码。
+`juggle` 从两球在手、一球在空中开始，不包含三球在手的开局和收尾。一次完整飞行从球离手开始，到确认接稳结束。初始空中球的接球不计入，释放总数可能超过目标飞行数。任务失败返回非零退出码。
+
+### 完整三球任务
+
+`complete_task` 从右手两球、左手一球开始，完成指定次数的抛接，再以右手两球、左手一球结束。`--throws` 须为不小于 4 的偶数，默认 30；`--timeout` 默认 40 s，`--output` 必填且须为新文件。
+
+```bash
+uv run python -m v8_robust_control.complete_task --throws 30 --observation-mode sampled --output v8_robust_control/results/complete_sampled30.json
+```
+
+支持上述 `--observation-mode`、感知扰动、种子和视频参数；采样周期固定为 1/60 s，测量有效期为 0.05 s。扰动仅用于 `sampled` 模式。`--seed-plans` 可指定完整任务的规划初值，默认使用 [complete_seed_plans.json](complete_seed_plans.json)。
 
 ## 观测接口
 
@@ -59,7 +69,9 @@ uv run python -m v8_robust_control.juggle --throws 1 --observation-mode sampled
 
 动作执行前检查接球稳定性、下一次抛球的准备状态、碰撞和关节姿态。两种观测模式使用相同的控制逻辑。
 
-采样估计用于实时接球预测。持球控制、接触判定、安全检查和规划试算使用仿真真值。
+采样估计用于实时接球及完整任务的收尾预测。持球控制、接触判定、安全检查和规划试算使用仿真真值。
+
+[CompleteCascade](complete_task.py) 复用三球开局与收尾控制，并接入观测和完整任务验收。
 
 ## 验证
 
@@ -91,6 +103,38 @@ uv run python -m v8_robust_control.verify_baselines --observation-mode sampled -
 | [sampled，50 次](results/sampled_baseline50.json) | 50/50 | 52 | 0 | 0 | 16.671 s |
 
 各结果文件记录验收指标、运行配置，以及源码和规划初值的 SHA-256 校验值。
+
+### 完整任务参考结果
+
+```bash
+uv run python -m v8_robust_control.complete_task --throws 30 --observation-mode truth --output v8_robust_control/results/complete_truth30.json
+uv run python -m v8_robust_control.complete_task --throws 50 --observation-mode truth --output v8_robust_control/results/complete_truth50.json
+uv run python -m v8_robust_control.complete_task --throws 50 --observation-mode sampled --output v8_robust_control/results/complete_sampled50.json
+```
+
+各零扰动任务独立运行，结束时三球均连续接稳 0.8 s。
+
+| 模式及记录 | 完成飞行 | 掉球 | 禁止的球球接触 | 仿真时长 |
+| --- | --- | --- | --- | --- |
+| [truth，30 次](results/complete_truth30.json) | 30/30 | 0 | 0 | 11.147 s |
+| [sampled，30 次](results/complete_sampled30.json) | 30/30 | 0 | 0 | 11.145 s |
+| [truth，50 次](results/complete_truth50.json) | 50/50 | 0 | 0 | 17.562 s |
+| [sampled，50 次](results/complete_sampled50.json) | 50/50 | 0 | 0 | 17.562 s |
+
+### 完整任务验收
+
+| 检查 | 条件 |
+| --- | --- |
+| 开局 | 三球接触对应手部并连续稳定至少 0.05 s，才启动首次抛球 |
+| 完成次数 | 恰好释放指定次数，每个释放编号均已确认接回，结束时无空中球 |
+| 最终持球 | 三球连续 0.8 s 接触手部，相对手掌速度均小于 0.15 m/s，球心距对应掌心小于 0.16 m，球高大于 0.40 m |
+| 收尾接近 | 在提前到达时间之外保留至少 25 ms 接近余量，当前要求预测剩余飞行时间大于 125 ms |
+| 球球接触 | 仅首次确认释放前允许开局右手的球 0/2 接触，且保留球仍接触右手、两球均在承托范围内；该接触单独记录。此后的球球接触判为失败 |
+| 姿态 | 默认支架高度下，球高低于 1.30 m、掌心高度不超过 1.15 m、手肘至少低于肩部 0.08 m、手肘外展小于 0.10 m、腕部俯仰绝对值小于 38°、关节越限量不超过 0.004 rad；收尾不放宽限制 |
+| 其他接触 | 臂部与躯干等非手指内部接触的穿透深度不超过 4 mm；球触地面、支架、手臂，以及两臂相撞均判为失败 |
+| 规划失败 | 同一次抛球最多进行 8 次规划尝试，不可行时以 `NO_FEASIBLE_THROW` 停止；接球规划不可行时以 `NO_FEASIBLE_RECEPTION` 停止 |
+
+JSON 保存配置、逐球承托证据、姿态指标及源码和标定文件的 SHA-256 校验值。开局允许的球对接触单独保存为 `supported_pair_contact_steps` 和 `supported_pair_force_max_n`。
 
 ## 感知扰动评估
 
@@ -124,6 +168,15 @@ JSONL 保存配置、逐次结果、感知序列校验值和估计误差。汇�
 
 评估结果：[退化报告](results/perception_sensitivity.md)、[逐次指标](results/perception_trials.csv)、[原始记录](results/perception_trials.jsonl)。
 
+完整任务使用 `--task complete`，结果以 `complete_` 前缀区分：
+
+```bash
+uv run python -m v8_robust_control.evaluate_perception --task complete --seeds 0 1 --throws 30 --jobs 3 --output v8_robust_control/results/complete_perception_trials.jsonl --video-cases baseline noise_3mm combined
+uv run python -m v8_robust_control.summarize_perception --input v8_robust_control/results/complete_perception_trials.jsonl --output v8_robust_control/results/complete_perception_sensitivity.md --csv-output v8_robust_control/results/complete_perception_trials.csv --overwrite
+```
+
+完整任务结果：[退化报告](results/complete_perception_sensitivity.md)、[逐次指标](results/complete_perception_trials.csv)、[原始记录](results/complete_perception_trials.jsonl)。`--jobs` 默认为 1。每组两个种子的结果不作为总体成功概率的精确估计。
+
 ## 视频
 
 演示：[感知扰动对照视频](../videos/v8_perception_before_rl.mp4)。画面标注配置、种子、完成次数和停止原因；对应试验信息见 [video_comparison.json](results/video_comparison.json)。
@@ -150,4 +203,25 @@ uv run python -m v8_robust_control.compare_videos --input v8_robust_control/resu
 
 `--cases` 指定单个配置时可生成单独的展示片段。`--output` 指定视频路径，`--metadata-output` 指定结果目录中的 JSON 路径；两者均须为新文件。
 
+完整任务的原始视频命名为 `videos/v8_complete_before_rl_<配置>_seed<种子>.mp4`。生成对应的并排视频：
+
+```bash
+uv run python -m v8_robust_control.compare_videos --input v8_robust_control/results/complete_perception_trials.jsonl --cases baseline noise_3mm combined --seed 0 --output videos/v8_complete_perception_before_rl.mp4 --metadata-output v8_robust_control/results/complete_video_comparison.json
+```
+
+完整任务演示：[零扰动](../videos/v8_complete_before_rl_baseline_seed0.mp4)、[感知扰动对照](../videos/v8_complete_perception_before_rl.mp4)、[视频信息](results/complete_video_comparison.json)。
+
 本实现支持感知扰动评估。执行器延迟、物理参数随机化和 RL 不在当前实现范围内。
+
+## 规划初值
+
+完整任务默认加载 [complete_seed_plans.json](complete_seed_plans.json)。初值包含手部运动参数，供规划器试算与修正，不用于回放或覆盖球状态。复现现有基线无需重新标定。
+
+修改几何、接触参数或节拍后，可按需重新标定并验证候选初值：
+
+```bash
+uv run python -m v8_robust_control.calibrate_complete --throws 50 --output v8_robust_control/results/complete_seed_candidate.json --report v8_robust_control/results/complete_calibration.jsonl
+uv run python -m v8_robust_control.complete_task --throws 50 --observation-mode sampled --seed-plans v8_robust_control/results/complete_seed_candidate.json --output v8_robust_control/results/complete_candidate_sampled50.json
+```
+
+标定程序仅在完整任务通过后导出初值，JSONL 保留各轮结果；`--input <初值文件>` 可指定起点。

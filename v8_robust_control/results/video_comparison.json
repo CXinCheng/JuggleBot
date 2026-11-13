@@ -1,6 +1,6 @@
 {
   "input": "v8_robust_control/results/perception_trials.jsonl",
-  "input_sha256": "475cab61e4e10ec6e25b39d74161c39c8897637a7aba1a78a5c7bed3004f633d",
+  "input_sha256": "bc9f6d3bcb8f4c7278693dfd170abc26963a9857e3ba6c08962af8ce8200ab95",
   "output": "videos/v8_perception_before_rl.mp4",
   "cases": [
     "baseline",
