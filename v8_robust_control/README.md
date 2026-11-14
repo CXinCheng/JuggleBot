@@ -53,7 +53,7 @@ uv run python -m v8_robust_control.complete_task --throws 30 --observation-mode 
 | `acceleration_m_s2` | 估计加速度；不可用时为 `None` |
 | `valid` | 测量或状态估计是否有效 |
 
-采样模式根据连续三次球位置测量估计速度和加速度，并预测控制时刻的球状态。位置测量依次经过噪声、丢帧和延迟队列后交给估计器。接球规划使用有效且未过期的估计结果。
+三球任务的采样模式根据连续三次球位置测量估计速度和加速度，并预测控制时刻的球状态。位置测量依次经过噪声、丢帧和延迟队列后交给估计器。接球规划使用有效且未过期的估计结果。
 
 噪声按球和坐标轴独立采样；丢帧作用于一次采样中的全部球。固定延迟通过 FIFO 队列实现，接收时间为测量实际交付的物理步时刻。固定种子可重放噪声和丢帧序列。状态估计采用未滤波的三点位置差分。
 
@@ -211,7 +211,7 @@ uv run python -m v8_robust_control.compare_videos --input v8_robust_control/resu
 
 完整任务演示：[零扰动](../videos/v8_complete_before_rl_baseline_seed0.mp4)、[感知扰动对照](../videos/v8_complete_perception_before_rl.mp4)、[视频信息](results/complete_video_comparison.json)。
 
-本实现支持感知扰动评估。执行器延迟、物理参数随机化和 RL 不在当前实现范围内。
+完整三球任务支持感知扰动评估，尚未接入 RL、执行器延迟或物理参数随机化。单球 SAC/PPO 残差控制的训练与评估见 [单球接球残差控制](#单球接球残差控制)。
 
 ## 规划初值
 
@@ -225,3 +225,76 @@ uv run python -m v8_robust_control.complete_task --throws 50 --observation-mode 
 ```
 
 标定程序仅在完整任务通过后导出初值，JSONL 保留各轮结果；`--input <初值文件>` 可指定起点。
+
+## 单球接球残差控制
+
+使用 G1 上身、双 LEAP Hand 和 85 mm、120 g 球，评估经典反馈控制器上的有界残差学习。任务从下降球开始，以左手连续接稳结束，不包含主动抛球或完整三球循环。
+
+### 任务与控制
+
+| 项目 | 默认设置 |
+| --- | --- |
+| 来球 | 落点各轴 ±50 mm；水平速度各轴 ±0.12 m/s；初始高度为承托点上方 0.20 ±0.015 m，向下速度 0.30 ±0.10 m/s |
+| 控制与测量 | 控制 50 Hz，位置测量 60 Hz；测量有效期 50 ms |
+| 状态估计 | 最多八帧位置拟合速度，使用已知重力和物理步长校正；不读取球真值速度 |
+| 名义控制器 | 根据有效估计预测落点，生成限速、限加速度的五次轨迹；掌心接触后下沉缓冲并闭合手指 |
+| 残差 | 掌心 XYZ 每轴 ±15 mm、变化速度不超过 0.15 m/s；手指屈曲协同 ±0.15 rad，并限制变化率 |
+| 成功 | 连续 0.2 s 存在受力手球接触；相对速度小于 0.15 m/s，掌心切向距离小于 40 mm，法向距离为 10–60 mm |
+| 截止时间 | 0.8 s，未接稳判为任务失败 |
+
+球状态只在 `reset` 时初始化；运行中仅写执行器目标，不使用抓握约束、球体外力或球状态回写。姿态和碰撞检查沿用接触控制器的限制，在每个物理步执行。
+
+[ResidualCatchEnv](residual_env.py) 提供 Gymnasium 接口。69 维观测包括估计的球相对位置与速度、有效性和年龄、关节状态、掌心速度、接触、时间、已应用动作，以及名义参考位置误差与速度。测量过期时保留已有参考，不回退到球真值。
+
+扰动仅作用于球位置测量链路；关节、接触信号和物理参数尚未随机化。
+
+重力拟合仅用于自由飞行，首次掌心接触后停止更新。估计过期后，接触阶段依赖接触、本体和名义参考信息，尚未实现接触阶段的球状态跟踪。
+
+### 奖励
+
+接稳成功一次性 +10，失败一次性 −10，随后结束回合。持续惩罚按实际执行时间积分：归一化残差幅度为 `−0.05 × mean(u²)` 每秒，变化惩罚为 `−0.02 × mean(((u − previous_u) / 0.2)²)` 每秒。默认不使用距离引导奖励，不奖励存活、滞空或重复触碰。
+
+球高、禁止接触、姿态限制和接稳判据由独立验收器检查。0.8 s 是观测中可见的任务截止时间，以 `terminated=True` 返回；它不是训练采样预算造成的截断。
+
+### 运行
+
+在仓库根目录执行。输出路径须为新路径；检查点和中间记录保存在已忽略的 `build/`，标准结果保存在 `results/`。
+
+```bash
+uv run python -m unittest v8_robust_control.test_reception_control v8_robust_control.test_residual_env v8_robust_control.test_residual_reporting -v
+uv run python -m v8_robust_control.evaluate_residual --seed-start 1000 --episodes 20 --cases baseline --output v8_robust_control/results/reception_nominal.json
+```
+
+默认训练 PPO，并评估该次训练记录中的策略：
+
+```bash
+uv run python -m v8_robust_control.train_residual --steps 2048 --seeds 0 1 2 --jobs 2 --output-dir build/v8_reception_ppo
+uv run python -m v8_robust_control.evaluate_residual --input-dir build/v8_reception_ppo --seed-start 30000 --episodes 10 --jobs 2 --output build/v8_reception_ppo/test.json
+```
+
+SAC 可通过 `--algorithms sac` 显式启用。以下命令复现仓库保存的双算法对照，各使用三个训练种子和相同控制步预算：
+
+```bash
+uv run python -m v8_robust_control.train_residual --algorithms sac ppo --steps 2048 --seeds 0 1 2 --learning-rates 0.0003 --shaping-weights 0 --eval-episodes 10 --jobs 2 --output-dir build/v8_reception_training
+uv run python -m v8_robust_control.summarize_residual --input-dir build/v8_reception_training --output v8_robust_control/results/reception_training.json --report build/v8_reception_training/validation.md
+```
+
+训练回合按 25%、35%、25%、15% 的概率使用零扰动、1 mm、3 mm 和组合条件（3 mm、20 ms、10% 丢帧）。两种算法均从零均值、小幅 gSDE 探索开始，记录实际训练耗时并验证策略保存、加载一致性。`--steps` 须为 128 的整数倍。
+
+### 独立测试与反馈诊断
+
+评估默认按训练记录选择算法，可用 `--algorithms ppo` 或 `--algorithms sac` 过滤。验证种子从 10000 开始；独立测试使用另一组种子，关闭探索，保留全部训练种子的结果：
+
+```bash
+uv run python -m v8_robust_control.evaluate_residual --input-dir build/v8_reception_training --seed-start 30000 --episodes 10 --cases baseline noise_3mm combined noise_10mm delay_40ms dropout_30pct --jobs 2 --output v8_robust_control/results/reception_test.json
+uv run python -m v8_robust_control.audit_residual_feedback --input-dir build/v8_reception_training --output v8_robust_control/results/reception_feedback.json --checkpoints sac_seed0_lr0.0003_shape0.zip ppo_seed0_lr0.0003_shape0.zip
+uv run python -m v8_robust_control.summarize_residual --input v8_robust_control/results/reception_test.json --training v8_robust_control/results/reception_training.json --nominal v8_robust_control/results/reception_nominal.json --feedback v8_robust_control/results/reception_feedback.json --report v8_robust_control/results/reception_report.md
+```
+
+`zero` 为无残差的经典反馈控制器；`static` 仅关闭其落点预测，保留相同抓握和缓冲。反馈诊断另测试完全丢失球测量、遮盖策略的直接球状态字段，以及冻结策略初始输出。后两种仍保留名义控制器及其参考，不能解释为整个系统没有球信息。
+
+结果记录配置、源码校验值、检查点校验值、逐次接稳证据、失败原因和动作指标。训练报告可直接从 `reception_training.json` 再生成，无需检查点；独立测试报告同理。算法采用与否以跨种子成功率、安全指标及零扰动表现为准，不以训练回报或单个最佳策略为准。
+
+参考结果：[评估报告](results/reception_report.md)、[名义验收](results/reception_nominal.json)、[训练与验证](results/reception_training.json)、[独立测试](results/reception_test.json)、[反馈诊断](results/reception_feedback.json)。
+
+本环境是接球子任务。通过后仍需验证单球抛接、双球和完整三球任务；完整任务入口尚未接入学习策略。
