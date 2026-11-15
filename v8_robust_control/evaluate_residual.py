@@ -19,27 +19,9 @@ TEST_CASES = dict(EVALUATION_CASES,
 
 
 def compatible_training_sources(recorded, current=None):
-    """Keep runtime checks strict while accepting the former CLI default.
-
-    Existing checkpoints predate the change from both algorithms to PPO by
-    default. Accept only the exact byte-level entry change; all other files
-    and all training/environment code must retain their recorded hashes.
-    """
+    """A changed observation/controller runtime requires a new training run."""
     current = source_hashes() if current is None else current
-    if recorded == current:
-        return True
-    entry = Path(__file__).with_name('train_residual.py')
-    entry_key = entry.relative_to(entry.parents[1]).as_posix()
-    content = entry.read_bytes()
-    new_default = b"choices=['sac', 'ppo'], default=['ppo']"
-    old_default = b"choices=['sac', 'ppo'], default=['sac', 'ppo']"
-    if content.count(new_default) != 1:
-        return False
-    allowed = {hashlib.sha256(content).hexdigest(),
-               hashlib.sha256(content.replace(new_default, old_default, 1)).hexdigest()}
-    return (recorded.get(entry_key) in allowed and current.get(entry_key) in allowed
-            and {k: v for k, v in recorded.items() if k != entry_key}
-                == {k: v for k, v in current.items() if k != entry_key})
+    return recorded == current
 
 
 def select_training_rows(rows, algorithms=None):
@@ -63,12 +45,15 @@ def evaluate_checkpoint(arguments):
         raise ValueError('Checkpoint checksum mismatch')
     model_type = SAC if row['algorithm'] == 'sac' else PPO
     model = model_type.load(path, device='cpu')
+    if model.num_timesteps != row.get('selected_training_steps', row.get('training_steps', model.num_timesteps)):
+        raise ValueError('Checkpoint training budget does not match the record')
     if model.observation_space.shape != (ResidualCatchEnv.OBSERVATION_SIZE,):
         raise ValueError('Policy belongs to a different environment version')
     records = evaluate(model, config, seeds, policies=('learned',), cases=cases)
     print(path.name, json.dumps(summary(records)), flush=True)
     return dict(kind='trained', algorithm=row['algorithm'], seed=row['seed'],
                 learning_rate=row['learning_rate'], shaping_weight=row['shaping_weight'],
+                selected_training_steps=row.get('selected_training_steps', row.get('training_steps')),
                 checkpoint=path.name, checkpoint_sha256=digest, trials=records)
 
 
@@ -125,6 +110,7 @@ def main():
                    evaluation_source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                    screening_rule=('every training seed must preserve baseline success; '
                                    'pooled perturbed success must exceed paired nominal; '
+                                   'no training seed may increase unsafe failures over nominal; '
                                    'no automatic deployment'),
                    scope='confirmation' if training else 'nominal_controller_verification')
     args.output.parent.mkdir(parents=True, exist_ok=True)

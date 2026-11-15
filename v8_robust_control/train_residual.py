@@ -7,6 +7,9 @@ import importlib.metadata
 import json
 from pathlib import Path
 import time
+import shutil
+import random
+from contextlib import contextmanager
 from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
@@ -15,7 +18,7 @@ import torch
 from stable_baselines3 import PPO, SAC
 from stable_baselines3.common.callbacks import BaseCallback
 
-from .residual_env import CatchConfig, ResidualCatchEnv
+from .residual_env import CatchConfig, ResidualCatchEnv, UNSAFE_REASONS
 
 
 EVALUATION_CASES = {
@@ -23,9 +26,24 @@ EVALUATION_CASES = {
     'noise_1mm': {'noise_std_m': .001},
     'noise_3mm': {'noise_std_m': .003},
     'combined': {'noise_std_m': .003, 'delay_s': .02, 'dropout': .1},
+    'noise_10mm': {'noise_std_m': .010},
+    'delay_40ms': {'delay_s': .040},
+    'dropout_30pct': {'dropout': .30},
 }
 EVALUATION_SEED_START = 10000
-TRAINING_CASE_PROBABILITIES = (.25, .35, .25, .15)
+TRAINING_CASE_PROBABILITIES = (.25, .15, .20, .15, .10, .10, .05)
+
+
+@contextmanager
+def isolated_evaluation_rng():
+    """Model loading and evaluation must not reseed subsequent training."""
+    states = random.getstate(), np.random.get_state(), torch.random.get_rng_state()
+    try:
+        yield
+    finally:
+        random.setstate(states[0])
+        np.random.set_state(states[1])
+        torch.random.set_rng_state(states[2])
 
 
 class RandomizedReception(gym.Wrapper):
@@ -53,10 +71,12 @@ class RandomizedReception(gym.Wrapper):
 
 
 class TrainingProgress(BaseCallback):
-    def __init__(self):
+    def __init__(self, label=''):
         super().__init__()
         self.episodes = self.successes = 0
         self.reasons = Counter()
+        self.label = label
+        self.next_progress = 1024
 
     def _on_step(self):
         for done, info in zip(self.locals['dones'], self.locals['infos']):
@@ -64,6 +84,10 @@ class TrainingProgress(BaseCallback):
                 self.episodes += 1
                 self.successes += int(info['is_success'])
                 self.reasons[info['reason']] += 1
+        if self.num_timesteps >= self.next_progress:
+            print('[Progress]', self.label, self.num_timesteps,
+                  'episodes', self.episodes, 'successes', self.successes, flush=True)
+            self.next_progress += 1024
         return True
 
 
@@ -155,26 +179,51 @@ def summary(records):
     return values
 
 
+def validation_score(trials, nominal_successes, cases=None):
+    cases = cases or EVALUATION_CASES
+    counts = {case: sum(t['is_success'] for t in trials if t['case'] == case) for case in cases}
+    unsafe = sum(t['reason'] in UNSAFE_REASONS for t in trials)
+    preserves = counts['baseline'] >= nominal_successes['baseline']
+    safe = unsafe <= nominal_successes.get('unsafe', 0)
+    return (int(preserves and safe), int(preserves), -max(0, unsafe-nominal_successes.get('unsafe', 0)), min(counts.values()),
+            sum(counts.values()), -unsafe, -float(np.mean([t['residual_rms'] for t in trials])))
+
+
 def train_run(arguments):
-    algorithm, seed, lr, weight, steps, config, seeds, output_dir = arguments
+    algorithm, seed, lr, weight, steps, config, seeds, output_dir, budgets, nominal = arguments
     torch.set_num_threads(1)
     name = f'{algorithm}_seed{seed}_lr{lr:g}_shape{weight:g}'
     env = RandomizedReception(ResidualCatchEnv(replace(config, shaping_weight=weight)))
     try:
-        callback = TrainingProgress()
+        callback = TrainingProgress(name)
         model = create_model(algorithm, env, seed, lr)
-        start = time.perf_counter()
-        print('[Train]', name, steps, flush=True)
-        model.learn(total_timesteps=steps, callback=callback)
-        duration = time.perf_counter()-start
+        curve = []
+        duration = 0.
+        for budget in budgets:
+            start = time.perf_counter()
+            print('[Train]', name, 'to', budget, flush=True)
+            model.learn(total_timesteps=budget-model.num_timesteps, callback=callback, reset_num_timesteps=False)
+            duration += time.perf_counter()-start
+            point = output_dir/(name+f'_step{budget}.zip')
+            # Do not reset the training environment between learning chunks:
+            # the next rollout must retain the last observation and RNG state.
+            probe = np.asarray(model._last_obs).copy()
+            before, _ = model.predict(probe, deterministic=True)
+            model.save(point)
+            with isolated_evaluation_rng():
+                loaded = type(model).load(point, device='cpu')
+                after, _ = loaded.predict(probe, deterministic=True)
+                np.testing.assert_array_equal(before, after)
+                records = evaluate(loaded, config, seeds, policies=('learned',))
+            losses = {k: float(v) for k, v in model.logger.name_to_value.items()
+                      if k.startswith('train/') and np.isscalar(v) and np.isfinite(v)}
+            curve.append(dict(training_steps=budget, training_wall_time_s=duration,
+                              checkpoint=point.name, checkpoint_sha256=hashlib.sha256(point.read_bytes()).hexdigest(),
+                              validation_score=list(validation_score(records, nominal)), losses=losses, trials=records))
+            print('[Validated]', name, budget, json.dumps(summary(records)), flush=True)
+        selected = max(curve, key=lambda p: (tuple(p['validation_score']), -p['training_steps']))
         checkpoint = output_dir/(name+'.zip')
-        obs, _ = env.reset(seed=100)
-        before, _ = model.predict(obs, deterministic=True)
-        model.save(checkpoint)
-        loaded = type(model).load(checkpoint, device='cpu')
-        after, _ = loaded.predict(obs, deterministic=True)
-        np.testing.assert_array_equal(before, after)
-        records = evaluate(loaded, config, seeds, policies=('learned',))
+        shutil.copyfile(output_dir/selected['checkpoint'], checkpoint)
         row = dict(kind='trained', algorithm=algorithm, seed=seed,
                    learning_rate=lr, shaping_weight=weight,
                    training_steps=model.num_timesteps, training_wall_time_s=duration,
@@ -182,8 +231,9 @@ def train_run(arguments):
                    training_episodes=callback.episodes, training_successes=callback.successes,
                    training_outcomes=dict(callback.reasons), checkpoint=checkpoint.name,
                    checkpoint_sha256=hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
-                   save_load_verified=True, trials=records)
-        print('[Evaluated]', name, json.dumps(summary(records)), flush=True)
+                   selected_training_steps=selected['training_steps'], validation_curve=curve,
+                   save_load_verified=True, trials=selected['trials'])
+        print('[Selected]', name, selected['training_steps'], flush=True)
         return row
     finally:
         env.close()
@@ -193,36 +243,45 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output-dir', type=Path, required=True)
     parser.add_argument('--steps', type=int, default=2048)
+    parser.add_argument('--checkpoints', type=int, nargs='+', help='Increasing validation budgets ending at --steps')
     parser.add_argument('--seeds', type=int, nargs='+', default=[0, 1, 2])
     parser.add_argument('--algorithms', nargs='+', choices=['sac', 'ppo'], default=['ppo'])
     parser.add_argument('--learning-rates', type=float, nargs='+', default=[.0003])
     parser.add_argument('--shaping-weights', type=float, nargs='+', default=[0.])
     parser.add_argument('--eval-episodes', type=int, default=10, help='Validation episodes per perception case')
     parser.add_argument('--jobs', type=int, default=1, help='Concurrent independent training runs')
+    parser.add_argument('--validation-seed-start', type=int, default=EVALUATION_SEED_START)
     args = parser.parse_args()
+    budgets = args.checkpoints or [args.steps]
     if (args.steps < 128 or args.steps % 128 or args.eval_episodes < 1 or args.jobs < 1
             or len(set(args.seeds)) != len(args.seeds)
             or any(seed < 0 or seed >= EVALUATION_SEED_START for seed in args.seeds)
             or any(not np.isfinite(x) or x <= 0 for x in args.learning_rates)
-            or any(not np.isfinite(x) or x < 0 for x in args.shaping_weights)):
+            or any(not np.isfinite(x) or x < 0 for x in args.shaping_weights)
+            or budgets != sorted(set(budgets)) or budgets[-1] != args.steps
+            or any(b < 128 or b % 128 for b in budgets)
+            or args.validation_seed_start < EVALUATION_SEED_START):
         parser.error('Require positive budgets, steps divisible by 128, distinct training seeds < 10000')
     if args.output_dir.exists():
         parser.error('Output directory must be new')
     args.output_dir.mkdir(parents=True)
     torch.set_num_threads(1)
     config = CatchConfig()
-    seeds = list(range(EVALUATION_SEED_START, EVALUATION_SEED_START+args.eval_episodes))
+    seeds = list(range(args.validation_seed_start, args.validation_seed_start+args.eval_episodes))
     hashes = source_hashes()
     manifest = dict(task='single_ball_reception', config=asdict(config),
                     environment_version=ResidualCatchEnv.ENVIRONMENT_VERSION,
                     algorithms=args.algorithms, steps=args.steps, training_seeds=args.seeds,
                     jobs=args.jobs,
+                    checkpoints=budgets, control_policies=['zero', 'static'],
+                    validation_selection='baseline and safety non-regression first, baseline preservation, unsafe excess, worst-case success, total success, fewer unsafe failures, smaller residual; earlier budget on ties',
                     evaluation_seeds=seeds, learning_rates=args.learning_rates,
                     shaping_weights=args.shaping_weights, evaluation_cases=EVALUATION_CASES,
                     training_perception_cases=EVALUATION_CASES,
                     training_case_probabilities=TRAINING_CASE_PROBABILITIES,
                     policy_settings=dict(hidden_layers=[64, 64], activation='tanh',
                                          exploration='gSDE', initial_log_std=-3., noise_resample_steps=4),
+                    residual_application='relax grip after hand contact; additional closing requires current palm support; XYZ additionally waits for wrapping completion and a sufficiently certain valid estimate',
                     source_sha256=hashes,
                     versions={n: importlib.metadata.version(n) for n in
                               ('gymnasium', 'stable-baselines3', 'torch', 'mujoco', 'numpy')},
@@ -231,11 +290,14 @@ def main():
                     scope='reception only; no throw policy or complete-task RL')
     (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
     with (args.output_dir/'trials.jsonl').open('x', encoding='utf-8') as stream:
-        controls = evaluate(None, config, seeds, policies=('zero', 'static', 'random'))
+        controls = evaluate(None, config, seeds, policies=('zero', 'static'))
         stream.write(json.dumps(dict(kind='controls', trials=controls))+'\n')
         stream.flush()
         print('[Controls]', json.dumps(summary(controls)), flush=True)
-        tasks = [(a, s, lr, w, args.steps, config, seeds, args.output_dir)
+        nominal = {case: sum(t['is_success'] for t in controls if t['policy'] == 'zero' and t['case'] == case)
+                   for case in EVALUATION_CASES}
+        nominal['unsafe'] = sum(t['reason'] in UNSAFE_REASONS for t in controls if t['policy'] == 'zero')
+        tasks = [(a, s, lr, w, args.steps, config, seeds, args.output_dir, budgets, nominal)
                  for w in args.shaping_weights for lr in args.learning_rates
                  for a in args.algorithms for s in args.seeds]
         pool = ProcessPoolExecutor(args.jobs) if args.jobs > 1 else None

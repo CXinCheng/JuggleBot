@@ -6,6 +6,7 @@ import unittest
 from .train_residual import EVALUATION_CASES
 from .residual_env import CatchConfig
 from .summarize_residual import summarize, validate, archived_trials, confirmation_report, screening_decisions
+from .train_residual import validation_score
 from .audit_residual_feedback import FeedbackAblation
 import numpy as np
 import hashlib
@@ -13,6 +14,20 @@ import json
 
 
 class ResidualReportTests(unittest.TestCase):
+    def test_previous_environment_archives_remain_readable(self):
+        for version in (2, 3):
+            manifest, rows = self.records()
+            legacy_cases = dict(list(EVALUATION_CASES.items())[:4])
+            manifest.update(environment_version=version, evaluation_cases=legacy_cases)
+            for row in rows:
+                row['trials'] = [t for t in row['trials'] if t['case'] in legacy_cases]
+                for trial in row['trials']:
+                    trial['environment_version'] = version
+            raw = ''.join(json.dumps(row)+'\n' for row in rows).encode()
+            archive = dict(manifest=manifest, records=rows, trials_sha256=hashlib.sha256(raw).hexdigest())
+            restored, _ = archived_trials(archive)
+            validate(archive['manifest'], restored)
+
     def records(self):
         manifest = dict(algorithms=['sac', 'ppo'], training_seeds=[0, 1, 2],
                         environment_version=2,
@@ -60,6 +75,58 @@ class ResidualReportTests(unittest.TestCase):
         for changed in (rows[:-1], rows+[deepcopy(rows[-1])]):
             with self.assertRaises(ValueError):
                 validate(manifest, changed)
+
+    def learning_records(self):
+        manifest, rows = self.records()
+        manifest.update(environment_version=4, checkpoints=[128, 512])
+        for row in rows:
+            for trial in row['trials']:
+                trial['environment_version'] = 4
+        nominal = {case: 1 for case in EVALUATION_CASES}
+        for row in rows[1:]:
+            score = list(validation_score(row['trials'], nominal))
+            row.update(selected_training_steps=128, checkpoint_sha256='selected')
+            row['validation_curve'] = [dict(training_steps=b, trials=deepcopy(row['trials']),
+                                          checkpoint_sha256='selected' if b == 128 else 'last',
+                                          validation_score=score.copy()) for b in (128, 512)]
+        return manifest, rows
+
+    def test_validation_curve_selection_and_coverage(self):
+        manifest, rows = self.learning_records()
+        self.assertIn('学习曲线', summarize(manifest, rows)[1])
+        for mutate in ('missing', 'duplicate', 'wrong_score', 'later_tie'):
+            changed = deepcopy(rows)
+            run = changed[-1]
+            if mutate == 'missing':
+                run['validation_curve'].pop()
+            elif mutate == 'duplicate':
+                run['validation_curve'][0]['trials'].append(deepcopy(run['trials'][0]))
+            elif mutate == 'wrong_score':
+                run['validation_curve'][0]['validation_score'][0] = -1
+            else:
+                run.update(selected_training_steps=512, checkpoint_sha256='last')
+            with self.assertRaises(ValueError, msg=mutate):
+                validate(manifest, changed)
+
+    def test_selection_prioritizes_baseline_preservation(self):
+        _, rows = self.learning_records()
+        nominal = {case: 1 for case in EVALUATION_CASES}
+        safe = rows[1]['trials']
+        regressed = deepcopy(safe)
+        regressed[0].update(is_success=False, reason='BALL_DROPPED')
+        self.assertGreater(validation_score(safe, nominal), validation_score(regressed, nominal))
+
+    def test_selection_rejects_safety_regression_before_success_gain(self):
+        _, rows = self.learning_records()
+        nominal = {case: 1 for case in EVALUATION_CASES}
+        nominal['unsafe'] = 0
+        safe = deepcopy(rows[1]['trials'])
+        risky = deepcopy(safe)
+        safe[-1].update(is_success=False, reason='BALL_DROPPED')
+        safe[-2].update(is_success=False, reason='BALL_DROPPED')
+        risky[-1].update(is_success=False, reason='FORBIDDEN_CONTACT')
+        self.assertGreater(sum(t['is_success'] for t in risky), sum(t['is_success'] for t in safe))
+        self.assertGreater(validation_score(safe, nominal), validation_score(risky, nominal))
 
     def test_training_and_evaluation_seeds_must_be_disjoint(self):
         manifest, rows = self.records()
@@ -134,6 +201,19 @@ class ConfirmationReportTests(unittest.TestCase):
         self.assertIn('| sac | 3/3', text)
         self.assertIn('| ppo | 3/3', text)
 
+    def test_paired_counts_distinguish_actual_control_trials_from_repeats(self):
+        receipt = self.receipt()
+        receipt['environment_version'] = 4
+        for row in receipt['records']:
+            for trial in row['trials']:
+                trial['environment_version'] = 4
+        decision = screening_decisions(receipt)['ppo']
+        actual = len(EVALUATION_CASES)-1
+        self.assertEqual(decision['nominal_perturbed'], actual)
+        self.assertEqual(decision['perturbed_episodes_per_seed'], actual)
+        self.assertEqual(decision['perturbed_per_seed'], [actual]*3)
+        self.assertEqual(decision['paired_perturbed_gain'], 0)
+
     def test_reusing_validation_seeds_is_rejected(self):
         receipt = self.receipt()
         receipt['evaluation_seeds'] = [10000]
@@ -170,6 +250,25 @@ class ConfirmationReportTests(unittest.TestCase):
         trial.update(is_success=False, reason='TASK_DEADLINE')
         with self.assertRaisesRegex(ValueError, 'Terminal reward'):
             confirmation_report(receipt)
+
+    def test_success_gain_cannot_hide_increased_unsafe_failures(self):
+        receipt = self.receipt()
+        receipt['environment_version'] = 3
+        for row in receipt['records']:
+            for trial in row['trials']:
+                trial['environment_version'] = 3
+        def fail(trial, reason):
+            trial.update(is_success=False, reason=reason, stable_contact_s=0.,
+                         episode_return=-10.1, reward_sums=dict(event=-10., shaping=-.1))
+        for trial in receipt['records'][0]['trials']:
+            if trial['policy'] == 'zero' and trial['case'] != 'baseline':
+                fail(trial, 'BALL_DROPPED')
+        fail(receipt['records'][1]['trials'][1], 'FORBIDDEN_CONTACT')
+        decision = screening_decisions(receipt)['sac']
+        self.assertGreater(decision['paired_perturbed_gain'], 0)
+        self.assertTrue(decision['baseline_preserved'])
+        self.assertFalse(decision['safety_preserved'])
+        self.assertFalse(decision['candidate_gate'])
 
 
 if __name__ == '__main__':

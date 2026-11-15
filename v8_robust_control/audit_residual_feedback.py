@@ -9,7 +9,7 @@ import numpy as np
 import torch
 from stable_baselines3 import PPO, SAC
 
-from .train_residual import EVALUATION_CASES, evaluate, summary
+from .train_residual import EVALUATION_CASES, evaluate, summary, source_hashes
 from .residual_env import CatchConfig, ResidualCatchEnv
 from .evaluate_residual import compatible_training_sources, select_training_rows
 
@@ -42,10 +42,13 @@ def main():
     args = parser.parse_args()
     if args.output.exists() or args.seed_start < 0 or args.episodes < 1:
         parser.error('Output must be new and evaluation seeds must be valid')
+    if not json.loads((args.input_dir/'complete.json').read_text())['complete']:
+        raise ValueError('Training run is incomplete')
+    fingerprints = source_hashes()
     manifest = json.loads((args.input_dir/'manifest.json').read_text())
     if manifest['environment_version'] != ResidualCatchEnv.ENVIRONMENT_VERSION:
         raise ValueError('Environment version mismatch')
-    if not compatible_training_sources(manifest['source_sha256']):
+    if not compatible_training_sources(manifest['source_sha256'], fingerprints):
         raise ValueError('Use the training revision for feedback diagnostics')
     config = CatchConfig(**manifest['config'])
     evaluation_seeds = list(range(args.seed_start, args.seed_start+args.episodes))
@@ -70,6 +73,8 @@ def main():
             raise ValueError('Checkpoint checksum mismatch')
         model_type = SAC if row['algorithm'] == 'sac' else PPO
         model = model_type.load(path, device='cpu')
+        if model.num_timesteps != row.get('selected_training_steps', row['training_steps']):
+            raise ValueError('Checkpoint training budget does not match the record')
         for mode in ('unmodified', 'masked_ball', 'frozen_initial'):
             rows = evaluate(FeedbackAblation(model, mode), config,
                             evaluation_seeds, policies=('learned',), cases=cases)
@@ -77,6 +82,8 @@ def main():
                                 checkpoint_sha256=digest,
                                 mode=mode, trials=rows))
             print(name, mode, json.dumps(summary(rows)), flush=True)
+    if source_hashes() != fingerprints:
+        raise ValueError('Feedback diagnostic source changed during execution')
     result = dict(task='single_ball_reception', environment_version=ResidualCatchEnv.ENVIRONMENT_VERSION,
                   scope='feedback_diagnostic', config=asdict(config), training_manifest=manifest, records=records,
                   evaluation_cases=cases, evaluation_seeds=evaluation_seeds,

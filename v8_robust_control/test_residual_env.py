@@ -58,6 +58,16 @@ class RewardAcceptanceTests(unittest.TestCase):
             self.assertLess(failure, 0.)
             self.assertGreater(success, failure)
 
+    def test_unsafe_contact_has_stronger_penalty_than_an_ordinary_miss(self):
+        config = CatchConfig()
+        action = np.zeros(4)
+        missed = transition_reward(config, 0., 0., .02, action, action, 'BALL_DROPPED')[0]
+        unsafe = transition_reward(config, 0., 0., .02, action, action, 'FORBIDDEN_CONTACT')[0]
+        self.assertLess(unsafe, missed)
+        self.assertLess(missed, 0.)
+        with self.assertRaises(ValueError):
+            replace(config, unsafe_failure_reward=-5.)
+
     def test_discounted_shaping_telescopes_for_all_terminal_outcomes(self):
         cfg = replace(CatchConfig(), shaping_weight=.25)
         for potentials in ((.2, 1., .1, .9), (.2, .1, .1, .1)):
@@ -135,6 +145,81 @@ class PhysicalCatchTests(unittest.TestCase):
             self.env.step(np.zeros(4))
         self.assertGreater(self.env.reference.updates, 0)
         self.assertGreater(np.linalg.norm(self.env.reference.last_intercept[:2]-initial[:2]), .001)
+
+    def test_residual_authority_requires_hand_contact(self):
+        obs, _ = self.env.reset(seed=1)
+        np.testing.assert_array_equal(obs[-2:], np.zeros(2))
+        for _ in range(30):
+            permitted = self.env._residual_permitted()
+            position_permitted = self.env._position_residual_permitted()
+            obs, _, done, _, info = self.env.step(np.full(4, .1))
+            if not permitted:
+                np.testing.assert_array_equal(self.env.action, np.zeros(4))
+            if not position_permitted:
+                np.testing.assert_array_equal(self.env.action[:3], np.zeros(3))
+            if permitted and np.any(self.env.action):
+                self.assertGreater(info['residual_active_steps'], 0)
+                return
+            if done:
+                break
+        self.fail('Policy never received contact-phase action authority')
+
+    def test_finger_contact_cannot_command_extra_closing_before_palm_support(self):
+        self.env.reset(seed=1)
+        self.env.last_evidence = CatchEvidence(True, .1, .03, .05, 1.)
+        self.env.palm_contact = False
+        self.env.step(np.full(4, .1))
+        np.testing.assert_array_equal(self.env.action, np.zeros(4))
+        self.env.reset(seed=1)
+        self.env.last_evidence = CatchEvidence(True, .1, .03, .05, 1.)
+        self.env.palm_contact = False
+        self.env.step(np.array([0., 0., 0., -.05]))
+        self.assertLess(self.env.action[3], 0.)
+
+    def test_contact_phase_keeps_position_observation_available(self):
+        self.env.reset(seed=1)
+        available = False
+        for _ in range(45):
+            obs, _, done, _, info = self.env.step(np.zeros(4))
+            if self.env.touch_time is not None and self.env.data.time-self.env.touch_time > .06:
+                available |= bool(obs[6])
+            if done:
+                break
+        self.assertTrue(available)
+        self.assertGreater(info['contact_measurement_updates'], 2)
+
+    def test_post_contact_velocity_truth_cannot_change_policy_observation(self):
+        self.env.reset(seed=1)
+        for _ in range(45):
+            _, _, done, _, _ = self.env.step(np.zeros(4))
+            if self.env.touch_time is not None and self.env.data.time-self.env.touch_time > .06:
+                before = self.env._observation()
+                self.assertTrue(before[6])
+                self.env.data.qvel[self.env.bv:self.env.bv+3] += [1., 2., 3.]
+                mujoco.mj_forward(self.env.model, self.env.data)
+                np.testing.assert_array_equal(before, self.env._observation())
+                return
+            if done:
+                break
+        self.fail('No valid post-contact observation reached')
+
+    def test_forward_cache_reuse_preserves_physical_trajectory(self):
+        reference = ResidualCatchEnv(replace(CatchConfig(), reuse_forward_cache=False))
+        try:
+            reference.reset(seed=3)
+            self.env.reset(seed=3)
+            for _ in range(45):
+                action = np.array([.02, -.03, .01, .02])
+                a = reference.step(action)
+                b = self.env.step(action)
+                np.testing.assert_allclose(reference.data.qpos, self.env.data.qpos, atol=1e-12, rtol=0.)
+                np.testing.assert_allclose(reference.data.qvel, self.env.data.qvel, atol=1e-10, rtol=0.)
+                self.assertEqual(a[2:4], b[2:4])
+                if a[2]:
+                    self.assertEqual(a[4]['reason'], b[4]['reason'])
+                    break
+        finally:
+            reference.close()
 
 
 class PerceptionRandomizationTests(unittest.TestCase):
