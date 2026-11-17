@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "task": "single",
+  "case": "clean",
+  "episode_seed": 0,
+  "controller": "nominal controller + trained PPO residual",
+  "deterministic": true,
+  "training": "v8_robust_control/results/full_transfer/training.json",
+  "training_sha256": "43cd298daaa904df7b6d822818a133cf0d7490700ae55c5e54b350acac7af92e",
+  "training_seed": 0,
+  "selected_step": 32768,
+  "checkpoint": "ppo_seed0.zip",
+  "checkpoint_sha256": "80ef7b14350a99d7f7e127d201a399518a10a466e97d50604da60b3d6407713a",
+  "source_sha256": {
+    "v8_robust_control/train_residual.py": "fcc78ab57c247b4bbb8901f47160056060228719e362561a6046af846c3b3d8b",
+    "v8_robust_control/residual_env.py": "05c3ed96a0a1d1ce87e2f3a344a1db69b4f1e6bbb860d228f90db25373742c6c",
+    "v8_robust_control/reception_control.py": "d5ffabd17477a7e4c8644116257b2f08bdeaf71be02f4784d8354884d0ef5735",
+    "src/jugglebot/humanoid/cascade.py": "47903e49d916eb11660961040ac77bcfad73d973053770ff51e06b25030ab432",
+    "src/jugglebot/humanoid/contact_control.py": "7a2f2eac399afa01b9d11b52b4f27d142034c5bc024dd9cee8343943b8e501e5",
+    "src/jugglebot/humanoid/kinematics.py": "d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15",
+    "src/jugglebot/humanoid/logging.py": "6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09",
+    "src/jugglebot/humanoid/metrics.py": "2b3fc325a4b81bc7d6eef10d18c3d8976533be57d69e380302476562b0c0d3af",
+    "src/jugglebot/humanoid/model.py": "2e723b461ea404026be03535a5aec6eab822911410edbc5bdb9ab2b1ec8fb156",
+    "src/jugglebot/humanoid/planning.py": "5b9a846c9ad60450846598c76e14fdda2357d41c4e7f5d09669f6eaec6d70c8c",
+    "src/jugglebot/humanoid/throwing.py": "e787456478c77f5e027d7bdc8f516530f7b7b9629dbbad3662ea543ce2187b26",
+    "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
+    "src/jugglebot/robustness/controller.py": "41928aca7ef055fa098004e0864ad0c500ffee8446396ab45b4bcfb68edb7e4b",
+    "src/jugglebot/robustness/evaluation.py": "056cb1586c8237658e7f5b9e13b23b740a91b01d0cf616e6cf19b084ee7b9461",
+    "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
+    "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
+    "src/jugglebot/robustness/__init__.py": "79474c60c1bc67b396052492cebab1f6c11868ca5cbb421fb877e6d7dd7f8e2f",
+    "pyproject.toml": "90406beaf7bb91f244f79678bb8abdff5bca5dfd8f59cdcc3e9a87e184321a9d",
+    "uv.lock": "f99cafcea22776812dd795e806725be72f17a76343e4f089ffa475a3f3b468c1",
+    "assets/leap_hand/left_hand.xml": "aed631597451a7fe4e81f26887ddb07634dc9500c896f19308e1a531cdf31488",
+    "assets/leap_hand/right_hand.xml": "9d8f25c38bdb60617f378c07b7e71f97306471353c81bf281eb9943f3f2340d8",
+    "assets/leap_hand/UPSTREAM.json": "1dd9c2836a38fa451de7ca869bebf94c8de1cd3232743d97d4e5afb6ac7b2108",
+    "assets/unitree_g1/g1.xml": "3c2616550a31f33e84d3c80b8e913ac5618c8888019b0c9490dae93493e647f3",
+    "assets/ur5e_leap_hands/world.xml": "43c2616bb4e685c78f0b3bd3d553603776754818c0a310d952ed663d3960c7bb",
+    "v8_robust_control/single_ball.py": "dca5bbdc1edf4d5d4c8b3c3b53b79df429e385b9faa8a0260b1065a5e58f0435",
+    "v8_robust_control/transfer_env.py": "508d8f24bf685dbe353b4bfdc5695cc54cabd862dfec3a430d8166a496202184",
+    "v8_robust_control/transfer_observation.py": "031d9f2fd4f9df9dd1434699da25bc92f72d4337c214cd9960ae5155bd70007a",
+    "src/jugglebot/humanoid/leap_cascade_seed_plans.json": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
+    "v8_robust_control/train_transfer.py": "f4816ee79ee65e596cd15dad5ea2b7f5c6adfcef756beeb82a00b3a7c996a192"
+  },
+  "recorder_sha256": "7e0865db42782135988597b8126313a66f0f137b7f62e1097bdc9dcceaea4731",
+  "reference_sha256": "63d9b2b146974f067f6a2a391b70d11da42085ae918371fe418b769b34ed16cf",
+  "reference_manifest_sha256": "841c5844d5deeca176f23b995677452c0018e28542886b7497a3ca28b7389fb5",
+  "video": {
+    "path": "videos/v8_ppo_single_seed0.mp4",
+    "sha256": "21465985cb87bcbe9d40d2065dfee0bffef13fc14df4e1ad86fa2c1ffc41ff8c",
+    "frames": 55,
+    "fps": 50,
+    "speed": 1.0,
+    "duration_s": 1.1,
+    "end_hold_s": 0.0,
+    "width": 1280,
+    "height": 720
+  },
+  "result": {
+    "task": "single_ball_transfer",
+    "environment_version": 2,
+    "config": {
+      "control_period_s": 0.02,
+      "horizon_s": 1.6,
+      "seat_jitter_m": 0.0,
+      "noise_std_m": 0.0,
+      "delay_s": 0.0,
+      "dropout": 0.0,
+      "max_cartesian_offset_m": 0.005,
+      "max_joint_offset_rad": 0.02,
+      "max_joint_rate_rad_s": 0.15,
+      "max_grip_offset_rad": 0.1,
+      "max_grip_rate_rad_s": 0.5
+    },
+    "physics_steps": 1063,
+    "is_success": true,
+    "reason": "SUCCESS",
+    "simulated_time_s": 1.0629999999999937,
+    "failure_event": null,
+    "release_time_s": 0.2610000000000002,
+    "palm_touch_time_s": 0.8410000000000006,
+    "airborne_s": 0.5580000000000004,
+    "initial_hold_max_s": 0.18700000000000014,
+    "final_hold_s": 0.20000000000000015,
+    "episode_return": 9.989637419839024,
+    "reward_sums": {
+      "event": 10.0,
+      "shaping": 0.0,
+      "action": -0.005628526630414896,
+      "rate": -0.004734053530561627
+    },
+    "initial_displacement_m": [
+      0.0,
+      0.0
+    ],
+    "zero_reference_verified": false,
+    "reference_state_max_error": 0.0,
+    "max_ball_height_m": 1.2858665035370551,
+    "max_joint_offset_rad": 0.02,
+    "max_grip_offset_rad": 0.05,
+    "estimation": {
+      "held": {
+        "control_samples": 12,
+        "position_rmse_m": 0.0008007467824565871,
+        "velocity_rmse_m_s": 0.08270498579058075
+      },
+      "flight": {
+        "control_samples": 29,
+        "position_rmse_m": 0.0005413345347304497,
+        "velocity_rmse_m_s": 0.08818935089124821
+      },
+      "contact": {
+        "control_samples": 12,
+        "position_rmse_m": 0.0004115363048190584,
+        "velocity_rmse_m_s": 0.03754498054077317
+      }
+    },
+    "joint_offset_rad": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.006871652901909963,
+        -0.007412190686985622,
+        -0.007472758228924973,
+        -0.006539336505745775,
+        0.007089417289587294,
+        0.0007894718794223084,
+        0.008623904828228675
+      ]
+    ],
+    "grip_offset_rad": [
+      0.0,
+      0.004893863201141358
+    ],
+    "reward_terms": {
+      "event": 10.0,
+      "shaping": 0.0,
+      "action": -1.185689224906297e-05,
+      "rate": -4.142123021466203e-09
+    }
+  },
+  "interpretation": "A demonstration episode, not an independent robustness estimate."
+}

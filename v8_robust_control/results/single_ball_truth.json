@@ -1,0 +1,347 @@
+{
+  "schema_version": 1,
+  "experiment": "single-ball nominal transfer",
+  "requested_flights": 1,
+  "simulated_timeout_s": 5.0,
+  "source_sha256": {
+    "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
+    "src/jugglebot/humanoid/cascade.py": "47903e49d916eb11660961040ac77bcfad73d973053770ff51e06b25030ab432",
+    "src/jugglebot/humanoid/contact_control.py": "7a2f2eac399afa01b9d11b52b4f27d142034c5bc024dd9cee8343943b8e501e5",
+    "src/jugglebot/humanoid/kinematics.py": "d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15",
+    "src/jugglebot/humanoid/logging.py": "6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09",
+    "src/jugglebot/humanoid/metrics.py": "2b3fc325a4b81bc7d6eef10d18c3d8976533be57d69e380302476562b0c0d3af",
+    "src/jugglebot/humanoid/model.py": "2e723b461ea404026be03535a5aec6eab822911410edbc5bdb9ab2b1ec8fb156",
+    "src/jugglebot/humanoid/planning.py": "5b9a846c9ad60450846598c76e14fdda2357d41c4e7f5d09669f6eaec6d70c8c",
+    "src/jugglebot/humanoid/throwing.py": "e787456478c77f5e027d7bdc8f516530f7b7b9629dbbad3662ea543ce2187b26",
+    "src/jugglebot/robustness/__init__.py": "79474c60c1bc67b396052492cebab1f6c11868ca5cbb421fb877e6d7dd7f8e2f",
+    "src/jugglebot/robustness/controller.py": "41928aca7ef055fa098004e0864ad0c500ffee8446396ab45b4bcfb68edb7e4b",
+    "src/jugglebot/robustness/evaluation.py": "056cb1586c8237658e7f5b9e13b23b740a91b01d0cf616e6cf19b084ee7b9461",
+    "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
+    "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
+    "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
+    "v8_robust_control/single_ball.py": "dca5bbdc1edf4d5d4c8b3c3b53b79df429e385b9faa8a0260b1065a5e58f0435"
+  },
+  "optimizer_inputs_sha256": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
+  "result": {
+    "ball_count": 1,
+    "throws": 1,
+    "caught_release_ids": [
+      1
+    ],
+    "releases": [
+      {
+        "time": 0.279,
+        "kind": "release",
+        "side": "right",
+        "ball": 0,
+        "count": 1,
+        "separation_time": 0.2670000000000002,
+        "confirmation_delay": 0.01200000000000001,
+        "position": [
+          0.3269029161846029,
+          -0.0757587708169465,
+          1.026105314523555
+        ],
+        "velocity": [
+          -0.0755216659420824,
+          0.542270395272035,
+          2.274318330558133
+        ]
+      }
+    ],
+    "catches": [
+      {
+        "time": 0.896,
+        "kind": "catch",
+        "side": "left",
+        "ball": 0,
+        "release_id": 1,
+        "palm_touch_time": 0.7890000000000006,
+        "contact_settle_time": 0.1070000000000001,
+        "cushion_depth": 0.07213940707005562,
+        "palm_drop_at_settle": 0.07213940707005562,
+        "incoming_ball_speed": 2.5268007713368514,
+        "touch_palm_vertical_velocity": -1.562958050548196,
+        "initial_relative_speed": 0.9674842077591086,
+        "settled_relative_speed": 0.06077528815610573,
+        "settled_ball_speed": 0.329076790507307,
+        "supporting_digits": [
+          "if",
+          "mf",
+          "rf",
+          "th"
+        ],
+        "contact_distance": -0.0007696983468219037,
+        "contact_body": "lh_palm",
+        "palm_side": 0.02310157924460545,
+        "tangent_offset": 0.008682425104446955
+      }
+    ],
+    "initial_hold_validated": true,
+    "initial_hold_max_s": 0.18000000000000013,
+    "final_hold_s": 0.20000000000000015,
+    "final_evidence": {
+      "contact": true,
+      "relative_speed_m_s": 0.008844206602866812,
+      "tangent_m": 0.012571576773126645,
+      "normal_m": 0.022113561773335646,
+      "ball_height_m": 0.8399834268352665,
+      "forbidden_contact": false,
+      "pose_violation": false,
+      "external_ball_force": false
+    },
+    "error": null,
+    "time_s": 1.0949999999999902,
+    "failure_event": null,
+    "contact_only_checks": 1095,
+    "airborne_physics_checks": 617,
+    "conditions": {
+      "mujoco_version": "3.15.0",
+      "timestep_s": 0.001,
+      "gravity_m_s2": [
+        0.0,
+        0.0,
+        -9.81
+      ],
+      "ball_count": 1,
+      "ball_diameter_m": 0.085,
+      "ball_mass_kg": 0.12,
+      "finger_position_gain": 3.0,
+      "finger_velocity_gain": 0.01,
+      "finger_force_limit_nm": [
+        -0.5,
+        0.5
+      ],
+      "hand_material_rgba": {
+        "rh_black": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.20000000298023224,
+          1.0
+        ],
+        "rh_white": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "lh_black": [
+          0.20000000298023224,
+          0.20000000298023224,
+          0.20000000298023224,
+          1.0
+        ],
+        "lh_white": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      "soft_finger_links": false,
+      "observation": "MuJoCo position and velocity truth",
+      "partial_prediction_noise_m": 0.0,
+      "observation_noise_seed": 0,
+      "source_positions_m": {
+        "right": [
+          0.33,
+          -0.14,
+          0.82
+        ],
+        "left": [
+          0.33,
+          0.14,
+          0.82
+        ]
+      },
+      "catch_positions_m": {
+        "right": [
+          0.3,
+          -0.22,
+          0.86
+        ],
+        "left": [
+          0.3,
+          0.22,
+          0.86
+        ]
+      },
+      "wrist_seat_offsets_m": {
+        "right": [
+          0.13500000000000004,
+          4.7027269231558755e-18,
+          0.0700000000000001
+        ],
+        "left": [
+          0.135,
+          4.174178364069192e-18,
+          0.07000000000000006
+        ]
+      },
+      "palm_mount_quaternions_wxyz": {
+        "right": [
+          0.0,
+          0.9990482215818577,
+          0.0,
+          0.043619387365336
+        ],
+        "left": [
+          0.0,
+          0.9990482215818577,
+          0.0,
+          0.043619387365336
+        ]
+      },
+      "initial_ball_states": [
+        {
+          "position_m": [
+            0.3299938699122762,
+            -0.1400007948188888,
+            0.8420123659181115
+          ],
+          "velocity_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "palm_seat_surfaces_m": {
+        "right": [
+          -0.046,
+          -0.036,
+          -0.034
+        ],
+        "left": [
+          -0.1218,
+          -0.0545,
+          -0.0078
+        ]
+      },
+      "throw_interval_s": 0.32,
+      "flight_target_s": 0.53,
+      "torso_stand_height_m": 0.75,
+      "planned_apex_limit_m": 1.29,
+      "scoop_acceleration_duration_s": 0.14,
+      "scoop_braking_duration_s": 0.1,
+      "post_release_braking_preview_s": 0.08,
+      "scoop_end_angle_rad": 0.7,
+      "throw_palm_back_tilt": 0.18,
+      "throw_lateral_palm_lean": 0.2,
+      "throw_command_fields": [
+        "vx",
+        "vy",
+        "vz",
+        "fore_aft_normal_bias",
+        "finger_release_lead_s"
+      ],
+      "default_finger_release_lead_s": 0.0,
+      "finger_release_lead_limit_s": 0.025,
+      "loaded_source_tilt_deg": 10.0,
+      "initial_hold_tilt_duration_s": 0.08,
+      "throw_ready_margin_s": 0.005,
+      "minimum_loaded_recovery_s": 0.24,
+      "elbow_lateral_posture_gain": 8.0,
+      "wrist_throw_lookahead_s": 0.02,
+      "waist_yaw_stiffness": 1800.0,
+      "digit_contact_memory_s": 0.004,
+      "capture_force_feedback_delay_s": 0.07,
+      "capture_relative_speed_ratio": 0.4,
+      "release_confirmation_s": 0.012,
+      "ball_observation": {
+        "mode": "truth",
+        "frame": "world",
+        "clock": "simulation_seconds",
+        "sample_period_s": null,
+        "max_age_s": null,
+        "position_step_s": null,
+        "interval_clock": null,
+        "velocity_convention": "simulation_truth",
+        "estimator": "truth",
+        "scope": "live reception prediction",
+        "rollout_input": "simulation_truth",
+        "contact_and_safety_input": "simulation_truth",
+        "reception_requires_acceleration": false
+      },
+      "reception_input_precision": {
+        "position_resolution_m": null,
+        "velocity_resolution_m_s": null
+      },
+      "additional_throw_guesses": {
+        "source": "recent_executed_same_hand_launches",
+        "max_guesses": 8,
+        "release_timing": "current_indexed_input",
+        "acceptance": "unchanged_full_physics_certificate"
+      },
+      "reception_forecast": {
+        "initial": "explicit_forecast_or_previous_command",
+        "retry": "explicit_forecast_or_indexed_execution_or_previous_command",
+        "max_retries": 1,
+        "attempted_retries": 0
+      },
+      "release_timing_search": {
+        "candidates": "half_indexed_lead_then_zero",
+        "motion": "unchanged_best_four_parameter_command",
+        "max_trials_per_plan": 2,
+        "attempted_trials": 0,
+        "accepted_trials": 0,
+        "acceptance": "unchanged_full_physics_objective_and_safety_limits"
+      },
+      "reception_tilt_search": {
+        "trigger": "receiver_wrist_pitch_limit_with_centered_timely_captured_ready_ball",
+        "default_amplitude_deg": 5.0,
+        "max_amplitude_deg": 7.5,
+        "max_trials_per_plan": 2,
+        "attempted_trials": 0,
+        "accepted_trials": 0,
+        "acceptance": "zero_error_full_physics_certificate_and_unchanged_safety_limits"
+      },
+      "reception_refinement": {
+        "trigger": "captured_ball_after_failed_indexed_forecast_retry",
+        "max_retries": 1,
+        "attempted_retries": 0,
+        "finite_difference": [
+          0.001,
+          0.001,
+          0.001,
+          0.006,
+          0.006
+        ],
+        "acceptance": "unchanged_reception_acceptance_and_safety_limits"
+      },
+      "early_recovery": {
+        "enabled": true,
+        "active": false,
+        "activation": "late_confirmed_catch_after_loaded_recovery",
+        "lateness_trigger_s": 0.035,
+        "intercept_window_s": [
+          0.025,
+          0.3
+        ],
+        "starts": 0,
+        "finger_control": "existing_release_curve_until_confirmation",
+        "flight_counting": "unchanged_contact_separation_confirmation"
+      }
+    },
+    "style": {
+      "wrist_angle_p95_deg": 31.68508967798965,
+      "wrist_angle_rms_deg": 19.29695573124548,
+      "max_elbow_out_m": 0.08316775138480562,
+      "elbow_out_p95_m": 0.07740912046760601,
+      "wrist_pitch_p95_deg": 30.892835195569795,
+      "wrist_pitch_max_deg": 33.24785244319646,
+      "torso_range_deg": [
+        0.6614558000797803,
+        0.6409370937382121,
+        0.8550773793429122
+      ]
+    },
+    "success": true
+  },
+  "task_scope": "right hold, one release, left stable catch",
+  "observation_mode": "truth",
+  "initial_hold_required_s": 0.05,
+  "final_hold_required_s": 0.2,
+  "residual_control": false,
+  "training_api": false
+}
