@@ -1,0 +1,113 @@
+{
+  "ending_t_start_s": 0.35,
+  "dt_to_impact_max_s": 0.195,
+  "total_wall_s": 4036.0022855999996,
+  "pass_count": "4/4",
+  "rows": [
+    {
+      "seed": 440101,
+      "mode": "state_triggered",
+      "success": true,
+      "wall_timeout": false,
+      "wall_s": 1696.5970799999777,
+      "sim_time_s": 11.342999999999153,
+      "throw_count": 30,
+      "catch_count": 30,
+      "longest_final_support_s": 0.8000000000000006,
+      "trigger_count": 1,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.05460736043503,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.09329995617202791,
+        "time_s": 10.584999999999573,
+        "pair": [
+          0,
+          2
+        ]
+      },
+      "max_rh_elbow_ending": {
+        "elbow_out_m": 0.05523232758970059,
+        "time_s": 10.043999999999873
+      },
+      "error": null,
+      "failure_event": null
+    },
+    {
+      "seed": 440102,
+      "mode": "state_triggered",
+      "success": true,
+      "wall_timeout": false,
+      "wall_s": 1781.3504323999805,
+      "sim_time_s": 11.171999999999247,
+      "throw_count": 30,
+      "catch_count": 30,
+      "longest_final_support_s": 0.8000000000000006,
+      "trigger_count": 2,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.28714364021512,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.09279283313521079,
+        "time_s": 7.908000000000976,
+        "pair": [
+          0,
+          1
+        ]
+      },
+      "max_rh_elbow_ending": {
+        "elbow_out_m": 0.05779245639427692,
+        "time_s": 10.071999999999857
+      },
+      "error": null,
+      "failure_event": null
+    },
+    {
+      "seed": 440104,
+      "mode": "state_triggered",
+      "success": true,
+      "wall_timeout": false,
+      "wall_s": 2336.500716300012,
+      "sim_time_s": 11.170999999999248,
+      "throw_count": 30,
+      "catch_count": 30,
+      "longest_final_support_s": 0.8000000000000006,
+      "trigger_count": 1,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.33838997587407,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.09180571532043956,
+        "time_s": 4.375999999999796,
+        "pair": [
+          0,
+          2
+        ]
+      },
+      "max_rh_elbow_ending": {
+        "elbow_out_m": 0.05477297289176765,
+        "time_s": 10.045999999999871
+      },
+      "error": null,
+      "failure_event": null
+    },
+    {
+      "seed": 440104,
+      "mode": "baseline",
+      "success": true,
+      "wall_timeout": false,
+      "wall_s": 2050.141550200002,
+      "sim_time_s": 11.173999999999246,
+      "throw_count": 30,
+      "catch_count": 30,
+      "longest_final_support_s": 0.8000000000000006,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.33838997587407,
+      "min_interball_post_first_trigger": null,
+      "max_rh_elbow_ending": {
+        "elbow_out_m": 0.05483344168788158,
+        "time_s": 10.04899999999987
+      },
+      "error": null,
+      "failure_event": null
+    }
+  ]
+}

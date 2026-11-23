@@ -1,0 +1,707 @@
+{
+  "wall_timeout": false,
+  "physical_result": "COMPLETE",
+  "total_wall_s": 1307.654538599978,
+  "frozen_rule_file": "build/v8_throw_warmstart_generalization/run_01/frozen_rule.json",
+  "rule": {
+    "err_x0_trigger_threshold_m": 0.12,
+    "dvx_clip_m_s": 0.75,
+    "first_search_only": true
+  },
+  "summary_counts": {
+    "total_snapshots": 4,
+    "reproduced_original_count": 4,
+    "triggered_count": 3,
+    "group_a_accepted": 1,
+    "group_b_accepted": 3,
+    "fail_to_pass_recoveries": 2,
+    "pass_to_fail_regressions": 0
+  },
+  "results": [
+    {
+      "snapshot": {
+        "id": "S1_440203_T12_left",
+        "role": "known_positive_rejected",
+        "seed": 440203,
+        "source_dir": "build/v8_independent_validation_440200_ts35/seed_440203_state_triggered",
+        "throw_idx": 12,
+        "throw_count_at_entry": 11,
+        "side": "left",
+        "time_s": 3.83,
+        "orig_score": 0.14446,
+        "orig_accepted": false
+      },
+      "entry_state": {
+        "time_s": 3.829999999999689,
+        "throw_count": 11,
+        "catch_count": 9,
+        "key": "throw:left:11",
+        "is_retry": false,
+        "held_ball": 0,
+        "seat_m": [
+          0.3273357941276761,
+          0.13479473794336908,
+          0.8168319441629052
+        ],
+        "warm_vec": [
+          0.2365649634575946,
+          -0.6179999640584571,
+          3.729948538714104,
+          -0.1626010499239696
+        ]
+      },
+      "reproduced_original": true,
+      "reproduced_score": true,
+      "reproduced_accepted": true,
+      "pass_to_fail_regression": false,
+      "fail_to_pass_recovery": true,
+      "group_a_native": {
+        "key": "throw:left:11",
+        "is_retry": false,
+        "initial_guess_vec": [
+          0.2365649634575946,
+          -0.6179999640584571,
+          3.729948538714104,
+          -0.1626010499239696
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.33198704855486894,
+          "components": {
+            "land_x_m": 0.3191660536649192,
+            "land_y_m": 0.07096796825169224,
+            "weighted_time_err": -0.05754978782203857,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 90,
+        "probe_trials": 0,
+        "total_trials": 90,
+        "infeasible_count": 0,
+        "planner_wall_s": 790.3738464000053,
+        "probe_wall_s": 0.0,
+        "total_wall_s": 790.3738464000053,
+        "accepted": false,
+        "score": 0.14446272504074384,
+        "objective_components": {
+          "land_x_m": 0.14113561854642392,
+          "land_y_m": 0.02931918257507629,
+          "weighted_time_err": 0.009518489210227798,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.12219964137568542,
+          -0.684428835584819,
+          3.0471632673487323,
+          -0.11129287518251842
+        ],
+        "predicted_release_time": 4.000999999999671
+      },
+      "group_b_probe": {
+        "attempted": true,
+        "triggered": true,
+        "reason": "abs_err_x0_exceeded_threshold (319.2mm > 120mm)",
+        "probe_trials": 1,
+        "probe_wall_s": 1.260176199983107,
+        "warm_vec": [
+          0.2365649634575946,
+          -0.6179999640584571,
+          3.729948538714104,
+          -0.1626010499239696
+        ],
+        "corrected_vec": [
+          -0.3656351377969699,
+          -0.6179999640584571,
+          3.729948538714104,
+          -0.1626010499239696
+        ],
+        "feasible": true,
+        "probe_score": 0.33198704855486894,
+        "probe_components": {
+          "land_x_m": 0.3191660536649192,
+          "land_y_m": 0.07096796825169224,
+          "weighted_time_err": -0.05754978782203857,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "err_x0_m": 0.3191660536649192,
+        "flight_s": 0.53,
+        "dvx_raw_m_s": -0.6022001012545645,
+        "dvx_clipped_m_s": -0.6022001012545645,
+        "was_clipped": false
+      },
+      "group_b_rule": {
+        "key": "throw:left:11",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.3656351377969699,
+          -0.6179999640584571,
+          3.729948538714104,
+          -0.1626010499239696
+        ],
+        "first_eval": {
+          "feasible": false,
+          "error": "evaluate_infeasible_ValueError"
+        },
+        "planner_trials": 36,
+        "probe_trials": 1,
+        "total_trials": 37,
+        "infeasible_count": 10,
+        "planner_wall_s": 42.827421199996024,
+        "probe_wall_s": 1.260176199983107,
+        "total_wall_s": 44.08759739997913,
+        "accepted": true,
+        "score": 0.016243105224776403,
+        "objective_components": {
+          "land_x_m": 0.007795153297137147,
+          "land_y_m": -0.000567304505786792,
+          "weighted_time_err": 0.014239108750726093,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.47938536612490457,
+          -0.7318957507292199,
+          3.3332736299871106,
+          -0.1426010499239696
+        ],
+        "predicted_release_time": 4.0029999999996715
+      }
+    },
+    {
+      "snapshot": {
+        "id": "S2_440001_T10_left",
+        "role": "different_seed_and_throw_severe_rejected",
+        "seed": 440001,
+        "source_dir": "build/v8_state_triggered_postsep_dt195/seed_440001_dt195",
+        "throw_idx": 10,
+        "throw_count_at_entry": 9,
+        "side": "left",
+        "time_s": 3.18,
+        "orig_score": 0.26064,
+        "orig_accepted": false
+      },
+      "entry_state": {
+        "time_s": 3.179999999999761,
+        "throw_count": 9,
+        "catch_count": 7,
+        "key": "throw:left:9",
+        "is_retry": false,
+        "held_ball": 2,
+        "seat_m": [
+          0.23794771577685167,
+          0.11356358848019597,
+          0.7694585901926803
+        ],
+        "warm_vec": [
+          -0.4339203399226793,
+          -0.6277212047932943,
+          3.618655660463271,
+          -0.25335264761924525
+        ]
+      },
+      "reproduced_original": true,
+      "reproduced_score": true,
+      "reproduced_accepted": true,
+      "pass_to_fail_regression": false,
+      "fail_to_pass_recovery": false,
+      "group_a_native": {
+        "key": "throw:left:9",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.4339203399226793,
+          -0.6277212047932943,
+          3.618655660463271,
+          -0.25335264761924525
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.36934903344737824,
+          "components": {
+            "land_x_m": -0.16000636734400261,
+            "land_y_m": -0.08772428562195048,
+            "weighted_time_err": -0.32112477423893515,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 69,
+        "probe_trials": 0,
+        "total_trials": 69,
+        "infeasible_count": 1,
+        "planner_wall_s": 102.50636189998477,
+        "probe_wall_s": 0.0,
+        "total_wall_s": 102.50636189998477,
+        "accepted": false,
+        "score": 0.26063939596136393,
+        "objective_components": {
+          "land_x_m": -0.12095026294685784,
+          "land_y_m": -0.030812567433945642,
+          "weighted_time_err": -0.22881108869178335,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.25672427680994986,
+          -0.5150929889978448,
+          4.55660847973075,
+          -0.2229062068440979
+        ],
+        "predicted_release_time": 3.477999999999728
+      },
+      "group_b_probe": {
+        "attempted": true,
+        "triggered": true,
+        "reason": "abs_err_x0_exceeded_threshold (160.0mm > 120mm)",
+        "probe_trials": 1,
+        "probe_wall_s": 1.8040345000044908,
+        "warm_vec": [
+          -0.4339203399226793,
+          -0.6277212047932943,
+          3.618655660463271,
+          -0.25335264761924525
+        ],
+        "corrected_vec": [
+          -0.13202153361324043,
+          -0.6277212047932943,
+          3.618655660463271,
+          -0.25335264761924525
+        ],
+        "feasible": true,
+        "probe_score": 0.36934903344737824,
+        "probe_components": {
+          "land_x_m": -0.16000636734400261,
+          "land_y_m": -0.08772428562195048,
+          "weighted_time_err": -0.32112477423893515,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "err_x0_m": -0.16000636734400261,
+        "flight_s": 0.53,
+        "dvx_raw_m_s": 0.3018988063094389,
+        "dvx_clipped_m_s": 0.3018988063094389,
+        "was_clipped": false
+      },
+      "group_b_rule": {
+        "key": "throw:left:9",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.13202153361324043,
+          -0.6277212047932943,
+          3.618655660463271,
+          -0.25335264761924525
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.3350103899487109,
+          "components": {
+            "land_x_m": -0.08006217586470987,
+            "land_y_m": 0.02642421390850011,
+            "weighted_time_err": -0.32422796037466206,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 63,
+        "probe_trials": 1,
+        "total_trials": 64,
+        "infeasible_count": 3,
+        "planner_wall_s": 97.28640860001906,
+        "probe_wall_s": 1.8040345000044908,
+        "total_wall_s": 99.09044310002355,
+        "accepted": false,
+        "score": 0.3312346179893443,
+        "objective_components": {
+          "land_x_m": -0.08757070808439149,
+          "land_y_m": 0.020353462530117328,
+          "weighted_time_err": -0.31880006242656267,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.1331924952146216,
+          -0.6459625460922722,
+          3.7084199275822436,
+          -0.25643559002717187
+        ],
+        "predicted_release_time": 3.486999999999727
+      }
+    },
+    {
+      "snapshot": {
+        "id": "S3_440202_T17_right",
+        "role": "different_seed_right_hand_moderate_rejected",
+        "seed": 440202,
+        "source_dir": "build/v8_independent_validation_440200_ts35/seed_440202_state_triggered",
+        "throw_idx": 17,
+        "throw_count_at_entry": 16,
+        "side": "right",
+        "time_s": 5.42,
+        "orig_score": 0.03958,
+        "orig_accepted": false
+      },
+      "entry_state": {
+        "time_s": 5.420000000000145,
+        "throw_count": 16,
+        "catch_count": 14,
+        "key": "throw:right:16",
+        "is_retry": false,
+        "held_ball": 1,
+        "seat_m": [
+          0.3249118156136796,
+          -0.12854939197246903,
+          0.811607548589831
+        ],
+        "warm_vec": [
+          -0.08169215401470645,
+          0.7203964555723099,
+          4.046876741280626,
+          -0.1071276577773062
+        ]
+      },
+      "reproduced_original": true,
+      "reproduced_score": true,
+      "reproduced_accepted": true,
+      "pass_to_fail_regression": false,
+      "fail_to_pass_recovery": true,
+      "group_a_native": {
+        "key": "throw:right:16",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.08169215401470645,
+          0.7203964555723099,
+          4.046876741280626,
+          -0.1071276577773062
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.15845944811948295,
+          "components": {
+            "land_x_m": 0.1573688720473988,
+            "land_y_m": 0.018555949254735,
+            "weighted_time_err": 0.00033400017400286863,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 63,
+        "probe_trials": 0,
+        "total_trials": 63,
+        "infeasible_count": 0,
+        "planner_wall_s": 79.46756109999842,
+        "probe_wall_s": 0.0,
+        "total_wall_s": 79.46756109999842,
+        "accepted": false,
+        "score": 0.039576710439405055,
+        "objective_components": {
+          "land_x_m": -0.03466068275198225,
+          "land_y_m": -0.019031625504377092,
+          "weighted_time_err": 0.0016584061722317855,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.4482919039430485,
+          0.5634555798879675,
+          3.7826535280902758,
+          -0.20901664827762473
+        ],
+        "predicted_release_time": 5.603000000000206
+      },
+      "group_b_probe": {
+        "attempted": true,
+        "triggered": true,
+        "reason": "abs_err_x0_exceeded_threshold (157.4mm > 120mm)",
+        "probe_trials": 1,
+        "probe_wall_s": 1.1902803000120912,
+        "warm_vec": [
+          -0.08169215401470645,
+          0.7203964555723099,
+          4.046876741280626,
+          -0.1071276577773062
+        ],
+        "corrected_vec": [
+          -0.37861455410413813,
+          0.7203964555723099,
+          4.046876741280626,
+          -0.1071276577773062
+        ],
+        "feasible": true,
+        "probe_score": 0.15845944811948295,
+        "probe_components": {
+          "land_x_m": 0.1573688720473988,
+          "land_y_m": 0.018555949254735,
+          "weighted_time_err": 0.00033400017400286863,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "err_x0_m": 0.1573688720473988,
+        "flight_s": 0.53,
+        "dvx_raw_m_s": -0.29692240008943166,
+        "dvx_clipped_m_s": -0.29692240008943166,
+        "was_clipped": false
+      },
+      "group_b_rule": {
+        "key": "throw:right:16",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.37861455410413813,
+          0.7203964555723099,
+          4.046876741280626,
+          -0.1071276577773062
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.48598481121585885,
+          "components": {
+            "land_x_m": -0.038899010952926805,
+            "land_y_m": 0.11813708753431909,
+            "weighted_time_err": 0.17607984462863224,
+            "apex_ceiling_pen": 0.43555438299236915,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 24,
+        "probe_trials": 1,
+        "total_trials": 25,
+        "infeasible_count": 1,
+        "planner_wall_s": 29.696398100000806,
+        "probe_wall_s": 1.1902803000120912,
+        "total_wall_s": 30.886678400012897,
+        "accepted": true,
+        "score": 0.018653432023188195,
+        "objective_components": {
+          "land_x_m": 0.004369728253027116,
+          "land_y_m": -0.017942132885380907,
+          "weighted_time_err": 0.002633603759439218,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.26485981626203237,
+          0.67039645557231,
+          3.546280918833793,
+          -0.09858873149629463
+        ],
+        "predicted_release_time": 5.6020000000002055
+      }
+    },
+    {
+      "snapshot": {
+        "id": "S4_440001_T09_right",
+        "role": "native_first_search_accepted_control",
+        "seed": 440001,
+        "source_dir": "build/v8_state_triggered_postsep_dt195/seed_440001_dt195",
+        "throw_idx": 9,
+        "throw_count_at_entry": 8,
+        "side": "right",
+        "time_s": 2.86,
+        "orig_score": 0.01992,
+        "orig_accepted": true
+      },
+      "entry_state": {
+        "time_s": 2.859999999999796,
+        "throw_count": 8,
+        "catch_count": 6,
+        "key": "throw:right:8",
+        "is_retry": false,
+        "held_ball": 0,
+        "seat_m": [
+          0.32980120715474703,
+          -0.1363375284134509,
+          0.8158370751119309
+        ],
+        "warm_vec": [
+          -0.497913973630139,
+          0.6633350130510627,
+          3.2654572303057368,
+          -0.041771593953730646
+        ]
+      },
+      "reproduced_original": true,
+      "reproduced_score": true,
+      "reproduced_accepted": true,
+      "pass_to_fail_regression": false,
+      "fail_to_pass_recovery": false,
+      "group_a_native": {
+        "key": "throw:right:8",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.497913973630139,
+          0.6633350130510627,
+          3.2654572303057368,
+          -0.041771593953730646
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.09741251609224898,
+          "components": {
+            "land_x_m": -0.03760315924548191,
+            "land_y_m": -0.0708167531893821,
+            "weighted_time_err": -0.055318967577999256,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 23,
+        "probe_trials": 0,
+        "total_trials": 23,
+        "infeasible_count": 2,
+        "planner_wall_s": 30.04254300001776,
+        "probe_wall_s": 0.0,
+        "total_wall_s": 30.04254300001776,
+        "accepted": true,
+        "score": 0.019920468225036066,
+        "objective_components": {
+          "land_x_m": 0.019739299190694504,
+          "land_y_m": -0.000521544379350064,
+          "weighted_time_err": -0.00262927998229312,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.41056526156778006,
+          0.8042851874938154,
+          3.9617459062161835,
+          -0.16177159395373064
+        ],
+        "predicted_release_time": 3.032999999999777
+      },
+      "group_b_probe": {
+        "attempted": true,
+        "triggered": false,
+        "reason": "abs_err_x0_below_threshold (37.6mm <= 120mm)",
+        "probe_trials": 1,
+        "probe_wall_s": 1.2065039000008255,
+        "warm_vec": [
+          -0.497913973630139,
+          0.6633350130510627,
+          3.2654572303057368,
+          -0.041771593953730646
+        ],
+        "corrected_vec": null,
+        "feasible": true,
+        "probe_score": 0.09741251609224898,
+        "probe_components": {
+          "land_x_m": -0.03760315924548191,
+          "land_y_m": -0.0708167531893821,
+          "weighted_time_err": -0.055318967577999256,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "err_x0_m": -0.03760315924548191
+      },
+      "group_b_rule": {
+        "key": "throw:right:8",
+        "is_retry": false,
+        "initial_guess_vec": [
+          -0.497913973630139,
+          0.6633350130510627,
+          3.2654572303057368,
+          -0.041771593953730646
+        ],
+        "first_eval": {
+          "feasible": true,
+          "score": 0.09741251609224898,
+          "components": {
+            "land_x_m": -0.03760315924548191,
+            "land_y_m": -0.0708167531893821,
+            "weighted_time_err": -0.055318967577999256,
+            "apex_ceiling_pen": 0.0,
+            "upstroke_rise_pen": 0.0,
+            "vertical_ratio_pen": 0.0,
+            "fingers_fwd_pen": 0.0,
+            "ball_spacing_pen": 0.0
+          }
+        },
+        "planner_trials": 23,
+        "probe_trials": 1,
+        "total_trials": 24,
+        "infeasible_count": 2,
+        "planner_wall_s": 27.028198500018334,
+        "probe_wall_s": 1.2065039000008255,
+        "total_wall_s": 28.23470240001916,
+        "accepted": true,
+        "score": 0.019920468225036066,
+        "objective_components": {
+          "land_x_m": 0.019739299190694504,
+          "land_y_m": -0.000521544379350064,
+          "weighted_time_err": -0.00262927998229312,
+          "apex_ceiling_pen": 0.0,
+          "upstroke_rise_pen": 0.0,
+          "vertical_ratio_pen": 0.0,
+          "fingers_fwd_pen": 0.0,
+          "ball_spacing_pen": 0.0
+        },
+        "safety_penalties_zero": true,
+        "best_command": [
+          -0.41056526156778006,
+          0.8042851874938154,
+          3.9617459062161835,
+          -0.16177159395373064
+        ],
+        "predicted_release_time": 3.032999999999777
+      }
+    }
+  ]
+}

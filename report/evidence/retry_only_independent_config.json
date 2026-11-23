@@ -1,0 +1,58 @@
+{
+  "experiment": "v8_retry_fallback_independent_run01",
+  "description": "Independent online 30-throw + 0.8s three-ball hold A/B pairing of native retry cache (a0_native) vs fixed zero-probe analytic vx_cmd retry fallback (b1_fixed_analytic) on 3 verified unseen seeds.",
+  "seeds": [440300, 440301, 440302],
+  "seed_provenance": {
+    "checked_scopes": ["src/", "v8_robust_control/", "build/"],
+    "historical_usage_found": false,
+    "sealed_test_seeds_untouched": "450000..450019",
+    "note": "440300..440302 appear only as the reserved unseen validation range in build/v8_retry_selector_eval_plan/eval_protocol.md; zero prior runs exist."
+  },
+  "shared_frozen_params": {
+    "noise_std_m": 0.001,
+    "seat_jitter_m": 0.0,
+    "extra_delay_s": 0.0,
+    "frame_drop_rate": 0.0,
+    "observation_mode": "sampled",
+    "ball_estimator": "filtered",
+    "tau_s": 0.32,
+    "flight_s": 0.53,
+    "throws_target": 30,
+    "final_settle_s": 0.8,
+    "ending_t_start_s": 0.35,
+    "post_sep_braking": {
+      "dt_to_impact_max_s": 0.195,
+      "v_away_min_m_s": 1.0,
+      "post_sep_brake_duration_s": 0.030,
+      "brake_coast_ratio": 0.35
+    },
+    "first_search_policy": "100_percent_native",
+    "subsequent_retry_policy": "100_percent_native",
+    "acceptance_threshold": 0.02,
+    "sim_timeout_s": 35.0,
+    "wall_timeout_s": 3600.0
+  },
+  "groups": {
+    "a0_native": {
+      "label": "Native retry_throw_command (selector disabled)",
+      "enable_analytic_retry_fallback": false
+    },
+    "b1_fixed_analytic": {
+      "label": "Fixed zero-probe analytic vx_cmd retry fallback on first retry after rejected first search",
+      "enable_analytic_retry_fallback": true,
+      "err_x0_threshold_m": 0.120,
+      "dvx_clip_m_s": 0.75,
+      "extra_probe_trials": 0,
+      "fallback_on_invalid_err_x0": "native_retry_cache"
+    }
+  },
+  "execution": {
+    "concurrency": 2,
+    "skip_completed_matching_config": true,
+    "existing_smoke_verification": {
+      "source": "build/v8_retry_selector_pilot/run_01/pilot.log",
+      "smoke_c5_first_search_accepted_zero_intervention": true,
+      "smoke_s1_disabled_vs_a0_bit_exact": true
+    }
+  }
+}

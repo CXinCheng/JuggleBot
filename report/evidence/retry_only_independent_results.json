@@ -1,0 +1,927 @@
+{
+  "experiment": "v8_retry_fallback_independent_run01",
+  "config_hash": "3b0262e5e02173e9",
+  "seeds": [
+    440300,
+    440301,
+    440302
+  ],
+  "updated_at": "2026-11-22 20:28:18",
+  "pairs": [
+    {
+      "seed": 440300,
+      "a0_native": {
+        "seed": 440300,
+        "group": "a0_native",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 2379.06,
+        "sim_time_s": 5.304,
+        "success": false,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "POSE_LIMIT",
+        "throw_count": 16,
+        "catch_count": 13,
+        "validated_flights": 13,
+        "released_count": 16,
+        "confirmed_catches_count": 13,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": null,
+        "longest_final_support_s": 0.0,
+        "airborne_at_end": [
+          0,
+          1,
+          2
+        ],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08860534028202555,
+        "actual_min_interball_live": {
+          "dist_m": 0.08860534028202555,
+          "time_s": 1.1859999999999802,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": null,
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.08953767078686285,
+          "time_s": 3.1349999999997658
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07086946127117819,
+          "time_s": 1.0449999999999957
+        },
+        "actual_minimum_height_m": 0.7747169586179653,
+        "post_sep_brake_trigger_count": 5,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 24,
+          "first_search_calls": 16,
+          "first_search_accepted": 13,
+          "first_search_rejected": 3,
+          "retry_search_calls": 8,
+          "first_retry_entries": 3,
+          "selector_calls": 0,
+          "analytic_fallback_triggered_count": 0,
+          "analytic_fallback_skipped_below_thresh_count": 0,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 840,
+          "first_search_trials": 422,
+          "retry_trials": 418,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 1629.55
+        },
+        "retry_decisions": [
+          {
+            "time_s": 1.904999999999901,
+            "side": "left",
+            "key": "throw:left:5",
+            "selector_invoked": false,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": -0.021904119321471793,
+            "trial1_weighted_time_err": -0.10942272070288339,
+            "trial1_score": 0.14606281552977252,
+            "trial1_forward_error_share": 0.14996369364800446,
+            "first_search_score": 0.07808422838888468,
+            "retry1_accepted": false,
+            "retry1_score": 0.0731823618342912,
+            "retry1_trials": 65,
+            "retry1_wall_s": 112.29,
+            "throw_total_searches": 5,
+            "throw_total_trials": 295,
+            "throw_total_search_wall_s": 587.59
+          },
+          {
+            "time_s": 2.8649999999997955,
+            "side": "right",
+            "key": "throw:right:8",
+            "selector_invoked": false,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.0514751669201341,
+            "trial1_weighted_time_err": -0.1474313174916596,
+            "trial1_score": 0.15617016466227054,
+            "trial1_forward_error_share": 0.3296094809879526,
+            "first_search_score": 0.0964037658557116,
+            "retry1_accepted": false,
+            "retry1_score": 0.048191373938482725,
+            "retry1_trials": 99,
+            "retry1_wall_s": 188.61,
+            "throw_total_searches": 4,
+            "throw_total_trials": 240,
+            "throw_total_search_wall_s": 419.6
+          },
+          {
+            "time_s": 4.4849999999998325,
+            "side": "left",
+            "key": "throw:left:13",
+            "selector_invoked": false,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.10525678613030837,
+            "trial1_weighted_time_err": 0.053996004704095046,
+            "trial1_score": 0.19517612499688378,
+            "trial1_forward_error_share": 0.5392912997529228,
+            "first_search_score": 0.06862580742932488,
+            "retry1_accepted": true,
+            "retry1_score": 0.013040602439635715,
+            "retry1_trials": 26,
+            "retry1_wall_s": 70.41,
+            "throw_total_searches": 2,
+            "throw_total_trials": 101,
+            "throw_total_search_wall_s": 201.07
+          }
+        ]
+      },
+      "b1_fixed_analytic": {
+        "seed": 440300,
+        "group": "b1_fixed_analytic",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 2395.34,
+        "sim_time_s": 5.304,
+        "success": false,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "POSE_LIMIT",
+        "throw_count": 16,
+        "catch_count": 13,
+        "validated_flights": 13,
+        "released_count": 16,
+        "confirmed_catches_count": 13,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": null,
+        "longest_final_support_s": 0.0,
+        "airborne_at_end": [
+          0,
+          1,
+          2
+        ],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08860534028202555,
+        "actual_min_interball_live": {
+          "dist_m": 0.08860534028202555,
+          "time_s": 1.1859999999999802,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": null,
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.08953767078686285,
+          "time_s": 3.1349999999997658
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07086946127117819,
+          "time_s": 1.0449999999999957
+        },
+        "actual_minimum_height_m": 0.7747169586179653,
+        "post_sep_brake_trigger_count": 5,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 24,
+          "first_search_calls": 16,
+          "first_search_accepted": 13,
+          "first_search_rejected": 3,
+          "retry_search_calls": 8,
+          "first_retry_entries": 3,
+          "selector_calls": 3,
+          "analytic_fallback_triggered_count": 0,
+          "analytic_fallback_skipped_below_thresh_count": 3,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 840,
+          "first_search_trials": 422,
+          "retry_trials": 418,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 1642.36
+        },
+        "retry_decisions": [
+          {
+            "time_s": 1.904999999999901,
+            "side": "left",
+            "key": "throw:left:5",
+            "selector_invoked": true,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": -0.021904119321471793,
+            "trial1_weighted_time_err": -0.10942272070288339,
+            "trial1_score": 0.14606281552977252,
+            "trial1_forward_error_share": 0.14996369364800446,
+            "first_search_score": 0.07808422838888468,
+            "retry1_accepted": false,
+            "retry1_score": 0.0731823618342912,
+            "retry1_trials": 65,
+            "retry1_wall_s": 112.62,
+            "throw_total_searches": 5,
+            "throw_total_trials": 295,
+            "throw_total_search_wall_s": 590.76
+          },
+          {
+            "time_s": 2.8649999999997955,
+            "side": "right",
+            "key": "throw:right:8",
+            "selector_invoked": true,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.0514751669201341,
+            "trial1_weighted_time_err": -0.1474313174916596,
+            "trial1_score": 0.15617016466227054,
+            "trial1_forward_error_share": 0.3296094809879526,
+            "first_search_score": 0.0964037658557116,
+            "retry1_accepted": false,
+            "retry1_score": 0.048191373938482725,
+            "retry1_trials": 99,
+            "retry1_wall_s": 187.45,
+            "throw_total_searches": 4,
+            "throw_total_trials": 240,
+            "throw_total_search_wall_s": 421.06
+          },
+          {
+            "time_s": 4.4849999999998325,
+            "side": "left",
+            "key": "throw:left:13",
+            "selector_invoked": true,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.10525678613030837,
+            "trial1_weighted_time_err": 0.053996004704095046,
+            "trial1_score": 0.19517612499688378,
+            "trial1_forward_error_share": 0.5392912997529228,
+            "first_search_score": 0.06862580742932488,
+            "retry1_accepted": true,
+            "retry1_score": 0.013040602439635715,
+            "retry1_trials": 26,
+            "retry1_wall_s": 73.06,
+            "throw_total_searches": 2,
+            "throw_total_trials": 101,
+            "throw_total_search_wall_s": 204.65
+          }
+        ]
+      }
+    },
+    {
+      "seed": 440301,
+      "a0_native": {
+        "seed": 440301,
+        "group": "a0_native",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 636.63,
+        "sim_time_s": 2.71,
+        "success": false,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "BALL_COLLISION",
+        "throw_count": 8,
+        "catch_count": 6,
+        "validated_flights": 6,
+        "released_count": 8,
+        "confirmed_catches_count": 6,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": null,
+        "longest_final_support_s": 0.0,
+        "airborne_at_end": [
+          1,
+          2
+        ],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08893619232215637,
+        "actual_min_interball_live": {
+          "dist_m": 0.08893619232215637,
+          "time_s": 1.1849999999999803,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": null,
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.08103591597240505,
+          "time_s": 0.8370000000000006
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07734627804055019,
+          "time_s": 1.0679999999999932
+        },
+        "actual_minimum_height_m": 0.7918645442559119,
+        "post_sep_brake_trigger_count": 0,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 8,
+          "first_search_calls": 8,
+          "first_search_accepted": 8,
+          "first_search_rejected": 0,
+          "retry_search_calls": 0,
+          "first_retry_entries": 0,
+          "selector_calls": 0,
+          "analytic_fallback_triggered_count": 0,
+          "analytic_fallback_skipped_below_thresh_count": 0,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 82,
+          "first_search_trials": 82,
+          "retry_trials": 0,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 155.53
+        },
+        "retry_decisions": []
+      },
+      "b1_fixed_analytic": {
+        "seed": 440301,
+        "group": "b1_fixed_analytic",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 630.55,
+        "sim_time_s": 2.71,
+        "success": false,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "BALL_COLLISION",
+        "throw_count": 8,
+        "catch_count": 6,
+        "validated_flights": 6,
+        "released_count": 8,
+        "confirmed_catches_count": 6,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": null,
+        "longest_final_support_s": 0.0,
+        "airborne_at_end": [
+          1,
+          2
+        ],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08893619232215637,
+        "actual_min_interball_live": {
+          "dist_m": 0.08893619232215637,
+          "time_s": 1.1849999999999803,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": null,
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.08103591597240505,
+          "time_s": 0.8370000000000006
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07734627804055019,
+          "time_s": 1.0679999999999932
+        },
+        "actual_minimum_height_m": 0.7918645442559119,
+        "post_sep_brake_trigger_count": 0,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 8,
+          "first_search_calls": 8,
+          "first_search_accepted": 8,
+          "first_search_rejected": 0,
+          "retry_search_calls": 0,
+          "first_retry_entries": 0,
+          "selector_calls": 0,
+          "analytic_fallback_triggered_count": 0,
+          "analytic_fallback_skipped_below_thresh_count": 0,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 82,
+          "first_search_trials": 82,
+          "retry_trials": 0,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 151.03
+        },
+        "retry_decisions": []
+      }
+    },
+    {
+      "seed": 440302,
+      "a0_native": {
+        "seed": 440302,
+        "group": "a0_native",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 2877.58,
+        "sim_time_s": 9.458,
+        "success": false,
+        "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "POSE_LIMIT",
+        "throw_count": 29,
+        "catch_count": 26,
+        "validated_flights": 26,
+        "released_count": 29,
+        "confirmed_catches_count": 26,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": null,
+        "longest_final_support_s": 0.0,
+        "airborne_at_end": [
+          0,
+          1,
+          2
+        ],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08854255144720274,
+        "actual_min_interball_live": {
+          "dist_m": 0.08854255144720274,
+          "time_s": 1.18699999999998,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": null,
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.0810247660682427,
+          "time_s": 0.8370000000000006
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07947174981870318,
+          "time_s": 9.267000000000303
+        },
+        "actual_minimum_height_m": 0.7919816504996574,
+        "post_sep_brake_trigger_count": 5,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 35,
+          "first_search_calls": 29,
+          "first_search_accepted": 27,
+          "first_search_rejected": 2,
+          "retry_search_calls": 6,
+          "first_retry_entries": 2,
+          "selector_calls": 0,
+          "analytic_fallback_triggered_count": 0,
+          "analytic_fallback_skipped_below_thresh_count": 0,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 1000,
+          "first_search_trials": 608,
+          "retry_trials": 392,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 2028.82
+        },
+        "retry_decisions": [
+          {
+            "time_s": 5.745000000000253,
+            "side": "left",
+            "key": "throw:left:17",
+            "selector_invoked": false,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.19508400868624615,
+            "trial1_weighted_time_err": 0.06169175818792616,
+            "trial1_score": 0.23939516510633008,
+            "trial1_forward_error_share": 0.8149037120260861,
+            "first_search_score": 0.02025141676801769,
+            "retry1_accepted": true,
+            "retry1_score": 0.01145640071535961,
+            "retry1_trials": 1,
+            "retry1_wall_s": 1.82,
+            "throw_total_searches": 2,
+            "throw_total_trials": 72,
+            "throw_total_search_wall_s": 145.29
+          },
+          {
+            "time_s": 6.06500000000036,
+            "side": "right",
+            "key": "throw:right:18",
+            "selector_invoked": false,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": -0.058096255852938816,
+            "trial1_weighted_time_err": -0.10294369537479697,
+            "trial1_score": 0.12073176611133893,
+            "trial1_forward_error_share": 0.48120107676849855,
+            "first_search_score": 0.03328134993745438,
+            "retry1_accepted": false,
+            "retry1_score": 0.025565437735353847,
+            "retry1_trials": 71,
+            "retry1_wall_s": 137.75,
+            "throw_total_searches": 6,
+            "throw_total_trials": 468,
+            "throw_total_search_wall_s": 998.38
+          }
+        ]
+      },
+      "b1_fixed_analytic": {
+        "seed": 440302,
+        "group": "b1_fixed_analytic",
+        "config_hash": "3b0262e5e02173e9",
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "wall_s": 2337.72,
+        "sim_time_s": 11.169,
+        "success": true,
+        "error": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "validated_flights": 30,
+        "released_count": 30,
+        "confirmed_catches_count": 30,
+        "initial_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.015064981832142794,
+                -0.017063142741903032,
+                0.021728796499105564
+              ],
+              "relative_speed_m_s": 0.023434602830736433,
+              "height_m": 0.8456682483821943
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.034829253741595526,
+                0.05442363728898264,
+                0.06612259128533225
+              ],
+              "relative_speed_m_s": 0.07076874001863559,
+              "height_m": 0.8781659162673896
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.00012296035616877888,
+                -0.003450955607279909,
+                0.02203018484771576
+              ],
+              "relative_speed_m_s": 0.019697452792365913,
+              "height_m": 0.8429882485917298
+            }
+          },
+          "time_s": 0.18200000000000013,
+          "continuous_support_s": 0.05000000000000004
+        },
+        "final_hold": {
+          "ok": true,
+          "balls": {
+            "0": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.0500140252611295,
+                0.08782286061857787,
+                0.03405692389691701
+              ],
+              "relative_speed_m_s": 0.00013458988673186814,
+              "height_m": 0.8805992603418731
+            },
+            "1": {
+              "hand": "left",
+              "contact": true,
+              "local_m": [
+                0.015705836051717458,
+                0.007003547502981046,
+                0.024069379539106872
+              ],
+              "relative_speed_m_s": 0.0005707011837208526,
+              "height_m": 0.8424886005392391
+            },
+            "2": {
+              "hand": "right",
+              "contact": true,
+              "local_m": [
+                0.008418992746356846,
+                -0.004789168370980316,
+                0.02200302741789584
+              ],
+              "relative_speed_m_s": 9.461385094613891e-06,
+              "height_m": 0.8832521405582854
+            }
+          },
+          "continuous_support_s": 0.8000000000000006,
+          "time_s": 11.168999999999249,
+          "first_contact": {
+            "t": 10.28199999999974,
+            "speed": 1.8959020886222313
+          }
+        },
+        "longest_final_support_s": 0.8000000000000006,
+        "airborne_at_end": [],
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_live_collision_count": 0,
+        "actual_minimum_distance_m": 0.08854255144720274,
+        "actual_min_interball_live": {
+          "dist_m": 0.08854255144720274,
+          "time_s": 1.18699999999998,
+          "pair": [
+            0,
+            1
+          ]
+        },
+        "actual_max_rh_elbow_ending": {
+          "elbow_out_m": 0.05879905951981532,
+          "time_s": 10.063999999999862
+        },
+        "actual_max_rh_elbow_all": {
+          "elbow_out_m": 0.09166694131675536,
+          "time_s": 8.898000000000508
+        },
+        "actual_max_lh_elbow_all": {
+          "elbow_out_m": 0.07763888308350948,
+          "time_s": 1.0679999999999932
+        },
+        "actual_minimum_height_m": 0.7919816504996574,
+        "post_sep_brake_trigger_count": 2,
+        "post_sep_brake_recontact_count": 0,
+        "search_stats": {
+          "total_plan_throw_calls": 34,
+          "first_search_calls": 30,
+          "first_search_accepted": 28,
+          "first_search_rejected": 2,
+          "retry_search_calls": 4,
+          "first_retry_entries": 2,
+          "selector_calls": 2,
+          "analytic_fallback_triggered_count": 1,
+          "analytic_fallback_skipped_below_thresh_count": 1,
+          "analytic_fallback_skipped_invalid_err_count": 0,
+          "total_trials": 885,
+          "first_search_trials": 681,
+          "retry_trials": 204,
+          "extra_probe_trials": 0,
+          "total_search_wall_s": 1852.78
+        },
+        "retry_decisions": [
+          {
+            "time_s": 5.745000000000253,
+            "side": "left",
+            "key": "throw:left:17",
+            "selector_invoked": true,
+            "action": 1,
+            "applied_analytic": true,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.19508400868624615,
+            "trial1_weighted_time_err": 0.06169175818792616,
+            "trial1_score": 0.23939516510633008,
+            "trial1_forward_error_share": 0.8149037120260861,
+            "first_search_score": 0.02025141676801769,
+            "retry1_accepted": true,
+            "retry1_score": 0.017422739482060495,
+            "retry1_trials": 24,
+            "retry1_wall_s": 52.0,
+            "throw_total_searches": 2,
+            "throw_total_trials": 95,
+            "throw_total_search_wall_s": 195.15
+          },
+          {
+            "time_s": 6.06500000000036,
+            "side": "right",
+            "key": "throw:right:18",
+            "selector_invoked": true,
+            "action": 0,
+            "applied_analytic": false,
+            "fallback_reason": null,
+            "trial1_feasible": true,
+            "trial1_err_x0_m": -0.05741308100687709,
+            "trial1_weighted_time_err": -0.10367589720070847,
+            "trial1_score": 0.12109207531575858,
+            "trial1_forward_error_share": 0.4741274840419348,
+            "first_search_score": 0.04485013486008645,
+            "retry1_accepted": false,
+            "retry1_score": 0.046638803055566905,
+            "retry1_trials": 77,
+            "retry1_wall_s": 148.05,
+            "throw_total_searches": 4,
+            "throw_total_trials": 251,
+            "throw_total_search_wall_s": 522.58
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,12 +1,50 @@
 """Full-task completion must not imply robustness or feedback advantage."""
 from copy import deepcopy
 import unittest
+from types import SimpleNamespace
+from unittest.mock import Mock
 
-from .evaluate_cascade import assess
-from .train_cascade import runtime_compatible, selection_score
+import numpy as np
+
+from .evaluate_cascade import assess, evaluation_cases, PERCEPTION_CASES
+from .train_cascade import Frozen, runtime_compatible, selection_score
 
 
 class CascadeAssessmentTests(unittest.TestCase):
+    def test_motor_frozen_control_waits_for_actual_motor_authority(self):
+        model = SimpleNamespace(juggling_ball_count=3, juggling_controller='motor_residual',
+            predict=Mock(return_value=(np.full(6, .3), None)))
+        actor = Frozen(model)
+        observation = np.zeros(191)
+        observation[[12, 26, 40]] = 1.
+        for authority, ready in ((0., 0.), (1., 0.), (0., 1.)):
+            observation[189:191] = authority, ready
+            np.testing.assert_array_equal(actor.predict(observation)[0], np.zeros(6))
+            model.predict.assert_not_called()
+        observation[189:191] = 1., 1.
+        np.testing.assert_array_equal(actor.predict(observation)[0], np.full(6, .3))
+        observation[189:191] = 0., 0.
+        result, _ = actor.predict(observation)
+        result[:] = 9.
+        np.testing.assert_array_equal(actor.predict(observation)[0], np.full(6, .3))
+        model.predict.assert_called_once()
+        actor.reset()
+        np.testing.assert_array_equal(actor.predict(observation)[0], np.zeros(6))
+
+    def test_perception_protocol_cannot_drop_or_relabel_harder_conditions(self):
+        protocol = dict(suite='perception', evaluation_cases=deepcopy(PERCEPTION_CASES))
+        self.assertEqual(evaluation_cases(protocol), PERCEPTION_CASES)
+        for change in ('missing', 'noise', 'suite'):
+            altered = deepcopy(protocol)
+            if change == 'missing':
+                altered['evaluation_cases'].pop('noise_10mm')
+            elif change == 'noise':
+                altered['evaluation_cases']['noise_10mm']['noise_std_m'] = .001
+            else:
+                altered['suite'] = 'unknown'
+            with self.assertRaises(ValueError):
+                evaluation_cases(altered)
+
     def values(self):
         baseline = dict(clean=5, sensor_only=2, perturbed=3, unsafe=8)
         names = ['zero', 'timed']+[f'{kind}_seed{seed}' for seed in (0, 1, 2) for kind in ('live', 'frozen')]

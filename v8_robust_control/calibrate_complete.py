@@ -45,6 +45,8 @@ def main():
     p.add_argument('--input',type=Path,default=DEFAULT_SEED_PLANS)
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--report',type=Path,required=True)
+    p.add_argument('--executed-output',type=Path,
+                   help='Export executed commands after native acceptance; requires separate event replay')
     p.add_argument('--throws',type=int,default=30)
     p.add_argument('--timeout',type=float,default=40.)
     p.add_argument('--max-iterations',type=int,default=8)
@@ -55,6 +57,10 @@ def main():
         p.error('Input, output and report paths must be distinct')
     if args.output.exists() or args.report.exists():
         p.error('Output and report paths must be new')
+    if args.executed_output is not None:
+        if (args.executed_output.resolve() in {path.resolve() for path in (args.input,args.output,args.report)}
+                or args.executed_output.exists()):
+            p.error('Executed command output must be a new, distinct path')
     inputs=json.loads(args.input.read_text(encoding='utf-8'))
     args.report.parent.mkdir(parents=True,exist_ok=True)
     with args.report.open('x',encoding='utf-8',newline='') as stream:
@@ -80,6 +86,10 @@ def main():
                 args.output.parent.mkdir(parents=True,exist_ok=True)
                 with args.output.open('x',encoding='utf-8') as output:
                     output.write(json.dumps(effective,indent=2,allow_nan=False)+'\n')
+                if args.executed_output is not None:
+                    args.executed_output.parent.mkdir(parents=True,exist_ok=True)
+                    with args.executed_output.open('x',encoding='utf-8') as output:
+                        output.write(json.dumps(collect(controller,effective),indent=2,allow_nan=False)+'\n')
                 return
             if updated==effective:
                 raise SystemExit('No new feasible optimizer guesses; inspect the recorded task failure')

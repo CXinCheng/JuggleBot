@@ -1,0 +1,131 @@
+[
+  {
+    "seed": 440000,
+    "tau": 0.32,
+    "flight": 0.53,
+    "calibration": "original_complete_seed_plans",
+    "observation_mode": "sampled",
+    "perception": {
+      "noise_std_m": 0.0,
+      "delay_s": 0.0,
+      "dropout_probability": 0.0,
+      "seed": 440000
+    },
+    "estimator": "three_position_backward_difference",
+    "success": true,
+    "throws": 30,
+    "validated_flights": 30,
+    "initial_hold_s": 0.05000000000000004,
+    "final_hold_s": 0.8000000000000006,
+    "longest_final_support_s": 0.8000000000000006,
+    "ball_contacts": 0,
+    "minimum_distance_m": 0.08894863562113199,
+    "clearance_m": 0.003948635621131985,
+    "first_failure": null,
+    "right_elbow_snapshot": {
+      "time_s": 11.144999999999262,
+      "mode": "ending",
+      "palm_reference_m": [
+        0.2100570505048639,
+        -0.15594926287806643,
+        0.8600373574500265
+      ],
+      "palm_position_m": [
+        0.2100570505048639,
+        -0.15594926287806643,
+        0.8600373574500265
+      ],
+      "elbow_out_m": 0.09318492656600269,
+      "elbow_limit_m": 0.1,
+      "elbow_margin_m": 0.006815073433997315
+    },
+    "elbow_over_limit": null,
+    "case": "zero"
+  },
+  {
+    "seed": 440000,
+    "tau": 0.32,
+    "flight": 0.53,
+    "calibration": "original_complete_seed_plans",
+    "observation_mode": "sampled",
+    "perception": {
+      "noise_std_m": 0.001,
+      "delay_s": 0.0,
+      "dropout_probability": 0.0,
+      "seed": 440000
+    },
+    "estimator": "contact_support_and_ballistic_fit",
+    "success": true,
+    "throws": 30,
+    "validated_flights": 30,
+    "initial_hold_s": 0.05000000000000004,
+    "final_hold_s": 0.8000000000000006,
+    "longest_final_support_s": 0.8000000000000006,
+    "ball_contacts": 0,
+    "minimum_distance_m": 0.08950537750078329,
+    "clearance_m": 0.004505377500783281,
+    "first_failure": null,
+    "right_elbow_snapshot": {
+      "time_s": 11.13199999999927,
+      "mode": "ending",
+      "palm_reference_m": [
+        0.22833302653514617,
+        -0.1755558192222479,
+        0.8615081329533575
+      ],
+      "palm_position_m": [
+        0.22833302653514617,
+        -0.1755558192222479,
+        0.8615081329533575
+      ],
+      "elbow_out_m": 0.08834110665771455,
+      "elbow_limit_m": 0.1,
+      "elbow_margin_m": 0.011658893342285453
+    },
+    "elbow_over_limit": null,
+    "case": "1mm"
+  },
+  {
+    "seed": 440002,
+    "tau": 0.32,
+    "flight": 0.53,
+    "calibration": "original_complete_seed_plans",
+    "observation_mode": "sampled",
+    "perception": {
+      "noise_std_m": 0,
+      "delay_s": 0,
+      "dropout_probability": 0,
+      "seed": 440002
+    },
+    "estimator": "three_position_backward_difference",
+    "success": true,
+    "throws": 30,
+    "validated_flights": 30,
+    "initial_hold_s": 0.05000000000000004,
+    "final_hold_s": 0.8000000000000006,
+    "longest_final_support_s": 0.8000000000000006,
+    "ball_contacts": 0,
+    "minimum_distance_m": 0.08894863562113199,
+    "clearance_m": 0.003948635621131985,
+    "first_failure": null,
+    "right_elbow_snapshot": {
+      "time_s": 11.144999999999262,
+      "mode": "ending",
+      "palm_reference_m": [
+        0.2100570505048639,
+        -0.15594926287806643,
+        0.8600373574500265
+      ],
+      "palm_position_m": [
+        0.2100570505048639,
+        -0.15594926287806643,
+        0.8600373574500265
+      ],
+      "elbow_out_m": 0.09318492656600269,
+      "elbow_limit_m": 0.1,
+      "elbow_margin_m": 0.006815073433997315
+    },
+    "elbow_over_limit": null,
+    "case": "zero"
+  }
+]

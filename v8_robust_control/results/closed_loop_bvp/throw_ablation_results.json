@@ -1,0 +1,4428 @@
+{
+  "wall_s": 149.8,
+  "seeds": [
+    440000,
+    440001,
+    440002
+  ],
+  "arms": [
+    "Arm 2 (Zero Throw Correction)",
+    "Arm 2 + Vertical-Only Clamped",
+    "Arm 2 + 3-Axis Clamped",
+    "Arm 1 (Full Rule Throw)"
+  ],
+  "results": {
+    "Arm 2 (Zero Throw Correction)": [
+      {
+        "seed": 440000,
+        "arm_mode": "zero",
+        "catches": 5,
+        "releases": 7,
+        "elapsed_s": 2.427,
+        "reason": "BALL_COLLISION",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "BALL_COLLISION",
+          "time": 2.4269999999998437,
+          "geoms": [
+            "ball0",
+            "ball2"
+          ]
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 9,
+            "time_s": 1.9,
+            "side": "left",
+            "ball_id": 0,
+            "released": 5,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 11,
+            "time_s": 2.22,
+            "side": "right",
+            "ball_id": 2,
+            "released": 6,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.509,
+              0.5888,
+              3.2831,
+              -0.1524,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.509,
+              0.5888,
+              3.2831,
+              -0.1524,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0679,
+              0.6525,
+              2.2499
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0938,
+              -0.5864,
+              2.3039
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1023,
+              0.5546,
+              2.2639
+            ]
+          },
+          {
+            "time": 2.077,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.0229,
+              -0.4446,
+              2.0254
+            ]
+          },
+          {
+            "time": 2.391,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.3767,
+              0.6523,
+              2.1298
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9902,
+            "predicted_pos": [
+              0.2873,
+              0.2095,
+              0.8769
+            ],
+            "touch_time_s": 1.003,
+            "timing_error_s": 0.0128,
+            "contact_distance": -4.8e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3193,
+            "predicted_pos": [
+              0.2898,
+              -0.2206,
+              0.8765
+            ],
+            "touch_time_s": 1.301,
+            "timing_error_s": -0.0183,
+            "contact_distance": -0.00056,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.43,
+            "predicted_time_s": 1.6241,
+            "predicted_pos": [
+              0.2926,
+              0.2268,
+              0.867
+            ],
+            "touch_time_s": 1.624,
+            "timing_error_s": -0.0001,
+            "contact_distance": -0.000105,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9371,
+            "predicted_pos": [
+              0.2898,
+              -0.2117,
+              0.8745
+            ],
+            "touch_time_s": 1.96,
+            "timing_error_s": 0.0229,
+            "contact_distance": -2.3e-05,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 1,
+            "plan_time_s": 2.077,
+            "predicted_time_s": 2.2748,
+            "predicted_pos": [
+              0.2701,
+              0.2202,
+              0.866
+            ],
+            "touch_time_s": 2.271,
+            "timing_error_s": -0.0038,
+            "contact_distance": -0.000716,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 0,
+            "plan_time_s": 2.391,
+            "predicted_time_s": 2.5412,
+            "predicted_pos": [
+              0.3195,
+              -0.1163,
+              0.8804
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "arm_mode": "zero",
+        "catches": 7,
+        "releases": 9,
+        "elapsed_s": 3.358,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 1,
+          "time": 3.357999999999741,
+          "height": 0.3987118806975375
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 9,
+            "time_s": 1.9,
+            "side": "left",
+            "ball_id": 0,
+            "released": 5,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 11,
+            "time_s": 2.22,
+            "side": "right",
+            "ball_id": 2,
+            "released": 6,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.509,
+              0.5888,
+              3.2831,
+              -0.1524,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.509,
+              0.5888,
+              3.2831,
+              -0.1524,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 13,
+            "time_s": 2.54,
+            "side": "left",
+            "ball_id": 1,
+            "released": 7,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.5564,
+              -0.7813,
+              3.3538,
+              -0.153,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5564,
+              -0.7813,
+              3.3538,
+              -0.153,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 15,
+            "time_s": 3.006,
+            "side": "right",
+            "ball_id": 0,
+            "released": 8,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4979,
+              0.6633,
+              3.2655,
+              -0.0418,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4979,
+              0.6633,
+              3.2655,
+              -0.0418,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 16,
+            "time_s": 3.18,
+            "side": "left",
+            "ball_id": 2,
+            "released": 8,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.5564,
+              -0.7813,
+              3.3538,
+              -0.153,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5564,
+              -0.7813,
+              3.3538,
+              -0.153,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.126,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.0694,
+              0.611,
+              2.2314
+            ]
+          },
+          {
+            "time": 1.435,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0959,
+              -0.5629,
+              2.3168
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0874,
+              0.5486,
+              2.2519
+            ]
+          },
+          {
+            "time": 2.076,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              0.0049,
+              -0.5919,
+              2.2637
+            ]
+          },
+          {
+            "time": 2.39,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.1695,
+              0.5699,
+              2.305
+            ]
+          },
+          {
+            "time": 2.71,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.2351,
+              -0.6265,
+              2.2078
+            ]
+          },
+          {
+            "time": 3.356,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.4451,
+              -0.6333,
+              2.1543
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9903,
+            "predicted_pos": [
+              0.2878,
+              0.2149,
+              0.8769
+            ],
+            "touch_time_s": 0.989,
+            "timing_error_s": -0.0013,
+            "contact_distance": -6.6e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.126,
+            "predicted_time_s": 1.3176,
+            "predicted_pos": [
+              0.2927,
+              -0.2194,
+              0.8765
+            ],
+            "touch_time_s": 1.307,
+            "timing_error_s": -0.0106,
+            "contact_distance": -3.7e-05,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.435,
+            "predicted_time_s": 1.6374,
+            "predicted_pos": [
+              0.2846,
+              0.236,
+              0.867
+            ],
+            "touch_time_s": 1.632,
+            "timing_error_s": -0.0054,
+            "contact_distance": -0.000788,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9514,
+            "predicted_pos": [
+              0.2862,
+              -0.2049,
+              0.8745
+            ],
+            "touch_time_s": 1.941,
+            "timing_error_s": -0.0104,
+            "contact_distance": -0.000233,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 1,
+            "plan_time_s": 2.076,
+            "predicted_time_s": 2.2718,
+            "predicted_pos": [
+              0.2843,
+              0.2194,
+              0.866
+            ],
+            "touch_time_s": 2.268,
+            "timing_error_s": -0.0038,
+            "contact_distance": -8.5e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 0,
+            "plan_time_s": 2.39,
+            "predicted_time_s": 2.5863,
+            "predicted_pos": [
+              0.331,
+              -0.2076,
+              0.8804
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 2.71,
+            "predicted_time_s": 2.8986,
+            "predicted_pos": [
+              0.2421,
+              0.2007,
+              0.86
+            ],
+            "touch_time_s": 2.894,
+            "timing_error_s": -0.0046,
+            "contact_distance": -0.0006,
+            "touched": true
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "arm_mode": "zero",
+        "catches": 3,
+        "releases": 6,
+        "elapsed_s": 2.221,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "time": 2.2209999999998664,
+          "geoms": [
+            "ball2",
+            "torso_stand"
+          ]
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 9,
+            "time_s": 1.9,
+            "side": "left",
+            "ball_id": 0,
+            "released": 5,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.251,
+              -0.7439,
+              3.6381,
+              0.0202,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0685,
+              0.6491,
+              2.2537
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0343,
+              -0.6529,
+              2.393
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.071,
+              0.5576,
+              2.262
+            ]
+          },
+          {
+            "time": 2.076,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.1186,
+              -0.4342,
+              2.0303
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9919,
+            "predicted_pos": [
+              0.2855,
+              0.2142,
+              0.8769
+            ],
+            "touch_time_s": 1.007,
+            "timing_error_s": 0.0151,
+            "contact_distance": -2e-06,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3184,
+            "predicted_pos": [
+              0.2917,
+              -0.2178,
+              0.8765
+            ],
+            "touch_time_s": 1.302,
+            "timing_error_s": -0.0164,
+            "contact_distance": -0.000398,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.43,
+            "predicted_time_s": 1.6262,
+            "predicted_pos": [
+              0.2942,
+              0.2252,
+              0.867
+            ],
+            "touch_time_s": 1.622,
+            "timing_error_s": -0.0042,
+            "contact_distance": -0.000398,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9525,
+            "predicted_pos": [
+              0.322,
+              -0.2633,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "left",
+            "ball_id": 1,
+            "plan_time_s": 2.076,
+            "predicted_time_s": 2.2735,
+            "predicted_pos": [
+              0.2944,
+              0.2254,
+              0.866
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      }
+    ],
+    "Arm 2 + Vertical-Only Clamped": [
+      {
+        "seed": 440000,
+        "arm_mode": "vertical_only_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.914,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.9139999999999,
+          "height": 0.3999182431379981
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.2661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.113,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0458,
+              0.6492,
+              2.1622
+            ]
+          },
+          {
+            "time": 1.432,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.1013,
+              -0.6145,
+              2.201
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1032,
+              0.5564,
+              2.2232
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9902,
+            "predicted_pos": [
+              0.2873,
+              0.2095,
+              0.8769
+            ],
+            "touch_time_s": 1.003,
+            "timing_error_s": 0.0128,
+            "contact_distance": -4.9e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.113,
+            "predicted_time_s": 1.3193,
+            "predicted_pos": [
+              0.2898,
+              -0.2206,
+              0.8765
+            ],
+            "touch_time_s": 1.303,
+            "timing_error_s": -0.0163,
+            "contact_distance": -0.000365,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.432,
+            "predicted_time_s": 1.5978,
+            "predicted_pos": [
+              0.3376,
+              0.2315,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9187,
+            "predicted_pos": [
+              0.2873,
+              -0.2183,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "arm_mode": "vertical_only_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.81,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.8099999999999115,
+          "height": 0.3966991140131485
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.2661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              3.963,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.067,
+              0.659,
+              2.1511
+            ]
+          },
+          {
+            "time": 1.434,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0703,
+              -0.5614,
+              2.2284
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0759,
+              0.5507,
+              2.1613
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9903,
+            "predicted_pos": [
+              0.2878,
+              0.2149,
+              0.8769
+            ],
+            "touch_time_s": 0.989,
+            "timing_error_s": -0.0013,
+            "contact_distance": -6.6e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3177,
+            "predicted_pos": [
+              0.295,
+              -0.2188,
+              0.8765
+            ],
+            "touch_time_s": 1.304,
+            "timing_error_s": -0.0137,
+            "contact_distance": -0.000304,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.434,
+            "predicted_time_s": 1.5944,
+            "predicted_pos": [
+              0.3526,
+              0.2334,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9306,
+            "predicted_pos": [
+              0.3024,
+              -0.1913,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "arm_mode": "vertical_only_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.907,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.9069999999999008,
+          "height": 0.398224339639865
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.379,
+              0.76,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.4994,
+              -0.8064,
+              3.2661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.0629,
+              0.6776,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.113,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0464,
+              0.6458,
+              2.1659
+            ]
+          },
+          {
+            "time": 1.433,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0442,
+              -0.6538,
+              2.2593
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0999,
+              0.532,
+              2.2193
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9919,
+            "predicted_pos": [
+              0.2855,
+              0.2142,
+              0.8769
+            ],
+            "touch_time_s": 1.007,
+            "timing_error_s": 0.0151,
+            "contact_distance": -3e-06,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.113,
+            "predicted_time_s": 1.3184,
+            "predicted_pos": [
+              0.2917,
+              -0.2178,
+              0.8765
+            ],
+            "touch_time_s": 1.304,
+            "timing_error_s": -0.0144,
+            "contact_distance": -0.000239,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.433,
+            "predicted_time_s": 1.5996,
+            "predicted_pos": [
+              0.3398,
+              0.2298,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9297,
+            "predicted_pos": [
+              0.3171,
+              -0.25,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      }
+    ],
+    "Arm 2 + 3-Axis Clamped": [
+      {
+        "seed": 440000,
+        "arm_mode": "three_axis_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.824,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.82399999999991,
+          "height": 0.3971561022675819
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.529,
+              0.8859,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0629,
+              0.0053,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0629,
+              0.0053,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5466,
+              -0.8024,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.2,
+              0.1714,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.2,
+              0.1714,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.2129,
+              0.8061,
+              3.963,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.0025,
+              0.7477,
+              2.1787
+            ]
+          },
+          {
+            "time": 1.432,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0913,
+              -0.586,
+              2.2338
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1931,
+              0.6273,
+              2.238
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9902,
+            "predicted_pos": [
+              0.2873,
+              0.2095,
+              0.8769
+            ],
+            "touch_time_s": 1.003,
+            "timing_error_s": 0.0128,
+            "contact_distance": -6.7e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3193,
+            "predicted_pos": [
+              0.2898,
+              -0.2206,
+              0.8765
+            ],
+            "touch_time_s": 1.302,
+            "timing_error_s": -0.0173,
+            "contact_distance": -0.000434,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.432,
+            "predicted_time_s": 1.5988,
+            "predicted_pos": [
+              0.3048,
+              0.2903,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9261,
+            "predicted_pos": [
+              0.2897,
+              -0.2049,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "arm_mode": "three_axis_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.805,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.804999999999912,
+          "height": 0.3987039607828595
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.529,
+              0.8859,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0678,
+              0.0044,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0678,
+              0.0044,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5503,
+              -0.8031,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.2,
+              0.1703,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.2,
+              0.1703,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.2129,
+              0.8053,
+              3.963,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.111,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0043,
+              0.7534,
+              2.1833
+            ]
+          },
+          {
+            "time": 1.429,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.112,
+              -0.586,
+              2.2891
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.2034,
+              0.6004,
+              2.2069
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9903,
+            "predicted_pos": [
+              0.2878,
+              0.2149,
+              0.8769
+            ],
+            "touch_time_s": 0.989,
+            "timing_error_s": -0.0013,
+            "contact_distance": -7.1e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.111,
+            "predicted_time_s": 1.3177,
+            "predicted_pos": [
+              0.295,
+              -0.2188,
+              0.8765
+            ],
+            "touch_time_s": 1.303,
+            "timing_error_s": -0.0147,
+            "contact_distance": -0.00068,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.429,
+            "predicted_time_s": 1.5986,
+            "predicted_pos": [
+              0.3101,
+              0.2923,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.76,
+            "predicted_time_s": 1.9333,
+            "predicted_pos": [
+              0.2754,
+              -0.2067,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "arm_mode": "three_axis_clamped",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.811,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.8109999999999113,
+          "height": 0.3986380225591751
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.2,
+              0.1679,
+              -0.2,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.529,
+              0.8859,
+              3.5277,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.059,
+              0.0072,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.059,
+              0.0072,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5437,
+              -0.801,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0683,
+              -0.0056,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0683,
+              -0.0056,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.1141,
+              0.6733,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.0016,
+              0.7443,
+              2.1825
+            ]
+          },
+          {
+            "time": 1.434,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0958,
+              -0.6524,
+              2.2971
+            ]
+          },
+          {
+            "time": 1.759,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1054,
+              0.5592,
+              2.2446
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9919,
+            "predicted_pos": [
+              0.2855,
+              0.2142,
+              0.8769
+            ],
+            "touch_time_s": 1.007,
+            "timing_error_s": 0.0151,
+            "contact_distance": -2e-06,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3184,
+            "predicted_pos": [
+              0.2917,
+              -0.2178,
+              0.8765
+            ],
+            "touch_time_s": 1.303,
+            "timing_error_s": -0.0154,
+            "contact_distance": -0.000365,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.434,
+            "predicted_time_s": 1.6009,
+            "predicted_pos": [
+              0.3092,
+              0.2911,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.759,
+            "predicted_time_s": 1.9401,
+            "predicted_pos": [
+              0.2857,
+              -0.2558,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      }
+    ],
+    "Arm 1 (Full Rule Throw)": [
+      {
+        "seed": 440000,
+        "arm_mode": "full_rule",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.927,
+        "reason": "POSE_LIMIT",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "POSE_LIMIT",
+          "time": 1.9269999999998986,
+          "part": "left",
+          "quantity": "shoulder_elbow_clearance_m",
+          "actual": 0.07897213241869483,
+          "limit": 0.08
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.6759,
+              0.8859,
+              2.9777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0637,
+              0.005,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0637,
+              0.005,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5472,
+              -0.8026,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0684,
+              -0.006,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0684,
+              -0.006,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.1141,
+              0.673,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1086,
+              0.747,
+              1.963
+            ]
+          },
+          {
+            "time": 1.413,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0554,
+              -0.6334,
+              2.1062
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1218,
+              0.4869,
+              2.1774
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9902,
+            "predicted_pos": [
+              0.2873,
+              0.2095,
+              0.8769
+            ],
+            "touch_time_s": 1.002,
+            "timing_error_s": 0.0118,
+            "contact_distance": -6.6e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3193,
+            "predicted_pos": [
+              0.2898,
+              -0.2206,
+              0.8765
+            ],
+            "touch_time_s": 1.304,
+            "timing_error_s": -0.0153,
+            "contact_distance": -0.00041,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.413,
+            "predicted_time_s": 1.5527,
+            "predicted_pos": [
+              0.2487,
+              0.2537,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.741,
+            "predicted_time_s": 1.8756,
+            "predicted_pos": [
+              0.2934,
+              -0.2286,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "arm_mode": "full_rule",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 2.168,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 2.1679999999998723,
+          "height": 0.3987630097729753
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.6759,
+              0.8859,
+              2.9777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0675,
+              0.0044,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0675,
+              0.0044,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5501,
+              -0.8031,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.068,
+              -0.0052,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.068,
+              -0.0052,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.1139,
+              0.6736,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1001,
+              0.7533,
+              1.9596
+            ]
+          },
+          {
+            "time": 1.413,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              0.0104,
+              -0.6436,
+              2.1774
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1206,
+              0.4623,
+              2.14
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9903,
+            "predicted_pos": [
+              0.2878,
+              0.2149,
+              0.8769
+            ],
+            "touch_time_s": 0.988,
+            "timing_error_s": -0.0023,
+            "contact_distance": -2.2e-05,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3177,
+            "predicted_pos": [
+              0.295,
+              -0.2188,
+              0.8765
+            ],
+            "touch_time_s": 1.306,
+            "timing_error_s": -0.0117,
+            "contact_distance": -0.000146,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.413,
+            "predicted_time_s": 1.5521,
+            "predicted_pos": [
+              0.2515,
+              0.2579,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.741,
+            "predicted_time_s": 1.8895,
+            "predicted_pos": [
+              0.3244,
+              -0.2391,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "arm_mode": "full_rule",
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.907,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "time": 1.9069999999999008,
+          "geoms": [
+            "ball0",
+            "torso_stand"
+          ]
+        },
+        "throw_decisions": [
+          {
+            "k": 0,
+            "time_s": 0.3,
+            "side": "right",
+            "ball_id": 2,
+            "released": 0,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.2507,
+              1.1304,
+              3.7577,
+              -0.1013,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 1,
+            "time_s": 0.62,
+            "side": "left",
+            "ball_id": 1,
+            "released": 1,
+            "authority": 1.0,
+            "raw_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "decoded_parameters": [
+              0.1449,
+              -1.0348,
+              4.3215,
+              -0.1894,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 3,
+            "time_s": 0.94,
+            "side": "right",
+            "ball_id": 0,
+            "released": 2,
+            "authority": 1.0,
+            "raw_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.3959,
+              0.1679,
+              -0.64,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.379,
+              0.76,
+              3.7777,
+              -0.2845,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.6759,
+              0.8859,
+              2.9777,
+              -0.2845,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 5,
+            "time_s": 1.26,
+            "side": "left",
+            "ball_id": 2,
+            "released": 3,
+            "authority": 1.0,
+            "raw_action": [
+              -0.0587,
+              0.0072,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.0587,
+              0.0072,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.4994,
+              -0.8064,
+              3.5161,
+              -0.1319,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.5434,
+              -0.801,
+              3.3661,
+              -0.1319,
+              0.0
+            ],
+            "defer_s": 0.0
+          },
+          {
+            "k": 7,
+            "time_s": 1.58,
+            "side": "right",
+            "ball_id": 1,
+            "released": 4,
+            "authority": 1.0,
+            "raw_action": [
+              -0.068,
+              -0.0063,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "executed_action": [
+              -0.068,
+              -0.0063,
+              -0.12,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "nominal_parameters": [
+              -0.0629,
+              0.6776,
+              4.213,
+              -0.1873,
+              0.0
+            ],
+            "decoded_parameters": [
+              -0.1138,
+              0.6728,
+              4.063,
+              -0.1873,
+              0.0
+            ],
+            "defer_s": 0.0
+          }
+        ],
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1073,
+              0.7433,
+              1.9678
+            ]
+          },
+          {
+            "time": 1.414,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0591,
+              -0.6609,
+              2.1577
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1339,
+              0.4764,
+              2.1846
+            ]
+          }
+        ],
+        "reception_tracking": [
+          {
+            "side": "left",
+            "ball_id": 2,
+            "plan_time_s": 0.799,
+            "predicted_time_s": 0.9919,
+            "predicted_pos": [
+              0.2855,
+              0.2142,
+              0.8769
+            ],
+            "touch_time_s": 1.007,
+            "timing_error_s": 0.0151,
+            "contact_distance": -4e-06,
+            "touched": true
+          },
+          {
+            "side": "right",
+            "ball_id": 1,
+            "plan_time_s": 1.112,
+            "predicted_time_s": 1.3184,
+            "predicted_pos": [
+              0.2917,
+              -0.2178,
+              0.8765
+            ],
+            "touch_time_s": 1.305,
+            "timing_error_s": -0.0134,
+            "contact_distance": -0.00026,
+            "touched": true
+          },
+          {
+            "side": "left",
+            "ball_id": 0,
+            "plan_time_s": 1.414,
+            "predicted_time_s": 1.5544,
+            "predicted_pos": [
+              0.2492,
+              0.2556,
+              0.867
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          },
+          {
+            "side": "right",
+            "ball_id": 2,
+            "plan_time_s": 1.741,
+            "predicted_time_s": 1.8849,
+            "predicted_pos": [
+              0.2944,
+              -0.2476,
+              0.8745
+            ],
+            "touch_time_s": null,
+            "timing_error_s": null,
+            "contact_distance": null,
+            "touched": false
+          }
+        ]
+      }
+    ]
+  }
+}

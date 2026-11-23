@@ -31,11 +31,26 @@ class CompleteCascade(EndingCascade, ObservedCascade):
     ENDING_POSTURE_MAX_OFFSET_RAD = .10
     ENDING_POSTURE_BLEND_S = .30
 
-    def __init__(self, throws=30, optimizer_inputs=None, **kwargs):
+    def __init__(self, throws=30, optimizer_inputs=None, ball_estimator='filtered', **kwargs):
         if throws < 4 or throws % 2:
             raise ValueError('Complete task requires an even number of throws, at least four')
         kwargs.setdefault('normalize_reception_input', True)
         super().__init__(stop_after=throws, **kwargs)
+        if ball_estimator not in ('difference', 'filtered'):
+            raise ValueError('Ball estimator must be difference or filtered')
+        if (self.ball_observer.mode == 'sampled'
+                and ball_estimator == 'filtered'
+                and self.ball_observer.perception.enabled):
+            from .event_observation import make_event_observer
+            previous = self.ball_observer
+            self.ball_observer = make_event_observer(
+                self,
+                ball_estimator,
+                perception=previous.perception,
+                sample_period_s=previous.sample_period_s,
+                max_age_s=previous.max_age_s,
+            )
+            self.ball_observer.update(self.data)
         if optimizer_inputs is None:
             optimizer_inputs = json.loads(DEFAULT_SEED_PLANS.read_text(encoding='utf-8'))
         self.set_optimizer_inputs(dict(

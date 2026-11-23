@@ -7,7 +7,31 @@ from pathlib import Path
 
 from .compare_residual import digest, read_json
 from .train_cascade import (sources, summarize, counts, qualifies, dominates,
-                            test_one, validate_trials, runtime_compatible)
+                            test_one, validate_trials, runtime_compatible, CASES)
+
+
+PERCEPTION_CASES = {
+    'clean': {},
+    'sensor_only_3mm': dict(noise_std_m=.003),
+    'noise_1mm': dict(noise_std_m=.001),
+    'noise_5mm': dict(noise_std_m=.005),
+    'noise_10mm': dict(noise_std_m=.01),
+    'delay_20ms': dict(delay_s=.02),
+    'delay_40ms': dict(delay_s=.04),
+    'dropout_10pct': dict(dropout=.1),
+    'dropout_30pct': dict(dropout=.3),
+    'perception_combined': dict(noise_std_m=.003, delay_s=.02, dropout=.1),
+}
+
+
+def evaluation_cases(protocol):
+    suite = protocol.get('suite', 'reference')
+    if suite not in ('reference', 'perception'):
+        raise ValueError('Unknown independent evaluation suite')
+    cases = PERCEPTION_CASES if suite == 'perception' else CASES
+    if protocol.get('evaluation_cases', cases) != cases:
+        raise ValueError('Independent evaluation cases differ from the frozen suite')
+    return cases
 
 
 def assess(values, episodes):
@@ -24,6 +48,7 @@ def assess(values, episodes):
 
 def validate_record(record, training):
     protocol = record['protocol']
+    cases = evaluation_cases(protocol)
     raw = (json.dumps(training, allow_nan=False, separators=(',', ':'))+'\n').encode('utf-8')
     hashes = {hashlib.sha256(raw).hexdigest(), hashlib.sha256(raw.replace(b'\n', b'\r\n')).hexdigest()}
     checked = summarize(training)
@@ -36,6 +61,7 @@ def validate_record(record, training):
             or protocol['selected_checkpoints'] != selected
             or protocol['validation_robustness_passed'] != checked['all_candidates_passed']
             or protocol['task'] != manifest['task'] or protocol['requested_throws'] != manifest['requested_throws']
+            or protocol.get('controller', 'reference') != manifest.get('controller', 'reference')
             or not seeds or len(set(seeds)) != len(seeds) or min(seeds) < 390000
             or set(seeds) & set(manifest['training_seeds']+manifest['validation_seeds'])):
         raise ValueError('Different selected candidates, task or independent seeds')
@@ -50,7 +76,7 @@ def validate_record(record, training):
     for candidate, row in zip(candidates, record['records']):
         if any(row[key] != value for key, value in candidate.items()):
             raise ValueError('Independent controller differs from the frozen protocol')
-        validate_trials(row['trials'], manifest, seeds)
+        validate_trials(row['trials'], manifest, seeds, cases=cases)
         values[row['id']] = counts(row['trials'])
     if record['summary'] != assess(values, len(seeds)):
         raise ValueError('Independent assessment differs from physical trials')
@@ -59,20 +85,34 @@ def validate_record(record, training):
 def report(record):
     protocol, summary = record['protocol'], record['summary']
     n = len(protocol['seeds'])
+    cases = evaluation_cases(protocol)
+    perception = protocol.get('suite') == 'perception'
+    other = '其他感知扰动' if perception else '物理初态扰动及组合'
     lines = [f"# {protocol['requested_throws']} 抛完整任务独立评估", '',
         '完整任务能力、扰动下的非退化表现和反馈收益分别验收。每个成功回合均须通过释放、接回、连续承托、碰撞和姿态检查。', '',
         '零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。', '',
-        '| 控制器 | 无扰动 | 仅 3 mm 位置噪声 | 物理初态扰动及组合 | 安全失败 |',
+        f'| 控制器 | 无扰动 | 仅 3 mm 位置噪声 | {other} | 安全失败 |',
         '| --- | --- | --- | --- | --- |']
+    if 'controller' in protocol:
+        lines[2:2] = [f"控制器：`{protocol['controller']}`；测试集：`{protocol.get('suite', 'reference')}`。", '']
     for name, value in summary['counts'].items():
-        lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{6*n} | {value['unsafe']}/{8*n} |")
+        lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{(len(cases)-2)*n} | {value['unsafe']}/{len(cases)*n} |")
     lines += ['', '| PPO 训练种子 | 无扰动完整任务 | 扰动非退化 | 严格反馈收益 |', '| --- | --- | --- | --- |']
     for seed in ('0', '1', '2'):
         labels = ['通过' if summary[field][seed] else '未通过' for field in
                   ('nominal_task_gates', 'robustness_nondegradation', 'feedback_advantage')]
         lines.append(f"| {seed} | {' | '.join(labels)} |")
+    if perception:
+        lines += ['', '本测试集只改变位置测量、传输延迟和丢帧，不包含物理初态随机化。', '',
+                  '| 条件 | 零请求 | 时序增益 | PPO 0 | PPO 1 | PPO 2 |', '| --- | --- | --- | --- | --- | --- |']
+        indexed = {row['id']: row['trials'] for row in record['records']}
+        for case in cases:
+            values = [sum(row['is_success'] for row in indexed[name] if row['case'] == case)
+                      for name in ('zero', 'timed', 'live_seed0', 'live_seed1', 'live_seed2')]
+            lines.append(f"| {case} | "+' | '.join(f'{value}/{n}' for value in values)+' |')
     lines += ['', '无扰动重复使用同一物理初态，用于检查完整任务与重置一致性；重复种子不代表独立物理初态样本。', '',
-              '扰动非退化要求感知噪声和物理初态扰动的完成数不降低，且安全失败数不增加。严格反馈收益还要求物理初态扰动完成数超过零残差、时间序列及自身冻结对照。', '',
+              ('扰动非退化要求感知扰动完成数不降低，且安全失败数不增加。严格反馈收益还要求其他感知扰动完成数超过零请求、时间序列及自身冻结对照。' if perception else
+               '扰动非退化要求感知噪声和物理初态扰动的完成数不降低，且安全失败数不增加。严格反馈收益还要求物理初态扰动完成数超过零残差、时间序列及自身冻结对照。'), '',
               '候选检查点和时间序列对照在验证集上确定，独立评估不重新选择策略。配置、模型校验值、源码和逐回合物理证据保存在协议与原始 JSON 中。', '']
     return '\n'.join(lines)
 
@@ -86,6 +126,7 @@ def main():
     run.add_argument('--seed-start', type=int, default=390000)
     run.add_argument('--episodes', type=int, default=5)
     run.add_argument('--jobs', type=int, default=3)
+    run.add_argument('--suite', choices=('reference', 'perception'), default='reference')
     run.add_argument('--protocol-output', type=Path, required=True)
     run.add_argument('--output', type=Path, required=True)
     run.add_argument('--report', type=Path)
@@ -108,10 +149,11 @@ def main():
         parser.error('Use distinct new outputs, positive counts and independent seeds')
     training = read_json(args.training)
     summary = summarize(training)
-    fingerprints = sources()
+    fingerprints = sources(training['manifest'].get('controller', 'reference'))
     if summary != training['summary'] or not runtime_compatible(training['manifest']['source_sha256'], fingerprints):
         raise ValueError('Require the unchanged training archive and runtime')
     manifest = training['manifest']
+    cases = PERCEPTION_CASES if args.suite == 'perception' else CASES
     seeds = list(range(args.seed_start, args.seed_start+args.episodes))
     if set(seeds) & set(manifest['training_seeds']+manifest['validation_seeds']):
         raise ValueError('Independent seeds overlap training or validation')
@@ -132,6 +174,8 @@ def main():
     protocol = dict(training_sha256=digest(args.training), source_sha256=manifest['source_sha256'],
         evaluation_source_sha256=fingerprints,
         evaluator_sha256=evaluator, task=manifest['task'], requested_throws=manifest['requested_throws'],
+        controller=manifest.get('controller', 'reference'),
+        suite=args.suite, evaluation_cases=cases,
         seeds=seeds, selected_checkpoints=[{key: row[key] for key in
             ('seed', 'selected_step', 'checkpoint', 'checkpoint_sha256')} for row in training['models']],
         validation_robustness_passed=summary['all_candidates_passed'], candidates=candidates,
@@ -140,13 +184,13 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
     args.protocol_output.write_text(json.dumps(protocol, indent=2, allow_nan=False)+'\n', encoding='utf-8')
     with ProcessPoolExecutor(args.jobs) as pool:
-        records = list(pool.map(test_one, [(row, training, args.input_dir, seeds) for row in candidates]))
-    if (sources() != fingerprints or digest(Path(__file__)) != evaluator
+        records = list(pool.map(test_one, [(row, training, args.input_dir, seeds, cases) for row in candidates]))
+    if (sources(manifest.get('controller', 'reference')) != fingerprints or digest(Path(__file__)) != evaluator
             or digest(args.training) != protocol['training_sha256']):
         raise ValueError('Evaluation sources or selected training archive changed')
     values = {}
     for row in records:
-        validate_trials(row['trials'], manifest, seeds)
+        validate_trials(row['trials'], manifest, seeds, cases=cases)
         values[row['id']] = counts(row['trials'])
     result = dict(protocol=protocol, records=records, summary=assess(values, args.episodes))
     validate_record(result, training)

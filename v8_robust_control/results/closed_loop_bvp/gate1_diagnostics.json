@@ -1,0 +1,3070 @@
+{
+  "wall_s": 1145.79,
+  "dev_seeds": [
+    440000,
+    440001,
+    440002,
+    440003,
+    440004,
+    440005,
+    440006,
+    440007,
+    440008,
+    440009
+  ],
+  "paired_regressions_vs_fixed": [
+    {
+      "seed": 440002,
+      "jitter_mm": 0.1
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0
+    }
+  ],
+  "paired_regressions_vs_timing": [
+    {
+      "seed": 440005,
+      "jitter_mm": 0.02
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0
+    }
+  ],
+  "earlier_drop_summary": {
+    "0.02mm": {
+      "cl_mean_elapsed": 1.403,
+      "bl_mean_elapsed": 1.383,
+      "tm_mean_elapsed": 1.2,
+      "u2s_vs_bl_count": 2,
+      "u2s_vs_bl_earlier_count": 0,
+      "u2s_vs_bl_mean_dt": 0.14,
+      "u2s_vs_bl_mean_dc": 0.0,
+      "u2s_vs_tm_count": 5,
+      "u2s_vs_tm_earlier_count": 0,
+      "u2s_vs_tm_mean_dt": 0.529,
+      "u2s_vs_tm_mean_dc": 1.0
+    },
+    "0.10mm": {
+      "cl_mean_elapsed": 1.54,
+      "bl_mean_elapsed": 1.524,
+      "tm_mean_elapsed": 1.462,
+      "u2s_vs_bl_count": 3,
+      "u2s_vs_bl_earlier_count": 1,
+      "u2s_vs_bl_mean_dt": 0.09,
+      "u2s_vs_bl_mean_dc": 0.0,
+      "u2s_vs_tm_count": 4,
+      "u2s_vs_tm_earlier_count": 0,
+      "u2s_vs_tm_mean_dt": 0.429,
+      "u2s_vs_tm_mean_dc": 1.5
+    },
+    "0.25mm": {
+      "cl_mean_elapsed": 1.826,
+      "bl_mean_elapsed": 1.758,
+      "tm_mean_elapsed": 1.232,
+      "u2s_vs_bl_count": 4,
+      "u2s_vs_bl_earlier_count": 1,
+      "u2s_vs_bl_mean_dt": 0.275,
+      "u2s_vs_bl_mean_dc": 0.75,
+      "u2s_vs_tm_count": 5,
+      "u2s_vs_tm_earlier_count": 1,
+      "u2s_vs_tm_mean_dt": 0.643,
+      "u2s_vs_tm_mean_dc": 2.2
+    },
+    "0.50mm": {
+      "cl_mean_elapsed": 1.707,
+      "bl_mean_elapsed": 1.457,
+      "tm_mean_elapsed": 1.227,
+      "u2s_vs_bl_count": 4,
+      "u2s_vs_bl_earlier_count": 1,
+      "u2s_vs_bl_mean_dt": 0.421,
+      "u2s_vs_bl_mean_dc": 0.75,
+      "u2s_vs_tm_count": 4,
+      "u2s_vs_tm_earlier_count": 0,
+      "u2s_vs_tm_mean_dt": 0.753,
+      "u2s_vs_tm_mean_dc": 1.5
+    },
+    "1.00mm": {
+      "cl_mean_elapsed": 1.256,
+      "bl_mean_elapsed": 1.142,
+      "tm_mean_elapsed": 1.183,
+      "u2s_vs_bl_count": 2,
+      "u2s_vs_bl_earlier_count": 0,
+      "u2s_vs_bl_mean_dt": 0.345,
+      "u2s_vs_bl_mean_dc": 0.5,
+      "u2s_vs_tm_count": 3,
+      "u2s_vs_tm_earlier_count": 0,
+      "u2s_vs_tm_mean_dt": 0.277,
+      "u2s_vs_tm_mean_dc": 1.0
+    },
+    "2.00mm": {
+      "cl_mean_elapsed": 1.316,
+      "bl_mean_elapsed": 1.122,
+      "tm_mean_elapsed": 1.237,
+      "u2s_vs_bl_count": 4,
+      "u2s_vs_bl_earlier_count": 0,
+      "u2s_vs_bl_mean_dt": 0.46,
+      "u2s_vs_bl_mean_dc": 0.75,
+      "u2s_vs_tm_count": 7,
+      "u2s_vs_tm_earlier_count": 2,
+      "u2s_vs_tm_mean_dt": 0.232,
+      "u2s_vs_tm_mean_dc": -0.14
+    }
+  },
+  "ablation_report": [
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0,
+      "variants": {
+        "fixed": {
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.146,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.1459999999999846,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.16,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.159999999999983,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.038,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 1.0379999999999965,
+            "geoms": [
+              "ball2",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 58,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.038,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 1.0379999999999965,
+            "geoms": [
+              "ball2",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 59,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.038,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 1.0379999999999965,
+            "geoms": [
+              "ball2",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 58,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.147,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.1469999999999845,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 2,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.038,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 1.0379999999999965,
+            "geoms": [
+              "ball2",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 59,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1454,
+            -0.0029,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_apex": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1454,
+            -0.0029,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0039,
+            -0.0029,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_tight": null
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5,
+      "variants": {
+        "fixed": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.319,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3189999999999655,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3001013536478085,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.142,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.141999999999985,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 4,
+          "releases": 7,
+          "elapsed_s": 2.391,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 2.3909999999998477,
+            "part": "torso_link/right_wrist_roll_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004070934135711305,
+            "limit": 0.004
+          },
+          "uncaught_steps": 10,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.321,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3209999999999653,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3001488089730335,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 4,
+          "releases": 7,
+          "elapsed_s": 2.391,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 2.3909999999998477,
+            "part": "torso_link/right_wrist_roll_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004070934135711305,
+            "limit": 0.004
+          },
+          "uncaught_steps": 10,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 4,
+          "releases": 7,
+          "elapsed_s": 2.39,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 2.389999999999848,
+            "part": "torso_link/right_wrist_roll_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004159110577080504,
+            "limit": 0.004
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.319,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3189999999999655,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3001013536478085,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1448,
+            -0.0018,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_apex": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1448,
+            -0.0018,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0046,
+            -0.0018,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_tight": null
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.1,
+      "variants": {
+        "fixed": {
+          "catches": 3,
+          "releases": 5,
+          "elapsed_s": 2.025,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 2.024999999999888,
+            "height": 0.3962374890026269
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.479,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.478999999999948,
+            "part": "world/right_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004123183917040891,
+            "limit": 0.004
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 2,
+          "releases": 3,
+          "elapsed_s": 1.502,
+          "reason": "ARM_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "ARM_COLLISION",
+            "time": 1.5019999999999454,
+            "geoms": [
+              "rh_palm_collision_4",
+              "lh_rf_tip"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 3,
+          "releases": 5,
+          "elapsed_s": 2.024,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 2.023999999999888,
+            "height": 0.39882458565558854
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 2,
+          "releases": 3,
+          "elapsed_s": 1.514,
+          "reason": "ARM_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "ARM_COLLISION",
+            "time": 1.513999999999944,
+            "geoms": [
+              "rh_palm_collision_4",
+              "lh_rf_tip"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 2,
+          "releases": 3,
+          "elapsed_s": 1.502,
+          "reason": "ARM_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "ARM_COLLISION",
+            "time": 1.5019999999999454,
+            "geoms": [
+              "rh_palm_collision_4",
+              "lh_rf_tip"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 3,
+          "releases": 5,
+          "elapsed_s": 2.025,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 2.024999999999888,
+            "height": 0.3964211900886941
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 47,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1454,
+            -0.0027,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_apex": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1454,
+            -0.0027,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.004,
+            -0.0027,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_tight": null
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25,
+      "variants": {
+        "fixed": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.219,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.2189999999999765,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.844,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8440000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": null,
+      "first_div_full_vs_no_apex": null,
+      "first_div_full_vs_no_tight": null
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.02,
+      "variants": {
+        "fixed": {
+          "catches": 2,
+          "releases": 4,
+          "elapsed_s": 1.723,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 1.722999999999921,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.254,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 1.2539999999999727,
+            "height": 0.3999832761679452
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.908,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.9079999999999007,
+            "part": "left",
+            "quantity": "shoulder_elbow_clearance_m",
+            "actual": 0.07968639261637955,
+            "limit": 0.08
+          },
+          "uncaught_steps": 98,
+          "cbf_elbow": 51,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.781,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.7809999999999147,
+            "geoms": [
+              "ball0",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 47,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 2,
+          "releases": 4,
+          "elapsed_s": 1.739,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 1.7389999999999193,
+            "geoms": [
+              "ball2",
+              "right_wrist_pitch_link"
+            ]
+          },
+          "uncaught_steps": 88,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 2,
+          "releases": 4,
+          "elapsed_s": 1.714,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.713999999999922,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004032472566905927,
+            "limit": 0.004
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 2,
+          "releases": 4,
+          "elapsed_s": 1.723,
+          "reason": "BALL_COLLISION",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "BALL_COLLISION",
+            "time": 1.722999999999921,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          },
+          "uncaught_steps": 8,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.3959,
+            0.1683,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_apex": {
+        "k": 5,
+        "a": {
+          "k": 5,
+          "t": 1.26,
+          "kind": "throw",
+          "side": "left",
+          "released": 3,
+          "auth": 1.0,
+          "act": [
+            -0.1054,
+            0.0078,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 5,
+          "t": 1.26,
+          "kind": "throw",
+          "side": "left",
+          "released": 3,
+          "auth": 1.0,
+          "act": [
+            0.0439,
+            0.0078,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_tight": {
+        "k": 6,
+        "a": {
+          "k": 6,
+          "t": 1.415,
+          "kind": "reception",
+          "side": "left",
+          "released": 4,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 6,
+          "t": 1.44,
+          "kind": "reception",
+          "side": "left",
+          "released": 4,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25,
+      "variants": {
+        "fixed": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.3,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.2999999999999676,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.300429622566373,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "timing": {
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 1.192,
+          "reason": "DROPPED",
+          "is_unsafe": false,
+          "failure_event": {
+            "reason": "DROPPED",
+            "time": 1.1919999999999795,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "full_cl": {
+          "catches": 4,
+          "releases": 6,
+          "elapsed_s": 2.302,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 2.3019999999998575,
+            "geoms": [
+              "ball1",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 16,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_apex_trim": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.301,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3009999999999675,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3003662188976757,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_tight": {
+          "catches": 4,
+          "releases": 6,
+          "elapsed_s": 2.302,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 2.3019999999998575,
+            "geoms": [
+              "ball1",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 16,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "no_uncaught_braking": {
+          "catches": 4,
+          "releases": 6,
+          "elapsed_s": 2.303,
+          "reason": "HIT_ARM",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "HIT_ARM",
+            "time": 2.3029999999998574,
+            "geoms": [
+              "ball1",
+              "left_wrist_yaw_link"
+            ]
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        },
+        "safety_base_only": {
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.3,
+          "reason": "POSE_LIMIT",
+          "is_unsafe": true,
+          "failure_event": {
+            "reason": "POSE_LIMIT",
+            "time": 1.2999999999999676,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.300429622566373,
+            "limit": 1.3
+          },
+          "uncaught_steps": 0,
+          "cbf_elbow": 0,
+          "cbf_wrist": 0
+        }
+      },
+      "first_div_full_vs_fixed": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1445,
+            -0.0015,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_apex": {
+        "k": 3,
+        "a": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            -0.1445,
+            -0.0015,
+            -0.256,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "b": {
+          "k": 3,
+          "t": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "auth": 1.0,
+          "act": [
+            0.0048,
+            -0.0015,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "first_div_full_vs_no_tight": null
+    }
+  ],
+  "ppo_ab_summary": {
+    "ppo_bare": {
+      "0.00mm": {
+        "success": 10,
+        "mean_catches": 30.0,
+        "max_catches": 30,
+        "mean_elapsed": 11.148,
+        "unsafe": 0
+      },
+      "0.25mm": {
+        "success": 0,
+        "mean_catches": 1.5,
+        "max_catches": 4,
+        "mean_elapsed": 1.617,
+        "unsafe": 7
+      },
+      "0.50mm": {
+        "success": 0,
+        "mean_catches": 1.2,
+        "max_catches": 6,
+        "mean_elapsed": 1.508,
+        "unsafe": 8
+      },
+      "1.00mm": {
+        "success": 0,
+        "mean_catches": 0.1,
+        "max_catches": 1,
+        "mean_elapsed": 0.929,
+        "unsafe": 9
+      },
+      "2.00mm": {
+        "success": 0,
+        "mean_catches": 0.5,
+        "max_catches": 2,
+        "mean_elapsed": 1.047,
+        "unsafe": 10
+      }
+    },
+    "ppo_safety_base": {
+      "0.00mm": {
+        "success": 10,
+        "mean_catches": 30.0,
+        "max_catches": 30,
+        "mean_elapsed": 11.148,
+        "unsafe": 0
+      },
+      "0.25mm": {
+        "success": 0,
+        "mean_catches": 1.4,
+        "max_catches": 4,
+        "mean_elapsed": 1.643,
+        "unsafe": 5
+      },
+      "0.50mm": {
+        "success": 0,
+        "mean_catches": 1.2,
+        "max_catches": 7,
+        "mean_elapsed": 1.579,
+        "unsafe": 6
+      },
+      "1.00mm": {
+        "success": 0,
+        "mean_catches": 0.1,
+        "max_catches": 1,
+        "mean_elapsed": 0.929,
+        "unsafe": 9
+      },
+      "2.00mm": {
+        "success": 0,
+        "mean_catches": 0.5,
+        "max_catches": 2,
+        "mean_elapsed": 1.068,
+        "unsafe": 10
+      }
+    },
+    "ppo_plus_rule_cl": {
+      "0.00mm": {
+        "success": 10,
+        "mean_catches": 30.0,
+        "max_catches": 30,
+        "mean_elapsed": 11.148,
+        "unsafe": 0
+      },
+      "0.25mm": {
+        "success": 0,
+        "mean_catches": 1.1,
+        "max_catches": 2,
+        "mean_elapsed": 1.563,
+        "unsafe": 1
+      },
+      "0.50mm": {
+        "success": 0,
+        "mean_catches": 1.1,
+        "max_catches": 2,
+        "mean_elapsed": 1.569,
+        "unsafe": 1
+      },
+      "1.00mm": {
+        "success": 0,
+        "mean_catches": 0.1,
+        "max_catches": 1,
+        "mean_elapsed": 0.972,
+        "unsafe": 8
+      },
+      "2.00mm": {
+        "success": 0,
+        "mean_catches": 0.6,
+        "max_catches": 2,
+        "mean_elapsed": 1.146,
+        "unsafe": 8
+      }
+    }
+  },
+  "ppo_ab_episodes": [
+    {
+      "seed": 440000,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.0,
+      "mode": "ppo_bare",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.17,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 3,
+      "releases": 6,
+      "elapsed_s": 2.091,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.114,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.0,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 3,
+      "releases": 5,
+      "elapsed_s": 1.844,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.76,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.811,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 4,
+      "releases": 7,
+      "elapsed_s": 2.427,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.768,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.25,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.186,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.121,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.125,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.156,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 6,
+      "releases": 8,
+      "elapsed_s": 2.94,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.156,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.174,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 3,
+      "releases": 6,
+      "elapsed_s": 2.083,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.209,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 3,
+      "releases": 5,
+      "elapsed_s": 1.839,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.5,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.273,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.845,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.766,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.166,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.988,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.007,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.995,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.843,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.703,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.476,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 1.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.5,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.772,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.018,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.534,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.274,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.67,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 2,
+      "releases": 3,
+      "elapsed_s": 1.562,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.26,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.52,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.69,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 2.0,
+      "mode": "ppo_bare",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.169,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.0,
+      "mode": "ppo_safety_base",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.233,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 3,
+      "releases": 6,
+      "elapsed_s": 2.089,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.213,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.0,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.902,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.76,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.812,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 4,
+      "releases": 7,
+      "elapsed_s": 2.43,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.794,
+      "reason": "HIT_ARM",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.25,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.194,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.121,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.195,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.156,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 7,
+      "releases": 10,
+      "elapsed_s": 3.769,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.157,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.174,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.882,
+      "reason": "HIT_ARM",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.223,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 3,
+      "releases": 5,
+      "elapsed_s": 1.842,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.5,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.273,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.845,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.766,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.168,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.988,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.007,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.995,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.843,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.703,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.476,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 1.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.5,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.969,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.018,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.54,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.274,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.67,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 2,
+      "releases": 3,
+      "elapsed_s": 1.562,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.26,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.524,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.69,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 2.0,
+      "mode": "ppo_safety_base",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.17,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.148,
+      "reason": "TIMEOUT",
+      "is_success": true,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.233,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.934,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.213,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.0,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.848,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.729,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.817,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.864,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.796,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.25,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.193,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.121,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.194,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.798,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.764,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.888,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.746,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.805,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.223,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.818,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.5,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.335,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.845,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.784,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.577,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.988,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.007,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.995,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.843,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.703,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.476,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 1.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.5,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 2,
+      "releases": 5,
+      "elapsed_s": 1.798,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.018,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.54,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.738,
+      "reason": "DROPPED",
+      "is_success": false,
+      "is_unsafe": false
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.67,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.554,
+      "reason": "BALL_COLLISION",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.291,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.524,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.69,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "is_unsafe": true
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 2.0,
+      "mode": "ppo_plus_rule_cl",
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.634,
+      "reason": "HIT_ARM",
+      "is_success": false,
+      "is_unsafe": true
+    }
+  ]
+}

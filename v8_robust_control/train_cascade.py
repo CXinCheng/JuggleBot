@@ -6,6 +6,7 @@ import json
 import hashlib
 import importlib.metadata
 import inspect
+import math
 from pathlib import Path
 import shutil
 import time
@@ -14,6 +15,7 @@ import gymnasium as gym
 import numpy as np
 import torch
 from stable_baselines3 import PPO
+from stable_baselines3.common.policies import ActorCriticPolicy
 
 from .cascade_env import CascadeEnv, runtime_sources
 from .compare_residual import read_json, digest
@@ -22,9 +24,38 @@ from jugglebot.humanoid import cascade as C
 from .train_transfer import CASES, MaskedTransferPolicy, TransferFeatures, Fixed, counts, dominates
 from .train_residual import TrainingProgress, isolated_evaluation_rng
 
+MOTOR_CONTROLLERS = ('motor_residual',)
+POLICY_WIDTH = 64
+MOTOR_INITIAL_ACTION_STD = .04
+# gSDE sums variance over the tanh latent units, whose magnitudes are <= 1.
+MOTOR_INITIAL_LOG_STD = math.log(MOTOR_INITIAL_ACTION_STD/math.sqrt(POLICY_WIDTH))
 
-def sources():
-    return dict(runtime_sources(), **{
+def environment_type(controller='reference'):
+    if controller == 'reference':
+        return CascadeEnv
+    if controller == 'latched_feedback':
+        from .feedback_env import FeedbackCascadeEnv
+        return FeedbackCascadeEnv
+    if controller == 'guarded_feedback':
+        from .feedback_env import GuardedCascadeEnv
+        return GuardedCascadeEnv
+    if controller == 'motor_residual':
+        from .motor_env import MotorResidualCascadeEnv
+        return MotorResidualCascadeEnv
+    raise ValueError('Unknown cascade controller')
+
+
+def sources(controller='reference'):
+    extra = {}
+    if controller in ('latched_feedback', 'guarded_feedback'):
+        from .feedback_env import runtime_sources as feedback_sources
+        extra = feedback_sources()
+    elif controller in MOTOR_CONTROLLERS:
+        from .motor_env import runtime_sources as motor_sources
+        extra = motor_sources()
+    elif controller != 'reference':
+        raise ValueError('Unknown cascade controller')
+    return dict(runtime_sources(), **extra, **{
         'v8_robust_control/train_transfer.py': digest(Path(__file__).with_name('train_transfer.py')),
         'v8_robust_control/train_cascade.py': digest(Path(__file__)),
         'v8_robust_control/train_cascade.py:CascadeFeatures':
@@ -87,7 +118,10 @@ class Frozen:
         self.action = None
 
     def predict(self, obs, deterministic=True):
-        if self.action is None and np.all(obs[[14*ball+12 for ball in range(self.ball_count)]] > .5):
+        ready = np.all(obs[[14*ball+12 for ball in range(self.ball_count)]] > .5)
+        if getattr(self.model, 'juggling_controller', 'reference') in MOTOR_CONTROLLERS:
+            ready &= obs[189] > 0. and obs[190] > .5
+        if self.action is None and ready:
             self.action = self.model.predict(obs, deterministic=True)[0]
         return np.zeros(6) if self.action is None else self.action.copy(), None
 
@@ -107,14 +141,14 @@ class Randomized(gym.Wrapper):
         return observation, dict(info, perception_case=case)
 
 
-def evaluate(actor, reference_dir, seeds, fit=False, clean_only=False):
-    env = CascadeEnv(reference_dir)
+def evaluate(actor, reference_dir, seeds, fit=False, clean_only=False, controller='reference', cases=None):
+    env = environment_type(controller)(reference_dir)
     base_config = env.config
     bins = int(np.ceil(base_config.horizon_s/.02))+1
     sums, samples = np.zeros((bins, 6)), np.zeros(bins, dtype=int)
     trials = []
     try:
-        for case, settings in CASES.items():
+        for case, settings in (CASES if cases is None else cases).items():
             if clean_only and case != 'clean':
                 continue
             env.config = replace(base_config, **settings)
@@ -141,13 +175,23 @@ def evaluate(actor, reference_dir, seeds, fit=False, clean_only=False):
 
 
 def make_model(env, seed, warm=None, warm_dir=None):
-    model = PPO(MaskedTransferPolicy, env, seed=seed, device='cpu', verbose=0,
-                learning_rate=.0001, n_steps=256, batch_size=64, n_epochs=5,
+    controller = getattr(env.unwrapped, 'CONTROLLER_NAME', 'reference')
+    policy = ActorCriticPolicy if controller != 'reference' else MaskedTransferPolicy
+    initial_std = MOTOR_INITIAL_LOG_STD if controller in MOTOR_CONTROLLERS else -3. if controller == 'guarded_feedback' else -4.5
+    features = CascadeFeatures
+    if controller in MOTOR_CONTROLLERS:
+        from .motor_env import MotorFeatures, MotorResidualPolicy
+        features = MotorFeatures
+        policy = MotorResidualPolicy
+    model = PPO(policy, env, seed=seed, device='cpu', verbose=0,
+                learning_rate=.0003 if controller in MOTOR_CONTROLLERS else .0001,
+                n_steps=256, batch_size=64, n_epochs=5,
                 gamma=.99, ent_coef=0., target_kl=.01, use_sde=True, sde_sample_freq=4,
-                policy_kwargs=dict(net_arch=[64, 64], activation_fn=torch.nn.Tanh,
-                    squash_output=True, log_std_init=-4.5, features_extractor_class=CascadeFeatures))
-    model.juggling_observation_layout = CascadeEnv.OBSERVATION_LAYOUT
-    model.juggling_action_layout = CascadeEnv.ACTION_LAYOUT
+                policy_kwargs=dict(net_arch=[POLICY_WIDTH, POLICY_WIDTH], activation_fn=torch.nn.Tanh,
+                    squash_output=True, log_std_init=initial_std, features_extractor_class=features))
+    model.juggling_observation_layout = env.unwrapped.OBSERVATION_LAYOUT
+    model.juggling_action_layout = env.unwrapped.ACTION_LAYOUT
+    model.juggling_controller = controller
     provenance, retain_actor = None, False
     if warm is not None:
         row = next(row for row in warm['models'] if row['seed'] == seed)
@@ -168,9 +212,10 @@ def make_model(env, seed, warm=None, warm_dir=None):
         model.policy.load_state_dict(previous.policy.state_dict())
         model.policy.features_extractor.scale.copy_(feature_scale)
         previous_balls = warm['manifest'].get('ball_count', 1)
-        same_layout = (warm['manifest'].get('observation_layout') == CascadeEnv.OBSERVATION_LAYOUT
-                       and warm['manifest'].get('action_layout') == CascadeEnv.ACTION_LAYOUT)
-        retain_actor = same_layout and previous_balls <= env.unwrapped.count
+        same_observation = warm['manifest'].get('observation_layout') == model.juggling_observation_layout
+        same_layout = same_observation and warm['manifest'].get('action_layout') == model.juggling_action_layout
+        retain_actor = (same_layout and previous_balls <= env.unwrapped.count
+                        and warm['manifest'].get('controller', 'reference') == controller)
         with torch.no_grad():
             for network in (model.policy.mlp_extractor.policy_net, model.policy.mlp_extractor.value_net):
                 linear = next(layer for layer in network if isinstance(layer, torch.nn.Linear))
@@ -179,13 +224,15 @@ def make_model(env, seed, warm=None, warm_dir=None):
                     # contribution while making the newly active inputs neutral.
                     linear.bias.add_(2.*linear.weight[:, 14*missing+13])
                 linear.weight[:, 14*previous_balls:42] = 0.
-                if not same_layout:
+                if not same_observation:
                     changed = [index for offset in (0, 14, 28) for index in range(offset+6, offset+12)]+[168, 183, 184]
+                    if controller in MOTOR_CONTROLLERS and warm['manifest'].get('controller', 'reference') not in MOTOR_CONTROLLERS:
+                        changed += list(range(42, 146))+list(range(185, 191))
                     linear.weight[:, changed] = 0.
         provenance = dict(checkpoint_sha256=digest(path), selected_step=row['selected_step'],
                           source_sha256=warm['manifest']['source_sha256'], previous_ball_count=previous_balls,
                           actor_retained=retain_actor,
-                          reference_error_features_initialized=not same_layout,
+                          reference_error_features_initialized=not same_observation,
                           previous_robustness_qualified=warm['summary']['all_candidates_passed'] if 'summary' in warm else None,
                           transfer=('policy encoder, actor and exploration retained; value head reset' if retain_actor
                                     else 'network initialization; mean/value heads and exploration scale reset'))
@@ -196,14 +243,20 @@ def make_model(env, seed, warm=None, warm_dir=None):
     torch.nn.init.zeros_(model.policy.value_net.bias)
     if not retain_actor:
         with torch.no_grad():
-            model.policy.log_std.fill_(-4.5)
+            model.policy.log_std.fill_(initial_std)
     return model, provenance
 
 
 def train_one(task):
     seed, manifest, folder, warm, warm_dir, nominal = task
     torch.set_num_threads(1)
-    env = Randomized(CascadeEnv(manifest['reference_dir']), manifest['training_cases'])
+    controller = manifest.get('controller', 'reference')
+    base = environment_type(controller)(manifest['reference_dir'])
+    if manifest.get('training_curriculum'):
+        from .motor_env import MotorCurriculum
+        env = MotorCurriculum(base, manifest['training_curriculum'])
+    else:
+        env = Randomized(base, manifest['training_cases'])
     curve, elapsed = [], 0.
     try:
         model, initialization = make_model(env, seed, warm, warm_dir)
@@ -214,6 +267,7 @@ def train_one(task):
         model.juggling_throws = manifest['requested_throws']
         model.juggling_ball_count = manifest['ball_count']
         model.juggling_source_sha256 = manifest['source_sha256']
+        model.juggling_controller = controller
         for step in manifest['checkpoints']:
             started = time.perf_counter()
             model.learn(step-model.num_timesteps, reset_num_timesteps=False,
@@ -226,9 +280,11 @@ def train_one(task):
             with isolated_evaluation_rng():
                 loaded = PPO.load(path, device='cpu')
                 np.testing.assert_array_equal(expected, loaded.predict(last_obs, deterministic=True)[0])
-                trials = evaluate(loaded, manifest['reference_dir'], manifest['validation_seeds'])
+                trials = evaluate(loaded, manifest['reference_dir'], manifest['validation_seeds'], controller=controller)
             point = dict(step=step, checkpoint=path.name, checkpoint_sha256=digest(path),
                          trials=trials, score=list(selection_score(trials, nominal, manifest)))
+            if hasattr(env, 'progress_summary'):
+                point['curriculum'] = env.progress_summary()
             curve.append(point)
             print('[Cascade validation]', manifest['task'], manifest['requested_throws'], seed, step, counts(trials), flush=True)
         selected = max(curve, key=lambda row: (tuple(row['score']), -row['step']))
@@ -236,11 +292,11 @@ def train_one(task):
         shutil.copyfile(folder/selected['checkpoint'], path)
         with isolated_evaluation_rng():
             actor = PPO.load(path, device='cpu')
-            replayed, fitted = evaluate(actor, manifest['reference_dir'], manifest['validation_seeds'], fit=True)
+            replayed, fitted = evaluate(actor, manifest['reference_dir'], manifest['validation_seeds'], fit=True, controller=controller)
             if replayed != selected['trials']:
                 raise ValueError('Selected policy replay differs from validation')
-            frozen = evaluate(Frozen(actor), manifest['reference_dir'], manifest['validation_seeds'])
-            timed = evaluate(PhaseTimed(fitted['actions'], fitted['horizon_s']), manifest['reference_dir'], manifest['validation_seeds'])
+            frozen = evaluate(Frozen(actor), manifest['reference_dir'], manifest['validation_seeds'], controller=controller)
+            timed = evaluate(PhaseTimed(fitted['actions'], fitted['horizon_s']), manifest['reference_dir'], manifest['validation_seeds'], controller=controller)
         return dict(seed=seed, training_steps=model.num_timesteps, selected_step=selected['step'],
                     checkpoint=path.name, checkpoint_sha256=digest(path), save_load_verified=True,
                     initialization=initialization, training_wall_time_s=elapsed, curve=curve,
@@ -249,14 +305,18 @@ def train_one(task):
         env.close()
 
 
-def validate_trials(trials, manifest, seeds):
-    expected = {(case, seed) for case in CASES for seed in seeds}
+def validate_trials(trials, manifest, seeds, cases=None):
+    controller = manifest.get('controller', 'reference')
+    version = environment_type(controller).ENVIRONMENT_VERSION
+    cases = CASES if cases is None else cases
+    expected = {(case, seed) for case in cases for seed in seeds}
     if len(trials) != len(expected) or {(row['case'], row['seed']) for row in trials} != expected:
         raise ValueError('Missing or duplicate cascade evaluation scenes')
     for row in trials:
-        config = dict(manifest['task_config'], **CASES[row['case']])
+        config = dict(manifest['task_config'], **cases[row['case']])
         event_reward = 10. if row['is_success'] else -20. if row['reason'] in UNSAFE_REASONS else -10.
-        if (row['task'] != manifest['task'] or row['environment_version'] != CascadeEnv.ENVIRONMENT_VERSION
+        if (row['task'] != manifest['task'] or row['environment_version'] != version
+                or row.get('controller', 'reference') != controller
                 or row['config'] != config or row['requested_throws'] != manifest['requested_throws']
                 or row['is_success'] != (row['reason'] == 'SUCCESS')
                 or row['max_joint_offset_rad'] > config['max_joint_offset_rad']+1e-12
@@ -341,7 +401,8 @@ def summarize(record):
 
 
 def test_one(task):
-    candidate, training, folder, seeds = task
+    candidate, training, folder, seeds, *extra = task
+    cases = extra[0] if extra else None
     torch.set_num_threads(1)
     if candidate['kind'] == 'zero':
         actor = Fixed()
@@ -359,11 +420,13 @@ def test_one(task):
                 or actor.juggling_observation_layout != manifest['observation_layout']
                 or actor.juggling_action_layout != manifest['action_layout']
                 or actor.juggling_source_sha256 != manifest['source_sha256']
+                or getattr(actor, 'juggling_controller', 'reference') != manifest.get('controller', 'reference')
                 or actor.num_timesteps != row['selected_step']):
             raise ValueError('Policy task, training source or budget differs')
         if candidate['kind'] == 'frozen':
             actor = Frozen(actor)
-    trials = evaluate(actor, training['manifest']['reference_dir'], seeds)
+    trials = evaluate(actor, training['manifest']['reference_dir'], seeds,
+                      controller=training['manifest'].get('controller', 'reference'), cases=cases)
     print('[Cascade independent]', candidate['id'], counts(trials), flush=True)
     return dict(**candidate, trials=trials)
 
@@ -394,6 +457,8 @@ def main():
     commands = parser.add_subparsers(dest='command', required=True)
     run = commands.add_parser('run')
     run.add_argument('--reference-dir', type=Path, required=True)
+    run.add_argument('--controller', choices=('reference', 'latched_feedback', 'guarded_feedback')+MOTOR_CONTROLLERS, default='reference')
+    run.add_argument('--motor-curriculum', action='store_true')
     run.add_argument('--output-dir', type=Path, required=True)
     run.add_argument('--output', type=Path, required=True)
     run.add_argument('--warm-start-study', type=Path)
@@ -421,7 +486,9 @@ def main():
             or args.seed_start < 380000 or args.episodes < 1 or args.jobs < 1
             or bool(args.warm_start_study) != bool(args.warm_start_dir)):
         parser.error('Use a new model directory, distinct 256-step budgets and paired warm-start arguments')
-    fingerprints = sources()
+    if args.motor_curriculum and args.controller not in MOTOR_CONTROLLERS:
+        parser.error('Motor curriculum requires a motor residual controller')
+    fingerprints = sources(args.controller)
     warm = None if args.warm_start_study is None else read_json(args.warm_start_study)
     if warm is not None:
         if not runtime_compatible(warm['manifest']['source_sha256'], fingerprints, subset=True):
@@ -436,7 +503,7 @@ def main():
                 raise ValueError('Single-ball initialization archive differs')
         else:
             raise ValueError('Unsupported warm-start study')
-    env = CascadeEnv(args.reference_dir)
+    env = environment_type(args.controller)(args.reference_dir)
     try:
         config = asdict(env.config)
         task, requested, ball_count = env.task, env.target_throws, env.count
@@ -450,25 +517,32 @@ def main():
     finally:
         env.close()
     manifest = dict(scope='cascade_residual_validation', task=task, requested_throws=requested, ball_count=ball_count,
+        controller=args.controller,
         reference_dir=args.reference_dir.as_posix(), reference_sha256=digest(args.reference_dir/'reference.npz'),
         reference_manifest_sha256=digest(args.reference_dir/'manifest.json'), task_config=config,
         source_sha256=fingerprints, training_seeds=[0, 1, 2], validation_seeds=list(range(args.seed_start, args.seed_start+args.episodes)),
         checkpoints=args.checkpoints, training_cases=args.training_cases, observation_size=191, action_size=6,
-        observation_layout=CascadeEnv.OBSERVATION_LAYOUT, action_layout=CascadeEnv.ACTION_LAYOUT,
+        observation_layout=env.OBSERVATION_LAYOUT, action_layout=env.ACTION_LAYOUT,
         selection_protocol='nominal_task_then_robustness',
         warm_start_sha256=None if warm is None else digest(args.warm_start_study),
-        optimizer=dict(algorithm='PPO', learning_rate=.0001, n_steps=256, batch_size=64, epochs=5,
-                       target_kl=.01, fresh_log_std_init=-4.5), zero_residual_evidence=zero)
+        optimizer=dict(algorithm='PPO', learning_rate=.0003 if args.controller in MOTOR_CONTROLLERS else .0001,
+                       n_steps=256, batch_size=64, epochs=5,
+                       target_kl=.01, fresh_log_std_init=MOTOR_INITIAL_LOG_STD if args.controller in MOTOR_CONTROLLERS else -3. if args.controller == 'guarded_feedback' else -4.5), zero_residual_evidence=zero)
+    if args.controller in MOTOR_CONTROLLERS:
+        manifest['optimizer']['fresh_initial_action_std_bound'] = MOTOR_INITIAL_ACTION_STD
     manifest['versions'] = {name: importlib.metadata.version(name) for name in
                            ('mujoco', 'numpy', 'torch', 'gymnasium', 'stable-baselines3')}
-    baseline = evaluate(Fixed(), args.reference_dir, manifest['validation_seeds'])
+    if args.motor_curriculum:
+        from .motor_env import training_curriculum
+        manifest['training_curriculum'] = training_curriculum()
+    baseline = evaluate(Fixed(), args.reference_dir, manifest['validation_seeds'], controller=args.controller)
     print('[Cascade baseline]', task, requested, counts(baseline), flush=True)
     args.output_dir.mkdir(parents=True)
     (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
     with ProcessPoolExecutor(args.jobs) as pool:
         models = list(pool.map(train_one, [(seed, manifest, args.output_dir, warm, args.warm_start_dir, counts(baseline))
                                           for seed in manifest['training_seeds']]))
-    if fingerprints != sources():
+    if fingerprints != sources(args.controller):
         raise ValueError('Cascade source changed during training')
     record = dict(manifest=manifest, baseline=baseline, models=models)
     record['summary'] = summarize(record)

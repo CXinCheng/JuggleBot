@@ -1,0 +1,775 @@
+{
+  "seed": 440002,
+  "noise_std_m": 0.001,
+  "prefix_wall_s": 1031.6677744000044,
+  "snapshot_sim_time": 9.124000000000382,
+  "wall_timeout": false,
+  "status": "COMPLETE",
+  "group_A_filtered": {
+    "group": "A",
+    "use_truth_ball0": false,
+    "input": {
+      "sim_time": 9.124000000000382,
+      "z_target_m": 0.8823,
+      "est_pos": [
+        0.30342847,
+        0.1104302,
+        1.20379169
+      ],
+      "est_vel": [
+        -0.02868038,
+        0.56999309,
+        -0.98979416
+      ],
+      "truth_pos_raw": [
+        0.3036748556817411,
+        0.11066302154954069,
+        1.2037172112061219
+      ],
+      "truth_vel_raw": [
+        -0.035344745894683276,
+        0.5731538554452178,
+        -0.99586457920812
+      ],
+      "truth_pos_input": [
+        0.30367486,
+        0.11066302,
+        1.20371721
+      ],
+      "truth_vel_input": [
+        -0.03534475,
+        0.57315386,
+        -0.99586458
+      ],
+      "pos_error_est_minus_truth": [
+        -0.00024638999999998523,
+        -0.0002328199999999947,
+        7.448000000009891e-05
+      ],
+      "pos_error_norm_m": 0.000347074134587994,
+      "vel_error_est_minus_truth": [
+        0.006664370000000003,
+        -0.003160770000000035,
+        0.006070420000000021
+      ],
+      "vel_error_norm_m_s": 0.009552711314919995,
+      "crossing_est": {
+        "dt_s": 0.17428305836471641,
+        "t_cross_s": 9.298283058365099,
+        "xy_m": [
+          0.29842996565853774,
+          0.20977033897195507
+        ]
+      },
+      "crossing_truth": {
+        "dt_s": 0.17386417908019247,
+        "t_cross_s": 9.297864179080575,
+        "xy_m": [
+          0.29752967405645536,
+          0.21031394535554357
+        ]
+      },
+      "crossing_diff_est_minus_truth": {
+        "dt_s": 0.0004188792845239431,
+        "dxy_m": [
+          0.0009002916020823815,
+          -0.0005436063835884963
+        ],
+        "dxy_norm_m": 0.0010516809730418367
+      }
+    },
+    "search_wall_s": 175.79256609998993,
+    "candidate_trials_count": 72,
+    "accepted": false,
+    "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+    "failure_event": {
+      "reason": "NO_FEASIBLE_RECEPTION",
+      "time": 9.124000000000382,
+      "side": "left",
+      "ball": 0,
+      "reception_plan": {
+        "score": 0.06432857452589813,
+        "parameters": [
+          -0.0396549733907916,
+          0.034037230869017,
+          0.024392081448571884,
+          -0.10847657999520702,
+          -0.00272873003865573
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": false,
+          "first_forbidden_contact": {
+            "reason": "POSE_LIMIT",
+            "time": 9.439000000000208,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004759349273542321,
+            "limit": 0.004
+          },
+          "supporting_digits": [],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 1.4309020631686356,
+          "contact_time": null
+        }
+      }
+    },
+    "best_plan": {
+      "time": 9.124,
+      "kind": "return_plan",
+      "side": "left",
+      "ball": 0,
+      "error": [
+        -0.0279,
+        -0.0027,
+        0.0123,
+        0.04,
+        0.04
+      ],
+      "score": 0.06432857452589813,
+      "parameters": [
+        -0.0396549733907916,
+        0.034037230869017,
+        0.024392081448571884,
+        -0.10847657999520702,
+        -0.00272873003865573
+      ],
+      "diagnostics": {
+        "centered": false,
+        "timely": false,
+        "captured": false,
+        "ready_for_next_throw": false,
+        "next_throw_time": 9.584999999999972,
+        "collision_free": false,
+        "first_forbidden_contact": {
+          "reason": "POSE_LIMIT",
+          "time": 9.439000000000208,
+          "part": "world/lh_palm",
+          "quantity": "self_penetration_m",
+          "actual": 0.004759349273542321,
+          "limit": 0.004
+        },
+        "supporting_digits": [],
+        "stable_age_s": 0.02100000000000001,
+        "settled_relative_speed": 1.4309020631686356,
+        "contact_time": null
+      }
+    },
+    "best_candidate": {
+      "record_type": "candidate",
+      "trial_index": 18,
+      "parameters": [
+        -0.0396549733907916,
+        0.034037230869017,
+        0.024392081448571884,
+        -0.10847657999520702,
+        -0.00272873003865573
+      ],
+      "tilt_scale": 1.0,
+      "score": 0.06432857452589813,
+      "error": [
+        -0.027925668127720387,
+        -0.002670395070000775,
+        0.01229599732939815,
+        0.04,
+        0.04
+      ],
+      "diagnostics": {
+        "centered": false,
+        "timely": false,
+        "captured": false,
+        "ready_for_next_throw": false,
+        "next_throw_time": 9.584999999999972,
+        "collision_free": false,
+        "first_forbidden_contact": {
+          "reason": "POSE_LIMIT",
+          "time": 9.439000000000208,
+          "part": "world/lh_palm",
+          "quantity": "self_penetration_m",
+          "actual": 0.004759349273542321,
+          "limit": 0.004
+        },
+        "supporting_digits": [],
+        "stable_age_s": 0.02100000000000001,
+        "settled_relative_speed": 1.4309020631686356,
+        "contact_time": null
+      },
+      "penetration_geoms": [
+        {
+          "time": 9.439000000000208,
+          "geom1": "torso_stand",
+          "geom2": "lh_palm_collision_4",
+          "body1": "world",
+          "body2": "lh_palm",
+          "penetration_m": 0.004759349273542321,
+          "limit_m": 0.004
+        },
+        {
+          "time": 9.439000000000208,
+          "geom1": "torso_stand",
+          "geom2": "lh_palm_collision_7",
+          "body1": "world",
+          "body2": "lh_palm",
+          "penetration_m": 0.004485195316582346,
+          "limit_m": 0.004
+        }
+      ]
+    },
+    "five_criteria": {
+      "centered": false,
+      "timely": false,
+      "captured": false,
+      "ready_for_next_throw": false,
+      "collision_free": false
+    },
+    "penetration_geoms_sample": [
+      {
+        "time": 9.442000000000206,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004000757072454086,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.443000000000206,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004304193996444528,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.43400000000021,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.0040154239541432424,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.433000000000211,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004241869110229649,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.43600000000021,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.00401572559656485,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.43600000000021,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_7",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.0040060647584445755,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.43600000000021,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_7",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.0040073152102102225,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.430000000000213,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.0047067306240257175,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.441000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.00419251740190065,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.440000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004288449752350827,
+        "limit_m": 0.004
+      }
+    ],
+    "events_in_step": [
+      {
+        "time": 9.124,
+        "kind": "return_plan",
+        "side": "left",
+        "ball": 0,
+        "error": [
+          -0.0279,
+          -0.0027,
+          0.0123,
+          0.04,
+          0.04
+        ],
+        "score": 0.06432857452589813,
+        "parameters": [
+          -0.0396549733907916,
+          0.034037230869017,
+          0.024392081448571884,
+          -0.10847657999520702,
+          -0.00272873003865573
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": false,
+          "first_forbidden_contact": {
+            "reason": "POSE_LIMIT",
+            "time": 9.439000000000208,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004759349273542321,
+            "limit": 0.004
+          },
+          "supporting_digits": [],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 1.4309020631686356,
+          "contact_time": null
+        }
+      },
+      {
+        "time": 9.124,
+        "kind": "forecast_retry",
+        "side": "left",
+        "ball": 0,
+        "policy": "indexed_execution_fallback"
+      },
+      {
+        "time": 9.124,
+        "kind": "return_plan",
+        "side": "left",
+        "ball": 0,
+        "error": [
+          -0.0279,
+          -0.0027,
+          0.0123,
+          0.04,
+          0.04
+        ],
+        "score": 0.06432857452589813,
+        "parameters": [
+          -0.0396549733907916,
+          0.034037230869017,
+          0.024392081448571884,
+          -0.10847657999520702,
+          -0.00272873003865573
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": false,
+          "first_forbidden_contact": {
+            "reason": "POSE_LIMIT",
+            "time": 9.439000000000208,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004759349273542321,
+            "limit": 0.004
+          },
+          "supporting_digits": [],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 1.4309020631686356,
+          "contact_time": null
+        }
+      }
+    ]
+  },
+  "group_B_truth": {
+    "group": "B",
+    "use_truth_ball0": true,
+    "input": {
+      "sim_time": 9.124000000000382,
+      "z_target_m": 0.8823,
+      "est_pos": [
+        0.30342847,
+        0.1104302,
+        1.20379169
+      ],
+      "est_vel": [
+        -0.02868038,
+        0.56999309,
+        -0.98979416
+      ],
+      "truth_pos_raw": [
+        0.3036748556817411,
+        0.11066302154954069,
+        1.2037172112061219
+      ],
+      "truth_vel_raw": [
+        -0.035344745894683276,
+        0.5731538554452178,
+        -0.99586457920812
+      ],
+      "truth_pos_input": [
+        0.30367486,
+        0.11066302,
+        1.20371721
+      ],
+      "truth_vel_input": [
+        -0.03534475,
+        0.57315386,
+        -0.99586458
+      ],
+      "pos_error_est_minus_truth": [
+        -0.00024638999999998523,
+        -0.0002328199999999947,
+        7.448000000009891e-05
+      ],
+      "pos_error_norm_m": 0.000347074134587994,
+      "vel_error_est_minus_truth": [
+        0.006664370000000003,
+        -0.003160770000000035,
+        0.006070420000000021
+      ],
+      "vel_error_norm_m_s": 0.009552711314919995,
+      "crossing_est": {
+        "dt_s": 0.17428305836471641,
+        "t_cross_s": 9.298283058365099,
+        "xy_m": [
+          0.29842996565853774,
+          0.20977033897195507
+        ]
+      },
+      "crossing_truth": {
+        "dt_s": 0.17386417908019247,
+        "t_cross_s": 9.297864179080575,
+        "xy_m": [
+          0.29752967405645536,
+          0.21031394535554357
+        ]
+      },
+      "crossing_diff_est_minus_truth": {
+        "dt_s": 0.0004188792845239431,
+        "dxy_m": [
+          0.0009002916020823815,
+          -0.0005436063835884963
+        ],
+        "dxy_norm_m": 0.0010516809730418367
+      }
+    },
+    "search_wall_s": 179.87177830000292,
+    "candidate_trials_count": 74,
+    "accepted": false,
+    "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+    "failure_event": {
+      "reason": "NO_FEASIBLE_RECEPTION",
+      "time": 9.124000000000382,
+      "side": "left",
+      "ball": 0,
+      "reception_plan": {
+        "score": 0.06734689950879418,
+        "parameters": [
+          -0.03872971193106835,
+          0.029676819584630625,
+          0.02778703705158395,
+          -0.12,
+          -0.07598092468390544
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": true,
+          "first_forbidden_contact": null,
+          "supporting_digits": [
+            "mf"
+          ],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 0.26108453408417814,
+          "contact_time": null
+        }
+      }
+    },
+    "best_plan": {
+      "time": 9.124,
+      "kind": "return_plan",
+      "side": "left",
+      "ball": 0,
+      "error": [
+        -0.0299,
+        0.0024,
+        0.0208,
+        0.04,
+        0.04
+      ],
+      "score": 0.06734689950879418,
+      "parameters": [
+        -0.03872971193106835,
+        0.029676819584630625,
+        0.02778703705158395,
+        -0.12,
+        -0.07598092468390544
+      ],
+      "diagnostics": {
+        "centered": false,
+        "timely": false,
+        "captured": false,
+        "ready_for_next_throw": false,
+        "next_throw_time": 9.584999999999972,
+        "collision_free": true,
+        "first_forbidden_contact": null,
+        "supporting_digits": [
+          "mf"
+        ],
+        "stable_age_s": 0.02100000000000001,
+        "settled_relative_speed": 0.26108453408417814,
+        "contact_time": null
+      }
+    },
+    "best_candidate": {
+      "record_type": "candidate",
+      "trial_index": 37,
+      "parameters": [
+        -0.03872971193106835,
+        0.029676819584630625,
+        0.02778703705158395,
+        -0.12,
+        -0.07598092468390544
+      ],
+      "tilt_scale": 1.0,
+      "score": 0.06734689950879418,
+      "error": [
+        -0.029929660855552747,
+        0.0024042849879187637,
+        0.02083361918189163,
+        0.04,
+        0.04
+      ],
+      "diagnostics": {
+        "centered": false,
+        "timely": false,
+        "captured": false,
+        "ready_for_next_throw": false,
+        "next_throw_time": 9.584999999999972,
+        "collision_free": true,
+        "first_forbidden_contact": null,
+        "supporting_digits": [
+          "mf"
+        ],
+        "stable_age_s": 0.02100000000000001,
+        "settled_relative_speed": 0.26108453408417814,
+        "contact_time": null
+      },
+      "penetration_geoms": []
+    },
+    "five_criteria": {
+      "centered": false,
+      "timely": false,
+      "captured": false,
+      "ready_for_next_throw": false,
+      "collision_free": true
+    },
+    "penetration_geoms_sample": [
+      {
+        "time": 9.441000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004249787303763496,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.443000000000206,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004446157632903975,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.441000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.00470351993545307,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.441000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_7",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004430741222712186,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.441000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_7",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004403608044546383,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.432000000000212,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004168382944565052,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.43400000000021,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004096581786503601,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.428000000000214,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004062513681166966,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.440000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004370218567052116,
+        "limit_m": 0.004
+      },
+      {
+        "time": 9.440000000000207,
+        "geom1": "torso_stand",
+        "geom2": "lh_palm_collision_4",
+        "body1": "world",
+        "body2": "lh_palm",
+        "penetration_m": 0.004179357165300907,
+        "limit_m": 0.004
+      }
+    ],
+    "events_in_step": [
+      {
+        "time": 9.124,
+        "kind": "return_plan",
+        "side": "left",
+        "ball": 0,
+        "error": [
+          -0.0299,
+          0.0024,
+          0.0208,
+          0.04,
+          0.04
+        ],
+        "score": 0.06734689950879418,
+        "parameters": [
+          -0.03872971193106835,
+          0.029676819584630625,
+          0.02778703705158395,
+          -0.12,
+          -0.07598092468390544
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": true,
+          "first_forbidden_contact": null,
+          "supporting_digits": [
+            "mf"
+          ],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 0.26108453408417814,
+          "contact_time": null
+        }
+      },
+      {
+        "time": 9.124,
+        "kind": "forecast_retry",
+        "side": "left",
+        "ball": 0,
+        "policy": "indexed_execution_fallback"
+      },
+      {
+        "time": 9.124,
+        "kind": "return_plan",
+        "side": "left",
+        "ball": 0,
+        "error": [
+          -0.0299,
+          0.0024,
+          0.0208,
+          0.04,
+          0.04
+        ],
+        "score": 0.06734689950879418,
+        "parameters": [
+          -0.03872971193106835,
+          0.029676819584630625,
+          0.02778703705158395,
+          -0.12,
+          -0.07598092468390544
+        ],
+        "diagnostics": {
+          "centered": false,
+          "timely": false,
+          "captured": false,
+          "ready_for_next_throw": false,
+          "next_throw_time": 9.584999999999972,
+          "collision_free": true,
+          "first_forbidden_contact": null,
+          "supporting_digits": [
+            "mf"
+          ],
+          "stable_age_s": 0.02100000000000001,
+          "settled_relative_speed": 0.26108453408417814,
+          "contact_time": null
+        }
+      }
+    ]
+  },
+  "total_wall_s": 1393.5536704999977
+}

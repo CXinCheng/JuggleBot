@@ -19,6 +19,27 @@ from .summarize_perception import reports, validate
 
 
 class TestCompleteTask(unittest.TestCase):
+    def test_successful_calibration_separates_optimizer_guesses_and_executed_commands(self):
+        from .calibrate_complete import main
+        with TemporaryDirectory() as directory:
+            root=Path(directory)
+            source,output,report,executed=(root/name for name in ('input.json','guesses.json','report.jsonl','executed.json'))
+            inputs=dict(forecast={},execution={'throw:right:0':[0.,0.,3.,0.]})
+            source.write_text(json.dumps(inputs),encoding='utf-8')
+            command=[.1,.2,3.1,0.,.01]
+            controller=SimpleNamespace(warm=inputs['forecast'],execution_warm=inputs['execution'],
+                events=[dict(kind='plan',side='right',ball=2,time=.3,command=command),
+                        dict(kind='stroke',side='right',ball=2,time=.3)],
+                run_complete=lambda timeout:dict(success=True,validated_flights=50,error=None))
+            argv=['calibrate_complete','--input',str(source),'--output',str(output),'--report',str(report),
+                  '--throws','50','--executed-output',str(executed)]
+            with patch('sys.argv',argv),patch('v8_robust_control.calibrate_complete.CompleteCascade',return_value=controller), \
+                    patch('v8_robust_control.calibrate_complete.complete_record',return_value={'optimizer_inputs_sha256':'base'}):
+                main()
+            self.assertEqual(json.loads(output.read_text()),inputs)
+            self.assertEqual(json.loads(source.read_text()),inputs)
+            self.assertEqual(json.loads(executed.read_text())['execution']['throw:right:0'],command)
+
     def test_default_full_task_seed_file_is_consumed(self):
         inputs=json.loads(DEFAULT_SEED_PLANS.read_text(encoding='utf-8'))
         c=CompleteCascade(throws=4)

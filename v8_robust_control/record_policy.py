@@ -15,7 +15,6 @@ from stable_baselines3 import PPO
 from .compare_residual import digest, read_json
 from .compare_videos import filter_path
 from .transfer_env import TransferEnv
-from .cascade_env import CascadeEnv
 from . import train_transfer, train_cascade
 from v6_humanoid_hands.juggle import cascade_camera
 
@@ -38,7 +37,7 @@ def load_selected(training, folder, seed):
     if not single and manifest['scope'] != 'cascade_residual_validation':
         raise ValueError('Require a complete single-ball or cascade training archive')
     driver = train_transfer if single else train_cascade
-    current = driver.sources()
+    current = driver.sources() if single else driver.sources(manifest.get('controller', 'reference'))
     compatible = current == manifest['source_sha256'] if single else train_cascade.runtime_compatible(
         manifest['source_sha256'], current)
     if not compatible or driver.summarize(training) != training['summary']:
@@ -52,6 +51,7 @@ def load_selected(training, folder, seed):
             or actor.juggling_task != manifest['task']
             or actor.juggling_throws != manifest['requested_throws']
             or actor.juggling_ball_count != manifest['ball_count']
+            or getattr(actor, 'juggling_controller', 'reference') != manifest.get('controller', 'reference')
             or actor.juggling_action_layout != manifest['action_layout']
             or actor.juggling_observation_layout != manifest['observation_layout']):
         raise ValueError('Policy task or interface differs')
@@ -116,7 +116,7 @@ def main():
         parser.error(str(error))
     manifest = training['manifest']
     reference = Path(manifest['reference_dir'])
-    env = TransferEnv(reference) if single else CascadeEnv(reference)
+    env = TransferEnv(reference) if single else train_cascade.environment_type(manifest.get('controller', 'reference'))(reference)
     env.config = replace(env.config, **train_transfer.CASES[args.case])
     task = 'single' if single else env.task
     fps = round(1/env.config.control_period_s)
@@ -149,7 +149,8 @@ def main():
                 'expansion=none:fontcolor=white:fontsize=20:x=12:y=8:line_spacing=5',
                 '-an', '-c:v', 'libx264', '-crf', '20', '-pix_fmt', 'yuv420p', str(args.video)], check=True)
         driver = train_transfer if single else train_cascade
-        if (driver.sources() != sources or digest(args.training) != training_hash
+        current_sources = driver.sources() if single else driver.sources(manifest.get('controller', 'reference'))
+        if (current_sources != sources or digest(args.training) != training_hash
                 or digest(checkpoint) != selected['checkpoint_sha256']):
             raise ValueError('Policy or sources changed while recording')
         metadata = dict(schema_version=1, task=task, case=args.case, episode_seed=args.seed,
