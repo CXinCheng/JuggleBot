@@ -1,0 +1,357 @@
+{
+  "experiment": "retry_selector_pilot_run02_resumable",
+  "shared_prefix_in_experiment": false,
+  "cross_batch_wall_time_note": "S1, R2, and R3_a0 were reused from prior runs under identical frozen configs; wall-clock comparisons across batches are for reference only.",
+  "pairs": [
+    {
+      "id": "S1_440203_T12_left",
+      "seed": 440203,
+      "side": "left",
+      "throw_idx": 12,
+      "first_search_reproduced": true,
+      "shared_prefix_in_experiment": true,
+      "source_note": "reused from build/v8_retry_fallback_downstream/run_01/retry_downstream_summary.json",
+      "a0": {
+        "wall_timeout": false,
+        "retry1_accepted": false,
+        "retry1_score": 0.05659563627749697,
+        "plan_accepted": false,
+        "actually_caught": false,
+        "cum_trials": 158,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 342.07,
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_max_rh_elbow_m": 0.06434786233688121,
+        "actual_max_lh_elbow_m": 0.06934718282802547,
+        "live_failure_reason": "NO_FEASIBLE_RECEPTION",
+        "planned_rollout_violation": "DROPPED"
+      },
+      "a1": {
+        "wall_timeout": false,
+        "retry1_accepted": true,
+        "retry1_score": 0.009283474404186018,
+        "plan_accepted": true,
+        "actually_caught": true,
+        "cum_trials": 116,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 242.98,
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_max_rh_elbow_m": 0.06511516001658825,
+        "actual_max_lh_elbow_m": 0.0706454721971752,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null
+      }
+    },
+    {
+      "id": "R2_440202_T17_right",
+      "seed": 440202,
+      "side": "right",
+      "throw_idx": 17,
+      "first_search_reproduced": true,
+      "shared_prefix_in_experiment": true,
+      "source_note": "reused from build/v8_retry_selector_pilot/run_01/pilot.log (identical config; detailed elbow fields null)",
+      "a0": {
+        "wall_timeout": false,
+        "retry1_accepted": false,
+        "retry1_score": 0.03669,
+        "plan_accepted": true,
+        "actually_caught": true,
+        "cum_trials": 217,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 392.5,
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_max_rh_elbow_m": null,
+        "actual_max_lh_elbow_m": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null
+      },
+      "a1": {
+        "wall_timeout": false,
+        "retry1_accepted": true,
+        "retry1_score": 0.01995,
+        "plan_accepted": true,
+        "actually_caught": true,
+        "cum_trials": 86,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 211.3,
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_max_rh_elbow_m": null,
+        "actual_max_lh_elbow_m": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null
+      }
+    },
+    {
+      "id": "R3_440001_T10_left",
+      "seed": 440001,
+      "side": "left",
+      "throw_idx": 10,
+      "first_search_reproduced": true,
+      "shared_prefix_in_experiment": false,
+      "source_note": "a0 reused from run_01/pilot.log; a1 from run_02 branch worker (cross-batch wall time for reference only)",
+      "a0": {
+        "wall_timeout": false,
+        "retry1_accepted": false,
+        "retry1_score": 0.2865,
+        "plan_accepted": true,
+        "actually_caught": true,
+        "cum_trials": 378,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 742.6,
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_max_rh_elbow_m": null,
+        "actual_max_lh_elbow_m": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null
+      },
+      "a1": {
+        "snapshot_id": "R3_440001_T10_left",
+        "seed": 440001,
+        "side": "left",
+        "throw_idx": 10,
+        "action": 1,
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "prefix_wall_s": 16.21,
+        "branch_wall_s": 673.17,
+        "first_search_reproduced": true,
+        "first_search_score": 0.26063939596136393,
+        "first_search_trials": 69,
+        "first_search_wall_s": 114.12,
+        "retry1_accepted": false,
+        "retry1_score": 0.325032900516117,
+        "retry1_trials": 63,
+        "retry1_wall_s": 110.19,
+        "total_searches_for_throw": 6,
+        "cum_trials": 400,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 610.95,
+        "selector_calls": 1,
+        "retry_decision": {
+          "time_s": 3.1849999999997602,
+          "side": "left",
+          "key": "throw:left:9",
+          "selector_invoked": true,
+          "action": 1,
+          "applied_analytic": true,
+          "fallback_reason": null,
+          "native_retry_cmd": [
+            -0.25672427680994986,
+            -0.5150929889978448,
+            4.55660847973075,
+            -0.2229062068440979
+          ],
+          "chosen_cmd": [
+            -0.13202153361324043,
+            -0.6277212047932943,
+            3.618655660463271,
+            -0.25335264761924525
+          ],
+          "obs": {
+            "trial1_feasible": true,
+            "trial1_err_x0_m": -0.16000636734400261,
+            "trial1_land_y_m": -0.08772428562195048,
+            "trial1_weighted_time_err": -0.32112477423893515,
+            "trial1_apex_ceiling_pen": 0.0,
+            "trial1_score": 0.36934903344737824,
+            "trial1_forward_error_share": 0.43321182094496796,
+            "first_search_score": 0.26063939596136393,
+            "first_search_land_x_m": -0.12095026294685784,
+            "first_search_land_y_m": -0.030812567433945642,
+            "first_search_weighted_time_err": -0.22881108869178335,
+            "first_search_apex_ceiling_pen": 0.0,
+            "palm_offset_from_nom_m": [
+              -0.09046191666527029,
+              -0.02547099682716636,
+              -0.04905319250494389
+            ],
+            "palm_vel_m_s": [
+              0.33540971084767107,
+              0.1946021129294719,
+              0.30724749287226366
+            ],
+            "ball_local_offset_m": [
+              0.0019764252018639647,
+              0.02209188206461717,
+              0.022137422844999796
+            ],
+            "ball_rel_vel_m_s": [
+              -0.010985204187219877,
+              0.012568112431464107,
+              0.033745025950345675
+            ]
+          }
+        },
+        "plan_accepted": true,
+        "caught_flight_prev": true,
+        "caught_flight_thrown": true,
+        "actually_caught": true,
+        "release_target": {
+          "time": 3.384,
+          "kind": "release",
+          "side": "left",
+          "ball": 2,
+          "count": 10,
+          "separation_time": 3.3709999999997398,
+          "confirmation_delay": 0.012999999999998568,
+          "position": [
+            0.27551840848880393,
+            0.06050221980795184,
+            0.9574591924327251
+          ],
+          "velocity": [
+            0.04379209306329404,
+            -0.565200221463592,
+            2.3955988180920427
+          ]
+        },
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_min_dist_mm": 89.65930921901943,
+        "actual_max_rh_elbow_m": 0.06676537351025166,
+        "actual_max_lh_elbow_m": 0.07755319770166559,
+        "failure_str": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null,
+        "source_note": "fresh_run_02_branch_worker"
+      }
+    },
+    {
+      "id": "R4_440200_T21_right",
+      "seed": 440200,
+      "side": "right",
+      "throw_idx": 21,
+      "first_search_reproduced": true,
+      "shared_prefix_in_experiment": false,
+      "source_note": "both a0 and a1 fresh from run_02 isolated per-branch workers",
+      "a0": {
+        "snapshot_id": "R4_440200_T21_right",
+        "seed": 440200,
+        "side": "right",
+        "throw_idx": 21,
+        "action": 0,
+        "wall_timeout": true,
+        "physical_result": "PENDING",
+        "branch_wall_s": 750.02,
+        "timeout_limit_s": 750.0,
+        "source_note": "run_02_branch_wall_timeout"
+      },
+      "a1": {
+        "snapshot_id": "R4_440200_T21_right",
+        "seed": 440200,
+        "side": "right",
+        "throw_idx": 21,
+        "action": 1,
+        "wall_timeout": false,
+        "physical_result": "COMPLETE",
+        "prefix_wall_s": 37.54,
+        "branch_wall_s": 311.6,
+        "first_search_reproduced": true,
+        "first_search_score": 0.039159246497558954,
+        "first_search_trials": 70,
+        "first_search_wall_s": 109.85,
+        "retry1_accepted": false,
+        "retry1_score": 0.03297360272049521,
+        "retry1_trials": 80,
+        "retry1_wall_s": 139.88,
+        "total_searches_for_throw": 3,
+        "cum_trials": 180,
+        "extra_probe_trials": 0,
+        "cum_wall_s": 297.26,
+        "selector_calls": 1,
+        "retry_decision": {
+          "time_s": 6.705000000000574,
+          "side": "right",
+          "key": "throw:right:20",
+          "selector_invoked": true,
+          "action": 1,
+          "applied_analytic": true,
+          "fallback_reason": null,
+          "native_retry_cmd": [
+            -0.41159124144120857,
+            0.661654230012042,
+            4.081317709771448,
+            -0.13398244272850277
+          ],
+          "chosen_cmd": [
+            -0.4525712702795135,
+            0.7780254555234962,
+            4.168381233458472,
+            -0.10820954238635476
+          ],
+          "obs": {
+            "trial1_feasible": true,
+            "trial1_err_x0_m": 0.040853731923498726,
+            "trial1_land_y_m": 0.0501568487496383,
+            "trial1_weighted_time_err": -0.0038801308720299854,
+            "trial1_apex_ceiling_pen": 0.0,
+            "trial1_score": 0.06480580455603704,
+            "trial1_forward_error_share": 0.6304023567545225,
+            "first_search_score": 0.039159246497558954,
+            "first_search_land_x_m": 0.02752020007697098,
+            "first_search_land_y_m": 0.0038365114524947785,
+            "first_search_weighted_time_err": -0.027592867807731514,
+            "first_search_apex_ceiling_pen": 0.0,
+            "palm_offset_from_nom_m": [
+              -0.006080141097248137,
+              0.010484870731675311,
+              -0.010180651179211408
+            ],
+            "palm_vel_m_s": [
+              0.06004243622428439,
+              -0.03986177777478535,
+              0.09101559688581007
+            ],
+            "ball_local_offset_m": [
+              0.00584789237237524,
+              0.008046386593575632,
+              0.02198352562796101
+            ],
+            "ball_rel_vel_m_s": [
+              -0.005393723085344748,
+              -0.015395616558998154,
+              0.002332455644113718
+            ]
+          }
+        },
+        "plan_accepted": true,
+        "caught_flight_prev": true,
+        "caught_flight_thrown": true,
+        "actually_caught": true,
+        "release_target": {
+          "time": 6.897,
+          "kind": "release",
+          "side": "right",
+          "ball": 0,
+          "count": 21,
+          "separation_time": 6.885000000000634,
+          "confirmation_delay": 0.012000000000004007,
+          "position": [
+            0.3229078692456481,
+            -0.07071417217201499,
+            1.0194532336379476
+          ],
+          "velocity": [
+            -0.07846774531388619,
+            0.574676234658886,
+            2.2689800468710386
+          ]
+        },
+        "actual_ball_contacts": 0,
+        "actual_live_collisions": [],
+        "actual_min_dist_mm": 88.74231604812152,
+        "actual_max_rh_elbow_m": 0.0717433329337745,
+        "actual_max_lh_elbow_m": 0.062347009080714444,
+        "failure_str": null,
+        "live_failure_reason": null,
+        "planned_rollout_violation": null,
+        "source_note": "fresh_run_02_branch_worker"
+      }
+    }
+  ]
+}

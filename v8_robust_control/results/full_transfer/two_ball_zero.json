@@ -1,0 +1,279 @@
+{
+  "source_sha256": {
+    "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
+    "src/jugglebot/humanoid/cascade.py": "47903e49d916eb11660961040ac77bcfad73d973053770ff51e06b25030ab432",
+    "src/jugglebot/humanoid/contact_control.py": "7a2f2eac399afa01b9d11b52b4f27d142034c5bc024dd9cee8343943b8e501e5",
+    "src/jugglebot/humanoid/kinematics.py": "d281fb528d6f6c3d8661968d0440acb547e74295bead3c5cadcd4be5071a3f15",
+    "src/jugglebot/humanoid/logging.py": "6534b00d1d3f7c2085b72f39bd9a77648b5459f44ccf448f54eb336372bb8b09",
+    "src/jugglebot/humanoid/metrics.py": "2b3fc325a4b81bc7d6eef10d18c3d8976533be57d69e380302476562b0c0d3af",
+    "src/jugglebot/humanoid/model.py": "2e723b461ea404026be03535a5aec6eab822911410edbc5bdb9ab2b1ec8fb156",
+    "src/jugglebot/humanoid/planning.py": "5b9a846c9ad60450846598c76e14fdda2357d41c4e7f5d09669f6eaec6d70c8c",
+    "src/jugglebot/humanoid/throwing.py": "e787456478c77f5e027d7bdc8f516530f7b7b9629dbbad3662ea543ce2187b26",
+    "src/jugglebot/robustness/__init__.py": "79474c60c1bc67b396052492cebab1f6c11868ca5cbb421fb877e6d7dd7f8e2f",
+    "src/jugglebot/robustness/controller.py": "41928aca7ef055fa098004e0864ad0c500ffee8446396ab45b4bcfb68edb7e4b",
+    "src/jugglebot/robustness/evaluation.py": "056cb1586c8237658e7f5b9e13b23b740a91b01d0cf616e6cf19b084ee7b9461",
+    "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
+    "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
+    "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
+    "v8_robust_control/complete_task.py": "7471e67e1e05487ef511993cc0be5f2c1dc650fa23692e1539a99be795c21a92",
+    "v7_three_ball_hold/cascade21.py": "9612d138d24d25eb3784d61415d8241d0d1e6227b3fee3eee77deb655ce5fad4",
+    "v7_three_ball_hold/end21.py": "69280fc370d851d2e477d0bbef2b22b962a9954a320c3865d96d7800200552a6",
+    "v7_three_ball_hold/results/hold2f_right_s20.json": "02df596241e3498bea5c186a23e80d04a6c0950cb4616882d1200e9ed985a5d2",
+    "v7_three_ball_hold/results/first_throw_calibration.json": "5eb1d7e87f28c7d27bf93ccbf893e0b87c4be09992caa08abb1016ab610350aa",
+    "v7_three_ball_hold/results/second_throw_calibration.json": "3eeed5c59b7eaa67503f9598b19ad31fba6a7ffe7c13ca9c5df9b0de54ae7218",
+    "v7_three_ball_hold/results/seeds_2plus1.json": "2bb6324bcde7a0e751f024d74c6261680318e17fd306d9c35e9331214a66f9b4",
+    "v7_three_ball_hold/results/catchtipM_az0_el90.json": "0f78dc36a3dc09c4cce51f0a324ce494837dd22444ac446567551e7fd25dabea",
+    "v7_three_ball_hold/results/pinky_A.json": "2e7cd2c8a08ff245dc6aff7906fc388100d4839bce1e334538505702b5f3c2f1",
+    "v8_robust_control/complete_seed_plans.json": "541f8bddb30ebd8e70da57ab414391c76a467a6b323fd3d07b7cdcc23a101a11",
+    "v8_robust_control/train_residual.py": "fcc78ab57c247b4bbb8901f47160056060228719e362561a6046af846c3b3d8b",
+    "v8_robust_control/residual_env.py": "05c3ed96a0a1d1ce87e2f3a344a1db69b4f1e6bbb860d228f90db25373742c6c",
+    "v8_robust_control/reception_control.py": "d5ffabd17477a7e4c8644116257b2f08bdeaf71be02f4784d8354884d0ef5735",
+    "pyproject.toml": "90406beaf7bb91f244f79678bb8abdff5bca5dfd8f59cdcc3e9a87e184321a9d",
+    "uv.lock": "f99cafcea22776812dd795e806725be72f17a76343e4f089ffa475a3f3b468c1",
+    "assets/leap_hand/left_hand.xml": "aed631597451a7fe4e81f26887ddb07634dc9500c896f19308e1a531cdf31488",
+    "assets/leap_hand/right_hand.xml": "9d8f25c38bdb60617f378c07b7e71f97306471353c81bf281eb9943f3f2340d8",
+    "assets/leap_hand/UPSTREAM.json": "1dd9c2836a38fa451de7ca869bebf94c8de1cd3232743d97d4e5afb6ac7b2108",
+    "assets/unitree_g1/g1.xml": "3c2616550a31f33e84d3c80b8e913ac5618c8888019b0c9490dae93493e647f3",
+    "assets/ur5e_leap_hands/world.xml": "43c2616bb4e685c78f0b3bd3d553603776754818c0a310d952ed663d3960c7bb",
+    "v8_robust_control/single_ball.py": "dca5bbdc1edf4d5d4c8b3c3b53b79df429e385b9faa8a0260b1065a5e58f0435",
+    "v8_robust_control/transfer_env.py": "508d8f24bf685dbe353b4bfdc5695cc54cabd862dfec3a430d8166a496202184",
+    "v8_robust_control/transfer_observation.py": "031d9f2fd4f9df9dd1434699da25bc92f72d4337c214cd9960ae5155bd70007a",
+    "src/jugglebot/humanoid/leap_cascade_seed_plans.json": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
+    "v8_robust_control/cascade_env.py:TwoBallTransfer": "13102ef1608215068ebe5222b02c5075b8c68003071ed71b4a40eb4e15b4a1d3",
+    "v8_robust_control/cascade_env.py:prepare_reference": "15391990032a1c1464f7ceabc98eafe15ad940a970105971a244c4c3136856fe",
+    "v8_robust_control/cascade_env.py:nominal_support": "14bd7437042b974815336b6161f5841f9d85659ecf93a20f10bc501ef4212cea",
+    "v8_robust_control/cascade_env.py:CascadeEnv": "975390e50a0f42fb902ff26d292894ba57e865153cbb2dd83c23a39bec8aee8a",
+    "v8_robust_control/cascade_env.py": "3b74bd5b4e73130986cc8be36fe06b64919cf376efd9165de3d5884934744ce4"
+  },
+  "reference_sha256": "fc68002a2183376a914cfc6b657deadb249f747b118638de6d52a7b96a561aaa",
+  "records": [
+    {
+      "seed": 0,
+      "task": "two",
+      "environment_version": 5,
+      "config": {
+        "control_period_s": 0.02,
+        "horizon_s": 1.96099999999995,
+        "seat_jitter_m": 0.0,
+        "noise_std_m": 0.0,
+        "delay_s": 0.0,
+        "dropout": 0.0,
+        "max_cartesian_offset_m": 0.005,
+        "max_joint_offset_rad": 0.02,
+        "max_joint_rate_rad_s": 0.15,
+        "max_grip_offset_rad": 0.1,
+        "max_grip_rate_rad_s": 0.5
+      },
+      "is_success": true,
+      "reason": "SUCCESS",
+      "simulated_time_s": 1.46099999999995,
+      "releases": 2,
+      "catches": 2,
+      "final_hold_s": 0.20000000000000015,
+      "initial_hold_s": 0.05000000000000004,
+      "reference_state_max_error": 0.0,
+      "events": [
+        {
+          "kind": "release",
+          "id": 1,
+          "ball": 0,
+          "side": 0,
+          "time": 0.2610000000000002,
+          "confirmed_time": 0.2720000000000002,
+          "vertical_speed_m_s": 2.339441828586767
+        },
+        {
+          "kind": "release",
+          "id": 2,
+          "ball": 1,
+          "side": 1,
+          "time": 0.5810000000000004,
+          "confirmed_time": 0.5920000000000004,
+          "vertical_speed_m_s": 2.353838770713733
+        },
+        {
+          "kind": "catch",
+          "id": 1,
+          "ball": 0,
+          "side": 1,
+          "time": 0.9540000000000007,
+          "palm_touch_time": 0.7870000000000006,
+          "supporting_digits": [
+            "if",
+            "mf",
+            "rf",
+            "th"
+          ],
+          "initial_relative_speed": 0.7151260107122184,
+          "settled_relative_speed": 0.032669594016297474,
+          "incoming_ball_speed": 2.2285229593755305,
+          "settled_ball_speed": 0.9227837243805034
+        },
+        {
+          "kind": "catch",
+          "id": 2,
+          "ball": 1,
+          "side": 0,
+          "time": 1.2619999999999718,
+          "palm_touch_time": 1.104999999999989,
+          "supporting_digits": [
+            "if",
+            "mf",
+            "rf",
+            "th"
+          ],
+          "initial_relative_speed": 1.1886428049814823,
+          "settled_relative_speed": 0.07484925446310728,
+          "incoming_ball_speed": 2.7273489532602206,
+          "settled_ball_speed": 1.2647452274726052
+        }
+      ],
+      "failure_event": null,
+      "physics_steps": 1461,
+      "requested_throws": 2,
+      "initial_displacement_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "episode_return": 11.0,
+      "reward_sums": {
+        "event": 10.0,
+        "shaping": 0.0,
+        "action": 0.0,
+        "rate": 0.0,
+        "progress": 1.0
+      },
+      "zero_reference_verified": true,
+      "max_ball_height_m": 1.292108472755877,
+      "max_joint_offset_rad": 0.0,
+      "max_grip_offset_rad": 0.0,
+      "max_wrapping_offset_rad": 0.0,
+      "wrapping_limit_rad": 0.55,
+      "wrapping_rate_limit_rad_s": 5.0,
+      "wrapping_gain": [
+        1.0,
+        1.0
+      ],
+      "wrapping_offset_rad": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "adaptive_ending": false,
+      "feedback_gains": [
+        [
+          0.5,
+          0.5
+        ],
+        [
+          0.5,
+          0.5
+        ]
+      ],
+      "xy_innovation_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "cartesian_request_m": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "joint_offset_rad": [
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "grip_offset_rad": [
+        0.0,
+        0.0
+      ],
+      "estimation": [
+        {
+          "control_samples": 73,
+          "position_rmse_m": 0.0006648339667117116,
+          "velocity_rmse_m_s": 0.050920527740425964
+        },
+        {
+          "control_samples": 73,
+          "position_rmse_m": 0.000543148419055589,
+          "velocity_rmse_m_s": 0.043146093140541505
+        }
+      ],
+      "reward_terms": {
+        "event": 10.0,
+        "shaping": 0.0,
+        "action": -0.0,
+        "rate": -0.0,
+        "progress": 0.0
+      }
+    }
+  ],
+  "control_steps": 74,
+  "wall_time_s": 2.3944325000047684
+}

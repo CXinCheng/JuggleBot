@@ -1,0 +1,1108 @@
+{
+  "wall_s": 131.2,
+  "seeds": [
+    440000,
+    440001,
+    440002
+  ],
+  "arms": [
+    [
+      "Arm 1: Rule ON / Underlying ON (Full Base)",
+      true,
+      true
+    ],
+    [
+      "Arm 2: Rule OFF / Underlying ON (Underlying Only)",
+      false,
+      true
+    ],
+    [
+      "Arm 3: Rule ON / Underlying OFF (Rule Action Only)",
+      true,
+      false
+    ],
+    [
+      "Arm 4: Rule OFF / Underlying OFF (Pure Nominal)",
+      false,
+      false
+    ]
+  ],
+  "results": {
+    "Arm 1: Rule ON / Underlying ON (Full Base)": [
+      {
+        "seed": 440000,
+        "rule_action_on": true,
+        "underlying_on": true,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.927,
+        "reason": "POSE_LIMIT",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "POSE_LIMIT",
+          "time": 1.9269999999998986,
+          "part": "left",
+          "quantity": "shoulder_elbow_clearance_m",
+          "actual": 0.07897213241869483,
+          "limit": 0.08
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1086,
+              0.747,
+              1.963
+            ]
+          },
+          {
+            "time": 1.413,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0554,
+              -0.6334,
+              2.1062
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1218,
+              0.4869,
+              2.1774
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "rule_action_on": true,
+        "underlying_on": true,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 2.168,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 2.1679999999998723,
+          "height": 0.3987630097729753
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1001,
+              0.7533,
+              1.9596
+            ]
+          },
+          {
+            "time": 1.413,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              0.0104,
+              -0.6436,
+              2.1774
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1206,
+              0.4623,
+              2.14
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "rule_action_on": true,
+        "underlying_on": true,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.907,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "time": 1.9069999999999008,
+          "geoms": [
+            "ball0",
+            "torso_stand"
+          ]
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1073,
+              0.7433,
+              1.9678
+            ]
+          },
+          {
+            "time": 1.414,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0591,
+              -0.6609,
+              2.1577
+            ]
+          },
+          {
+            "time": 1.741,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1339,
+              0.4764,
+              2.1846
+            ]
+          }
+        ]
+      }
+    ],
+    "Arm 2: Rule OFF / Underlying ON (Underlying Only)": [
+      {
+        "seed": 440000,
+        "rule_action_on": false,
+        "underlying_on": true,
+        "catches": 5,
+        "releases": 7,
+        "elapsed_s": 2.427,
+        "reason": "BALL_COLLISION",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "BALL_COLLISION",
+          "time": 2.4269999999998437,
+          "geoms": [
+            "ball0",
+            "ball2"
+          ]
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0679,
+              0.6525,
+              2.2499
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0938,
+              -0.5864,
+              2.3039
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1023,
+              0.5546,
+              2.2639
+            ]
+          },
+          {
+            "time": 2.077,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.0229,
+              -0.4446,
+              2.0254
+            ]
+          },
+          {
+            "time": 2.391,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.3767,
+              0.6523,
+              2.1298
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "rule_action_on": false,
+        "underlying_on": true,
+        "catches": 7,
+        "releases": 9,
+        "elapsed_s": 3.358,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 1,
+          "time": 3.357999999999741,
+          "height": 0.3987118806975375
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.126,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.0694,
+              0.611,
+              2.2314
+            ]
+          },
+          {
+            "time": 1.435,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0959,
+              -0.5629,
+              2.3168
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0874,
+              0.5486,
+              2.2519
+            ]
+          },
+          {
+            "time": 2.076,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              0.0049,
+              -0.5919,
+              2.2637
+            ]
+          },
+          {
+            "time": 2.39,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.1695,
+              0.5699,
+              2.305
+            ]
+          },
+          {
+            "time": 2.71,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.2351,
+              -0.6265,
+              2.2078
+            ]
+          },
+          {
+            "time": 3.356,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.4451,
+              -0.6333,
+              2.1543
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "rule_action_on": false,
+        "underlying_on": true,
+        "catches": 3,
+        "releases": 6,
+        "elapsed_s": 2.221,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "time": 2.2209999999998664,
+          "geoms": [
+            "ball2",
+            "torso_stand"
+          ]
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0685,
+              0.6491,
+              2.2537
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0343,
+              -0.6529,
+              2.393
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.071,
+              0.5576,
+              2.262
+            ]
+          },
+          {
+            "time": 2.076,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.1186,
+              -0.4342,
+              2.0303
+            ]
+          }
+        ]
+      }
+    ],
+    "Arm 3: Rule ON / Underlying OFF (Rule Action Only)": [
+      {
+        "seed": 440000,
+        "rule_action_on": true,
+        "underlying_on": false,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.819,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.8189999999999105,
+          "height": 0.3985708742270149
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1086,
+              0.747,
+              1.963
+            ]
+          },
+          {
+            "time": 1.429,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.1206,
+              -0.6005,
+              2.2862
+            ]
+          },
+          {
+            "time": 1.759,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1116,
+              0.5726,
+              2.2739
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "rule_action_on": true,
+        "underlying_on": false,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.816,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.8159999999999108,
+          "height": 0.39761707145371494
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1001,
+              0.7533,
+              1.9596
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0999,
+              -0.5659,
+              2.3027
+            ]
+          },
+          {
+            "time": 1.757,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.2163,
+              0.6379,
+              2.0711
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "rule_action_on": true,
+        "underlying_on": false,
+        "catches": 2,
+        "releases": 5,
+        "elapsed_s": 1.829,
+        "reason": "DROPPED",
+        "is_success": false,
+        "is_unsafe": false,
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 1.8289999999999094,
+          "height": 0.3967941642549814
+        },
+        "first_divergence": {
+          "k": 3,
+          "time_s": 0.94,
+          "kind": "throw",
+          "side": "right",
+          "released": 2,
+          "cmd": [
+            -0.3959,
+            0.1679,
+            -0.64,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.1073,
+              0.7433,
+              1.9678
+            ]
+          },
+          {
+            "time": 1.434,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0629,
+              -0.658,
+              2.3075
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.1123,
+              0.5435,
+              2.2238
+            ]
+          }
+        ]
+      }
+    ],
+    "Arm 4: Rule OFF / Underlying OFF (Pure Nominal)": [
+      {
+        "seed": 440000,
+        "rule_action_on": false,
+        "underlying_on": false,
+        "catches": 5,
+        "releases": 7,
+        "elapsed_s": 2.422,
+        "reason": "BALL_COLLISION",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "BALL_COLLISION",
+          "time": 2.4219999999998443,
+          "geoms": [
+            "ball0",
+            "ball2"
+          ]
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0679,
+              0.6525,
+              2.2499
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0937,
+              -0.5863,
+              2.3041
+            ]
+          },
+          {
+            "time": 1.76,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0893,
+              0.5652,
+              2.2823
+            ]
+          },
+          {
+            "time": 2.077,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.0802,
+              -0.4411,
+              2.0303
+            ]
+          },
+          {
+            "time": 2.395,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.3986,
+              0.6627,
+              2.1752
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440001,
+        "rule_action_on": false,
+        "underlying_on": false,
+        "catches": 5,
+        "releases": 8,
+        "elapsed_s": 2.714,
+        "reason": "POSE_LIMIT",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "POSE_LIMIT",
+          "time": 2.713999999999812,
+          "part": "world/right_wrist_roll_link",
+          "quantity": "self_penetration_m",
+          "actual": 0.0047877018929645965,
+          "limit": 0.004
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.126,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              -0.0694,
+              0.611,
+              2.2314
+            ]
+          },
+          {
+            "time": 1.435,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0959,
+              -0.5629,
+              2.3171
+            ]
+          },
+          {
+            "time": 1.759,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0648,
+              0.5567,
+              2.2758
+            ]
+          },
+          {
+            "time": 2.075,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.0549,
+              -0.7223,
+              2.2775
+            ]
+          },
+          {
+            "time": 2.389,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.286,
+              0.5132,
+              2.3331
+            ]
+          },
+          {
+            "time": 2.711,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.3004,
+              -0.6572,
+              2.1863
+            ]
+          }
+        ]
+      },
+      {
+        "seed": 440002,
+        "rule_action_on": false,
+        "underlying_on": false,
+        "catches": 3,
+        "releases": 6,
+        "elapsed_s": 2.09,
+        "reason": "POSE_LIMIT",
+        "is_success": false,
+        "is_unsafe": true,
+        "failure_event": {
+          "reason": "POSE_LIMIT",
+          "time": 2.089999999999881,
+          "part": "world/right_wrist_roll_link",
+          "quantity": "self_penetration_m",
+          "actual": 0.004099236520137175,
+          "limit": 0.004
+        },
+        "first_divergence": null,
+        "physical_releases": [
+          {
+            "time": 0.473,
+            "side": "right",
+            "ball": 2,
+            "velocity": [
+              -0.17,
+              0.5603,
+              2.3029
+            ]
+          },
+          {
+            "time": 0.799,
+            "side": "left",
+            "ball": 1,
+            "velocity": [
+              -0.075,
+              -0.5335,
+              2.2757
+            ]
+          },
+          {
+            "time": 1.112,
+            "side": "right",
+            "ball": 0,
+            "velocity": [
+              0.0685,
+              0.6491,
+              2.2537
+            ]
+          },
+          {
+            "time": 1.43,
+            "side": "left",
+            "ball": 2,
+            "velocity": [
+              -0.0343,
+              -0.6529,
+              2.3933
+            ]
+          },
+          {
+            "time": 1.759,
+            "side": "right",
+            "ball": 1,
+            "velocity": [
+              -0.0575,
+              0.5747,
+              2.292
+            ]
+          },
+          {
+            "time": 2.08,
+            "side": "left",
+            "ball": 0,
+            "velocity": [
+              -0.0663,
+              -0.4515,
+              1.9755
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

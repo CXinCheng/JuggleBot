@@ -1,0 +1,714 @@
+{
+  "ppo_checkpoint": "C:\\Users\\boc\\Box\\Projects\\JuggleBot\\build\\v8_stagewise_imitation_ppo\\ppo_official_imitation_seed0_epoch2000.zip",
+  "ppo_fitting": {
+    "history": [
+      {
+        "epoch": 0,
+        "training_mse": 0.004314815159887075
+      },
+      {
+        "epoch": 25,
+        "training_mse": 0.0014274565037339926
+      },
+      {
+        "epoch": 50,
+        "training_mse": 0.0005151498480699956
+      },
+      {
+        "epoch": 75,
+        "training_mse": 0.00015877002442721277
+      },
+      {
+        "epoch": 100,
+        "training_mse": 5.167237395653501e-05
+      },
+      {
+        "epoch": 125,
+        "training_mse": 3.085517164436169e-05
+      },
+      {
+        "epoch": 150,
+        "training_mse": 2.9297505534486845e-05
+      },
+      {
+        "epoch": 175,
+        "training_mse": 1.5280065781553276e-05
+      },
+      {
+        "epoch": 200,
+        "training_mse": 2.3482043616240844e-05
+      },
+      {
+        "epoch": 225,
+        "training_mse": 1.0788631698233075e-05
+      },
+      {
+        "epoch": 250,
+        "training_mse": 1.2064791008015163e-05
+      },
+      {
+        "epoch": 275,
+        "training_mse": 1.502150007581804e-05
+      },
+      {
+        "epoch": 300,
+        "training_mse": 8.042470653890632e-06
+      },
+      {
+        "epoch": 325,
+        "training_mse": 2.0567484170896932e-05
+      },
+      {
+        "epoch": 350,
+        "training_mse": 5.15074407303473e-06
+      },
+      {
+        "epoch": 375,
+        "training_mse": 7.2543343776487745e-06
+      },
+      {
+        "epoch": 400,
+        "training_mse": 6.24687572781113e-06
+      },
+      {
+        "epoch": 425,
+        "training_mse": 2.126278559444472e-06
+      },
+      {
+        "epoch": 450,
+        "training_mse": 3.434684913372621e-06
+      },
+      {
+        "epoch": 475,
+        "training_mse": 5.532762315851869e-06
+      },
+      {
+        "epoch": 500,
+        "training_mse": 2.1480438590515405e-05
+      },
+      {
+        "epoch": 525,
+        "training_mse": 2.7096712074126117e-06
+      },
+      {
+        "epoch": 550,
+        "training_mse": 1.6070081301222672e-06
+      },
+      {
+        "epoch": 575,
+        "training_mse": 1.152585718955379e-05
+      },
+      {
+        "epoch": 600,
+        "training_mse": 2.0172610675217584e-06
+      },
+      {
+        "epoch": 625,
+        "training_mse": 4.292796347726835e-06
+      },
+      {
+        "epoch": 650,
+        "training_mse": 5.255182713881368e-06
+      },
+      {
+        "epoch": 675,
+        "training_mse": 1.1703103837135131e-06
+      },
+      {
+        "epoch": 700,
+        "training_mse": 7.53199856262654e-05
+      },
+      {
+        "epoch": 725,
+        "training_mse": 3.0468888780887937e-06
+      },
+      {
+        "epoch": 750,
+        "training_mse": 1.0296472510162857e-06
+      },
+      {
+        "epoch": 775,
+        "training_mse": 5.246471846476197e-05
+      },
+      {
+        "epoch": 800,
+        "training_mse": 2.2508834263135213e-06
+      },
+      {
+        "epoch": 825,
+        "training_mse": 1.5008663467597216e-05
+      },
+      {
+        "epoch": 850,
+        "training_mse": 2.1349394501157803e-06
+      },
+      {
+        "epoch": 875,
+        "training_mse": 1.106301169784274e-06
+      },
+      {
+        "epoch": 900,
+        "training_mse": 1.1705811630235985e-05
+      },
+      {
+        "epoch": 925,
+        "training_mse": 1.2176986956546898e-06
+      },
+      {
+        "epoch": 950,
+        "training_mse": 2.8214151370775653e-06
+      },
+      {
+        "epoch": 975,
+        "training_mse": 2.765262479442754e-06
+      },
+      {
+        "epoch": 1000,
+        "training_mse": 9.322506571152189e-07
+      },
+      {
+        "epoch": 1025,
+        "training_mse": 8.487633067488787e-07
+      },
+      {
+        "epoch": 1050,
+        "training_mse": 2.7204761863686144e-05
+      },
+      {
+        "epoch": 1075,
+        "training_mse": 2.0181869331281632e-06
+      },
+      {
+        "epoch": 1100,
+        "training_mse": 1.1208197065570857e-05
+      },
+      {
+        "epoch": 1125,
+        "training_mse": 2.477593170624459e-06
+      },
+      {
+        "epoch": 1150,
+        "training_mse": 3.1539668725599768e-06
+      },
+      {
+        "epoch": 1175,
+        "training_mse": 5.786330802948214e-06
+      },
+      {
+        "epoch": 1200,
+        "training_mse": 1.1312019978504395e-06
+      },
+      {
+        "epoch": 1225,
+        "training_mse": 1.1567828551051207e-05
+      },
+      {
+        "epoch": 1250,
+        "training_mse": 1.1438052069934201e-06
+      },
+      {
+        "epoch": 1275,
+        "training_mse": 7.907486292424437e-07
+      },
+      {
+        "epoch": 1300,
+        "training_mse": 1.0219082469120622e-06
+      },
+      {
+        "epoch": 1325,
+        "training_mse": 3.927533725800458e-06
+      },
+      {
+        "epoch": 1350,
+        "training_mse": 1.2414757293299772e-06
+      },
+      {
+        "epoch": 1375,
+        "training_mse": 6.65259449306177e-07
+      },
+      {
+        "epoch": 1400,
+        "training_mse": 1.5093580714165e-06
+      },
+      {
+        "epoch": 1425,
+        "training_mse": 7.535189524787711e-06
+      },
+      {
+        "epoch": 1450,
+        "training_mse": 1.3959496527604642e-06
+      },
+      {
+        "epoch": 1475,
+        "training_mse": 6.841483468633669e-07
+      },
+      {
+        "epoch": 1500,
+        "training_mse": 2.8997956178500317e-06
+      },
+      {
+        "epoch": 1525,
+        "training_mse": 1.778106343408581e-05
+      },
+      {
+        "epoch": 1550,
+        "training_mse": 1.6401722859882284e-06
+      },
+      {
+        "epoch": 1575,
+        "training_mse": 7.47920751109632e-07
+      },
+      {
+        "epoch": 1600,
+        "training_mse": 6.05210232151876e-07
+      },
+      {
+        "epoch": 1625,
+        "training_mse": 5.851365472153702e-07
+      },
+      {
+        "epoch": 1650,
+        "training_mse": 6.0193069657543674e-05
+      },
+      {
+        "epoch": 1675,
+        "training_mse": 2.4760440737736644e-06
+      },
+      {
+        "epoch": 1700,
+        "training_mse": 5.707729542336892e-06
+      },
+      {
+        "epoch": 1725,
+        "training_mse": 8.619080062999274e-07
+      },
+      {
+        "epoch": 1750,
+        "training_mse": 1.4149667322271853e-06
+      },
+      {
+        "epoch": 1775,
+        "training_mse": 4.4687794797937386e-06
+      },
+      {
+        "epoch": 1800,
+        "training_mse": 1.1989005770374206e-06
+      },
+      {
+        "epoch": 1825,
+        "training_mse": 6.862873647150991e-07
+      },
+      {
+        "epoch": 1850,
+        "training_mse": 3.088089943048544e-05
+      },
+      {
+        "epoch": 1875,
+        "training_mse": 2.6382640498923138e-06
+      },
+      {
+        "epoch": 1900,
+        "training_mse": 8.143487661982363e-07
+      },
+      {
+        "epoch": 1925,
+        "training_mse": 8.155549039656762e-06
+      },
+      {
+        "epoch": 1950,
+        "training_mse": 1.210567006637575e-06
+      },
+      {
+        "epoch": 1975,
+        "training_mse": 2.1748423932876904e-06
+      },
+      {
+        "epoch": 2000,
+        "training_mse": 4.722099220089149e-06
+      }
+    ],
+    "final_training_mse": 4.722099220089149e-06
+  },
+  "lcb_config": {
+    "k_neighbors": 3,
+    "beta": 0.3,
+    "rec_margin": 0.45
+  },
+  "test_evaluation": {
+    "lcb_v2": {
+      "0.0": {
+        "jitter_mm": 0.0,
+        "runs": 10,
+        "successes": 10,
+        "mean_catches": 30.0,
+        "min_catches": 30,
+        "max_catches": 30,
+        "mean_elapsed_s": 11.14799999999926,
+        "unsafe": 0,
+        "reasons": {
+          "SUCCESS": 10
+        },
+        "catches_per_seed": [
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30
+        ]
+      },
+      "0.02": {
+        "jitter_mm": 0.02,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.2,
+        "min_catches": 0,
+        "max_catches": 5,
+        "mean_elapsed_s": 1.428399999999947,
+        "unsafe": 9,
+        "reasons": {
+          "FORBIDDEN_CONTACT": 5,
+          "POSE_LIMIT": 4,
+          "DROPPED": 1
+        },
+        "catches_per_seed": [
+          0,
+          0,
+          2,
+          0,
+          2,
+          2,
+          0,
+          0,
+          5,
+          1
+        ]
+      },
+      "0.1": {
+        "jitter_mm": 0.1,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 2.4,
+        "min_catches": 0,
+        "max_catches": 6,
+        "mean_elapsed_s": 1.7892999999999062,
+        "unsafe": 10,
+        "reasons": {
+          "POSE_LIMIT": 7,
+          "FORBIDDEN_CONTACT": 3
+        },
+        "catches_per_seed": [
+          3,
+          5,
+          1,
+          2,
+          2,
+          6,
+          0,
+          0,
+          2,
+          3
+        ]
+      },
+      "0.25": {
+        "jitter_mm": 0.25,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.9,
+        "min_catches": 0,
+        "max_catches": 6,
+        "mean_elapsed_s": 1.719299999999916,
+        "unsafe": 8,
+        "reasons": {
+          "FORBIDDEN_CONTACT": 3,
+          "DROPPED": 2,
+          "POSE_LIMIT": 5
+        },
+        "catches_per_seed": [
+          0,
+          1,
+          6,
+          4,
+          0,
+          2,
+          2,
+          2,
+          2,
+          0
+        ]
+      },
+      "0.5": {
+        "jitter_mm": 0.5,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.6,
+        "min_catches": 0,
+        "max_catches": 5,
+        "mean_elapsed_s": 1.5688999999999327,
+        "unsafe": 9,
+        "reasons": {
+          "POSE_LIMIT": 6,
+          "FORBIDDEN_CONTACT": 3,
+          "DROPPED": 1
+        },
+        "catches_per_seed": [
+          2,
+          0,
+          0,
+          5,
+          0,
+          1,
+          3,
+          1,
+          2,
+          2
+        ]
+      },
+      "1.0": {
+        "jitter_mm": 1.0,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 0.6,
+        "min_catches": 0,
+        "max_catches": 2,
+        "mean_elapsed_s": 1.1190999999999742,
+        "unsafe": 9,
+        "reasons": {
+          "DROPPED": 1,
+          "POSE_LIMIT": 4,
+          "FORBIDDEN_CONTACT": 5
+        },
+        "catches_per_seed": [
+          0,
+          2,
+          0,
+          0,
+          1,
+          2,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "2.0": {
+        "jitter_mm": 2.0,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 0.5,
+        "min_catches": 0,
+        "max_catches": 3,
+        "mean_elapsed_s": 1.1371999999999762,
+        "unsafe": 9,
+        "reasons": {
+          "POSE_LIMIT": 3,
+          "FORBIDDEN_CONTACT": 6,
+          "DROPPED": 1
+        },
+        "catches_per_seed": [
+          3,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "ppo_bc": {
+      "0.0": {
+        "jitter_mm": 0.0,
+        "runs": 10,
+        "successes": 10,
+        "mean_catches": 30.0,
+        "min_catches": 30,
+        "max_catches": 30,
+        "mean_elapsed_s": 11.14799999999926,
+        "unsafe": 0,
+        "reasons": {
+          "SUCCESS": 10
+        },
+        "catches_per_seed": [
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30,
+          30
+        ]
+      },
+      "0.02": {
+        "jitter_mm": 0.02,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.1,
+        "min_catches": 0,
+        "max_catches": 3,
+        "mean_elapsed_s": 1.4451999999999514,
+        "unsafe": 7,
+        "reasons": {
+          "DROPPED": 3,
+          "POSE_LIMIT": 7
+        },
+        "catches_per_seed": [
+          3,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          2,
+          3
+        ]
+      },
+      "0.1": {
+        "jitter_mm": 0.1,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 0.6,
+        "min_catches": 0,
+        "max_catches": 2,
+        "mean_elapsed_s": 1.2330999999999717,
+        "unsafe": 9,
+        "reasons": {
+          "FORBIDDEN_CONTACT": 2,
+          "POSE_LIMIT": 7,
+          "DROPPED": 1
+        },
+        "catches_per_seed": [
+          0,
+          1,
+          2,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "0.25": {
+        "jitter_mm": 0.25,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.5,
+        "min_catches": 0,
+        "max_catches": 4,
+        "mean_elapsed_s": 1.621399999999932,
+        "unsafe": 7,
+        "reasons": {
+          "POSE_LIMIT": 5,
+          "DROPPED": 3,
+          "FORBIDDEN_CONTACT": 2
+        },
+        "catches_per_seed": [
+          0,
+          3,
+          0,
+          0,
+          3,
+          1,
+          2,
+          4,
+          2,
+          0
+        ]
+      },
+      "0.5": {
+        "jitter_mm": 0.5,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 1.0,
+        "min_catches": 0,
+        "max_catches": 5,
+        "mean_elapsed_s": 1.4839999999999474,
+        "unsafe": 7,
+        "reasons": {
+          "DROPPED": 3,
+          "POSE_LIMIT": 3,
+          "FORBIDDEN_CONTACT": 4
+        },
+        "catches_per_seed": [
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          3,
+          0,
+          5,
+          0
+        ]
+      },
+      "1.0": {
+        "jitter_mm": 1.0,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 0.1,
+        "min_catches": 0,
+        "max_catches": 1,
+        "mean_elapsed_s": 0.9288999999999904,
+        "unsafe": 9,
+        "reasons": {
+          "FORBIDDEN_CONTACT": 5,
+          "DROPPED": 1,
+          "POSE_LIMIT": 4
+        },
+        "catches_per_seed": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "2.0": {
+        "jitter_mm": 2.0,
+        "runs": 10,
+        "successes": 0,
+        "mean_catches": 0.5,
+        "min_catches": 0,
+        "max_catches": 2,
+        "mean_elapsed_s": 1.0466999999999782,
+        "unsafe": 10,
+        "reasons": {
+          "POSE_LIMIT": 8,
+          "FORBIDDEN_CONTACT": 2
+        },
+        "catches_per_seed": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          1,
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

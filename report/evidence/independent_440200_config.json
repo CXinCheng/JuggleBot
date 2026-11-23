@@ -1,0 +1,32 @@
+{
+  "experiment": "independent_validation_440200_ts35_paired",
+  "seeds": [
+    440200,
+    440201,
+    440202,
+    440203,
+    440204
+  ],
+  "modes": [
+    "baseline",
+    "state_triggered"
+  ],
+  "noise_std_m": 0.001,
+  "seat_jitter_m": 0.0,
+  "observation_mode": "sampled",
+  "ball_estimator": "filtered",
+  "tau": 0.32,
+  "flight": 0.53,
+  "throws_target": 30,
+  "final_settle_s": 0.8,
+  "ending_t_start_s": 0.35,
+  "throw4_nominal_retry": false,
+  "rule": {
+    "dt_to_impact_max_s": 0.195,
+    "v_away_min_m_s": 1.0,
+    "post_sep_brake_duration_s": 0.03,
+    "brake_coast_ratio": 0.35
+  },
+  "wall_timeout_s_per_run": 3600.0,
+  "max_workers": 2
+}

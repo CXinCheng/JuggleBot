@@ -1,0 +1,1901 @@
+{
+  "selected_model": "lcb_fwdup_small_rec",
+  "selected_config": {
+    "k_neighbors": 4,
+    "beta": 0.35,
+    "rec_margin": 0.35,
+    "k0_mode": "fwd_up_small"
+  },
+  "validation_results": {
+    "lcb_6d_k4_b03_m03": {
+      "mean_catches": 1.625,
+      "unsafe": 8,
+      "catches": [
+        2,
+        0,
+        3,
+        0,
+        0,
+        6,
+        0,
+        2
+      ],
+      "choices": [
+        {
+          "k0": "fwd_up_small",
+          "k2": "r2_minus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        }
+      ]
+    },
+    "lcb_6d_k5_b04_m05": {
+      "mean_catches": 1.625,
+      "unsafe": 8,
+      "catches": [
+        0,
+        3,
+        2,
+        0,
+        0,
+        6,
+        0,
+        2
+      ],
+      "choices": [
+        {
+          "k0": "fwd_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "r2_plus",
+          "k4": "r3_minus"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "r2_plus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        }
+      ]
+    },
+    "lcb_fwdup_med_rec": {
+      "mean_catches": 2.0,
+      "unsafe": 8,
+      "catches": [
+        2,
+        2,
+        2,
+        0,
+        2,
+        6,
+        0,
+        2
+      ],
+      "choices": [
+        {
+          "k0": "fwd_up_med",
+          "k2": "r2_plus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "r2_plus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_up_med",
+          "k2": "zero",
+          "k4": "zero"
+        }
+      ]
+    },
+    "lcb_fwdup_small_rec": {
+      "mean_catches": 2.25,
+      "unsafe": 7,
+      "catches": [
+        2,
+        3,
+        2,
+        0,
+        1,
+        2,
+        5,
+        3
+      ],
+      "choices": [
+        {
+          "k0": "fwd_up_small",
+          "k2": "r2_minus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "r2_plus",
+          "k4": "r3_minus"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "r2_plus",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "zero"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "zero",
+          "k4": "r3_minus"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "zero",
+          "k4": "r3_minus"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "zero",
+          "k4": "zero"
+        },
+        {
+          "k0": "fwd_up_small",
+          "k2": "zero",
+          "k4": "zero"
+        }
+      ]
+    }
+  },
+  "test_results": {
+    "0.0": {
+      "jitter_mm": 0.0,
+      "runs": 10,
+      "successes": 10,
+      "mean_catches": 30.0,
+      "min_catches": 30,
+      "max_catches": 30,
+      "mean_elapsed_s": 11.14799999999926,
+      "unsafe": 0,
+      "reasons": {
+        "SUCCESS": 10
+      },
+      "catches_per_seed": [
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30,
+        30
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 0.0,
+          "choices": {},
+          "catches": 30,
+          "releases": 30,
+          "elapsed_s": 11.14799999999926,
+          "reason": "SUCCESS",
+          "is_success": true,
+          "unsafe": false,
+          "failure": null
+        }
+      ]
+    },
+    "0.02": {
+      "jitter_mm": 0.02,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 1.2,
+      "min_catches": 0,
+      "max_catches": 5,
+      "mean_elapsed_s": 1.4270999999999472,
+      "unsafe": 9,
+      "reasons": {
+        "FORBIDDEN_CONTACT": 5,
+        "POSE_LIMIT": 4,
+        "DROPPED": 1
+      },
+      "catches_per_seed": [
+        0,
+        0,
+        2,
+        0,
+        2,
+        2,
+        0,
+        0,
+        5,
+        1
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8500000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8500000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8520000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8520000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7809999999999147,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7809999999999147,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004292547561420442,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8430000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8430000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7619999999999167,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7619999999999167,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004430093426721313,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r3_minus"
+          },
+          "catches": 2,
+          "releases": 4,
+          "elapsed_s": 1.6349999999999307,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "HIT_ARM",
+            "time": 1.6349999999999307,
+            "geoms": [
+              "ball2",
+              "torso_link"
+            ]
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_minus",
+            "k4": "r3_minus"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1809999999999807,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.1809999999999807,
+            "part": "left",
+            "quantity": "shoulder_elbow_clearance_m",
+            "actual": 0.07896879509385546,
+            "limit": 0.08
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8490000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8490000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r3_minus"
+          },
+          "catches": 5,
+          "releases": 8,
+          "elapsed_s": 2.7569999999998074,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.7569999999998074,
+            "part": "world/right_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004192888833032098,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 0.02,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 4,
+          "elapsed_s": 1.7609999999999169,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 0,
+            "time": 1.7609999999999169,
+            "height": 0.3987790232746933
+          }
+        }
+      ]
+    },
+    "0.1": {
+      "jitter_mm": 0.1,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 2.9,
+      "min_catches": 0,
+      "max_catches": 8,
+      "mean_elapsed_s": 2.0188999999998827,
+      "unsafe": 9,
+      "reasons": {
+        "DROPPED": 1,
+        "POSE_LIMIT": 6,
+        "FORBIDDEN_CONTACT": 3
+      },
+      "catches_per_seed": [
+        2,
+        5,
+        1,
+        2,
+        3,
+        8,
+        3,
+        0,
+        2,
+        3
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r3_minus"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 2.160999999999873,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 2.160999999999873,
+            "height": 0.3969243711621304
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 5,
+          "releases": 7,
+          "elapsed_s": 2.716999999999812,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.716999999999812,
+            "part": "world/right_wrist_roll_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.00435191210165071,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 4,
+          "elapsed_s": 1.4529999999999508,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.4529999999999508,
+            "part": "left",
+            "quantity": "elbow_out_m",
+            "actual": 0.1000647571512143,
+            "limit": 0.1
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r3_minus"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.8119999999999112,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.8119999999999112,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.0042477442781609885,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 3,
+          "releases": 6,
+          "elapsed_s": 2.0819999999998817,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.0819999999998817,
+            "part": "right_wrist_pitch_joint",
+            "quantity": "wrist_pitch_rad",
+            "actual": 0.6635506937768805,
+            "limit": 0.6632251157578453
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r4_plus"
+          },
+          "catches": 8,
+          "releases": 10,
+          "elapsed_s": 3.6269999999997116,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "HIT_ARM",
+            "time": 3.6269999999997116,
+            "geoms": [
+              "ball2",
+              "torso_link"
+            ]
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r3_minus",
+            "k4": "r3_minus"
+          },
+          "catches": 3,
+          "releases": 5,
+          "elapsed_s": 1.903999999999901,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "HIT_ARM",
+            "time": 1.903999999999901,
+            "geoms": [
+              "ball2",
+              "right_wrist_pitch_link"
+            ]
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small"
+          },
+          "catches": 0,
+          "releases": 1,
+          "elapsed_s": 0.4900000000000004,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.4900000000000004,
+            "geoms": [
+              "ball0",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7669999999999162,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7669999999999162,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.0048349974869507355,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 0.1,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 3,
+          "releases": 6,
+          "elapsed_s": 2.1759999999998714,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.1759999999998714,
+            "part": "right_wrist_pitch_joint",
+            "quantity": "wrist_pitch_rad",
+            "actual": 0.6635819767612499,
+            "limit": 0.6632251157578453
+          }
+        }
+      ]
+    },
+    "0.25": {
+      "jitter_mm": 0.25,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 2.5,
+      "min_catches": 0,
+      "max_catches": 6,
+      "mean_elapsed_s": 1.8786999999999021,
+      "unsafe": 9,
+      "reasons": {
+        "FORBIDDEN_CONTACT": 4,
+        "DROPPED": 1,
+        "POSE_LIMIT": 5
+      },
+      "catches_per_seed": [
+        0,
+        1,
+        5,
+        6,
+        2,
+        2,
+        3,
+        2,
+        3,
+        1
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8490000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8490000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 4,
+          "elapsed_s": 1.8629999999999056,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 0,
+            "time": 1.8629999999999056,
+            "height": 0.39766617901569706
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r3_minus",
+            "k4": "zero"
+          },
+          "catches": 5,
+          "releases": 7,
+          "elapsed_s": 2.7089999999998127,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.7089999999998127,
+            "part": "world/right_wrist_roll_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004104650048033118,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 6,
+          "releases": 8,
+          "elapsed_s": 2.759999999999807,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 2.759999999999807,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7739999999999154,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7739999999999154,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.00428169310008317,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7759999999999152,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7759999999999152,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004510800951380861,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 3,
+          "releases": 6,
+          "elapsed_s": 2.1379999999998756,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 2.1379999999998756,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7699999999999159,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7699999999999159,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004459077687812696,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 3,
+          "releases": 5,
+          "elapsed_s": 1.8399999999999082,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "HIT_ARM",
+            "time": 1.8399999999999082,
+            "geoms": [
+              "ball2",
+              "right_wrist_yaw_link"
+            ]
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 0.25,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.3079999999999667,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3079999999999667,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3001954191280836,
+            "limit": 1.3
+          }
+        }
+      ]
+    },
+    "0.5": {
+      "jitter_mm": 0.5,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 1.2,
+      "min_catches": 0,
+      "max_catches": 3,
+      "mean_elapsed_s": 1.5198999999999416,
+      "unsafe": 8,
+      "reasons": {
+        "POSE_LIMIT": 4,
+        "DROPPED": 2,
+        "FORBIDDEN_CONTACT": 4
+      },
+      "catches_per_seed": [
+        3,
+        1,
+        1,
+        2,
+        0,
+        0,
+        3,
+        0,
+        2,
+        0
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 3,
+          "releases": 6,
+          "elapsed_s": 2.0829999999998816,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.0829999999998816,
+            "part": "world/rh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004289848946187384,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r4_plus"
+          },
+          "catches": 1,
+          "releases": 4,
+          "elapsed_s": 1.7579999999999172,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 0,
+            "time": 1.7579999999999172,
+            "height": 0.39976663126202394
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.178999999999981,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.178999999999981,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7719999999999156,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7719999999999156,
+            "part": "world/left_wrist_pitch_link",
+            "quantity": "self_penetration_m",
+            "actual": 0.004661888687253554,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r3_minus"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1799999999999808,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1799999999999808,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1829999999999805,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1829999999999805,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r4_plus"
+          },
+          "catches": 3,
+          "releases": 6,
+          "elapsed_s": 2.2489999999998633,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 2.2489999999998633,
+            "part": "right_wrist_pitch_joint",
+            "quantity": "wrist_pitch_rad",
+            "actual": 0.6642206853515139,
+            "limit": 0.6632251157578453
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r4_plus"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1759999999999813,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "time": 1.1759999999999813,
+            "geoms": [
+              "ball2",
+              "torso_stand"
+            ]
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r4_plus"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.7729999999999155,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.7729999999999155,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004033685770126753,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 0.5,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8460000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8460000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        }
+      ]
+    },
+    "1.0": {
+      "jitter_mm": 1.0,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.4,
+      "min_catches": 0,
+      "max_catches": 2,
+      "mean_elapsed_s": 1.0521999999999796,
+      "unsafe": 10,
+      "reasons": {
+        "POSE_LIMIT": 4,
+        "FORBIDDEN_CONTACT": 6
+      },
+      "catches_per_seed": [
+        0,
+        0,
+        0,
+        0,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1589999999999832,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.1589999999999832,
+            "part": "left",
+            "quantity": "elbow_out_m",
+            "actual": 0.10019914901953579,
+            "limit": 0.1
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.3089999999999666,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.3089999999999666,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3004598537609597,
+            "limit": 1.3
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8420000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8420000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r3_minus"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1799999999999808,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1799999999999808,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "r3_minus"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.1709999999999818,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1709999999999818,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 2,
+          "releases": 5,
+          "elapsed_s": 1.777999999999915,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.777999999999915,
+            "part": "world/lh_palm",
+            "quantity": "self_penetration_m",
+            "actual": 0.004592260291391616,
+            "limit": 0.004
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.2979999999999678,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.2979999999999678,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3006092694749498,
+            "limit": 1.3
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8400000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8400000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small"
+          },
+          "catches": 0,
+          "releases": 1,
+          "elapsed_s": 0.47500000000000037,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.47500000000000037,
+            "geoms": [
+              "ball0",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 1.0,
+          "choices": {
+            "k0": "fwd_up_small"
+          },
+          "catches": 0,
+          "releases": 1,
+          "elapsed_s": 0.47000000000000036,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.47000000000000036,
+            "geoms": [
+              "ball0",
+              "ball2"
+            ]
+          }
+        }
+      ]
+    },
+    "2.0": {
+      "jitter_mm": 2.0,
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.3,
+      "min_catches": 0,
+      "max_catches": 1,
+      "mean_elapsed_s": 1.1533999999999787,
+      "unsafe": 8,
+      "reasons": {
+        "DROPPED": 2,
+        "FORBIDDEN_CONTACT": 6,
+        "POSE_LIMIT": 2
+      },
+      "catches_per_seed": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "rows": [
+        {
+          "seed": 440000,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 4,
+          "elapsed_s": 1.7669999999999162,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 0,
+            "time": 1.7669999999999162,
+            "height": 0.3987006386924342
+          }
+        },
+        {
+          "seed": 440001,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8560000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8560000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440002,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8490000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8490000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440003,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero"
+          },
+          "catches": 0,
+          "releases": 2,
+          "elapsed_s": 0.8510000000000006,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 0.8510000000000006,
+            "geoms": [
+              "ball1",
+              "ball2"
+            ]
+          }
+        },
+        {
+          "seed": 440004,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1799999999999808,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1799999999999808,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440005,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "zero",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1309999999999862,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.1309999999999862,
+            "part": "left",
+            "quantity": "elbow_out_m",
+            "actual": 0.10014283257830936,
+            "limit": 0.1
+          }
+        },
+        {
+          "seed": 440006,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r3_minus",
+            "k4": "r3_minus"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.2919999999999685,
+          "reason": "POSE_LIMIT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "POSE_LIMIT",
+            "time": 1.2919999999999685,
+            "part": "ball0",
+            "quantity": "ball_height_m",
+            "actual": 1.3003063713750174,
+            "limit": 1.3
+          }
+        },
+        {
+          "seed": 440007,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "r3_minus"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.1759999999999813,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.1759999999999813,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        },
+        {
+          "seed": 440008,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r2_plus",
+            "k4": "zero"
+          },
+          "catches": 0,
+          "releases": 3,
+          "elapsed_s": 1.2529999999999728,
+          "reason": "DROPPED",
+          "is_success": false,
+          "unsafe": false,
+          "failure": {
+            "reason": "DROPPED",
+            "ball": 2,
+            "time": 1.2529999999999728,
+            "height": 0.39980465594371334
+          }
+        },
+        {
+          "seed": 440009,
+          "jitter_mm": 2.0,
+          "choices": {
+            "k0": "fwd_up_small",
+            "k2": "r3_minus",
+            "k4": "zero"
+          },
+          "catches": 1,
+          "releases": 3,
+          "elapsed_s": 1.178999999999981,
+          "reason": "FORBIDDEN_CONTACT",
+          "is_success": false,
+          "unsafe": true,
+          "failure": {
+            "reason": "BALL_COLLISION",
+            "time": 1.178999999999981,
+            "geoms": [
+              "ball0",
+              "ball1"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

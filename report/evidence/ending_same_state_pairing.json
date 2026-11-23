@@ -1,0 +1,455 @@
+{
+  "total_wall_s": 220.72579440000118,
+  "cases": {
+    "440101_state_triggered": {
+      "seed": 440101,
+      "mode": "state_triggered",
+      "fork_time_s": 9.75,
+      "prefix_wall_s": 46.67973269999493,
+      "control_050": {
+        "t_start_s_param": 0.5,
+        "wall_s": 3.56102659998578,
+        "success": false,
+        "error": "DROPPED: ball 0 at 10.540, throws=30",
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 10.539999999999598,
+          "height": 0.3990908598048213
+        },
+        "throw_count": 30,
+        "catch_count": 29,
+        "longest_final_support_s": 0.0,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 131.91443743526207,
+        "max_elbow_out_m": 0.08853596104072697,
+        "max_elbow_out_time_s": 10.129999999999825,
+        "elbow_margin_to_100mm_mm": 11.464038959273031,
+        "rh_lag_at_arrive_mm": 2.463983763764415,
+        "end_entry": {
+          "t_start_s": 9.814,
+          "impact_pred_s": 10.273499776204504,
+          "arrive_ref_s": 10.173499776204505,
+          "approach_dur_s": 0.3594997762045039,
+          "finger_prep_end_s": 9.964,
+          "dt_est_s": 0.45949977620450394,
+          "dt_true_s": 0.46708104601991396,
+          "dt_pred_err_ms": -7.581269815410019,
+          "land_pred_err_xy_mm": [
+            16.735427641682232,
+            34.383311773169474
+          ],
+          "land_pred_err_radial_mm": 38.23985704524739,
+          "goal_m": [
+            0.22817064982233415,
+            -0.12885592393298886,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05022087574867998
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.255999999999755,
+          "geom": "rh_th_tip",
+          "b0_local_mm": [
+            84.94470978806896,
+            55.59030205320334,
+            97.6555671699634
+          ],
+          "b0_minus_target_local_mm": [
+            21.476467534290638,
+            -28.282522232317824,
+            57.806297326566664
+          ],
+          "b0_rel_speed_m_s": 2.3322420504627104,
+          "rh_lag_mm": 0.9840709943550086
+        }
+      },
+      "intervention_035": {
+        "t_start_s_param": 0.35,
+        "wall_s": 6.839229500008514,
+        "success": true,
+        "error": null,
+        "failure_event": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "longest_final_support_s": 0.8000000000000006,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 93.2999561720279,
+        "max_elbow_out_m": 0.061320857576709645,
+        "max_elbow_out_time_s": 9.751000000000035,
+        "elbow_margin_to_100mm_mm": 38.67914242329036,
+        "rh_lag_at_arrive_mm": 7.057306979124159,
+        "end_entry": {
+          "t_start_s": 9.930999999999935,
+          "impact_pred_s": 10.280775275081638,
+          "arrive_ref_s": 10.180775275081638,
+          "approach_dur_s": 0.2497752750817032,
+          "finger_prep_end_s": 10.080999999999936,
+          "dt_est_s": 0.3497752750817032,
+          "dt_true_s": 0.3498649673465853,
+          "dt_pred_err_ms": -0.08969226488209081,
+          "land_pred_err_xy_mm": [
+            -5.174043056904221,
+            -4.4979157511194074
+          ],
+          "land_pred_err_radial_mm": 6.855798105171041,
+          "goal_m": [
+            0.2062560917755989,
+            -0.1676178266974582,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.04977734269024753
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.278999999999742,
+          "geom": "rh_if_md_collision_5",
+          "b0_local_mm": [
+            40.97364690245912,
+            102.93706897481626,
+            45.41928485114686
+          ],
+          "b0_minus_target_local_mm": [
+            -22.4945953513192,
+            19.0642446892951,
+            5.570015007750125
+          ],
+          "b0_rel_speed_m_s": 1.638086306179436,
+          "rh_lag_mm": 9.046367328443122
+        }
+      }
+    },
+    "440102_state_triggered": {
+      "seed": 440102,
+      "mode": "state_triggered",
+      "fork_time_s": 9.75,
+      "prefix_wall_s": 42.36198280000826,
+      "control_050": {
+        "t_start_s_param": 0.5,
+        "wall_s": 3.770493699994404,
+        "success": false,
+        "error": "DROPPED: ball 0 at 10.621, throws=30",
+        "failure_event": {
+          "reason": "DROPPED",
+          "ball": 0,
+          "time": 10.620999999999553,
+          "height": 0.3992588753794109
+        },
+        "throw_count": 30,
+        "catch_count": 29,
+        "longest_final_support_s": 0.0,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 110.09561830757201,
+        "max_elbow_out_m": 0.0940758185970456,
+        "max_elbow_out_time_s": 10.117999999999832,
+        "elbow_margin_to_100mm_mm": 5.924181402954407,
+        "rh_lag_at_arrive_mm": 6.305528732904035,
+        "end_entry": {
+          "t_start_s": 9.800000000000008,
+          "impact_pred_s": 10.27847072624342,
+          "arrive_ref_s": 10.17847072624342,
+          "approach_dur_s": 0.3784707262434116,
+          "finger_prep_end_s": 9.950000000000008,
+          "dt_est_s": 0.47847072624341164,
+          "dt_true_s": 0.48443659589424165,
+          "dt_pred_err_ms": -5.9658696508300135,
+          "land_pred_err_xy_mm": [
+            -23.522195361752097,
+            -34.23998230704575
+          ],
+          "land_pred_err_radial_mm": 41.541185142256566,
+          "goal_m": [
+            0.189767489723892,
+            -0.19555687408972833,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.054548850392234643
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.280999999999741,
+          "geom": "rh_mf_bs_collision_2",
+          "b0_local_mm": [
+            16.396363099098455,
+            110.62727684581391,
+            51.478163081078264
+          ],
+          "b0_minus_target_local_mm": [
+            -47.07187915467987,
+            26.754452560292755,
+            11.628893237681522
+          ],
+          "b0_rel_speed_m_s": 1.8328251984189752,
+          "rh_lag_mm": 5.563113875719287
+        }
+      },
+      "intervention_035": {
+        "t_start_s_param": 0.35,
+        "wall_s": 5.8439414000022225,
+        "success": true,
+        "error": null,
+        "failure_event": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "longest_final_support_s": 0.8000000000000006,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 93.43188052812287,
+        "max_elbow_out_m": 0.06213775189962509,
+        "max_elbow_out_time_s": 9.751000000000035,
+        "elbow_margin_to_100mm_mm": 37.86224810037492,
+        "rh_lag_at_arrive_mm": 4.403421765685497,
+        "end_entry": {
+          "t_start_s": 9.933999999999934,
+          "impact_pred_s": 10.282033885123735,
+          "arrive_ref_s": 10.182033885123735,
+          "approach_dur_s": 0.24803388512380112,
+          "finger_prep_end_s": 10.083999999999934,
+          "dt_est_s": 0.3480338851238011,
+          "dt_true_s": 0.35020076010277,
+          "dt_pred_err_ms": -2.1668749789688913,
+          "land_pred_err_xy_mm": [
+            0.26110955147828907,
+            -0.1523518547272562
+          ],
+          "land_pred_err_radial_mm": 0.3023066084491509,
+          "goal_m": [
+            0.21355846943300733,
+            -0.16133373128232817,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05186030922808044
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.28199999999974,
+          "geom": "rh_if_md_collision_5",
+          "b0_local_mm": [
+            52.87367348342298,
+            93.7551756500724,
+            44.92388649116511
+          ],
+          "b0_minus_target_local_mm": [
+            -10.594568770355348,
+            9.882351364551248,
+            5.074616647768371
+          ],
+          "b0_rel_speed_m_s": 1.7572575531754642,
+          "rh_lag_mm": 5.965658180095477
+        }
+      }
+    },
+    "440104_state_triggered": {
+      "seed": 440104,
+      "mode": "state_triggered",
+      "fork_time_s": 9.75,
+      "prefix_wall_s": 43.566720100003295,
+      "control_050": {
+        "t_start_s_param": 0.5,
+        "wall_s": 1.8800561999960337,
+        "success": false,
+        "error": "POSE_LIMIT: right elbow_out_m=0.100035, limit=0.100000",
+        "failure_event": {
+          "reason": "POSE_LIMIT",
+          "time": 10.111999999999835,
+          "part": "right",
+          "quantity": "elbow_out_m",
+          "actual": 0.1000352242962838,
+          "limit": 0.1
+        },
+        "throw_count": 30,
+        "catch_count": 28,
+        "longest_final_support_s": 0.0,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 113.04809544881022,
+        "max_elbow_out_m": 0.09993741011862825,
+        "max_elbow_out_time_s": 10.110999999999835,
+        "elbow_margin_to_100mm_mm": 0.06258988137175514,
+        "rh_lag_at_arrive_mm": null,
+        "end_entry": {
+          "t_start_s": 9.800000000000008,
+          "impact_pred_s": 10.284614121911506,
+          "arrive_ref_s": 10.184614121911507,
+          "approach_dur_s": 0.38461412191149824,
+          "finger_prep_end_s": 9.950000000000008,
+          "dt_est_s": 0.4846141219114983,
+          "dt_true_s": 0.4819817922613924,
+          "dt_pred_err_ms": 2.632329650105847,
+          "land_pred_err_xy_mm": [
+            23.57617730417022,
+            4.555647203148744
+          ],
+          "land_pred_err_radial_mm": 24.012289722498934,
+          "goal_m": [
+            0.23218267016767136,
+            -0.13754720480309626,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05414211792217047
+        },
+        "first_b0_rh_contact": null
+      },
+      "intervention_035": {
+        "t_start_s_param": 0.35,
+        "wall_s": 5.7952904000121634,
+        "success": true,
+        "error": null,
+        "failure_event": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "longest_final_support_s": 0.8000000000000006,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 104.413133393319,
+        "max_elbow_out_m": 0.061550722289976434,
+        "max_elbow_out_time_s": 9.751000000000035,
+        "elbow_margin_to_100mm_mm": 38.44927771002357,
+        "rh_lag_at_arrive_mm": 2.6896884766816016,
+        "end_entry": {
+          "t_start_s": 9.931999999999935,
+          "impact_pred_s": 10.28125500280539,
+          "arrive_ref_s": 10.18125500280539,
+          "approach_dur_s": 0.24925500280545468,
+          "finger_prep_end_s": 10.081999999999935,
+          "dt_est_s": 0.3492550028054547,
+          "dt_true_s": 0.34974839966089144,
+          "dt_pred_err_ms": -0.49339685543675627,
+          "land_pred_err_xy_mm": [
+            -2.0123688287715935,
+            8.045555209312049
+          ],
+          "land_pred_err_radial_mm": 8.293406232007436,
+          "goal_m": [
+            0.2066107001560356,
+            -0.13393531927242816,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05138367836251255
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.279999999999742,
+          "geom": "rh_if_md_collision_5",
+          "b0_local_mm": [
+            65.07723487385897,
+            93.89430769289704,
+            44.01294379716489
+          ],
+          "b0_minus_target_local_mm": [
+            1.608992620080643,
+            10.02148340737588,
+            4.163673953768147
+          ],
+          "b0_rel_speed_m_s": 1.8436301813058196,
+          "rh_lag_mm": 4.188708796974265
+        }
+      }
+    },
+    "440104_baseline": {
+      "seed": 440104,
+      "mode": "baseline",
+      "fork_time_s": 9.75,
+      "prefix_wall_s": 45.64282489998732,
+      "control_050": {
+        "t_start_s_param": 0.5,
+        "wall_s": 6.156409099989105,
+        "success": true,
+        "error": null,
+        "failure_event": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "longest_final_support_s": 0.8000000000000006,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 90.06522345657635,
+        "max_elbow_out_m": 0.09727137249046588,
+        "max_elbow_out_time_s": 10.134999999999822,
+        "elbow_margin_to_100mm_mm": 2.7286275095341206,
+        "rh_lag_at_arrive_mm": 2.02462177134468,
+        "end_entry": {
+          "t_start_s": 9.800000000000008,
+          "impact_pred_s": 10.287119281414455,
+          "arrive_ref_s": 10.187119281414455,
+          "approach_dur_s": 0.3871192814144472,
+          "finger_prep_end_s": 9.950000000000008,
+          "dt_est_s": 0.4871192814144472,
+          "dt_true_s": 0.48451973591438835,
+          "dt_pred_err_ms": 2.599545500058864,
+          "land_pred_err_xy_mm": [
+            23.7289457591624,
+            4.613369217441932
+          ],
+          "land_pred_err_radial_mm": 24.17325055464639,
+          "goal_m": [
+            0.24189667033010404,
+            -0.13639371129506955,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05436088913383244
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.26499999999975,
+          "geom": "rh_th_tip",
+          "b0_local_mm": [
+            59.069389510659455,
+            50.375560551202256,
+            87.13557250212185
+          ],
+          "b0_minus_target_local_mm": [
+            -4.398852743118874,
+            -33.497263734318906,
+            47.28630265872511
+          ],
+          "b0_rel_speed_m_s": 2.5344410211921686,
+          "rh_lag_mm": 1.051892692833438
+        }
+      },
+      "intervention_035": {
+        "t_start_s_param": 0.35,
+        "wall_s": 5.852206199982902,
+        "success": true,
+        "error": null,
+        "failure_event": null,
+        "throw_count": 30,
+        "catch_count": 30,
+        "longest_final_support_s": 0.8000000000000006,
+        "ball_contacts": 0,
+        "min_interball_post975_mm": 91.6442549720649,
+        "max_elbow_out_m": 0.06322703903745264,
+        "max_elbow_out_time_s": 9.751000000000035,
+        "elbow_margin_to_100mm_mm": 36.772960962547366,
+        "rh_lag_at_arrive_mm": 2.973864702091331,
+        "end_entry": {
+          "t_start_s": 9.933999999999934,
+          "impact_pred_s": 10.282663875823099,
+          "arrive_ref_s": 10.1826638758231,
+          "approach_dur_s": 0.2486638758231651,
+          "finger_prep_end_s": 10.083999999999934,
+          "dt_est_s": 0.3486638758231651,
+          "dt_true_s": 0.3502869844118864,
+          "dt_pred_err_ms": -1.6231085887212782,
+          "land_pred_err_xy_mm": [
+            3.2225646913808803,
+            5.7649144140135
+          ],
+          "land_pred_err_radial_mm": 6.604480402805005,
+          "goal_m": [
+            0.22140383578646994,
+            -0.13512118222596808,
+            0.86
+          ],
+          "rh_elbow_out_at_start_m": 0.05156725216272959
+        },
+        "first_b0_rh_contact": {
+          "time_s": 10.28299999999974,
+          "geom": "rh_if_md_collision_5",
+          "b0_local_mm": [
+            62.89325214780411,
+            89.09476310871527,
+            42.42192545244819
+          ],
+          "b0_minus_target_local_mm": [
+            -0.574990105974213,
+            5.2219388231941055,
+            2.572655609051448
+          ],
+          "b0_rel_speed_m_s": 1.6635152792831762,
+          "rh_lag_mm": 4.392932795635113
+        }
+      }
+    }
+  }
+}

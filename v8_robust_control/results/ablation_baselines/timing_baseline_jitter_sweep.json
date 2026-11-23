@@ -1,0 +1,1286 @@
+{
+  "defer_val": 0.5,
+  "seeds": [
+    440000,
+    440001,
+    440002,
+    440003,
+    440004,
+    440005,
+    440006,
+    440007,
+    440008,
+    440009
+  ],
+  "summary": {
+    "0.0": {
+      "runs": 10,
+      "successes": 10,
+      "mean_catches": 30.0,
+      "min_catches": 30,
+      "max_catches": 30,
+      "reasons": {
+        "SUCCESS": 10
+      }
+    },
+    "0.02": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.4,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "FORBIDDEN_CONTACT": 3,
+        "POSE_LIMIT": 6,
+        "DROPPED": 1
+      }
+    },
+    "0.1": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.4,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "POSE_LIMIT": 10
+      }
+    },
+    "0.25": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.1,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "POSE_LIMIT": 5,
+        "DROPPED": 3,
+        "FORBIDDEN_CONTACT": 2
+      }
+    },
+    "0.5": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.6,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "POSE_LIMIT": 6,
+        "DROPPED": 1,
+        "FORBIDDEN_CONTACT": 3
+      }
+    },
+    "1.0": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.2,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "POSE_LIMIT": 6,
+        "FORBIDDEN_CONTACT": 4
+      }
+    },
+    "2.0": {
+      "runs": 10,
+      "successes": 0,
+      "mean_catches": 0.7,
+      "min_catches": 0,
+      "max_catches": 1,
+      "reasons": {
+        "DROPPED": 1,
+        "FORBIDDEN_CONTACT": 5,
+        "POSE_LIMIT": 4
+      }
+    }
+  },
+  "runs": [
+    {
+      "seed": 440000,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.0,
+      "defer_val": 0.5,
+      "reason": "SUCCESS",
+      "is_success": true,
+      "catches": 30,
+      "releases": 30,
+      "elapsed_s": 11.14799999999926,
+      "failure_event": null
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8760000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8760000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.2379999999999745,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.2379999999999745,
+        "part": "left",
+        "quantity": "shoulder_elbow_clearance_m",
+        "actual": 0.07937203742910826,
+        "limit": 0.08
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8820000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8820000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.377999999999959,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.377999999999959,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3001045379906484,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8760000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8760000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.3349999999999638,
+      "failure_event": {
+        "reason": "DROPPED",
+        "ball": 2,
+        "time": 1.3349999999999638,
+        "height": 0.3984677626994924
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3949999999999572,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3949999999999572,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3002052403490276,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4259999999999537,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4259999999999537,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3000005376919577,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4019999999999564,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4019999999999564,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3002227005609888,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.02,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.1929999999999794,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.1929999999999794,
+        "part": "left",
+        "quantity": "elbow_out_m",
+        "actual": 0.10040385182532786,
+        "limit": 0.1
+      }
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 4,
+      "elapsed_s": 1.686999999999925,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.686999999999925,
+        "part": "ball2",
+        "quantity": "ball_height_m",
+        "actual": 1.3001214629480404,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.5549999999999395,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.5549999999999395,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.00411700975931628,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4769999999999481,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4769999999999481,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004491721950195035,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.3719999999999597,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3719999999999597,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.300598916431963,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4749999999999484,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4749999999999484,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004029686879909023,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.1849999999999803,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.1849999999999803,
+        "part": "world/lh_palm",
+        "quantity": "self_penetration_m",
+        "actual": 0.004001524364502306,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4909999999999466,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4909999999999466,
+        "part": "world/rh_palm",
+        "quantity": "self_penetration_m",
+        "actual": 0.004262403045133383,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.414999999999955,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.414999999999955,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3001350586647882,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.487999999999947,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.487999999999947,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004556467509963846,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.1,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4799999999999478,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4799999999999478,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004937925829472646,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4759999999999482,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4759999999999482,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004655087393683215,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4799999999999478,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4799999999999478,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004850340250562556,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.1999999999999786,
+      "failure_event": {
+        "reason": "DROPPED",
+        "time": 1.1999999999999786,
+        "geoms": [
+          "ball2",
+          "torso_stand"
+        ]
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.223999999999976,
+      "failure_event": {
+        "reason": "DROPPED",
+        "time": 1.223999999999976,
+        "geoms": [
+          "ball2",
+          "torso_stand"
+        ]
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.2489999999999732,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.2489999999999732,
+        "part": "left",
+        "quantity": "shoulder_elbow_clearance_m",
+        "actual": 0.07936144844003346,
+        "limit": 0.08
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8800000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8800000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.196999999999979,
+      "failure_event": {
+        "reason": "DROPPED",
+        "time": 1.196999999999979,
+        "geoms": [
+          "ball2",
+          "torso_stand"
+        ]
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.36999999999996,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.36999999999996,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3000258747709121,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8770000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8770000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.25,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.36999999999996,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.36999999999996,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3003546012079426,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.2439999999999738,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.2439999999999738,
+        "part": "left",
+        "quantity": "shoulder_elbow_clearance_m",
+        "actual": 0.07875823311834573,
+        "limit": 0.08
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.1369999999999856,
+      "failure_event": {
+        "reason": "DROPPED",
+        "time": 1.1369999999999856,
+        "geoms": [
+          "ball2",
+          "torso_stand"
+        ]
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8740000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8740000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8700000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8700000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.2279999999999756,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2279999999999756,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3479999999999623,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3479999999999623,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3010077645655507,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3639999999999606,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3639999999999606,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.300582372347352,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.351999999999962,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.351999999999962,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3009277024340655,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4739999999999485,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4739999999999485,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004221919414902448,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 0.5,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3799999999999588,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3799999999999588,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3003067998061029,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.387999999999958,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.387999999999958,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3000339819728117,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.269999999999971,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.269999999999971,
+        "part": "left",
+        "quantity": "shoulder_elbow_clearance_m",
+        "actual": 0.0798626774559199,
+        "limit": 0.08
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.2269999999999757,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2269999999999757,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4819999999999476,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4819999999999476,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.0041372433413954255,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8780000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8780000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 3,
+      "elapsed_s": 1.4849999999999473,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4849999999999473,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004794326943418376,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3479999999999623,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3479999999999623,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3005625014560156,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8860000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8860000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.3489999999999622,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.3489999999999622,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3003845103976788,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 1.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 1,
+      "elapsed_s": 0.5170000000000003,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.5170000000000003,
+        "geoms": [
+          "ball0",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440000,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "DROPPED",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.1549999999999836,
+      "failure_event": {
+        "reason": "DROPPED",
+        "time": 1.1549999999999836,
+        "geoms": [
+          "ball2",
+          "torso_stand"
+        ]
+      }
+    },
+    {
+      "seed": 440001,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.2279999999999756,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2279999999999756,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    },
+    {
+      "seed": 440002,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.2279999999999756,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2279999999999756,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    },
+    {
+      "seed": 440003,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4069999999999558,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4069999999999558,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3001308548234458,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440004,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.2309999999999752,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2309999999999752,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    },
+    {
+      "seed": 440005,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.4769999999999481,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.4769999999999481,
+        "part": "world/right_wrist_pitch_link",
+        "quantity": "self_penetration_m",
+        "actual": 0.004114153224152205,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440006,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 0.8820000000000007,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 0.8820000000000007,
+        "geoms": [
+          "ball1",
+          "ball2"
+        ]
+      }
+    },
+    {
+      "seed": 440007,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 0,
+      "releases": 2,
+      "elapsed_s": 1.1809999999999807,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.1809999999999807,
+        "part": "world/lh_palm",
+        "quantity": "self_penetration_m",
+        "actual": 0.004759073770618933,
+        "limit": 0.004
+      }
+    },
+    {
+      "seed": 440008,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "POSE_LIMIT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.350999999999962,
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 1.350999999999962,
+        "part": "ball0",
+        "quantity": "ball_height_m",
+        "actual": 1.3001702734910001,
+        "limit": 1.3
+      }
+    },
+    {
+      "seed": 440009,
+      "jitter_mm": 2.0,
+      "defer_val": 0.5,
+      "reason": "FORBIDDEN_CONTACT",
+      "is_success": false,
+      "catches": 1,
+      "releases": 3,
+      "elapsed_s": 1.2289999999999754,
+      "failure_event": {
+        "reason": "BALL_COLLISION",
+        "time": 1.2289999999999754,
+        "geoms": [
+          "ball0",
+          "ball1"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,539 @@
+{
+  "frozen_config": {
+    "experiment": "independent_validation_dt195_paired",
+    "seeds": [
+      440100,
+      440101,
+      440102,
+      440103,
+      440104
+    ],
+    "modes": [
+      "baseline",
+      "state_triggered"
+    ],
+    "noise_std_m": 0.001,
+    "seat_jitter_m": 0.0,
+    "observation_mode": "sampled",
+    "ball_estimator": "filtered",
+    "tau": 0.32,
+    "flight": 0.53,
+    "throws_target": 30,
+    "final_settle_s": 0.8,
+    "throw4_nominal_retry": false,
+    "rule": {
+      "dt_to_impact_max_s": 0.195,
+      "v_away_min_m_s": 1.0,
+      "post_sep_brake_duration_s": 0.03,
+      "brake_coast_ratio": 0.35
+    },
+    "wall_timeout_s_per_run": 2400.0,
+    "max_workers": 2
+  },
+  "total_wall_s": 6982.606474500004,
+  "baseline_pass": "1/5",
+  "state_triggered_pass": "0/5",
+  "rows": [
+    {
+      "seed": 440100,
+      "mode": "baseline",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 759.2792817000009,
+      "sim_time_s": 3.3749999999997393,
+      "throw_count": 10,
+      "catch_count": 7,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.90649413898686,
+      "min_interball_post_first_trigger": null,
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 3.3749999999997393,
+        "side": "left",
+        "ball": 0,
+        "reception_plan": {
+          "score": 0.0743184716379085,
+          "parameters": [
+            -0.05,
+            0.02551864342450579,
+            0.030438761651329985,
+            0.03646865329511692,
+            0.0604062727407654
+          ],
+          "diagnostics": {
+            "centered": false,
+            "timely": false,
+            "captured": false,
+            "ready_for_next_throw": false,
+            "next_throw_time": 3.8349999999998303,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "DROPPED",
+              "time": 3.768999999999696,
+              "geoms": [
+                "ball0",
+                "torso_stand"
+              ]
+            },
+            "supporting_digits": [],
+            "stable_age_s": 0.02000000000000001,
+            "settled_relative_speed": 1.3290601904448036,
+            "contact_time": null
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.214,
+      "left_sh_pitch_rec_sat_s": 0.14400000000000002,
+      "left_wrist_pitch_sat_s": 0.612,
+      "left_wrist_yaw_sat_s": 0.096,
+      "right_sh_pitch_sat_s": 0.12,
+      "right_wrist_pitch_sat_s": 0.668
+    },
+    {
+      "seed": 440100,
+      "mode": "state_triggered",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1368.4715645999822,
+      "sim_time_s": 5.937000000000317,
+      "throw_count": 18,
+      "catch_count": 15,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 5,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.90649413898686,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.08952971819526252,
+        "time_s": 3.4209999999997343,
+        "pair": [
+          0,
+          2
+        ]
+      },
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 5.937000000000317,
+        "side": "left",
+        "ball": 1,
+        "reception_plan": {
+          "score": 0.04011471415689129,
+          "parameters": [
+            0.0015518877396730893,
+            0.02785151573418381,
+            0.023877287744479756,
+            0.010644722993391045,
+            -0.05271796471240369
+          ],
+          "diagnostics": {
+            "centered": true,
+            "timely": true,
+            "captured": true,
+            "ready_for_next_throw": true,
+            "next_throw_time": 6.400000000000256,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "BALL_COLLISION",
+              "time": 6.283000000000433,
+              "geoms": [
+                "ball0",
+                "ball2"
+              ]
+            },
+            "supporting_digits": [
+              "mf",
+              "rf",
+              "th"
+            ],
+            "stable_age_s": 0.02100000000000001,
+            "settled_relative_speed": 0.004294020160300397,
+            "contact_time": 6.0870000000003675
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.40700000000000003,
+      "left_sh_pitch_rec_sat_s": 0.23800000000000002,
+      "left_wrist_pitch_sat_s": 1.309,
+      "left_wrist_yaw_sat_s": 0.125,
+      "right_sh_pitch_sat_s": 0.222,
+      "right_wrist_pitch_sat_s": 1.187
+    },
+    {
+      "seed": 440101,
+      "mode": "baseline",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1331.3774131999817,
+      "sim_time_s": 9.135000000000376,
+      "throw_count": 28,
+      "catch_count": 25,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.05460736043503,
+      "min_interball_post_first_trigger": null,
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 9.135000000000376,
+        "side": "left",
+        "ball": 0,
+        "reception_plan": {
+          "score": 0.06801793856751705,
+          "parameters": [
+            -0.04624325578660658,
+            0.03504298252039397,
+            0.04,
+            -0.10476344309541154,
+            0.0672429252409876
+          ],
+          "diagnostics": {
+            "centered": true,
+            "timely": false,
+            "captured": false,
+            "ready_for_next_throw": false,
+            "next_throw_time": 9.59500000000048,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "POSE_LIMIT",
+              "time": 9.450000000000202,
+              "part": "world/left_wrist_pitch_link",
+              "quantity": "self_penetration_m",
+              "actual": 0.004945119519233851,
+              "limit": 0.004
+            },
+            "supporting_digits": [],
+            "stable_age_s": 0.023000000000000013,
+            "settled_relative_speed": 0.8258946419450499,
+            "contact_time": null
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.5670000000000001,
+      "left_sh_pitch_rec_sat_s": 0.37,
+      "left_wrist_pitch_sat_s": 1.649,
+      "left_wrist_yaw_sat_s": 0.253,
+      "right_sh_pitch_sat_s": 0.436,
+      "right_wrist_pitch_sat_s": 1.899
+    },
+    {
+      "seed": 440101,
+      "mode": "state_triggered",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1441.4396429999906,
+      "sim_time_s": 10.539999999999598,
+      "throw_count": 30,
+      "catch_count": 29,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 1,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.05460736043503,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.11005172869412232,
+        "time_s": 9.521000000000162,
+        "pair": [
+          1,
+          2
+        ]
+      },
+      "error": "DROPPED: ball 0 at 10.540, throws=30",
+      "failure_event": {
+        "reason": "DROPPED",
+        "ball": 0,
+        "time": 10.539999999999598,
+        "height": 0.3990908598048213
+      },
+      "left_sh_pitch_sat_s": 0.719,
+      "left_sh_pitch_rec_sat_s": 0.47100000000000003,
+      "left_wrist_pitch_sat_s": 1.8880000000000001,
+      "left_wrist_yaw_sat_s": 0.34,
+      "right_sh_pitch_sat_s": 0.468,
+      "right_wrist_pitch_sat_s": 2.041
+    },
+    {
+      "seed": 440102,
+      "mode": "baseline",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1663.2295546999958,
+      "sim_time_s": 9.139000000000374,
+      "throw_count": 28,
+      "catch_count": 25,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.28714364021512,
+      "min_interball_post_first_trigger": null,
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 9.139000000000374,
+        "side": "left",
+        "ball": 0,
+        "reception_plan": {
+          "score": 0.062451295998466626,
+          "parameters": [
+            -0.05,
+            0.04334851803339622,
+            0.04,
+            -0.10313843003647064,
+            -0.035202882259687145
+          ],
+          "diagnostics": {
+            "centered": false,
+            "timely": false,
+            "captured": false,
+            "ready_for_next_throw": false,
+            "next_throw_time": 9.60000000000047,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "POSE_LIMIT",
+              "time": 9.463000000000195,
+              "part": "world/lh_palm",
+              "quantity": "self_penetration_m",
+              "actual": 0.004347506987504295,
+              "limit": 0.004
+            },
+            "supporting_digits": [],
+            "stable_age_s": 0.02000000000000001,
+            "settled_relative_speed": 1.6152732988209553,
+            "contact_time": null
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.656,
+      "left_sh_pitch_rec_sat_s": 0.419,
+      "left_wrist_pitch_sat_s": 2.0180000000000002,
+      "left_wrist_yaw_sat_s": 0.417,
+      "right_sh_pitch_sat_s": 0.34500000000000003,
+      "right_wrist_pitch_sat_s": 1.735
+    },
+    {
+      "seed": 440102,
+      "mode": "state_triggered",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1527.2333116999944,
+      "sim_time_s": 10.620999999999553,
+      "throw_count": 30,
+      "catch_count": 29,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 2,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 89.28714364021512,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.09279283313521079,
+        "time_s": 7.908000000000976,
+        "pair": [
+          0,
+          1
+        ]
+      },
+      "error": "DROPPED: ball 0 at 10.621, throws=30",
+      "failure_event": {
+        "reason": "DROPPED",
+        "ball": 0,
+        "time": 10.620999999999553,
+        "height": 0.3992588753794109
+      },
+      "left_sh_pitch_sat_s": 0.8220000000000001,
+      "left_sh_pitch_rec_sat_s": 0.591,
+      "left_wrist_pitch_sat_s": 2.121,
+      "left_wrist_yaw_sat_s": 0.339,
+      "right_sh_pitch_sat_s": 0.374,
+      "right_wrist_pitch_sat_s": 1.938
+    },
+    {
+      "seed": 440103,
+      "mode": "baseline",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 659.0566042999853,
+      "sim_time_s": 2.725999999999811,
+      "throw_count": 8,
+      "catch_count": 6,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.77322309130695,
+      "min_interball_post_first_trigger": null,
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 2.725999999999811,
+        "side": "left",
+        "ball": 2,
+        "reception_plan": {
+          "score": 0.04059745140777746,
+          "parameters": [
+            -0.05,
+            -0.0062968784301096516,
+            0.007674628169185286,
+            0.1033196087065868,
+            -0.023663893418848732
+          ],
+          "diagnostics": {
+            "centered": true,
+            "timely": true,
+            "captured": true,
+            "ready_for_next_throw": true,
+            "next_throw_time": 3.1849999999998313,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "POSE_LIMIT",
+              "time": 2.758999999999807,
+              "part": "left_wrist_pitch_joint",
+              "quantity": "wrist_pitch_rad",
+              "actual": 0.66524891444221,
+              "limit": 0.6632251157578453
+            },
+            "supporting_digits": [
+              "if",
+              "mf",
+              "rf",
+              "th"
+            ],
+            "stable_age_s": 0.02100000000000001,
+            "settled_relative_speed": 0.014476539900781786,
+            "contact_time": 2.91399999999979
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.138,
+      "left_sh_pitch_rec_sat_s": 0.081,
+      "left_wrist_pitch_sat_s": 0.458,
+      "left_wrist_yaw_sat_s": 0.059000000000000004,
+      "right_sh_pitch_sat_s": 0.089,
+      "right_wrist_pitch_sat_s": 0.531
+    },
+    {
+      "seed": 440103,
+      "mode": "state_triggered",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1642.117305199994,
+      "sim_time_s": 8.499000000000729,
+      "throw_count": 26,
+      "catch_count": 23,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 6,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.77322309130695,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.08976109632957076,
+        "time_s": 5.0240000000000125,
+        "pair": [
+          0,
+          1
+        ]
+      },
+      "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw",
+      "failure_event": {
+        "reason": "NO_FEASIBLE_RECEPTION",
+        "time": 8.499000000000729,
+        "side": "left",
+        "ball": 2,
+        "reception_plan": {
+          "score": 0.06443006319886756,
+          "parameters": [
+            -0.01367547080831824,
+            0.010951438566050136,
+            0.04,
+            -0.08031303801710331,
+            -0.03959947328685363
+          ],
+          "diagnostics": {
+            "centered": false,
+            "timely": false,
+            "captured": false,
+            "ready_for_next_throw": false,
+            "next_throw_time": 8.960000000000898,
+            "collision_free": false,
+            "first_forbidden_contact": {
+              "reason": "POSE_LIMIT",
+              "time": 8.82300000000055,
+              "part": "world/lh_palm",
+              "quantity": "self_penetration_m",
+              "actual": 0.004377311993792637,
+              "limit": 0.004
+            },
+            "supporting_digits": [],
+            "stable_age_s": 0.023000000000000013,
+            "settled_relative_speed": 2.7525259893252367,
+            "contact_time": null
+          }
+        }
+      },
+      "left_sh_pitch_sat_s": 0.639,
+      "left_sh_pitch_rec_sat_s": 0.432,
+      "left_wrist_pitch_sat_s": 1.691,
+      "left_wrist_yaw_sat_s": 0.296,
+      "right_sh_pitch_sat_s": 0.34800000000000003,
+      "right_wrist_pitch_sat_s": 1.594
+    },
+    {
+      "seed": 440104,
+      "mode": "baseline",
+      "success": true,
+      "wall_timeout": false,
+      "wall_s": 1283.553190800012,
+      "sim_time_s": 11.126999999999272,
+      "throw_count": 30,
+      "catch_count": 30,
+      "longest_final_support_s": 0.8000000000000006,
+      "trigger_count": 0,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.33838997587407,
+      "min_interball_post_first_trigger": null,
+      "error": null,
+      "failure_event": null,
+      "left_sh_pitch_sat_s": 0.89,
+      "left_sh_pitch_rec_sat_s": 0.687,
+      "left_wrist_pitch_sat_s": 1.9040000000000001,
+      "left_wrist_yaw_sat_s": 0.41200000000000003,
+      "right_sh_pitch_sat_s": 0.391,
+      "right_wrist_pitch_sat_s": 1.928
+    },
+    {
+      "seed": 440104,
+      "mode": "state_triggered",
+      "success": false,
+      "wall_timeout": false,
+      "wall_s": 1276.6758382999978,
+      "sim_time_s": 10.111999999999835,
+      "throw_count": 30,
+      "catch_count": 28,
+      "longest_final_support_s": 0.0,
+      "trigger_count": 1,
+      "ball_contacts": 0,
+      "minimum_distance_mm": 88.33838997587407,
+      "min_interball_post_first_trigger": {
+        "dist_m": 0.09180571532043956,
+        "time_s": 4.375999999999796,
+        "pair": [
+          0,
+          2
+        ]
+      },
+      "error": "POSE_LIMIT: right elbow_out_m=0.100035, limit=0.100000",
+      "failure_event": {
+        "reason": "POSE_LIMIT",
+        "time": 10.111999999999835,
+        "part": "right",
+        "quantity": "elbow_out_m",
+        "actual": 0.1000352242962838,
+        "limit": 0.1
+      },
+      "left_sh_pitch_sat_s": 0.876,
+      "left_sh_pitch_rec_sat_s": 0.6950000000000001,
+      "left_wrist_pitch_sat_s": 1.8840000000000001,
+      "left_wrist_yaw_sat_s": 0.365,
+      "right_sh_pitch_sat_s": 0.372,
+      "right_wrist_pitch_sat_s": 1.8980000000000001
+    }
+  ]
+}

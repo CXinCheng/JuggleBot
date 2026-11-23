@@ -1,0 +1,89 @@
+{
+  "rule_name": "generic_first_search_ballistic_vx_warmstart_v1",
+  "frozen_before_experiment": true,
+  "scope": {
+    "seed_agnostic": true,
+    "hand_agnostic": true,
+    "throw_index_agnostic": true,
+    "first_search_only": true,
+    "condition_first_search": "hand.get('retry_throw_key') != f'throw:{side}:{throw_count}'",
+    "preserves_retry_throw_command": true,
+    "preserves_safety_criteria": true,
+    "uses_future_commands": false
+  },
+  "coordinate_and_units": {
+    "command_vector": "[vx_cmd, vy_cmd, vz_cmd, bank]",
+    "units": ["m/s", "m/s", "m/s", "rad"],
+    "world_x_axis": "+x is forward (away from torso); +y is left; +z is up",
+    "err_x0_definition": "error[0] = land_x_m = x_land - x_target (m) from evaluate(command_warm)",
+    "sign_check": "err_x0 > 0 means forward overshoot (+x), requiring negative dvx = -err_x0 / flight to pull landing backward toward target[0]"
+  },
+  "trigger_and_update": {
+    "err_x0_trigger_threshold_m": 0.12,
+    "dvx_clip_m_s": 0.75,
+    "formula": "vx_new = vx_warm + clip(-err_x0 / flight, -0.75, +0.75)",
+    "modified_components": ["vx_cmd"],
+    "unchanged_components": ["vy_cmd", "vz_cmd", "bank"],
+    "fallback_conditions": [
+      "is_retry_search (retry_throw_key == key)",
+      "probe_infeasible (evaluate raises ValueError)",
+      "err_x0_non_finite",
+      "abs(err_x0) <= 0.12 m"
+    ]
+  },
+  "parameter_justification": {
+    "err_x0_trigger_threshold_m": "Native cascade.py:521 already applies a built-in ballistic step clipped to +/-0.20 m/s, which absorbs up to 0.20 * 0.53 = 0.106 m (106 mm) of forward landing error. Setting the trigger threshold to 0.12 m (120 mm) strictly above the native 106 mm reach avoids disturbing normal warm-starts while catching large forward mismatches.",
+    "dvx_clip_m_s": "Matches THROW_RESIDUAL_LIMITS[0] = 0.75 m/s in v8_robust_control/task_control.py:58."
+  },
+  "trial_budget_accounting_note": "In a native cascade.py implementation, the rule reuses evaluate(command) at line 475 (0 extra trials when not triggered, +1 trial when triggered). Because this experiment does not modify src/jugglebot/humanoid/cascade.py, the external wrapper executes 1 live probe on a clean fork and cannot hard-deduct 1 trial from cascade.py's internal loop counters; both probe_trials and planner_trials are reported separately and summed as total_trials.",
+  "snapshots": [
+    {
+      "id": "S1_440203_T12_left",
+      "role": "known_positive_rejected",
+      "seed": 440203,
+      "source_dir": "build/v8_independent_validation_440200_ts35/seed_440203_state_triggered",
+      "throw_idx": 12,
+      "throw_count_at_entry": 11,
+      "side": "left",
+      "time_s": 3.83,
+      "orig_score": 0.14446,
+      "orig_accepted": false
+    },
+    {
+      "id": "S2_440001_T10_left",
+      "role": "different_seed_and_throw_severe_rejected",
+      "seed": 440001,
+      "source_dir": "build/v8_state_triggered_postsep_dt195/seed_440001_dt195",
+      "throw_idx": 10,
+      "throw_count_at_entry": 9,
+      "side": "left",
+      "time_s": 3.18,
+      "orig_score": 0.26064,
+      "orig_accepted": false
+    },
+    {
+      "id": "S3_440202_T17_right",
+      "role": "different_seed_right_hand_moderate_rejected",
+      "seed": 440202,
+      "source_dir": "build/v8_independent_validation_440200_ts35/seed_440202_state_triggered",
+      "throw_idx": 17,
+      "throw_count_at_entry": 16,
+      "side": "right",
+      "time_s": 5.42,
+      "orig_score": 0.03958,
+      "orig_accepted": false
+    },
+    {
+      "id": "S4_440001_T09_right",
+      "role": "native_first_search_accepted_control",
+      "seed": 440001,
+      "source_dir": "build/v8_state_triggered_postsep_dt195/seed_440001_dt195",
+      "throw_idx": 9,
+      "throw_count_at_entry": 8,
+      "side": "right",
+      "time_s": 2.86,
+      "orig_score": 0.01992,
+      "orig_accepted": true
+    }
+  ]
+}

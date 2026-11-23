@@ -1,0 +1,2 @@
+[SMOKE C5] {'reproduced_score': True, 'accepted': True, 'score': 0.0111284021170223, 'trials': 39, 'selector_calls': 0, 'extra_probe_trials': 0, 'pass': True}
+[SMOKE S1] {'none_first_score': 0.14446272504074384, 'a0_first_score': 0.14446272504074384, 'none_retry1_score': 0.05659563627749697, 'a0_retry1_score': 0.05659563627749697, 'rel12_time_none': 4.006, 'rel12_time_a0': 4.006, 'rel12_dp_mm': 0.0, 'rel12_dv_m_s': 0.0, 'none_selector_calls': 0, 'a0_selector_calls': 1, 'extra_probes': 0, 'pass': True}
