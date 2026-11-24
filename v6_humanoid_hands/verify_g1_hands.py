@@ -200,15 +200,15 @@ def verify_wrist_clearance(model, data):
 
 def launch_viewer(m, d):
     print("\n[Viewer] Launching MuJoCo 3D viewer for Upper-Body Unitree G1 + LEAP Hands...")
-    print("      [提示] 当前脚本为底层装配与 7-DOF 运动学静态校验工具（非杂耍运行环路）。")
-    print("      [提示] 运行三球抛接请使用 juggle.py --pattern cascade3。")
+    print("      [Note] This script is a low-level assembly and 7-DOF static kinematics verifier (not the juggling loop).")
+    print("      [Note] For three-ball juggling, run juggle.py --pattern cascade3.")
     try:
         import mujoco.viewer
         with mujoco.viewer.launch_passive(m, d) as viewer:
             viewer.cam.lookat[:] = [0.0, 0.0, 0.95]
             viewer.cam.distance = 1.8
             viewer.cam.azimuth, viewer.cam.elevation = 215.0, -12.0
-            print(">>> 3D Viewer 运行中。按空格键可暂停/继续，关闭窗口即可退出。<<<")
+            print(">>> 3D Viewer running. Press Space to pause/resume, or close the window to exit. <<<")
             while viewer.is_running():
                 mujoco.mj_step(m, d)
                 viewer.sync()

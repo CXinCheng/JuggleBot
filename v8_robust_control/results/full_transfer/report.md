@@ -1,10 +1,10 @@
-# 完整单球残差 PPO 验证
+# Full Single-Ball Residual PPO Validation
 
-任务从右手持球开始，真实释放并由左手连续接稳 0.2 秒。物理初态变化只在 reset 施加；感知扰动独立作用于位置测量。
-名义电机参考离线生成，训练过程连续积分物理，不进行在线抛接试算。零残差在理想初态逐值复现原轨迹。
-固定动作及逐时刻平均动作只用验证集选择；冻结输出等待首次有效位置观测。该报告不是独立测试结论。
+The task starts with the ball held in the right hand, executes a physical release, and holds it stably in the left hand for 0.2 s. Physical initial-state offsets are applied only at reset; perception disturbances affect position measurements independently.
+Nominal motor references are generated offline, and training integrates physics continuously without online planning rollouts. Zero residual reproduces the nominal trajectory under clean initial conditions.
+Fixed and per-step mean controls are selected on validation only; frozen output waits for the first valid position observation. This report is not an independent test conclusion.
 
-| 控制器 | 理想初态 | 仅感知噪声 | 物理初态扰动 | 安全失败 |
+| Controller | Clean | Perception noise only | Physical seat jitter & combined | Safety failures |
 | --- | --- | --- | --- | --- |
 | zero | 5/5 | 5/5 | 18/30 | 0/40 |
 | fixed | 5/5 | 5/5 | 18/30 | 0/40 |
@@ -13,6 +13,6 @@
 | PPO seed 1 | 5/5 | 5/5 | 25/30 | 1/40 |
 | PPO seed 2 | 5/5 | 5/5 | 25/30 | 0/40 |
 
-候选门槛：{'0': False, '1': False, '2': False}。
-各训练种子须保持理想初态、仅感知噪声及安全指标，并严格超过零残差、固定、逐时刻平均和自身冻结对照的扰动成功数。
-全部通过后使用新的独立种子验证；未通过时不作为双球、三球策略扩展的依据。
+Candidate gates: {'0': False, '1': False, '2': False}.
+Each training seed must preserve clean, perception-only, and safety metrics while strictly exceeding zero-residual, fixed, per-step mean, and own-frozen controls on disturbed completions.
+Only after all seeds pass are fresh independent seeds evaluated; failure does not support scaling to two- or three-ball policies.

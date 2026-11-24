@@ -3,8 +3,8 @@
 | Record | Scope |
 | --- | --- |
 | [Dual-UR5e benchmark](../../v5_two_arm_hands/README.md) | Five nominal runs of 60 catches each using two arms and two LEAP Hands. |
-| [G1 long-run cascade baselines](../../v8_robust_control/EXPERIMENT_REFERENCE.md#零扰动参考结果) | 50 confirmed flights per observation mode on the G1 cascade. |
-| [Cascade-only perception baseline](../../v8_robust_control/results/perception_sensitivity.md) and [complete-task baseline](../../v8_robust_control/results/complete_perception_sensitivity.md) | Separate archived three-point-estimator protocols for noise, delay, and frame loss. Two runs per condition. |
+| [G1 long-run cascade baselines](../../v8_robust_control/EXPERIMENT_REFERENCE.md#zero-disturbance-reference-results) | 50 confirmed flights per observation mode on the G1 cascade. |
+| [Cascade-only perception baseline](../../v8_robust_control/results/perception_sensitivity.md) and [complete-task baseline](../../v8_robust_control/results/complete_perception_sensitivity.md) | Two runs per condition for noise, delay, and frame loss. Cascade-only uses the three-point estimator; on current HEAD the complete-task sweep uses the filtered observer under disturbances (archived three-point version is at tag `report-v1`). |
 | [Official perception runs](official_perception_runs.json) | Two zero-noise sampled runs and one completed 1 mm measurement-noise run, with original calibration. |
 | [Nominal retry run](nominal_retry_run.json) | Seed 440002 at 1 mm with the second search for the fourth throw initialized from the nominal command. |
 | [Late reception pair](late_reception_pair.json) | Same-state short replay at 9.124 s with the filtered ball estimate and the exact simulated state as alternative planner inputs. |

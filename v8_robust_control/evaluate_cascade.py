@@ -87,33 +87,33 @@ def report(record):
     n = len(protocol['seeds'])
     cases = evaluation_cases(protocol)
     perception = protocol.get('suite') == 'perception'
-    other = '其他感知扰动' if perception else '物理初态扰动及组合'
-    lines = [f"# {protocol['requested_throws']} 抛完整任务独立评估", '',
-        '完整任务能力、扰动下的非退化表现和反馈收益分别验收。每个成功回合均须通过释放、接回、连续承托、碰撞和姿态检查。', '',
-        '零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。', '',
-        f'| 控制器 | 无扰动 | 仅 3 mm 位置噪声 | {other} | 安全失败 |',
+    other = 'Other perception disturbances' if perception else 'Physical seat jitter & combined'
+    lines = [f"# {protocol['requested_throws']}-Throw Complete-Task Independent Evaluation", '',
+        'Complete-task capability, disturbance non-degradation, and strict feedback gain are verified separately. Every successful episode must pass release, catch, continuous support, collision, and posture checks.', '',
+        'At zero error, feedback gains preserve the nominal trajectory; clean counts verify compatibility, while disturbed counts and baselines test learning gain.', '',
+        f'| Controller | Clean | 3 mm noise only | {other} | Safety failures |',
         '| --- | --- | --- | --- | --- |']
     if 'controller' in protocol:
-        lines[2:2] = [f"控制器：`{protocol['controller']}`；测试集：`{protocol.get('suite', 'reference')}`。", '']
+        lines[2:2] = [f"Controller: `{protocol['controller']}`; suite: `{protocol.get('suite', 'reference')}`.", '']
     for name, value in summary['counts'].items():
         lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{(len(cases)-2)*n} | {value['unsafe']}/{len(cases)*n} |")
-    lines += ['', '| PPO 训练种子 | 无扰动完整任务 | 扰动非退化 | 严格反馈收益 |', '| --- | --- | --- | --- |']
+    lines += ['', '| PPO training seed | Clean complete task | Disturbance non-degradation | Strict feedback gain |', '| --- | --- | --- | --- |']
     for seed in ('0', '1', '2'):
-        labels = ['通过' if summary[field][seed] else '未通过' for field in
+        labels = ['PASS' if summary[field][seed] else 'FAIL' for field in
                   ('nominal_task_gates', 'robustness_nondegradation', 'feedback_advantage')]
         lines.append(f"| {seed} | {' | '.join(labels)} |")
     if perception:
-        lines += ['', '本测试集只改变位置测量、传输延迟和丢帧，不包含物理初态随机化。', '',
-                  '| 条件 | 零请求 | 时序增益 | PPO 0 | PPO 1 | PPO 2 |', '| --- | --- | --- | --- | --- | --- |']
+        lines += ['', 'This suite varies only position measurement noise, transmission delay, and frame dropout, with no physical initial-state randomization.', '',
+                  '| Condition | Zero request | Timed gain | PPO 0 | PPO 1 | PPO 2 |', '| --- | --- | --- | --- | --- | --- |']
         indexed = {row['id']: row['trials'] for row in record['records']}
         for case in cases:
             values = [sum(row['is_success'] for row in indexed[name] if row['case'] == case)
                       for name in ('zero', 'timed', 'live_seed0', 'live_seed1', 'live_seed2')]
             lines.append(f"| {case} | "+' | '.join(f'{value}/{n}' for value in values)+' |')
-    lines += ['', '无扰动重复使用同一物理初态，用于检查完整任务与重置一致性；重复种子不代表独立物理初态样本。', '',
-              ('扰动非退化要求感知扰动完成数不降低，且安全失败数不增加。严格反馈收益还要求其他感知扰动完成数超过零请求、时间序列及自身冻结对照。' if perception else
-               '扰动非退化要求感知噪声和物理初态扰动的完成数不降低，且安全失败数不增加。严格反馈收益还要求物理初态扰动完成数超过零残差、时间序列及自身冻结对照。'), '',
-              '候选检查点和时间序列对照在验证集上确定，独立评估不重新选择策略。配置、模型校验值、源码和逐回合物理证据保存在协议与原始 JSON 中。', '']
+    lines += ['', 'Clean runs repeat the same physical initial state to verify complete-task and reset consistency; repeated seeds do not represent independent physical initial states.', '',
+              ('Disturbance non-degradation requires non-decreasing completions on perception disturbances with non-increasing safety failures. Strict feedback gain additionally requires exceeding zero-request, timed, and own-frozen baselines on other perception disturbances.' if perception else
+               'Disturbance non-degradation requires non-decreasing completions on perception noise and physical seat jitter with non-increasing safety failures. Strict feedback gain additionally requires exceeding zero-residual, timed, and own-frozen baselines on physical seat jitter.'), '',
+              'Candidate checkpoints and timed baselines were fixed on the validation set; independent evaluation does not re-select policies. Configuration, model checksums, source hashes, and per-episode physical evidence are stored in the protocol and raw JSON.', '']
     return '\n'.join(lines)
 
 
@@ -141,7 +141,7 @@ def main():
         record, training = read_json(args.input), read_json(args.training)
         validate_record(record, training)
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(report(record), encoding='utf-8')
+        args.output.write_text(report(record), encoding='utf-8', newline='\n')
         return
     paths = [args.output, args.protocol_output]+([] if args.report is None else [args.report])
     if (any(path.exists() for path in paths) or len({path.resolve() for path in paths}) != len(paths)
@@ -182,7 +182,7 @@ def main():
         scope='nominal complete task; robustness and feedback benefit reported independently')
     for path in paths:
         path.parent.mkdir(parents=True, exist_ok=True)
-    args.protocol_output.write_text(json.dumps(protocol, indent=2, allow_nan=False)+'\n', encoding='utf-8')
+    args.protocol_output.write_text(json.dumps(protocol, indent=2, allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     with ProcessPoolExecutor(args.jobs) as pool:
         records = list(pool.map(test_one, [(row, training, args.input_dir, seeds, cases) for row in candidates]))
     if (sources(manifest.get('controller', 'reference')) != fingerprints or digest(Path(__file__)) != evaluator
@@ -194,9 +194,9 @@ def main():
         values[row['id']] = counts(row['trials'])
     result = dict(protocol=protocol, records=records, summary=assess(values, args.episodes))
     validate_record(result, training)
-    args.output.write_text(json.dumps(result, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8')
+    args.output.write_text(json.dumps(result, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8', newline='\n')
     if args.report is not None:
-        args.report.write_text(report(result), encoding='utf-8')
+        args.report.write_text(report(result), encoding='utf-8', newline='\n')
     print(json.dumps(result['summary'], ensure_ascii=False), flush=True)
     if not result['summary']['all_nominal_tasks_completed']:
         raise SystemExit(1)

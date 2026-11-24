@@ -1,84 +1,84 @@
-# 单球接球独立测试
+# Single-Ball Reception Independent Test
 
-任务为单球接球，不包含主动抛球或完整三球循环。
+The task is single-ball reception only, excluding active throws or the complete three-ball cycle.
 
-每个感知配置使用 20 个场景种子：[140000, 140001, 140002, 140003, 140004, 140005, 140006, 140007, 140008, 140009, 140010, 140011, 140012, 140013, 140014, 140015, 140016, 140017, 140018, 140019]。
+Each perception condition uses 20 scene seeds: [140000, 140001, 140002, 140003, 140004, 140005, 140006, 140007, 140008, 140009, 140010, 140011, 140012, 140013, 140014, 140015, 140016, 140017, 140018, 140019].
 
-| 策略 | baseline | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct |
+| Policy | baseline | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct |
 | --- | --- | --- | --- | --- | --- | --- |
 | zero | 19/20 | 17/20 | 12/20 | 9/20 | 12/20 | 17/20 |
 | static | 9/20 | 9/20 | 9/20 | 9/20 | 9/20 | 9/20 |
 | ppo | 57/60 | 54/60 | 39/60 | 32/60 | 36/60 | 54/60 |
 
-zero 为名义接球反馈控制器，static 仅关闭落点预测，保留相同的抓握与缓冲。
-学习策略按全部训练种子汇总；各训练种子使用相同测试场景，不视为独立场景样本。
-策略评估关闭探索；失败原因、接稳证据和动作指标保存在原始 JSON 中。
+zero is the nominal reception feedback controller; static disables landing prediction while keeping identical grasping and cushioning.
+Learned policies are pooled across all training seeds; training seeds share the same test scenes and are not independent scene samples.
+Policy evaluation disables exploration; failure reasons, catch evidence, and action metrics are stored in the raw JSON.
 
 
-## 训练与验证
+## Training and Validation
 
-任务为预置下降球的接稳，不包含主动抛球或完整三球任务。
+The task is catching a pre-launched descending ball, excluding active throws or the complete three-ball task.
 
-zero 为经典反馈控制器；static 关闭其落点预测，保留相同的手指控制和接触缓冲。
+zero is the classical feedback controller; static disables its landing prediction while keeping identical finger control and contact cushioning.
 
-结果属于验证集，最终结论需结合独立测试和反馈消融，不能单独证明闭环抗噪能力。
+These results are on the validation set; final conclusions require independent tests and feedback ablations and cannot alone establish closed-loop noise robustness.
 
-每次训练 4096 个控制步；训练种子：[0, 1, 2]。
-每个感知配置使用 10 个独立评估种子，关闭策略探索。
+Training budget: 4096 control steps per seed; training seeds: [0, 1, 2].
+Each perception condition uses 10 independent evaluation seeds with exploration disabled.
 
-表中训练策略的结果来自各自选中的检查点；各训练种子均执行完整预算。
+Trained policy rows come from each seed's selected checkpoint; all training seeds ran the full budget.
 
-| 策略 | 学习率 | 训练引导权重 | baseline | noise_1mm | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct | 训练耗时（s） |
+| Policy | Learning rate | Shaping weight | baseline | noise_1mm | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct | Training time (s) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | zero | — | — | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | 0.00 |
 | static | — | — | 6/10 | 6/10 | 6/10 | 6/10 | 6/10 | 6/10 | 6/10 | 0.00 |
-| ppo | 0.0003 | 0.0 | 30/30 | 30/30 | 24/30 | 21/30 | 15/30 | 22/30 | 30/30 | 1638.26 |
+| ppo | 0.0003 | 0.0 | 30/30 | 30/30 | 24/30 | 21/30 | 15/30 | 22/30 | 30/30 | 943.87 |
 
-各对照策略评估一次；训练策略的汇总分母包含全部训练种子。
-引导权重列指训练设置；评估回报使用清单中的统一奖励配置，策略优劣以独立验收指标衡量。
-不同训练种子共享评估场景，不能把这些重复场景视为独立样本。
-本预算用于验证训练链路和筛选配置，不能据此断言 SAC 或 PPO 已收敛或普遍更优。
-评估集用于本次筛选；后续确认实验须另选种子。耗时包含本机并发负载影响。
-名义接球根据位置采样预测落点，接触后下沉缓冲；本子任务不等同于完整三球任务。
+Each control policy is evaluated once; trained-policy denominators pool all training seeds.
+The shaping-weight column reflects training setup; evaluation returns use the unified reward config in the manifest, and policies are judged by independent verification metrics.
+Different training seeds share the same evaluation scenes; repeated scenes are not independent samples.
+This budget verifies the training pipeline and screens configurations; it does not establish convergence or general superiority of SAC or PPO.
+The validation set is used for this screening; confirmation experiments must use fresh seeds. Wall-clock time reflects local concurrency load.
+Nominal reception predicts landing from position samples and yields on contact; this subtask is not equivalent to the complete three-ball task.
 
-## 学习曲线
+## Learning Curve
 
-各预算沿同一次训练连续推进；检查点仅按验证集选择，独立测试不参与选择。
+Budgets advance continuously along the same training run; checkpoints are selected on the validation set only, excluding independent test scenes.
 
-训练耗时为各次 learn 调用的耗时之和，不含检查点评估；多个种子的耗时相加不等于并发任务的总历时。
+Training time sums actual learn calls excluding checkpoint evaluation; summing across seeds does not equal concurrent wall-clock duration.
 
-| 算法/训练种子 | 控制步 | baseline | noise_1mm | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct | 选用 |
+| Algorithm/Seed | Control steps | baseline | noise_1mm | noise_3mm | combined | noise_10mm | delay_40ms | dropout_30pct | Selected |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| ppo/0 | 2048 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | 是 |
+| ppo/0 | 2048 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | Yes |
 | ppo/0 | 4096 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | — |
 | ppo/1 | 2048 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | — |
-| ppo/1 | 4096 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 8/10 | 10/10 | 是 |
+| ppo/1 | 4096 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 8/10 | 10/10 | Yes |
 | ppo/2 | 2048 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | — |
-| ppo/2 | 4096 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | 是 |
+| ppo/2 | 4096 | 10/10 | 10/10 | 8/10 | 7/10 | 5/10 | 7/10 | 10/10 | Yes |
 
-学习曲线使用同一组验证场景；误差带表示训练种子间范围，不是成功率置信区间。
-较大训练预算不保证改善；检查点被选中也不代表训练已收敛。
+Learning curves use the same validation scenes; shaded bands show range across training seeds, not confidence intervals on success rate.
+Larger budgets do not guarantee improvement, and checkpoint selection does not imply convergence.
 
 
-## 名义控制器验收
+## Nominal Controller Verification
 
-任务为单球接球，不包含主动抛球或完整三球循环。
+The task is single-ball reception only, excluding active throws or the complete three-ball cycle.
 
-每个感知配置使用 20 个场景种子：[1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019]。
+Each perception condition uses 20 scene seeds: [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009, 1010, 1011, 1012, 1013, 1014, 1015, 1016, 1017, 1018, 1019].
 
-| 策略 | baseline |
+| Policy | baseline |
 | --- | --- |
 | zero | 20/20 |
 | static | 7/20 |
 
-zero 为名义接球反馈控制器，static 仅关闭落点预测，保留相同的抓握与缓冲。
-学习策略按全部训练种子汇总；各训练种子使用相同测试场景，不视为独立场景样本。
-策略评估关闭探索；失败原因、接稳证据和动作指标保存在原始 JSON 中。
+zero is the nominal reception feedback controller; static disables landing prediction while keeping identical grasping and cushioning.
+Learned policies are pooled across all training seeds; training seeds share the same test scenes and are not independent scene samples.
+Policy evaluation disables exploration; failure reasons, catch evidence, and action metrics are stored in the raw JSON.
 
 
-## 反馈诊断
+## Feedback Diagnostics
 
-| 策略/模式 | 配置 | 成功 |
+| Policy/Mode | Case | Success |
 | --- | --- | --- |
 | zero / nominal_controls | baseline | 4/5 |
 | zero / nominal_controls | combined | 2/5 |
@@ -105,33 +105,33 @@ zero 为名义接球反馈控制器，static 仅关闭落点预测，保留相�
 | ppo_seed2 / frozen_initial | combined | 2/5 |
 
 
-策略球状态遮盖仅作用直接输入字段，名义参考仍含球信息；冻结策略输出仍保留经典控制器。
+Masking policy ball state affects direct input fields only (nominal reference still carries ball info); frozen policy output still retains the classical controller.
 
 
-ppo_seed0：正常策略 6/10，冻结初始输出 6/10；两者保留相同的名义反馈。本组小样本未显示实时策略反馈的额外收益。
+ppo_seed0: normal policy 6/10, frozen initial output 6/10; both retain identical nominal feedback. This small sample shows no additional gain from online policy feedback.
 
-ppo_seed1：正常策略 6/10，冻结初始输出 6/10；两者保留相同的名义反馈。本组小样本未显示实时策略反馈的额外收益。
+ppo_seed1: normal policy 6/10, frozen initial output 6/10; both retain identical nominal feedback. This small sample shows no additional gain from online policy feedback.
 
-ppo_seed2：正常策略 6/10，冻结初始输出 6/10；两者保留相同的名义反馈。本组小样本未显示实时策略反馈的额外收益。
+ppo_seed2: normal policy 6/10, frozen initial output 6/10; both retain identical nominal feedback. This small sample shows no additional gain from online policy feedback.
 
-## 筛选门槛
+## Screening Gate
 
-各训练种子均须保持零扰动成功数，且扰动场景的配对汇总须超过经典控制器。此门槛不触发自动替换。
-
-
-- ppo：通过候选筛选；零扰动各种子 [19, 19, 19]，经典控制器 19；扰动配对完成数差 +14。
-
-  安全失败数：经典控制器 15；各训练种子 [15, 15, 15]。任一种子增加安全失败数均不通过。
-
-  扰动对照实际完成 67/100，各策略完成数 [72, 72, 71]（各 100 次）。配对汇总将同一对照重复 3 次，不代表新增独立场景。
+Every training seed must preserve zero-disturbance catches and paired disturbed totals must exceed the classical controller. This gate does not trigger automatic replacement.
 
 
-本预算与测试集不能证明算法普遍优劣；须同时检查各配置的退化与实际碰撞。三球任务尚未接入学习策略。
+- ppo: passed candidate screening; zero-disturbance per seed [19, 19, 19], classical controller 19; paired disturbed delta +14.
+
+  Safety failures: classical controller 15; per training seed [15, 15, 15]. Any seed increasing safety failures fails.
+
+  Disturbed baseline completions 67/100; per-seed policy completions [72, 72, 71] (out of 100 each). Paired pooling repeats the same baseline 3 times and does not add independent scenes.
 
 
-## 安全与动作指标
+This budget and test set cannot establish general algorithm superiority; per-condition degradation and collisions must be checked jointly. The three-ball task is not yet wired to learned policies.
 
-| 策略 | 配置 | 评估次数 | 禁止接触 | 姿态越限 | 球高越限 | 其他安全失败 | 截止超时 | 平均残差 RMS | 最大单轴偏移（mm） |
+
+## Safety and Action Metrics
+
+| Policy | Case | Episodes | Forbidden contact | Pose limit | Ball height | Other safety | Task deadline | Mean residual RMS | Max axis offset (mm) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | zero | baseline | 20 | 1 | 0 | 0 | 0 | 0 | 0.0000 | 0.000 |
 | zero | noise_3mm | 20 | 1 | 0 | 0 | 0 | 1 | 0.0000 | 0.000 |
@@ -147,11 +147,11 @@ ppo_seed2：正常策略 6/10，冻结初始输出 6/10；两者保留相同的�
 | ppo | dropout_30pct | 60 | 6 | 0 | 0 | 0 | 0 | 0.1046 | 4.108 |
 
 
-## 首次接触后的估计
+## Post-Contact Estimation
 
-误差仅使用有效估计时刻统计；真值用于诊断，不输入策略。无有效估计的回合不计作零误差。
+Errors are computed over valid estimation steps only; ground truth is diagnostic and never fed to policies. Episodes without valid estimates are not counted as zero error.
 
-| 策略 | 配置 | 有效估计时刻数 | 位置 RMSE（mm） | 速度 RMSE（m/s） |
+| Policy | Case | Valid estimate steps | Position RMSE (mm) | Velocity RMSE (m/s) |
 | --- | --- | --- | --- | --- |
 | zero | baseline | 260 | 2.215 | 0.194 |
 | zero | noise_3mm | 291 | 5.397 | 0.266 |

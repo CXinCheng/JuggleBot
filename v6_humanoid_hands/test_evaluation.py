@@ -245,17 +245,17 @@ class TestVerificationLogging(unittest.TestCase):
             with contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
                 with self.assertRaises(SystemExit) as raised:
                     with tee_output(output):
-                        print('验证记录')
-                        print('错误信息', file=sys.stderr)
+                        print('verification log — café')
+                        print('error message — naïve', file=sys.stderr)
                         raise SystemExit(3)
                 self.assertEqual(raised.exception.code, 3)
                 self.assertIs(sys.stdout, stdout)
                 self.assertIs(sys.stderr, stderr)
                 with tee_output():
                     print('ordinary output')
-            self.assertEqual(output.read_text(encoding='utf-8'), '验证记录\n错误信息\n')
-            self.assertEqual(stdout.getvalue(), '验证记录\nordinary output\n')
-            self.assertEqual(stderr.getvalue(), '错误信息\n')
+            self.assertEqual(output.read_text(encoding='utf-8'), 'verification log — café\nerror message — naïve\n')
+            self.assertEqual(stdout.getvalue(), 'verification log — café\nordinary output\n')
+            self.assertEqual(stderr.getvalue(), 'error message — naïve\n')
 
     def test_assembly_failure_is_logged_and_returns_nonzero(self):
         from v6_humanoid_hands import verify_g1_hands
@@ -263,14 +263,14 @@ class TestVerificationLogging(unittest.TestCase):
             output = Path(directory) / 'failure.txt'
             stdout, stderr = io.StringIO(), io.StringIO()
             with patch.object(sys, 'argv', ['verify_g1_hands.py', '--log', str(output)]), \
-                    patch.object(verify_g1_hands, 'verify_assembly', side_effect=RuntimeError('装配检查失败')), \
+                    patch.object(verify_g1_hands, 'verify_assembly', side_effect=RuntimeError('assembly check failed — café')), \
                     contextlib.redirect_stdout(stdout), contextlib.redirect_stderr(stderr):
                 self.assertEqual(verify_g1_hands.main(), 1)
             log = output.read_text(encoding='utf-8')
             self.assertIn('Upper-Body G1', log)
             self.assertIn('Traceback', log)
-            self.assertIn('RuntimeError: 装配检查失败', log)
-            self.assertIn('RuntimeError: 装配检查失败', stderr.getvalue())
+            self.assertIn('RuntimeError: assembly check failed — café', log)
+            self.assertIn('RuntimeError: assembly check failed — café', stderr.getvalue())
 
 
 if __name__ == '__main__':

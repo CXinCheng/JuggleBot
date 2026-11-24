@@ -1,10 +1,10 @@
-# 感知扰动评估结果
+# Perception Disturbance Evaluation Results
 
-每次请求 30 次完整飞行；测试种子：0, 1。
-控制器参数固定，使用位置采样与三点状态估计。噪声为各坐标轴独立高斯噪声，延迟为固定 FIFO 交付延迟，丢帧按整帧独立采样。
-接触、安全检查和私有规划试算使用仿真真值。以下结果属于仿真敏感性评估，扰动范围未经真实传感器标定。
+Requested 30 complete flights per trial; test seeds: 0, 1.
+Controller parameters are fixed, using position sampling and three-point state estimation. Noise is independent per-axis Gaussian noise, delay is a fixed FIFO delivery delay, and dropout drops whole frames independently.
+Contacts, safety checks, and private planning rollouts use simulation ground truth. These results are a simulation sensitivity study; disturbance ranges are not calibrated to real hardware sensors.
 
-| 配置 | 噪声 σ (mm) | 延迟 (ms) | 丢帧概率 | 成功/试验 | 平均完成飞行 | 掉球总数 | 球球碰撞总数 |
+| Case | Noise sigma (mm) | Delay (ms) | Dropout prob | Success/Trials | Mean completed flights | Total drops | Total ball-ball collisions |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | baseline | 0 | 0 | 0 | 2/2 | 30.0 | 0 | 0 |
 | noise_1mm | 1 | 0 | 0 | 0/2 | 0.0 | 0 | 0 |
@@ -19,5 +19,5 @@
 | dropout_30pct | 0 | 0 | 0.3 | 0/2 | 2.5 | 0 | 0 |
 | combined | 3 | 20 | 0.1 | 0/2 | 0.0 | 0 | 0 |
 
-各条件的试验次数有限；成功次数用于描述本次实验，不作为总体成功概率的精确估计。
-规划拒绝、姿态越限和数据过期造成的失败均保留在逐次结果中。估计误差仅统计实时空中球的有效估计，按物理步采样；无效估计单独计数。
+Trial counts per condition are limited; success counts summarize this experiment and are not an accurate estimate of population success probability.
+Failures from planning rejections, posture limit violations, and expired measurements are retained in per-trial records. Estimation error is computed only over valid online airborne-ball estimates sampled per physics step; invalid estimates are counted separately.

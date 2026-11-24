@@ -1,6 +1,6 @@
 {
   "input": "v8_robust_control/results/complete_perception_trials.jsonl",
-  "input_sha256": "f1f963858e89c0cd0a323897283a6c331620952ffea2390b64b23a1d77ce4821",
+  "input_sha256": "b94fbb077df29d3075ddef9382e4fa476a3bd2d185c06984e1c3ba80bf77feea",
   "output": "videos/v8_complete_perception_before_rl.mp4",
   "cases": [
     "baseline",
@@ -40,13 +40,13 @@
         "path": "videos/v8_complete_before_rl_noise_3mm_seed0.mp4",
         "fps": 60,
         "speed": 1.0,
-        "frames": 48
+        "frames": 549
       },
       "result": {
         "success": false,
-        "validated_flights": 0,
+        "validated_flights": 25,
         "requested_throws": 30,
-        "time": 0.7990000000000006,
+        "time": 9.134000000000377,
         "drops": 0,
         "ball_contacts": 0,
         "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw"
@@ -59,13 +59,13 @@
         "path": "videos/v8_complete_before_rl_combined_seed0.mp4",
         "fps": 60,
         "speed": 1.0,
-        "frames": 48
+        "frames": 318
       },
       "result": {
         "success": false,
-        "validated_flights": 0,
+        "validated_flights": 13,
         "requested_throws": 30,
-        "time": 0.7990000000000006,
+        "time": 5.296000000000103,
         "drops": 0,
         "ball_contacts": 0,
         "error": "NO_FEASIBLE_RECEPTION: no collision-free catch ready for the next throw"

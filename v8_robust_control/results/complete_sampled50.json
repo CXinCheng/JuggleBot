@@ -19,7 +19,7 @@
     "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
     "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
     "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
-    "v8_robust_control/complete_task.py": "7471e67e1e05487ef511993cc0be5f2c1dc650fa23692e1539a99be795c21a92",
+    "v8_robust_control/complete_task.py": "7abc35b9e356455ba589f1da52aee26ad0397b8a622587888bda78119938f65e",
     "v7_three_ball_hold/cascade21.py": "9612d138d24d25eb3784d61415d8241d0d1e6227b3fee3eee77deb655ce5fad4",
     "v7_three_ball_hold/end21.py": "69280fc370d851d2e477d0bbef2b22b962a9954a320c3865d96d7800200552a6"
   },

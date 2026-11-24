@@ -1,12 +1,12 @@
-# 30 抛完整任务独立评估
+# 30-Throw Complete-Task Independent Evaluation
 
-控制器：`guarded_feedback`；测试集：`reference`。
+Controller: `guarded_feedback`; suite: `reference`.
 
-完整任务能力、扰动下的非退化表现和反馈收益分别验收。每个成功回合均须通过释放、接回、连续承托、碰撞和姿态检查。
+Complete-task capability, disturbance non-degradation, and strict feedback gain are verified separately. Every successful episode must pass release, catch, continuous support, collision, and posture checks.
 
-零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。
+At zero error, feedback gains preserve the nominal trajectory; clean counts verify compatibility, while disturbed counts and baselines test learning gain.
 
-| 控制器 | 无扰动 | 仅 3 mm 位置噪声 | 物理初态扰动及组合 | 安全失败 |
+| Controller | Clean | 3 mm noise only | Physical seat jitter & combined | Safety failures |
 | --- | --- | --- | --- | --- |
 | zero | 5/5 | 5/5 | 0/30 | 30/40 |
 | timed | 5/5 | 5/5 | 0/30 | 30/40 |
@@ -17,14 +17,14 @@
 | live_seed2 | 5/5 | 5/5 | 0/30 | 30/40 |
 | frozen_seed2 | 5/5 | 5/5 | 0/30 | 30/40 |
 
-| PPO 训练种子 | 无扰动完整任务 | 扰动非退化 | 严格反馈收益 |
+| PPO training seed | Clean complete task | Disturbance non-degradation | Strict feedback gain |
 | --- | --- | --- | --- |
-| 0 | 通过 | 通过 | 未通过 |
-| 1 | 通过 | 通过 | 未通过 |
-| 2 | 通过 | 通过 | 未通过 |
+| 0 | PASS | PASS | FAIL |
+| 1 | PASS | PASS | FAIL |
+| 2 | PASS | PASS | FAIL |
 
-无扰动重复使用同一物理初态，用于检查完整任务与重置一致性；重复种子不代表独立物理初态样本。
+Clean runs repeat the same physical initial state to verify complete-task and reset consistency; repeated seeds do not represent independent physical initial states.
 
-扰动非退化要求感知噪声和物理初态扰动的完成数不降低，且安全失败数不增加。严格反馈收益还要求物理初态扰动完成数超过零残差、时间序列及自身冻结对照。
+Disturbance non-degradation requires non-decreasing completions on perception noise and physical seat jitter with non-increasing safety failures. Strict feedback gain additionally requires exceeding zero-residual, timed, and own-frozen baselines on physical seat jitter.
 
-候选检查点和时间序列对照在验证集上确定，独立评估不重新选择策略。配置、模型校验值、源码和逐回合物理证据保存在协议与原始 JSON 中。
+Candidate checkpoints and timed baselines were fixed on the validation set; independent evaluation does not re-select policies. Configuration, model checksums, source hashes, and per-episode physical evidence are stored in the protocol and raw JSON.

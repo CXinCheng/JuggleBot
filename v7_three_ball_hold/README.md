@@ -1,356 +1,106 @@
-# v7 — “2+1”三球开局/收尾的可行性验证（进行中）
+# v7 — "2+1" Three-Ball Start & Ending Feasibility Study
 
-目标：在 v6（G1 上身 + 双 LEAP Hand，三球级联）基础上，让机器人**开始前三个球都在手里（一只手 2 个、另一只手 1 个）**，**结束时再把三个球接回手里（2+1）**。本目录只做**可行性验证**，不修改 v6 的控制器；结论用于决定后续是否把 2+1 开局/收尾接入 `ContactCascade`。
+Goal: On top of v6 (fixed-base G1 upper body + dual LEAP Hands three-ball cascade), start with **all three balls in hand (2 in right hand, 1 in left hand)** and **end by catching all three balls back into hand (2+1)** without modifying v6 controller source code.
 
-> 范围更新（2026-11-11）：只固定**右手**作为“开局持两球 / 收尾接两球”的手，左手始终只持一个球，不做左手版本。
->
-> 状态：开局（持双球 → 抛出一个 → 另一个归位）已初步验证；收尾（已持一球再接第二球）已验证**第二球能稳稳落入掌心**，但已持球在手腕凹槽里的保持余量很小（±1 cm 接球位置偏差内约 36% 成功）；“把已持球从掌心主动挪开”这一步**未验证**；另用人手式分工（第 9 节）验证了**指尖夹住第一球、掌心接第二球**在特定接近方向下可行，但落点容忍度有限。只做了右手。所有数据来自仿真，不构成硬件结论。
+> Scope (2026-11-11): **Right hand only** holds/catches two balls; left hand always holds one ball. All results are simulation-only and do not constitute hardware validation.
 
-## 1. 结论摘要
+## 1. Summary of Findings
 
-| 问题 | 结论 | 余量 |
+| Question | Finding | Margin |
 | --- | --- | --- |
-| 一只手能否同时稳定拿住两个 85 mm 球 | **能**，但必须是“A 放掌心、B 被食/中/无名指指尖夹住（约 24–28 N）”；靠重力躺在手腕壳体凹槽里的姿态**不可用** | 8 m/s² 侧向、12 m/s² 向下、20 m/s² 向上脉冲及 5°–18° 倾角下，位移 ≤ 1 mm |
-| 能否在保持 B 的同时抛出 A | **能**（回放 v6 真实冲程）：B 漂移 ≈ 2 mm，A 约在 0.90 s 离手 | A 离手世界系速度 (−0.30, 0.65, 2.4) m/s，v6 为 (−0.08, 0.55, 2.1) m/s，横向差约 0.2 m/s，需重新校准抛球参数 |
-| B 能否在回收期滚回掌心并进入 v6 的 cradle | **可行但很窄**：随机时序成功率约 2%（6/360，7/360） | 需要优化时序或加接触反馈 |
-| 结束时已持一球再接第二球 | **部分可行**：第二球 β 在全部位置偏差下都落入掌心并停稳；已持球 α 停在手腕凹槽里，优化后 ±1 cm 偏差内 9/25 成功，±2 cm 基本失败 | α 被手的侧向加速度（≈ 8 m/s²）带出凹槽是唯一失败模式 |
-| 把已持球从掌心主动挪到凹槽/指尖 | **未验证**（收尾测试直接假设 α 已在凹槽） | — |
-| 收尾：α 在指尖夹住、β 落掌心（人手式，第 9 节） | **有条件可行**：β 须从正上方或掌根一侧落下；从指尖一侧（含 v6 真实接近路径）或拇指一侧会撞飞 α | 掌根侧斜落在 ±2 cm 偏差内约 64–68% 成功，正上方落约 32%；慢速到达差 |
-| 左手 | **未验证**（仅一次早期搜索在左手上得到与右手相同的凹槽解） | — |
+| Can one hand stably hold two 85 mm balls? | **Yes**, with ball A in the palm and ball B pinched by index/middle/ring fingertips (≈ 24–28 N); resting B in the wrist-housing groove is **unusable** | Displacement ≤ 1 mm under 8 m/s² lateral, 12 m/s² down, 20 m/s² up pulses and 5°–18° tilt |
+| Can A be thrown while retaining B? | **Yes** (v6 stroke replay): B drift ≈ 2 mm, A releases at ≈ 0.90 s | World release velocity (−0.30, 0.65, 2.4) vs v6 (−0.08, 0.55, 2.1) m/s; needs recalibration |
+| Can B reseat into v6 cradle during recovery? | **Feasible but narrow**: random-timing success ≈ 2% (6/360, 7/360) | Eliminated by the human-like role swap in Sec. 8 |
+| Ending: catch 2nd ball while holding 1st (wrist groove) | **Partially feasible**: β settles in palm across all offsets; α stays in groove in 9/25 cases within ±1 cm, fails at ±2 cm | Lateral acceleration (≈ 8 m/s²) dislodges α |
+| Active palm→fingertip transfer of held ball | **Failed** (0/2160+ CMA samples; Sec. 11.4) | — |
+| Human-like ending (α in palm held by ring finger + heel, β caught by index/middle/thumb, Secs. 12 & 14) | **Feasible**: static 0.000 m slip; dynamic robust within ±1 cm at 2–3.5 m/s | Integrated end-to-end in Sec. 15 (`stop_after` = 4, 6, 8, 12) |
+| Left hand | **Not validated** | — |
 
-另有一处与 v6 判据的冲突：静止时 A、B 轻贴（间隙 0，接触力约 5.5 N），违反 v6 “零球球碰撞”的验收条件，需要放宽判据或改姿态。
+## 2. Single-Hand Test Rig (`feaslib.py`)
 
-## 2. 测试装置（`feaslib.py`）
+Reuses `jugglebot.humanoid.model.load_g1_dual_arm` (3 balls) and `LeapFingers`; only one hand's 16 finger joints and the balls are free while the remaining joints are held at `Q_READY_ARM` via stiff servos (`kp=1500`, waist `2000`) with `gravcomp=1` on all non-ball bodies, so varying `opt.gravity` applies effective hand acceleration `g_eff = g − a_hand` in the seat frame (`x` lateral, `y` toward fingertips, `z` palm normal; nominal ball center `(0, 0, 0.022)`).
 
-- 复用 `jugglebot.humanoid.model.load_g1_dual_arm`（三球）与 `LeapFingers`；只让一只手的 16 个手指关节和球自由，其余全部用刚性位置伺服（`kp=1500`，腰部 `2000`）保持在 `Q_READY_ARM` 位姿。
-- **所有非球刚体 `gravcomp=1`**，所以只改 `opt.gravity` 就等价于“手在惯性系中加速/倾斜”（有效重力 `g_eff = g − a_hand`，表示在掌心 seat 坐标系中）。球不补偿。
-- seat 坐标系：x 横向、y 指向指尖、z 垂直掌面向外；球心名义位置 `(0, 0, 0.022)`。
-- 倾角约定：`tilt_g(θ)` 为掌面指尖向下倾斜 θ（v6 载球倾角 `LOADED_SOURCE_TILT_DEG = 10°`）。
+## 3. Pipeline Scripts and Example Commands
 
-### 装置踩过的坑（复现时需注意）
-1. 最初用“每步把手臂关节复位”的运动学冻结，等价于手臂自由落体，手指连空载都跟不住目标 → 改为刚性伺服 + 全补偿。
-2. v6 单球 cradle 在“固定姿态 + 冻结手臂”下并非静态稳定，需 5°–20° 指尖向下倾角才能保持；在 0° 时球会滑向掌根。
-3. 稳健性脚本最初的“留在手上”区域过紧（把掌根处的球判为掉落），已修正为以 seat 原点半径 0.13 m。
+All commands run from the repository root (`uv run python ...`):
 
-## 3. 实验流程与脚本
-
-所有命令在仓库根目录执行（`uv run python …`）。
-
-| 阶段 | 脚本 | 输出 | 说明 |
+| Stage | Script(s) | Key Outputs | Section |
 | --- | --- | --- | --- |
-| 1. 双球静态抓持搜索（单工况） | `search_hold2.py` | `results/hold2_*.json` | sep-CMA-ES，21 维：16 个手指目标 + 两球初始位置；10° 倾角，0.9 s 静置 |
-| 1b. 稳健性检验 | `robust_hold2.py` | `results/hold2_summary.txt` | 半正弦加速度脉冲（0.12 s）与倾角扫描 |
-| 2. 多工况并行优化 | `search_hold2b.py` | `results/hold2b_right_s0.json` | 6 种加速度脉冲 + 5°/18° 倾角；18 进程 |
-| 3. 录制 v6 真实冲程 | `record_v6_throw.py` | `results/v6_right_throw.npz` | 跑 `ContactCascade(n_balls=3)` 2.6 s，记录右手 seat 位姿、手指命令、释放时刻（右手释放：0.279/0.912/1.559/2.19 s） |
-| 4. 回放 | `replay_throw.py` | 终端输出 | 以 `R(t)ᵀ(g − a(t))` 回放，加速度由位置二阶差分（7 点平滑）得到 |
-| 5. “B 被夹住”搜索 | `search_hold2c.py` | `results/hold2c_*.json`、`hold2d_*.json` | 惩罚碰手腕壳体，要求 B 在远端，加入冲程回放项 |
-| 11. 整机联调（开局） | `cascade21.py`、`run_cascade21.py`、`calibrate_first_throw.py`、`calibrate_second_throw.py` | `results/first_throw_calibration.json`、`second_throw_calibration.json`、`cascade21_8throws.log`、`cascade21_30throws.log` | 第 11 节 |
-| 12. 掌心→指尖转移（收尾第一步） | `transfer.py` | `results/transfer_best.json` | 第 11.4 节 |
-| 10. 收尾手臂可达性 | `end_reach.py` | `results/end_reach_scan.txt` | 第 10 节 |
-| 6. B 归位 | `reseat.py`、`reseat_search.py` | `results/hold2d_right_s1_1*_reseat_good.json` | 手指 保持→张开→cradle 三段时序，随机搜索 |
-| 8. 人手式开局 | `search_hold2e.py` | `results/hold2f_right_s20.json`、`hold2f_right_s21.json` | 第 8 节 |
-| 9. 指尖夹持式收尾 | `end_tip_catch.py`、`search_end_tip.py`、`search_end_tip2.py`、`end_tip2_robust.py` | `results/endtip_right_s*.json`、`endtip2_az*_el*.json`、`end_tip_sweep_s20.json`、`end_tip2_robust.json` | 第 9 节 |
-| 7. 收尾接球 | `end_catch.py`（失败的指尖夹持版）、`end_catch2.py`、`end_catch2_sweep.py`、`search_end.py` | `results/hold2b_right_s0_endcatch_sweep.json`、`results/end_hold_right_s0.json` | β 沿 v6 录制的手系轨迹引导到 `handoff` 后交给物理；α 放在手腕凹槽；手指先用 v6 接球指令，再合拢到保持姿态 |
-| （另一会话） | `search_hold2e.py` | `results/hold2e_right_s*.json` | “指尖捏住被抛球、掌心留住另一球”的人类式角色互换思路，由并行会话产生，本 README 未对其结果下结论 |
-
-### 复现命令示例
-```bash
-# 2. 多工况搜索（约 5 min）
-uv run python -u v7_three_ball_hold/search_hold2b.py --side right --seed 0 --gens 80 --out v7_three_ball_hold/results/hold2b_right_s0.json
-# 3. 录制 v6 冲程（约 20 s；npz 已入库，可跳过）
-uv run python -u v7_three_ball_hold/record_v6_throw.py
-# 5. 夹住 B 的搜索，再以其结果为起点精修
-uv run python -u v7_three_ball_hold/search_hold2c.py --side right --seed 1 --out v7_three_ball_hold/results/hold2c_right_s1.json
-uv run python -u v7_three_ball_hold/search_hold2c.py --side right --seed 11 --init v7_three_ball_hold/results/hold2c_right_s1.json --gens 100 --procs 5 --out v7_three_ball_hold/results/hold2d_right_s1_11.json
-# 4. 回放抛 A、保留 B
-uv run python v7_three_ball_hold/replay_throw.py v7_three_ball_hold/results/hold2d_right_s1_11.json 0.74 1.6
-# 6. 归位时序搜索
-uv run python v7_three_ball_hold/reseat_search.py v7_three_ball_hold/results/hold2d_right_s1_10.json 360
-```
-`results/*.json` 中的 `x` 为 21 维参数：前 16 个是 LEAP 手指目标（顺序同 `LEAP_JOINTS`），后 5 个是 `[x1, y1, x2, y2, z2]`（A、B 的初始位置，seat 系）。
-
-## 4. 详细结果
-
-### 4.1 第一轮：凹槽姿态为何被否定
-- `search_hold2`（右 s0/s1、左 s0）三次都收敛到同一排布：A 在指掌杯中，B 在掌根 `(≈0, −0.086, 0.008)`，仅 1 个掌接触（约 1 N）。
-- `search_hold2b` 加入多工况后，扰动位移全部 ≈ 0；但接触检查显示 B 主要靠 `right_wrist_yaw_link`（1.81 N）而不是手（0.11 N）支撑——它躺在 G1 手腕壳体与掌根之间。
-- 回放 v6 抛球冲程时 B 在手减速阶段随 A 一起飞出。**原因：未被夹持的球在手减速时必然离手。要留下的球必须被主动夹住/围住。**
-
-### 4.2 夹住 B 的姿态（`hold2d_right_s1_10/11`）
-| 项 | s1_10 | s1_11 |
-| --- | --- | --- |
-| A 位置 (seat 系) | (0.006, −0.009, 0.022) | (0.010, −0.006, 0.022) |
-| B 位置 | (−0.004, 0.065, 0.064) | (−0.006, 0.068, 0.062) |
-| B 接触指 / 力 | 食/中/无名指指尖 ≈ 24 N | 同左 ≈ 28 N |
-| 脉冲/倾角位移 | ≤ 0.001 m | ≤ 0.001 m |
-| 冲程回放 B 漂移 | 1.8 mm | 2.0 mm |
-| A 离手时刻 | 0.898 s | 0.901 s |
-
-其余精修种子（`hold2d_right_s0_10/11`）的 B 只被食指+拇指/中指捏住（约 6 N），回放中同样不动，但夹持力小得多。
-
-### 4.3 归位（`reseat*.py`）
-手随录制的 v6 空手回收运动，A 离手后 B 从指尖夹持滚到掌心；下一次冲程约在 1.38 s 开始。在 1.50 s 判据：误差 < 3 cm、速度 < 5 cm/s、手接触 ≥ 3：
-- s1_10：6/360 成功；s1_11：7/360 成功。
-- 随机时序的误差分位数：5%≈2.4 cm，25%≈6–9 cm，50%≈11–19 cm。
-- 最优样本误差 5–8 mm，6 个手接触（含掌）。
-
-### 4.4 收尾接球（`end_catch*.py`、`search_end.py`）
-设置：手运动取 v6 录制的 1.00–1.32 s（空手回收末段 + 接球，v6 在 1.101 s 接球），之后手静止在 10° 倾角 0.5 s 看是否稳住；β 为 v6 的 ball 1，用 `R(t)ᵀ(p−p_seat)` 的录制轨迹引导到 1.07 s 再放手给物理；α 初始在手腕凹槽 `(−0.002,−0.086,0.008)`。位置偏差 `(ox,oy)` 加在 β 的引导轨迹上，用来模拟预测误差。
-
-1. **指尖夹持版不可行**：β 的真实接近路径（从前方上方斜向下）会穿过夹在指尖处的 α（球心距 ≈ 43 mm < 85 mm），α 被撞飞（`end_catch.py`）。结论：收尾时 α 必须放在掌根一侧，而不是指尖。
-2. **凹槽版**（`hold2b` 姿态，v6 手指指令接球，1.27 s 后合拢）：75 组（5×5 偏差 × 3 种合拢时序）成功 11 组。**β 在每一组都落入掌心并停稳（速度≈0）**；失败全部是 α 在 β 落入前后被手的侧向有效重力（约 +8 m/s² 的 x 分量）缓慢推出凹槽侧面。
-3. **优化合拢姿态**（`search_end.py`：17 维，手指保持目标 + 合拢时间，7 个偏差联合代价，40 代×54）：25 组偏差中 9 组成功（`ox,oy` 在 ±1 cm 内的中心区域多数成功，±2 cm 基本失败）。代价停在 ≈ 1.09，说明单靠手指姿态难以进一步约束 α。
-4. 重要附带事实：v6 空手回收段（0.912–1.0 s）的有效重力在掌面法向上为 +25 m/s²（手比自由落体下降更快），**任何未被夹住的球都会被抬离手掌**。因此收尾时手必须避免这种快速回收，不能直接复用 v6 的运动。
-5. 引导 β 的方法局限：β 在 1.07 s 前沿录制轨迹被运动学引导（保证接近路径与真实手系一致），之后才受物理支配；忽略科里奥利项。
-
-## 5. 局限（写报告时需注明）
-- 回放把手视为惯性系，忽略转动项（ω×ω×r、α×r）；单球验证显示离手前球位置与 v6 一致（误差 < 1 cm），离手后偏差较大，因此**抛出速度/方向只是近似**，需在整机仿真中重测。
-- 加速度由位置二阶差分得到，在接球冲击处噪声大；本验证只使用抛球冲程之后的窗口（0.74 s 起），起点用 10° 倾角静置。
-- 手臂为刚性伺服保持，不含手臂跟踪误差和躯干反作用。
-- 搜索代价函数中的权重为手工设定；各结果为单次搜索（少数种子），不是统计结论。
-- 只有右手。左手的录制轨迹用镜像近似（`search_hold2c.py` 中 `_GL * [-1,1,1]`），未经验证。
-
-## 6. 文献调研结论（2026-11）
-- Ploeger & Peters, *Controlling the Cascade* (arXiv 2207.01414)：两台 Barrett WAM + 被动锥形手，7 球以上 cascade；明确把“启动与停止”留作未来工作；用“持球时间/空手时间”划分周期（实验持球比例 0.5）。
-- 2026 年双手三指灵巧手三球论文 (arXiv 2608.26800)：靠“互相可达集合”保证抛接过渡可行；开局由人手动放球，结束靠失败判据，没有规划好的收尾。
-- MultiGrasp (arXiv 2310.15599)：Shadow Hand 用手的不同区域各抓一个物体，只做桌面两物体，无动态抛接。
-- Morgan et al., 手指步态重定向 (arXiv 2201.07928)：单物体。
-- 未找到“已持球再接第二球并挪开前一个球”或人形多指手 juggling 的公开工作；开局/收尾属于文献空白，需自行设计。
-
-## 7. 待办
-1. 收尾（人手式，第 9 节）：整机中让手从来球的掌根一侧迎接（接近方向、手速、姿态），并验证手臂可达性；收尾后无需再次抛出。
-2. 优化归位时序（或加接触反馈），把成功率从约 2% 提升。（若采用第 8 节的人手式开局，则无需归位。）
-3. 左手；整机（`ContactCascade`）中联调，用真实手臂跟踪与转动惯性重测抛出速度。
-4. 决定 A、B 轻贴是否接受（修改“零球球碰撞”判据）。
-
-另见：`results/feasibility_summary.txt`、`results/hold2_summary.txt`（早期结果摘要）。
-
-## 8. 对比方案：“人手式”角色互换（`search_hold2e.py`，2026-11-11）
-
-观察：真人颠球时，要抛的球夹在指尖，抛球时指尖松开让它飞出，另一个球留在掌心。我们用同一装置检验这一分工。
-
-**设定**：球 R（留下）放在掌心 cradle，由中指、拇指、掌面扣住；球 T（要抛）夹在食指+中指（+拇指）指尖，位于 seat 系约 (0.03, 0.054, 0.07)。抛球时食指、中指在 `t_open` 起 50 ms 内张开到 flat，其余手指不动。回放同第 4.2 节（v6 第二次冲程，0.74 s 起）。代价项：位置/扰动稳定性、R 在冲程中不动、T 在张指之后、约 0.905 s 离手且世界系速度逼近 v6 的 (−0.08, 0.55, 2.1) m/s、不碰手腕壳体。
-
-**一个失败的中间版本（`hold2e` 第一版）**：代价只要求 T 升高，优化器找到夹持力仅 3.6 N 的捏法，T 在手指张开之前就被冲程加速度甩出，离手速度只有约 1.1 m/s。教训：必须约束离手时刻与速度（已加入）。
-
-**结果（`results/hold2f_right_s20.json`、`s21.json`，两个种子一致）**
-
-| 项 | 数值 |
-| --- | --- |
-| R（留下，掌心） | (0.010–0.015, −0.013–−0.015, 0.022)，4–6 个接触，约 34–41 N，与 v6 cradle 中心偏差 < 2 cm |
-| T（被抛，指尖） | 食/中/拇指指尖夹持，约 10 N |
-| 脉冲/倾角扰动位移 | 两球 ≤ 1 mm |
-| 冲程中 R 漂移 | ≤ 0.9 mm |
-| T 离手 | 0.875–0.876 s，世界系速度 (−0.080, 0.55, 2.10) m/s（`t_open` 已调到该点，与 v6 目标吻合） |
-| 球球接触 | 静止与冲程中均为 0（可满足 v6“零球球碰撞”判据，优于第 4 节方案） |
-| 抛后是否需要归位 | **不需要**，R 已在 cradle 中心 |
-
-**对张指时机的敏感度**（`t_open` 相对最优值 −30…+30 ms，T 离手世界系 vz）：0.98 → 1.49 → 1.90 → **2.10** → 2.29 → 2.57 → 2.60 m/s，lateral 约 −0.04…−0.22 m/s；R 漂移全程 < 1 mm。速度对时机近似线性，约 0.04 m/s 每 ms；按飞行 0.53 s 估算约 2 cm 落点误差每 ms，1 kHz 控制可接受，但真实手指延迟需实测。
-
-**与第 4 节方案（“B 夹在指尖、A 在掌心被抛”）的对比**
-
-| 维度 | 4 节方案 | 人手式 |
-| --- | --- | --- |
-| 留下的球 | 指尖笼夹（掌上方 6 cm） | 掌心 cradle（v6 已验证的位置） |
-| 抛后归位 | 需要，随机时序成功率约 2% | 不需要 |
-| 球球接触 | 静止时贴着（约 5.5 N） | 无 |
-| 抛球方式 | 靠冲程自然离掌 | 靠手指张开时机，v6 已有类似的释放时序 |
-| 主要风险 | 归位窄 | 离手速度对张指时机敏感；抛完后被抛球一侧的手指要重新参与 cradle |
-| 收尾（接第二球）的衔接 | 未验证 | 未验证；见下 |
-
-**结论**：人手式在仿真中优于第 4 节方案——省掉最脆弱的归位环节，球球接触为 0。**代价**是离手速度由张指时机决定，需要精确时序（或用 v6 的接触反馈）。
-
-**对收尾的含义（未验证）**：收尾时要把第二个球接进手里。若沿用人手式反向，则需把先接到的球放进掌心 cradle，再把第二个球接到指尖夹持位——接球落在指尖几乎不现实；更可能的做法是：第一个球进 cradle 后，抓住第二个球进入 cradle 前先把第一个球“交给”指尖（手指夹住并抬起），再用掌心接第二球。这正是待验证的“挪球腾位”，现有结果表明指尖夹持（约 10 N）在 0.8 g 级扰动下可以稳住，但接球冲击下是否仍稳需要测试。
-
-脚本：`search_hold2e.py`（`hold2e_right_s1.json` 为第一版弱捏解，保留作失败案例）；结果：`results/hold2f_right_s20.json`、`hold2f_right_s21.json`。
-
-## 9. 收尾：指尖夹住第一球，掌心接第二球（`end_tip_catch.py`、`search_end_tip.py`、`search_end_tip2.py`、`end_tip2_robust.py`）
-
-动机：人手式开局（第 8 节）的逆过程。收尾时先接到的球 α 被夹在指尖（hold2f 的指尖夹持位，约 (0.035, 0.05, 0.07)），第二个球 β 落进掌心（hold2f 中留下球的位置附近）。
-
-**1. 静态扫描（`end_tip_catch.py`）**：手指保持 hold2f 的合拢姿态，从 8 个方位 × 3 个下落角 × 2 个速度向掌心槽位投 β，共 48 组全部失败（成功 0/48）。α 基本没动，但 β 被已合拢的中指/拇指/无名指挡在入口外，掉出手外。结论：接球前这几根手指必须张开成“碗”，接住后再合拢。
-
-**2. v6 真实接近路径（`search_end_tip.py`，两个种子）**：β 沿 v6 录制的手系路径（1.00–1.32 s 手运动，由 `end_catch.py` 的 `frame_data` 给出）被引导到 1.07 s 后交给物理。联合优化接球前后两组手指姿态、α 的指尖位置和合拢时机（37 维，70 代×72）。两个种子都收敛到代价 3.2–3.4 并在约 18 代后不再下降：β 能稳稳落进掌心（误差 2–3 cm，4–5 个接触，25–35 N），但 **α 被撞离指尖约 14 cm，落进手腕凹槽**。原因：β 的接近路径从指尖前方、掌上方斜向下穿过 α 所在位置（路径点 (0.061, 0.075, 0.086)→(0.033, 0.057, 0.073)，与 α (0.035, 0.05, 0.066) 的球心距小于 85 mm）。与并行会话在 `end_catch.py` 得到的“指尖夹持版不可行”一致。
-
-**3. 自由接近方向（`search_end_tip2.py`）**：假设手可以按需调整相对于来球的速度/姿态，从槽位上方 0.25 m 处、以 1.5 m/s 的手系相对速度投 β；掌心槽位向掌根移到 (0, −0.025, 0.022)，使它与指尖 α 水平间距 ≥ 85 mm。对四个接近方向各优化一次（60 代×72）：
-
-| 接近方向（行进方向 az / 下降角 el） | 来球位置 | 结果 | 代价 |
-| --- | --- | --- | --- |
-| 0° / 90°（正上方垂直落下） | 正上方 | **成功**：α 漂移 0.16 mm，β 误差 0.14 mm，α 夹持 19 N，β 由中指+掌面接住 | 0.0045 |
-| 90° / 60°（朝指尖方向行进，来自掌根一侧） | 掌根侧后上方 | **成功**：α 漂移 0.02 mm，β 误差 0.19 mm，α 4 个接触 19.5 N | 0.0032 |
-| 180° / 60°（朝 −x 行进，来自拇指一侧） | 拇指侧 | 失败：β 停在 α 上方，与食指尖接触 | 1.62 |
-| 270° / 60°（朝掌根行进，来自指尖一侧） | 指尖前方 | 失败：β 滚入手腕凹槽，未被掌接住 | 1.56 |
-
-**4. 容忍度（`end_tip2_robust.py`，结果 `results/end_tip2_robust.json`）**：对两个成功解，在 5×5 落点偏差网格（x、y 各 ±2 cm，间隔 1 cm）× 3 个相对速度下统计：
-
-| 解 | 0.5 m/s | 1.5 m/s | 2.5 m/s |
-| --- | --- | --- | --- |
-| 正上方落下（0°/90°） | 5/25 | 8/25 | 8/25 |
-| 掌根侧斜落（90°/60°） | 5/25 | 16/25 | 17/25 |
-
-另在 1.5 m/s、零偏差时抖动接近方向（方位 ±20°、下降角 ±15°）：正上方解 11/15，掌根侧解 9/15 成功；下降角偏小或偏大的一端先失效。慢速（0.5 m/s）几乎都失败——优化只针对 1.5 m/s，α 的指尖夹持在较慢的接球下可能被拖动，需要另行调参。
-
-**结论**
-- 指尖夹第一球、掌心接第二球**在几何和接触上可行**，前提是：①接球前把接球手指张成“碗”，只留食/中/拇指夹住 α；②β 必须从**正上方或掌根一侧**落下，掌心槽位移向掌根（不能是 v6 的 cradle 中心）；③不能沿 v6 的真实接近路径（从指尖前方斜压）。
-- 容忍度有限：掌根侧斜落在 ±2 cm 内约 2/3 成功，正上方约 1/3。真实系统要求预测误差好于约 1 cm，并需要手随来球调整相对速度。
-- 与 v6 控制的衔接：收尾时手的接近方式要重新规划（让手在来球的掌根一侧迎接），这不同于 v6 当前“从外侧接球点向下缓冲”的接球运动，需要在整机里实现并重测。
-- 局限：β 在第 3 节中是在静止手系里自由下落，没有包含手的缓冲运动；α 的指尖夹持位置沿用 hold2f 并微调；收尾后两球只需稳稳留在手里，无需再次抛出。
-
-## 10. 收尾的手臂可达性（`end_reach.py`、`results/end_reach_scan.txt`）
-
-问题：第 9 节要求手从**正上方或掌根一侧**迎接来球，手必须有特定的位置、姿态和速度。用 v6 的 7 自由度 IK 与关节限位检查（右臂，不含腰部运动）。
-
-**方法**：来球取 v6 录制的 ball 1（世界系位置与速度，1.10 s 时速度 (−0.08, −0.60, −2.66) m/s）。给定接球姿态（掌面法向倾 θ，指尖朝前）、接近方式（手系方向 `d`）和相对速度 `v_rel`，手的触球速度为 `v_hand = v_ball − v_rel · R_h d`，沿直线匀速接近。逐点解 IK，要求：IK 全程收敛、最小关节限位余量 > 0.03 rad、由雅可比求得的最大关节速度 < 15 rad/s。
-
-**单点检查（v6 实际接球点附近，Tc = 1.10 s，θ = 10°）**：整个 0.15 s 接近段内，只有“掌根侧 60°、v_rel = 1.5 m/s”通过（峰值关节速度 9.3 rad/s），但关节限位余量仅 0.01 rad，即贴着限位；其余组合在接近段较早的位姿处 IK 失败。说明 v6 的接球点本身已在臂的工作空间边缘附近。
-
-**位置扫描（θ ∈ {0°, 10°, 20°}）**：在接球点附近 4×5×5=100 个网格点上（x 0.24–0.36 共 4 档，y −0.30–−0.14 共 5 档，z 0.80–0.96 共 5 档，间隔 0.04 m），每格检验通过的比例（括号内为速度 v_rel = 1.0 / 1.5 m/s；来球速度不变，故所需手速因 v_rel 而异）：
-
-| θ | 正上方落 | 掌根侧 60° 斜落 |
-| --- | --- | --- |
-| 0° | 12% / 33% | 18% / 36% |
-| 10° | 7% / 22% | 16% / **41%** |
-| 20° | 0% / 9% | 7% / 26% |
-
-通过的格点集中在低位（z 0.80–0.84）和外侧（y ≈ −0.26…−0.30，x ≈ 0.24–0.28），此处所需最大关节速度约 8–12 rad/s、限位余量 0.04–0.12 rad。
-
-**结论**
-- 手臂对“掌根侧斜落”确有可达区域（θ = 10°、v_rel = 1.5 m/s 时约 41% 的接球位置通过），所需关节速度远低于 v6 已执行过的水平（v6 肘部峰值约 14 rad/s）。因此收尾接球在运动学上不是障碍，但要把接球点移到偏低、偏外侧的位置，不能照搬 v6 的接球点。
-- 相对速度越大、手需要下探的速度越小，通过率越高；v_rel = 1.0 m/s 明显更差。这与第 9 节的结论（0.5 m/s 很难成功、1.5–2.5 m/s 较好）一致。
-- 局限：匀速直线接近、不含加减速段和腰部；只检查 IK 可行性、限位余量与关节速度，不含力矩、手臂自碰撞和躯干干涉；来球速度沿用 v6 录制值，实际可通过调整另一只手的最后一抛来重新设计。
-
-## 11. 整机联调：2+1 开局（`cascade21.py`，2026-11-11）
-
-在不修改 v6 源码的前提下，`TwoPlusOneCascade(ContactCascade)` 让右手开局持两球（人手式：留下的球 R 在掌心 cradle，被抛球 T 夹在食/中/拇指指尖），左手持一球，开局无空中球。之后的抛接完全由 v6 的规划与控制接管。运行：
+| 1–2. Static / multi-condition 2-ball hold | `search_hold2.py`, `robust_hold2.py`, `search_hold2b.py` | `results/hold2_*.json`, `hold2b_right_s0.json` | Sec. 4.1 |
+| 3–5. v6 stroke recording, replay, clamped-B search | `record_v6_throw.py`, `replay_throw.py`, `search_hold2c.py` | `results/v6_right_throw.npz`, `hold2c_*.json`, `hold2d_*.json` | Sec. 4.2 |
+| 6. B reseating | `reseat.py`, `reseat_search.py` | `results/hold2d_right_s1_1*_reseat_good.json` | Sec. 4.3 |
+| 7. Wrist-groove ending catch | `end_catch.py`, `end_catch2.py`, `search_end.py` | `results/end_hold_right_s0.json` | Sec. 4.4 |
+| 8. Human-like start (throw fingertip ball T, retain palm ball R) | `search_hold2e.py` | `results/hold2f_right_s20.json`, `hold2f_right_s21.json` | Sec. 8 |
+| 9–10. Fingertip-held ending & arm reachability | `end_tip_catch.py`, `search_end_tip*.py`, `end_tip2_robust.py`, `end_reach.py` | `results/end_tip2_robust.json`, `end_reach_scan.txt` | Secs. 9–10 |
+| 11. Full-body 2+1 start integration | `cascade21.py`, `run_cascade21.py`, `calibrate_first_throw.py`, `calibrate_second_throw.py`, `transfer.py` | `results/first_throw_calibration.json`, `second_throw_calibration.json`, `cascade21_*throws.log`, `transfer_best.json` | Sec. 11 |
+| 12–14. Pinky/ring-finger palm hold + fingertip catch | `search_pinky.py`, `search_catch_tip*.py`, `catch_tip_robust.py`, `render_start.py`, `record_cascade21.py` | `results/pinky_A.json`, `catchtipM_az0_el90.json`, `cascade21_start.mp4` | Secs. 12–14 |
+| 15–18. Full-body 2+1 ending, 30-throw diagnosis, seed recalibration, local noise | `end21.py`, `run_end21.py`, `diag_30.py`, `calibrate21.py`, `noise21.py` | `results/end21*_stop*.log`, `seeds_2plus1.json`, `diag_30_seeded.log`, `noise21_*.jsonl` | Secs. 15–18 |
 
 ```bash
-uv run python v7_three_ball_hold/run_cascade21.py --throws 8 --timeout 12 --verbose     # 约 100 s
-uv run python v7_three_ball_hold/run_cascade21.py --throws 30 --timeout 30 --guard     # 约 13 min
+uv run python v7_three_ball_hold/run_cascade21.py --throws 8 --timeout 12 --verbose     # ~100 s
+uv run python v7_three_ball_hold/run_cascade21.py --throws 30 --timeout 30 --guard     # ~13 min
 ```
 
-### 11.1 时序
-右手第一抛释放 T（食指、中指在冲程中张开，拇指不动）→ 手带着 R 用两段返回（先沿 v6 的空手制动轨迹，再进入 v6 的载球回位）回到源位 → 在 v6 时刻抛出 R → 后续为标准 v6 级联。整个抛球日程相对 v6 整体后移 0.2 s（`SETTLE_S`），让手指先从张开状态合拢夹紧两个球。
+## 4. Detailed Early-Rig Results (Wrist Groove vs Clamped-B)
 
-### 11.2 结果
-| 运行 | 结果 |
-| --- | --- |
-| 8 次抛球 | **成功**：8 次释放、6 次完整飞行全部接住，零掉球、零球球碰撞，仿真 2.71 s（`cascade21_8throws.log`） |
-| 30 次抛球（守卫模式） | 18 次释放、16 次完整飞行后在 5.95 s 以 `NO_FEASIBLE_RECEPTION` 停止，零掉球、零球球碰撞（`cascade21_30throws.log`）；v6 同条件为 30/30 |
+- **4.1 Groove rejection**: `search_hold2b` showed B rested mainly on `right_wrist_yaw_link` (1.81 N) rather than the hand (0.11 N) and flew out with A during deceleration. Any retained ball must be actively clamped.
+- **4.2 Clamped-B (`hold2d_right_s1_10/11`)**: B held at ≈ 24–28 N by index/middle/ring tips; pulse/tilt slip ≤ 1 mm; stroke replay drift 1.8–2.0 mm; A releases at 0.898–0.901 s. Static ball-ball contact force ≈ 5.5 N conflicts with v6's zero-ball-contact check.
+- **4.3 Reseating**: 6/360 (`s1_10`) and 7/360 (`s1_11`) random-timing successes; best samples 5–8 mm error.
+- **4.4 Groove ending catch**: Fingertip-held α collides with β along v6's approach (`end_catch.py`); wrist-groove α survives 9/25 offsets (±1 cm mostly OK, ±2 cm fails) while β settles in the palm in all 25 cases. Note: v6's empty-hand recovery (0.912–1.0 s) produces +25 m/s² palm-normal effective gravity, lifting any unclamped ball off the palm.
 
-30 次未达到的原因尚未定位：v6 的种子文件按 v6 自己的前几抛标定，2+1 开局改变了前几抛的状态，后面的接球规划在某一次找不到无碰撞方案。未调优、也没有统计意义（单次运行）。
+## 5. Early-Rig Limitations
 
-### 11.3 联调中发现并解决的问题（按出现顺序）
-1. **手指直接设成夹持姿态会弹飞球**：夹持目标比接触位置更深（预紧），把手指置于该姿态会穿插。改为手指从张开状态闭合，整体抛球日程延后 0.2 s。
-2. **两球轻贴触发 v6 的“球球碰撞”失败**：持双球阶段（及 T 离手后 0.12 s）只对 (R, T) 这一对球豁免该检查，单独计数并记录最大接触力；其他球对仍按 v6 判据。同时把 (R, T) 间距从规划器的最小球间距惩罚中排除，否则该惩罚恒为 0.08，规划永远达不到 0.02 的接受阈值。
-3. **v6 规划器对指尖第一抛收敛不了**（得分在 0.03–0.08 之间摆动）：第一抛改用离线标定的开环命令（`calibrate_first_throw.py`，并行 CMA，目标=落点 xy 误差 + 飞行时间误差）。标定结果：命令 [0.2507, 1.1304, 3.7577, −0.1013]，张指时刻为冲程开始后 0.1125 s，落点误差 2 mm、飞行时间 0.530 s。
-4. **T 离手后被食/中指扫到**：T 离手后立即切回 v6 的“合拢成 cradle”，指尖正好扫过 T 刚离开的位置（水平速度从 −0.17 突变到 −1.9 m/s，随后撞躯干）。改为 T 离手后手指保持张开姿态 0.12 s 再接入 v6 的握持。
-5. **T 离手即切到载球回位，手腕俯仰角超限**（0.6639 > 0.6632 rad）或 R 掉落/撞躯干：改为两段返回（第一段沿 v6 的空手制动轨迹 0.28 s，第二段为 v6 的载球回位）；第一段长度 0.24–0.32 s 均可通过，0.20 s 因与左手来球碰撞失败。
-6. **R 的抛球用 v6 种子会撞上左手飞来的球**：对 R 的第二抛做同样的离线标定（`calibrate_second_throw.py`）：无碰撞、飞行时间 0.530 s，但落点还差 11 cm，由 v6 规划器在线修正。
+Inertial-frame gravity replay omits rotational terms (`ω×ω×r`, `α×r`), stiff servos omit arm tracking error and torso reaction, weights are hand-tuned, single/few seeds are not statistical, and only the right hand was tested.
 
-### 11.4 收尾转移：掌心→指尖（`transfer.py`）：未找到可行解
-整机收尾时先接到的球 α 会落在掌心 cradle，而第 9 节的收尾姿态要求 α 在指尖。用单手装置在“倾角+手指时序”的 11 维空间搜索把 α 从 cradle 送到指尖夹持位（2160 随机样本 + 25 代 CMA 精修，误差阈值 2 cm）：**无成功样本**。最佳解是“球原地不动”（误差 8.9 cm）；让手指张开并倾斜 40° 时球能滚到手指上（y 可到 0.09 m），但指尖合拢会把球向上挤出（z 升到 0.2 m）。结论：靠倾斜 + 合拢的简单时序无法把球夹在指尖，需要更精细的指尖接球/抬球策略，或改用下述替代方案。
+## 6. Literature Notes (2026-11)
 
-### 11.5 下一步（收尾）
-- 替代方案（并行会话已验证的第一步）：α 退到掌根的腕壳凹槽（掌心 cradle→凹槽只需让手指张开并让掌面指尖朝上倾，由重力滚入，比到指尖容易），β 落在其前方的掌心杯中。并行会话测得 β 总能落入掌心，但 α 在 ±1 cm 偏差内仅约 36% 保持，需要加强对 α 的侧向约束。
-- 30 次抛球未完成：定位 `NO_FEASIBLE_RECEPTION` 的来源，可能需要重新标定后续几抛的种子。
-- 整机里的收尾还没有任何实现。
+Ploeger & Peters (arXiv 2207.01414) leave start/stop to future work; arXiv 2608.26800 uses manual placement and no planned ending; MultiGrasp (arXiv 2310.15599) and Morgan et al. (arXiv 2201.07928) do not address dynamic 2+1 start/ending.
 
-## 12. 收尾新思路：掌心球由无名指（±拇指）+掌根夹住，其余手指接并固定最后一球（`search_pinky.py`，2026-11-11）
-观察到人手收尾时用手指接最后一个球。据此把收尾改为：先接到的球 A 留在掌心，由“小拇指位”手指与掌根夹住（LEAP 只有拇指、食、中、无名四指，**无名指 `rf` 充当小拇指**）；食指/中指（及拇指）空出来接住并固定最后一球 B。这样不需要第 11.4 节失败的“掌心→指尖”搬运，且收尾姿态与开局姿态同型。
+## 8. Human-Like Role Swap (`search_hold2e.py` → `hold2f_right_s20/s21.json`)
 
-**静态可行性（单手装置，倾角 10°，6 种手加速度脉冲 8–20 m/s²，各 sep-CMA 60 代×48 个体）**：
-| 变体 | A（掌心球）允许接触 | B（指尖球）允许接触 | 结果 |
-| --- | --- | --- | --- |
-| A | 无名指、掌 | 食、中、拇 | 6 种脉冲下两球位移均为 0.000 m；A 接触力 14 N（rf 末节+掌），B 22 N；A 位置 (−0.034, −0.009, 0.022) m |
-| B | 无名指、拇指、掌 | 食、中 | 同上；A 22.5 N，B 仅 4.0 N（食指中节+中指末节，偏弱） |
+Ball R (retained) sits in the palm cradle (34–41 N, < 2 cm from v6 cradle center) while ball T (thrown) is pinched by index/middle/thumb fingertips (≈ 10 N) and released by opening index/middle fingers over 50 ms at `t_open`:
+- **0 ball-ball contacts** during hold and stroke; R drift ≤ 0.9 mm; T releases at 0.875–0.876 s with (−0.080, 0.55, 2.10) m/s matching v6; **no reseating required**.
+- Sensitivity: `vz` varies linearly with `t_open` at ≈ 0.04 m/s per ms (≈ 2 cm landing shift per ms at 0.53 s flight).
 
-结论：85 mm 球的尺寸足以“A 被无名指（±拇指）+掌根夹住，B 被其余手指夹在指尖”，静态稳定；变体 A（拇指留给 B）夹持力更均衡。结果文件 `results/pinky_A.json`、`pinky_B.json`，图片 `results/figs/pinky_{A,B}_*.png`。**尚未验证的**：第二个球动态落入已有 A 的手并被食/中指接住固定（需要接球动态搜索）；整机集成。
+## 9–10. Fingertip-Held Ending & Arm Reachability (`end_tip*`, `end_reach.py`)
 
-## 13. 开局静态图与演示视频
-- 静态图：`render_start.py` → `results/figs/start_*.png`（整机、手部 4 个视角、掌面法向/侧向）。开局时右手 R（掌心）局部坐标 (0.015, −0.017, 0.022) m，T（指尖）(0.035, 0.054, 0.066) m。
-- 视频：`record_cascade21.py` → `results/cascade21_start.mp4`（0.5 倍速，9 次抛球，无失败）。
+- Catching β into the palm while holding α at fingertips requires opening receiving fingers into a bowl and approaching from directly above (0°/90°, 8/25 at 1.5 m/s) or from the palm-heel side (90°/60°, 16–17/25 at 1.5–2.5 m/s within ±2 cm); v6's actual fingertip-side approach collides with α.
+- 7-DoF IK reachability scan (`end_reach.py`, 100 grid points): at `θ = 10°`, `v_rel = 1.5 m/s`, **41%** of grid points pass for the palm-heel 60° approach (concentrated lower and outward: `z = 0.80–0.84`, `y = −0.26..−0.30`), with peak joint speeds 8–12 rad/s (< v6's 14 rad/s).
 
-## 14. 收尾动态接球：掌心球由无名指+掌根夹住，最后一球由食/中/拇指接住（`search_catch_tip.py`、`search_catch_tip_multi.py`、`catch_tip_robust.py`，2026-11-11）
-设置：A 球按第 12 节变体 A 夹在掌心，B 球从目标指尖位上方 0.25 m 起、以相对速度落下（`--az/--el/--speed`），手指在 `t_close` 起 `dur` 内从“接球碗”姿态插值到夹持姿态。16+16 个手指目标 + 2 个时序参数，sep-CMA。
+## 11. Full-Body 2+1 Start Integration (`cascade21.py`)
 
-| 阶段 | 结果 |
-| --- | --- |
-| 单工况（1.5 m/s，无偏移），三个接近方向（az0/el90、az90/el60、az180/el60） | 全部成功：A 位移 <0.1 mm，B 误差 <2 cm，球间接触力 0 |
-| 单工况解的鲁棒性（±2 cm 偏移×4 种速度网格） | 很差：az0/el90 在 1.5/2.5/3.5 m/s 为 12/25、6/25、3/25，0.5 m/s 为 0/25；az180/el60 为 1/25、8/25、12/25，0.5 m/s 为 0/25（过拟合单一速度） |
-| 多工况重优化（10 组速度 1.5–3.5 m/s × 偏移 ±1 cm，目标=均值+0.5×最大） | 两个方案 10/10 训练工况成功 |
-| 多工况解的鲁棒性（±2 cm 偏移×速度网格） | az0/el90：1.5 m/s 13/25，2.5 m/s 19/25，3.5 m/s 13/25；az180/el60：15/25、19/25、18/25；0.5 m/s 均 0/25；接近角度扰动（方位±20°、俯角±15°，2.5 m/s）两者 15/15 |
+`TwoPlusOneCascade(ContactCascade)` starts with `hold2f` in the right hand (0.2 s settle delay `SETTLE_S`), then hands off to v6:
+- **8 throws**: PASS (8 releases, 6 complete flights, 0 drops, 0 collisions, 2.71 s).
+- **30 throws (before seed recalibration)**: stopped at 5.95 s (18 releases, 16 flights) on `NO_FEASIBLE_RECEPTION` (0 drops, 0 collisions).
+- Key integration fixes: close fingers from open state (`0.2 s` settle); exempt `(R, T)` pair contact during initial 2-ball hold + 0.12 s post-release while logging it; offline-calibrate first throw (`calibrate_first_throw.py`: `[0.2507, 1.1304, 3.7577, −0.1013]`, `t_open = 0.1125 s`, 2 mm error); keep index/middle open 0.12 s post-release to avoid grazing T; two-segment return (0.28 s empty-hand brake + loaded carry) to stay within wrist pitch limit; calibrate second throw (`calibrate_second_throw.py`).
+- **11.4 Palm→fingertip transfer (`transfer.py`)**: 0 successes across 2,160 random + 25 CMA generations (best error 8.9 cm); abandoned in favor of Sec. 12.
 
-判据：A 位移 <2 cm 且速度 <0.05 m/s、B 速度 <0.05 m/s 且与 A 以外手指≥2 处接触、A 与无名指接触、无腕部接触、B 终点距目标 <8 cm。失败多集中在 ±2 cm 偏移网格的边角，以及 0.5 m/s 的慢速（球太慢不能触发夹紧）。
+## 12–14. Ring-Finger Palm Hold + Fingertip Catch (`pinky_A.json`, `catchtipM_az0_el90.json`)
 
-结论：这一动态接球在 2–3.5 m/s、约 ±1 cm 偏移内可行，对接近角度很鲁棒；整机里球到达速度约 2–3 m/s，在可行范围内。**尚未验证**：整机里手臂能否送到该位置并以该速度接近（需结合第 10 节可达性）、整机集成。结果文件：`results/catchtip*.json`、`results/catch_tip_robust*.log/json`。
+- **Static (`search_pinky.py`)**: Ring finger (`rf`, acting as pinky) + palm heel clamp ball A (14 N) while index/middle/thumb hold ball B (22 N); **0.000 m** slip across all 6 pulses (variant A). Eliminates palm→fingertip transfer.
+- **Dynamic (`search_catch_tip_multi.py`, `catch_tip_robust.py`)**: Multi-condition optimization (1.5–3.5 m/s × ±1 cm) passes 10/10 training conditions; on ±2 cm grid, `az0/el90` achieves 13/25 (1.5 m/s), 19/25 (2.5 m/s), 13/25 (3.5 m/s), 0/25 (0.5 m/s), and 15/15 under ±20° azimuth / ±15° elevation perturbations.
+- Start figures & video: `render_start.py` → `results/figs/start_*.png`; `record_cascade21.py` → `results/cascade21_start.mp4` (0.5x, 9 throws, 0 failures).
 
-## 15. 整机集成：2+1 收尾（`end21.py`、`run_end21.py`，2026-11-11）
-`EndingCascade(TwoPlusOneCascade)`（不改 v6 源码）。流程：右手 2+1 开局 → v6 级联 `stop_after` 次抛球（偶数，最后一抛由左手）→ 此后两手都不再抛（`ready_for_throw` 恒为 False，仅实盘；v6 的私有前向试算仍按“继续抛”预测，否则会触发 `NO_FEASIBLE_RECEPTION`）→ 右手已握着刚接到的球 c，左手抛出的最后一个球 a 还在空中时：
-1. 右手进入“指尖接球”姿态：掌面朝向取 v6 的 `LOADED_SOURCE_AXIS`（10° 倾角，正好是单手优化的座标系），手指在 0.15 s 内从 v6 cradle 过渡到第 14 节 `catchtipM_az0_el90.json` 的预备姿态 Ka（无名指+掌根夹 c，食/中/拇指张成碗）；
-2. 手掌位置 = a 的预测落点 − R·(指尖槽位 B_TGT)（落点按弹道预测）；掌路径用 v6 的 `CartesianPalmMotion` 在触球前 0.10 s 到位并静止（手速度为 0，使相对速度等于完整落地速度）；
-3. 触球时刻前后按优化得到的相对时序把手指从 Ka 收拢到 Kb；触球后手臂保持到达时的冗余姿态（若用 v6 的 `catch_q` 作为零空间目标，肘部会持续外张）。
-判据：触球后 0.8 s，右手两球都与手接触、相对手速度 <0.15 m/s、位于座标系 0.16 m 内、高度 >0.4 m，左手球不掉，全程无掉球/球球碰撞/禁止接触/姿态越限。
+## 15. Full-Body 2+1 Ending Integration (`end21.py`, `run_end21.py`)
 
-### 15.1 结果（`results/end21c_stop*.log`、`end21b_stop*.log`）
-| 抛球数 `stop_after` | 肘外展限 0.12 m（`end21b`） | v6 原限 0.10 m（`end21c`） |
+`EndingCascade(TwoPlusOneCascade)` runs `stop_after` throws (even, last throw by left hand), disables live further throws (`ready_for_throw` override on `silent=False` only), transitions right hand to `catchtipM_az0_el90.json` pre-catch pose `Ka`, arrives at predicted landing point 0.10 s early (`ARRIVE_EARLY_S`, zero hand velocity), closes fingers on timed schedule, holds `q_hold` in null space, and checks 0.8 s three-ball support (`v_rel < 0.15 m/s`, local radius `< 0.16 m`, `z > 0.4 m`):
+
+| `stop_after` | `ELBOW_OUT_END_M = 0.12 m` (`end21b`) | Original v6 `0.10 m` (`end21c`) |
 | --- | --- | --- |
-| 4 | 成功 | 成功 |
-| 6 | 成功 | 成功 |
-| 8 | 成功 | 成功 |
-| 10 | 成功 | 失败：`POSE_LIMIT elbow_out=0.100035`（仅超 0.04 mm） |
-| 12 | — | 成功 |
-| 2 | 失败：`BALL_COLLISION ball0-ball1`（右手仍在携带 R 球的开局过渡阶段，未单独分析） | — |
-单次确定性仿真，不是统计结果。成功时右手 c 球局部位置约 (0.012, −0.003, 0.022) m，a 球约 (0.047, 0.078, 0.029) m，两球相对手速度 <0.3 mm/s。演示视频：`results/end21_ending.mp4`（0.5 倍速，`stop_after=4`）。
+| 4, 6, 8 | PASS | PASS |
+| 10 | PASS | FAIL: `POSE_LIMIT elbow_out=0.100035` (+0.04 mm) |
+| 12 | — | PASS |
+| 2 | FAIL: `BALL_COLLISION ball0-ball1` (during start transition) | — |
 
-### 15.2 联调中的问题
-1. v6 私有试算里 `throw_count` 也会越过 `stop_after`，把试算里的抛球停掉，导致 `NO_FEASIBLE_RECEPTION`：停止逻辑只在 `silent=False`（实盘）时生效。
-2. 把 `throw_time` 设为 1e9 会让 v6 接球规划把“回到抛球位的时间”算成无穷：改为重写 `ready_for_throw`。
-3. 起点时右手刚接完 c，正快速内收；单段路径先向内再向外大幅摆动，肘外展接近 0.10 m 限值（stop 6、10 失败）：路径提前 0.10 s 到位并静止（`ARRIVE_EARLY_S`，手速度 0）后四个都成功；触球后手速度 0 也使相对速度 ≈ 落地速度（1.8–2.2 m/s，在第 14 节 1.5–3.5 m/s 的鲁棒范围内）。
-4. 触球后零空间目标改为当前姿态（`q_hold`），否则肘部仍持续外张到 0.12 m。
-5. **与 v6 的偏差**：默认把收尾阶段的肘外展限放宽到 0.12 m（`ELBOW_OUT_END_M`），因为指尖槽位在掌心原点后方约 9 cm，手更靠近躯干。用 v6 原限 0.10 m 时 5 个用例中 4 个成功。
+Demo video: `results/end21_ending.mp4` (0.5x, `stop_after=4`). Single deterministic runs only.
 
-### 15.3 尚未做的
-- 统计意义上的鲁棒性（噪声、不同落点、多种子）；`stop_after=2` 的开局过渡情形；收尾后的稳定性只验证了 0.8 s；左手仍按 v6 的单球持握。
+## 16–17. 30-Throw Diagnosis & Seed Recalibration (`diag_30.py`, `calibrate21.py`, `seeds_2plus1.json`)
 
-## 16. 30 次抛球在第 18 次释放处 `NO_FEASIBLE_RECEPTION` 的原因定位（`diag_30.py`，`results/diag_30_mine.*`、`diag_30_v6.*`，2026-11-11）
-同一条件重跑两次（确定性，均复现同一时刻）：2+1 开局在 5.947 s 失败（18 次释放）；v6 基线 30 次飞行全部完成（32 次释放、10.21 s、0 失败）。
+- **Root cause (Sec. 16)**: The 0.2 s shifted 2+1 timeline drifted away from v6's `leap_cascade_seed_plans.json`, causing Throw 18 (left) to take 4 retries (+15 ms delay) on top of an early Throw 17 (−13 ms), shrinking the reception window to 0.15–0.17 s and causing `NO_FEASIBLE_RECEPTION` (4.07 mm palm self-penetration).
+- **Recalibration (Sec. 17)**: Fixed-point recalibration (`calibrate21.py`, caching only directly accepted commands, preserving `throw:right:0/2`) yielded `results/seeds_2plus1.json`: **30/30 complete flights** (31 releases, 10.38 s, 0 drops/collisions, 654 s wall time) and all `stop_after = 4/8/12` ending regressions PASS. Pass `seeds_file=None` to reproduce earlier unseeded runs.
 
-**失败那一刻**：左手刚释放第 18 次抛球（5.947 s），立即为右手第 17 次抛出的 1 号球规划接球，v6 接球规划的最优候选 score=0.062：球未触手（`contact_time`=None）、未接稳，两个参数撞到搜索上限（0.04、−0.12），候选轨迹中左手掌与世界穿透 4.07 mm（限值 4 mm，`POSE_LIMIT self_penetration`）。此前 17 次接球规划 score 均为 0。
+## 18. Local Noise Check (`noise21.py`, `results/noise21_*.jsonl`)
 
-**因果链（来自两次运行的事件对比）**
-1. 第 18 次抛球（左）的前 3 次规划都没过 v6 的 0.02 验收：落点误差很小（<2 cm），主要是**释放时刻预测误差 −20 ms**（score 0.041→0.029→0.026→0.018，每次重试 5 ms，第 4 次才通过）。推迟了 15 ms 起冲程。
-2. 17→18 次释放间隔为 **0.356 s**；v6 的 31 个间隔范围是 0.305–0.336 s（均值 0.320，标准差 0.009），我的前 16 个间隔 0.308–0.328 s。同时右手第 17 次抛球偏早 13 ms，进一步压缩左手回收时间。
-3. 左手接 1 号球的窗口 = 1 号球落地时间 − 第 18 次释放时间 ≈ 0.15–0.17 s；v6 的窗口通常 0.18–0.21 s（最小一次 0.146 s 也通过了），我的前 16 个窗口 0.169–0.201 s。窗口过短使接球规划找不到可行解。
-
-**为什么我的运行重试更多**：我的第 14、16、18 次抛球（左手）需要 2、3、4 次规划，首次 score 0.023、0.067、0.041；v6 的 30 次抛球中只有 1 次需要 3 次（第 20 次，score 0.036），其余首次通过。v6 的 `leap_cascade_seed_plans.json`（含 `throw:*:N`、`return:*:N` 至 N≈52）是按 v6 自身轨迹标定的初值；2+1 开局的前几抛（人工标定的开环抛球、握持过渡）使整条时间线整体延迟 0.2 s、状态略有不同，后面的抛球落在“种子标定状态”之外，规划初值的释放时刻偏差逐渐增大，较晚的抛球更容易重试，一旦同时遇到“重试 + 右手偏早”，回收时间就不够。
-
-**证据的局限**：这只是一次确定性运行与一次基线运行的对比，“种子与新时间线不匹配”是对重试增多的解释，未通过重新标定种子或打乱种子做对照验证；v6 自身也会偶发重试，不能排除这次失败有随机性成分（时序抖动）。
-**可行的后续**：①按 2+1 开局的时间线重新标定后续抛球的 `warm/execution` 种子（`v6 calibrate.py` 的流程）；②把规划重试之前的起冲程时间整体提前一个余量，使重试不吃掉回收时间；③验收门限 0.02 放宽（会改变 v6 行为，不建议）。以上均未实现。
-
-## 17. 在 2+1 时间线上重新标定 v6 优化器种子（`calibrate21.py`，`results/seeds_2plus1.json`，2026-11-11/12）
-针对第 16 节的原因（后续抛球的规划初值与新时间线不匹配 → 重试 → 接球窗口过短），按 v6 `calibrate.py` 的思路做不动点迭代：每轮用当前种子跑 30 次飞行，把每次抛球**最终通过验收**（score<0.02）的命令、以及 score=0 的接球参数缓存为该抛球序号的首次猜测，下一轮从头重跑。两个手工标定种子 `throw:right:0/2` 不覆盖。
-
-**过程**（`results/calibrate21c.log`）
-| 轮次 | 输入种子 | 结果 |
-| --- | --- | --- |
-| 0 | 无（v6 默认） | 第 18 次释放失败（NO_FEASIBLE_RECEPTION），3 次抛球需重试（第 13/15/17），更新 32 个种子 |
-| 1 | 第 0 轮的输出 | **30 次完整飞行全部完成**（31 次释放），仍有 3 次重试（第 27/20/28 次抛球） |
-种子取“成功那一轮的输入”（`seeds_2plus1_iter1_input.json` 即 `seeds_2plus1.json`）：仿真是确定性的，该轮本身验证了它。**注意**：最初的版本继续迭代并把第 1 轮重试后的命令也写进种子，结果在第 27 次抛球失败（`seeds_2plus1_failed_fixedpoint.json`，不再使用）——与 v6 `calibrate.py` 只缓存直接成功命令、不缓存重试命令的理由一致，重试命令属于以后的状态。
-
-**独立验证**（`results/diag_30_seeded.log`）：`TwoPlusOneCascade` 默认自动读取 `seeds_2plus1.json`，从头跑 30 次飞行：成功，31 次释放，10.38 s，无失败规划，无掉球/球球碰撞，用时 654 s。收尾回归（`stop_after`=4/8/12，`end21d_stop*.log`）仍全部成功。
-**影响**：第 11、15 节的旧结果是没有这份种子时跑的，复现旧结果需向 `TwoPlusOneCascade` 传 `seeds_file=None`。种子是本次确定性运行的产物，不保证对其他初值/噪声仍然成立；本次只验证了 30 次飞行一次。
-
-## 18. 噪声鲁棒性（`noise21.py`，`results/noise21_*.jsonl/log`，2026-11-12）
-噪声模型同 v6：只对接球位置预测加高斯噪声（标准差 mm，种子固定），不含传感器延迟/丢帧/执行器误差；球速与前向试算初态仍用真值。使用第 17 节的种子。
-
-**级联（2+1 开局，请求 30 次飞行）**
-| 噪声 | 种子 | 释放次数 | 停止原因 |
-| --- | --- | --- | --- |
-| 0 mm | 0 | 31（30 次飞行完成） | 成功 |
-| 1 mm | 0 / 1 / 2 | 11 / 18 / 9 | 均 `NO_FEASIBLE_RECEPTION` |
-| 3 mm | 0 / 1 / 2 | 19 / 11 / 10 | 前两个 `NO_FEASIBLE_RECEPTION`，种子 2 `DROPPED`（ball 0，3.774 s） |
-| 5 mm | 0 / 1 / 2 | 15 / 20 / 9 | 均 `NO_FEASIBLE_RECEPTION` |
-有噪声的 9 轮全部失败，成功率 0/9；失败前释放次数 9–20。作为对照，v6 自身（无 2+1 开局）的 2 种子结果是：1 mm 为 4/4 次、3 mm 为 4/21 次、5 mm 为 7/13 次完成飞行，同样 0/6 成功（见 `v6_humanoid_hands/README.md`）。两者的失败特征相同——噪声使接球规划被拒——所以 2+1 开局没有引入新的噪声脆弱性，但也没有改善；每档仅 3 个种子，完成次数不随噪声幅度单调变化，不足以比较两者孰优。
-
-**收尾（`stop_after`=8，噪声作用于收尾前的级联接球预测）**：噪声 1/3/5 mm × 种子 0/1/2，9 轮全部成功（右手两球均握稳，左手球不掉）。**注意**：收尾自己的落点预测 `_maybe_start_end` 使用球的真值状态，没有加噪声，所以这个结果只说明“收尾前的级联在噪声下能走到 8 次抛球”以及“真值落点下的收尾”，并不说明收尾对落点噪声鲁棒；落点偏差下的鲁棒性只有单手数据（第 14 节：±1 cm 内较稳）。
-**结论**：噪声下的瓶颈是 v6 级联本身（接球规划被拒），与队友的 RL 噪声鲁棒训练方向一致；2+1 开局和收尾没有成为额外瓶颈，但收尾对自身落点估计噪声的鲁棒性还没测。
+Same local noise model as v6 (Gaussian noise on selected catch-position predictions only; true velocity/rollout state; `seeds_2plus1.json`):
+- **Cascade (30 flights requested)**: 0 mm PASS (1/1); 1 mm 0/3 (11/18/9 releases, all `NO_FEASIBLE_RECEPTION`); 3 mm 0/3 (19/11/10 releases; seed 2 `DROPPED` ball 0 at 3.774 s); 5 mm 0/3 (15/20/9 releases, all `NO_FEASIBLE_RECEPTION`). Matches v6's own 0/6 failure mode under noise.
+- **Ending (`stop_after = 8`)**: 9/9 PASS across 1/3/5 mm × seeds 0/1/2 (note: `_maybe_start_end` used true ball state without noise, so this does not test ending robustness to noisy landing estimates).

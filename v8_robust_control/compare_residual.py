@@ -276,17 +276,17 @@ def comparison_report(ppo_training, ppo_test, sac_training, sac_test, selection,
     baseline, fixed = trial_counts(controls), trial_counts(fixed_test['trials'])
     episodes = len(ppo_test['evaluation_seeds'])
     perturbations = (len(ppo_test['evaluation_cases'])-1)*episodes
-    lines = ['# 单球接球策略对照', '',
-             f"PPO 与 SAC 各使用三个训练种子、每种子 {ppo['steps']:,} 个控制步；仅按验证集选择检查点。",
-             f"验证种子为 {ppo['evaluation_seeds'][0]}–{ppo['evaluation_seeds'][-1]}；测试种子为 "
-             f"{ppo_test['evaluation_seeds'][0]}–{ppo_test['evaluation_seeds'][-1]}。", '',
-             '固定残差在全部回合请求同一个四维向量；名义反馈、接触权限、限幅和变化率限制仍生效。',
-             '候选为零残差，以及三个 PPO 各自的初始输出和验证接触阶段请求均值；参数与选择均不使用测试结果。', '',
-             '常数沿用安全优先的验证评分，同分时优先较早候选；零残差列在首位。固定对照复用 PPO 训练资产，不单独比较参数搜索成本。', '',
-             f"选定常数：`{selected['id']}`；归一化请求为 `{selected['action']}`。", '',
-             '| 策略 | 零扰动接稳 | 扰动接稳 | 安全失败 | 相对固定残差新增成功/丢失成功 |',
+    lines = ['# Single-Ball Reception Policy Comparison', '',
+             f"PPO and SAC each use three training seeds at {ppo['steps']:,} control steps per seed; checkpoints are selected on the validation set only.",
+             f"Validation seeds: {ppo['evaluation_seeds'][0]}–{ppo['evaluation_seeds'][-1]}; test seeds: "
+             f"{ppo_test['evaluation_seeds'][0]}–{ppo_test['evaluation_seeds'][-1]}.", '',
+             'The fixed residual requests the same 4-D vector across all episodes; nominal feedback, contact authority, clipping, and rate limits remain active.',
+             'Candidates are zero residual plus each of the three PPO models\' initial outputs and mean validation contact-phase requests; test outcomes are excluded from fitting and selection.', '',
+             'Constant selection uses the safety-first validation score, breaking ties toward earlier candidates with zero residual listed first. Because the fixed control reuses PPO training assets, parameter-search cost is not compared separately.', '',
+             f"Selected constant: `{selected['id']}`; normalized request: `{selected['action']}`.", '',
+             '| Policy | Zero-disturbance catches | Disturbed catches | Safety failures | Wins/Losses vs. fixed residual |',
              '| --- | --- | --- | --- | --- |']
-    groups = [('经典控制器', controls), ('固定残差', fixed_test['trials'])]
+    groups = [('Classical controller', controls), ('Fixed residual', fixed_test['trials'])]
     for algorithm, _, test in tests:
         groups.extend((f"{algorithm.upper()} / seed {r['seed']}", r['trials']) for r in test['records'] if r['kind'] == 'trained')
     for label, trials in groups:
@@ -294,11 +294,11 @@ def comparison_report(ppo_training, ppo_test, sac_training, sac_test, selection,
         paired = paired_counts(trials, fixed_test['trials'])
         lines.append(f"| {label} | {counts['baseline']}/{episodes} | {counts['perturbed']}/{perturbations} | "
                      f"{counts['unsafe']}/{episodes+perturbations} | {paired['wins']}/{paired['losses']} |")
-    lines += ['', '安全失败包含禁止接触、姿态或球高越限、外力和非有限状态；与实际掉球、截止超时分别统计。',
-              '所有策略复用相同场景；三个训练种子的汇总不代表新增独立测试场景。', '',
-              '## 各配置接稳数', '', '| 策略 | '+' | '.join(ppo_test['evaluation_cases'])+' |',
+    lines += ['', 'Safety failures include forbidden contacts, posture or ball-height violations, external forces, and non-finite states; they are counted separately from drops and deadline timeouts.',
+              'All policies share the same test scenes; pooling three training seeds does not create new independent test scenes.', '',
+              '## Catches by Condition', '', '| Policy | '+' | '.join(ppo_test['evaluation_cases'])+' |',
               '| --- | '+' | '.join('---' for _ in ppo_test['evaluation_cases'])+' |']
-    pooled = [('经典控制器', controls), ('固定残差', fixed_test['trials'])]
+    pooled = [('Classical controller', controls), ('Fixed residual', fixed_test['trials'])]
     for algorithm, _, test in tests:
         pooled.append((algorithm.upper(), [t for r in test['records'] if r['kind'] == 'trained' for t in r['trials']]))
     for label, trials in pooled:
@@ -307,24 +307,24 @@ def comparison_report(ppo_training, ppo_test, sac_training, sac_test, selection,
             values = [t for t in trials if t['case'] == case]
             counts.append(f"{sum(t['is_success'] for t in values)}/{len(values)}")
         lines.append('| '+label+' | '+' | '.join(counts)+' |')
-    lines += ['', '## 候选筛选', '']
+    lines += ['', '## Candidate Screening', '']
     for algorithm, _, test in tests:
         decision = screening_decisions(test)[algorithm]
-        lines.append(f"- {algorithm.upper()}：{'通过' if decision['candidate_gate'] else '未通过'}；"
-                     f"扰动配对完成数差 {decision['paired_perturbed_gain']:+d}，安全失败数为 {decision['unsafe_per_seed']}。")
+        lines.append(f"- {algorithm.upper()}: {'PASS' if decision['candidate_gate'] else 'FAIL'}; "
+                     f"paired disturbed delta {decision['paired_perturbed_gain']:+d}, safety failures per seed {decision['unsafe_per_seed']}.")
     fixed_pass = (fixed['baseline'] >= baseline['baseline'] and fixed['perturbed'] > baseline['perturbed']
                   and fixed['unsafe'] <= baseline['unsafe'])
-    lines += [f"- 固定残差：{'通过' if fixed_pass else '未通过'}相同的成功与安全门槛。", '',
-              '## 训练预算与耗时', '', '| 算法/种子 | 实际训练步数 | 选中步数 | 训练耗时（s） |',
+    lines += [f"- Fixed residual: {'PASS' if fixed_pass else 'FAIL'} under the same success and safety gate.", '',
+              '## Training Budget and Wall-Clock Time', '', '| Algorithm/Seed | Training steps | Selected step | Training wall time (s) |',
               '| --- | --- | --- | --- |']
     for algorithm, training, _ in tests:
         for row in training['records']:
             if row['kind'] == 'trained':
                 lines.append(f"| {algorithm.upper()}/{row['seed']} | {row['training_steps']} | "
                              f"{row['selected_training_steps']} | {row['training_wall_time_s']:.2f} |")
-    lines += ['', '耗时来自实际 learn 调用，不含验证；受机器负载和并发影响，不作为严格的算法速度排名。',
-              '相同交互预算不等于相同梯度更新次数，也不表示任一算法已收敛。', '', '## 结论与范围', '',
-              '经典控制器、固定残差及两个 RL 算法的结果用于判断是否值得继续训练；候选筛选不触发控制器替换。']
+    lines += ['', 'Wall-clock times come from actual learn calls excluding validation; affected by machine load and concurrency, they are not a strict algorithm speed ranking.',
+              'Equal interaction budgets do not imply equal gradient update counts or convergence of either algorithm.', '', '## Conclusion and Scope', '',
+              'Results for the classical controller, fixed residual, and both RL algorithms inform whether further training is warranted; candidate screening does not trigger controller replacement.']
     consistent = []
     for algorithm, _, test in tests:
         trained = [trial_counts(r['trials']) for r in test['records'] if r['kind'] == 'trained']
@@ -333,12 +333,12 @@ def comparison_report(ppo_training, ppo_test, sac_training, sac_test, selection,
                         and c['unsafe'] <= fixed['unsafe'] for c in trained)):
             consistent.append(algorithm.upper())
     if consistent:
-        lines.append('本测试中，'+ '、'.join(consistent)+' 各训练种子均超过固定残差，作为后续训练候选；差异仍需更多场景确认。')
+        lines.append('In this test, '+', '.join(consistent)+' exceeded the fixed residual across all training seeds and remain candidates for further training; differences still require more scenes to confirm.')
     else:
-        lines.append('本测试未显示任一算法在全部训练种子上稳定超过固定残差。后续保留经典控制器和固定残差对照，暂不据此扩展三球 RL。')
-    lines += ['本比较仅覆盖一种有限预算配置，不能判定 SAC 或 PPO 的普遍优劣。',
-              '固定残差仅搜索上述有限候选；策略实时反馈的额外收益仍需结合反馈消融判断。',
-              '任务仅为下降单球的接稳，不包含主动抛球、双球或完整三球任务。', '']
+        lines.append('This test did not show either algorithm consistently exceeding the fixed residual across all training seeds. Retain the classical controller and fixed residual as baselines and do not scale to three-ball RL on this basis.')
+    lines += ['This comparison covers one finite-budget setting and cannot establish general superiority of SAC or PPO.',
+              'The fixed residual searches only the finite candidate set above; any additional benefit from online policy feedback must be judged alongside feedback ablations.',
+              'The task covers catching a descending single ball only, excluding active throws, two-ball exchange, or the complete three-ball task.', '']
     return '\n'.join(lines)
 
 
@@ -370,7 +370,7 @@ def main():
                                    ('ppo_training', 'ppo_test', 'sac_training', 'sac_test', 'fixed_selection', 'fixed_test')),
                                  selection_sha256=digest(args.fixed_selection))
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        with args.output.open('x', encoding='utf-8') as stream:
+        with args.output.open('x', encoding='utf-8', newline='\n') as stream:
             stream.write(text)
         print(text)
 

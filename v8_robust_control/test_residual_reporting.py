@@ -57,7 +57,7 @@ class ResidualReportTests(unittest.TestCase):
         aggregates, text = summarize(manifest, rows)
         self.assertEqual(len(aggregates), 5)
         self.assertEqual(aggregates[3]['cases']['baseline']['episodes'], 3)
-        self.assertIn('不能据此断言', text)
+        self.assertIn('does not establish convergence', text)
 
     def test_archive_checksum_supports_both_platform_newlines(self):
         _, rows = self.records()
@@ -93,7 +93,7 @@ class ResidualReportTests(unittest.TestCase):
 
     def test_validation_curve_selection_and_coverage(self):
         manifest, rows = self.learning_records()
-        self.assertIn('学习曲线', summarize(manifest, rows)[1])
+        self.assertIn('Learning Curve', summarize(manifest, rows)[1])
         for mutate in ('missing', 'duplicate', 'wrong_score', 'later_tie'):
             changed = deepcopy(rows)
             run = changed[-1]

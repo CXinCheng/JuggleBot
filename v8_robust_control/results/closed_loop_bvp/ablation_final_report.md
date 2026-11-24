@@ -1,216 +1,203 @@
-# v8 抗扰控制与 RL 改进：阶段性消融对照与 Gate 1 诊断报告
+# v8 Disturbance-Rejection Control & RL Improvement: Stagewise Ablation and Gate 1 Diagnostic Report
 
-> **状态声明：阶段性进展（未完成本 commit 原定最终验收）**
-> - **两个独立结论明确分离**：
->   1. **规则闭环降低危险终止（冻结版 `ClosedLoopBvpPolicy`，`apex_trim_dvz = -0.15 m/s` + 手腕来球路径制动门控）**：在当前开发对照集（`440000..440009`）的 6 档持球初态扰动上，累计危险终止率由固定对照的 `48/60 (80.0%)`、时序对照的 `54/60 (90.0%)` 降至 **`28/60 (46.7%)`**（较初版 `31/60` 再降 3 例），平均接稳由 `1.18` 提至 **`1.20`**，且 6 档总体平均存活时长高于固定与时序对照（`1.516 s` vs `1.398 s / 1.257 s`；22 例危险→安全翻转中 18 例持平或更长、4 例更早结束，总体未见以提前掉球换取安全的趋势）；但 60 个扰动回合的 30 抛完整任务成功数仍为 `0`，且仍保留 2 例 vs 固定配对退化（已列入回归项）。
->   2. **RL 在闭环之上进一步改善表现**：**尚未证明**。历史 `PPO-BC`、`6D-LCB`、`7D-LCB` 未能同时证明接稳增益与安全不退化；需在 Gate 1 通过后，于冻结的 `ClosedLoopResidualEnv` 底座上开展多梯度增量 RL 训练并检验。
-> - **数据集口径纠偏**：
->   - `440000..440009` 中 `440000, 440001, 440002, 440005, 440008` 曾被历史动作搜索脚本 `build/v8_multi_seed_search.py` 用于 0.25 mm 诊断与搜索，因此本报告将 `440000..440009` 降级标为 **开发对照集（Dev Comparison Set）**，不再称作“未见独立测试集”。
->   - 全仓（`v8_robust_control/`、`v7_three_ball_hold/`、`v6_humanoid_hands/`、`src/`、`build/`）检索确认 **`450000..450019`** 存在 **0 条历史使用记录**，现冻结保留作为策略、安全阈值与感知扰动协议全部定型后的最终未见测试集。
->   - 当前七档对照仅覆盖 `seat_jitter_m`（持球初态偏移），尚未覆盖测量噪声（`noise_std_m`）、延迟（`delay_s`）和丢帧（`dropout`）组合；感知扰动将在最终统一评估协议中补齐。
+> **Status Statement: Interim Progress (Final Acceptance Criteria Not Yet Met)**
+> - **Two independent conclusions separated explicitly**:
+>   1. **Rule-based closed loop reduces unsafe terminations (frozen `ClosedLoopBvpPolicy`, `apex_trim_dvz = -0.15 m/s` + wrist incoming-ball path braking guard)**: Across the 6 held-ball seat-offset levels on the development comparison set (`440000..440009`), aggregate unsafe termination rate dropped from `48/60 (80.0%)` (fixed baseline) and `54/60 (90.0%)` (timing baseline) to **`28/60 (46.7%)`** (3 fewer than the initial `31/60`), mean confirmed catches rose from `1.18` to **`1.20`**, and mean survival duration exceeded both baselines (`1.516 s` vs `1.398 s / 1.257 s`; among 22 unsafe→safe flips, 18 lasted as long or longer and 4 ended earlier, showing no overall trend of trading safety for earlier drops). However, full 30-throw task completions across all 60 disturbed episodes remain **`0`**, and 2 matched paired regressions vs the fixed baseline remain (logged as regressions).
+>   2. **RL further improving over the rule-based closed loop**: **Not demonstrated**. Historical `PPO-BC`, `6D-LCB`, and `7D-LCB` failed to demonstrate simultaneous catch gains and safety non-degradation; incremental RL must be trained and tested on the frozen `ClosedLoopResidualEnv` base after Gate 1.
+> - **Dataset Scope Corrections**:
+>   - Seeds `440000, 440001, 440002, 440005, 440008` in `440000..440009` were previously used by `build/v8_multi_seed_search.py` for 0.25 mm diagnostics; therefore `440000..440009` is downgraded to **Development Comparison Set** rather than an unseen independent test set.
+>   - Repository-wide search (`v8_robust_control/`, `v7_three_ball_hold/`, `v6_humanoid_hands/`, `src/`, `build/`) confirmed **`450000..450019`** has **0 historical uses**; it remains strictly sealed as the final unseen test set.
+>   - The 7-level sweep covers only `seat_jitter_m` (initial held-ball seat offset); combined perception disturbances (`noise_std_m`, `delay_s`, `dropout`) are evaluated separately in Section 6.3.
 
 ---
 
-## 一、 验收项逐项核查（阶段性口径）
+## 1. Acceptance Checklist (Interim Scope)
 
-| 验收维度 | 当前实测状态 | 阶段判定 |
+| Criterion | Measured Status | Stage Verdict |
 | :--- | :--- | :---: |
-| **1. 保留无扰动完整任务能力** | `0.00 mm` 下，全部策略在 `440000..440009` 达成 **10/10 成功，30.00 / 30 接，0/10 危险**；`ClosedLoopResidualEnv` 受 `action_authority(obs)` 门控，单测验证非零学习动作在 `0.00 mm` 下实际执行量为 `0.0`。 | **有证据支持** |
-| **2. 扰动下有收益** | 开发对照集 6 档持球初态扰动（60 回合）下：冻结规则闭环平均接稳 **`1.20` 次**（`0.25 mm` 达 `2.40` 接）vs 固定对照 `1.00` 次 vs 时序对照 `0.40` 次；60 回合 30 抛完整成功数仍为 **`0`**；在 `2.00 mm` 档闭环平均 `0.40` 次，低于时序对照 `0.70` 次。 | **部分达到（收益偏薄）** |
-| **3. 安全不退化** | 60 扰动回合总危险终止率由固定对照 `48/60 (80.0%)`、时序对照 `54/60 (90.0%)` 降至 **`28/60 (46.7%)`**，总体未见以提前掉球换取安全的趋势；但按同种子同档位配对，仍存在 **2 例（vs 固定：`440006@0.02`, `440000@0.25`）** 和 **3 例（vs 时序）** 从非危险转为危险（已列入回归项）。 | **汇总改善，个别配对退化** |
-| **4. RL 改进** | 最佳安全结果来自规则闭环而非 RL。旧 `PPO-BC`（`0.25 mm` 裸环境训练）在 `2.00 mm` 下为 `10/10` 危险（差于固定 `6/10`）；同底座受控对照证实其在 `1.00–2.00 mm` 下即使加上保护层仍为 `9/10`、`10/10` 危险。`6D-LCB` 与 `7D-LCB` 虽在低/中扰动有接稳提升，但危险率高达 `88.3%–90.0%`。 | **尚未证明（待 Gate 2）** |
+| **1. Preserve zero-disturbance full task** | At `0.00 mm`, all policies achieve **10/10 success, 30.00 / 30 catches, 0/10 unsafe** on `440000..440009`; `ClosedLoopResidualEnv` is gated by `action_authority(obs)` and unit tests confirm non-zero learned actions execute as `0.0` at `0.00 mm`. | **Supported** |
+| **2. Gain under disturbances** | Across 6 seat-offset levels (60 dev episodes): frozen rule closed loop averages **`1.20` catches** (`2.40` at `0.25 mm`) vs `1.00` (fixed) and `0.40` (timing); full 30-throw completions remain **`0/60`**; at `2.00 mm` closed loop averages `0.40` vs timing's `0.70`. | **Partial (thin gain)** |
+| **3. Safety non-degradation** | Aggregate unsafe terminations drop from `48/60 (80.0%)` (fixed) and `54/60 (90.0%)` (timing) to **`28/60 (46.7%)`** with no overall early-drop tradeoff; however, matched pairs still have **2 regressions vs fixed (`440006@0.02`, `440000@0.25`)** and **3 vs timing**. | **Aggregate gain, isolated paired regressions** |
+| **4. RL improvement** | Best safety comes from the rule closed loop, not RL. Legacy `PPO-BC` (trained at `0.25 mm` bare) hits `10/10` unsafe at `2.00 mm` (worse than fixed `6/10`), and remains `9/10`–`10/10` unsafe at `1.00–2.00 mm` even with safety guards. `6D-LCB` and `7D-LCB` raise catches at low/mid jitter but suffer `88.3%–90.0%` unsafe rates. | **Not demonstrated (pending Gate 2)** |
 
 ---
 
-## 二、 开发对照集（`440000..440009`）单候选分列消融总表
+## 2. Single-Candidate Ablation Table on Dev Comparison Set (`440000..440009`)
 
-> 所有候选均在 `TaskResidualEnv` / `ClosedLoopTaskEnv(throws=30, horizon_s=12.0, estimator='filtered')` 与参考文件 `v8_robust_control/results/ablation_baselines/task_filtered_reference_final.json` 下运行。**以下各列严格对应单一冻结版本，严禁跨版本合并。**
+> All candidates ran in `TaskResidualEnv` / `ClosedLoopTaskEnv(throws=30, horizon_s=12.0, estimator='filtered')` using `v8_robust_control/results/ablation_baselines/task_filtered_reference_final.json`. **Each column corresponds strictly to one frozen version.**
 
-| 持球初态扰动 (`seat_jitter_m`) | 固定对照<br>（零残差） | 时序对照<br>（`defer=0.5`） | 行为克隆<br>`PPO-BC`（裸环境） | 离线 RL<br>`6D-LCB` | 离线 RL<br>`7D-LCB (v2)` | **规则闭环**<br>`ClosedLoopBvpPolicy` |
+| Seat Offset (`seat_jitter_m`) | Fixed Baseline<br>(Zero Residual) | Timing Baseline<br>(`defer=0.5`) | Behavior Cloning<br>`PPO-BC` (Bare) | Offline RL<br>`6D-LCB` | Offline RL<br>`7D-LCB (v2)` | **Rule Closed Loop**<br>`ClosedLoopBvpPolicy` |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **0.00 mm** | `10/10`, `30.00` 接<br>危险: `0/10` | `10/10`, `30.00` 接<br>危险: `0/10` | `10/10`, `30.00` 接<br>危险: `0/10` | `10/10`, `30.00` 接<br>危险: `0/10` | `10/10`, `30.00` 接<br>危险: `0/10` | **`10/10`, `30.00` 接**<br>**危险: `0/10`** |
-| **0.02 mm** | `1.00` 接 (max 3)<br>危险: `7/10` | `0.40` 接 (max 1)<br>危险: `9/10` | `1.10` 接 (max 3)<br>危险: `7/10` | `1.20` 接 (max 5)<br>危险: `9/10` | `1.20` 接 (max 5)<br>危险: `9/10` | `0.80` 接 (max 2)<br>**危险: `6/10`** |
-| **0.10 mm** | `1.30` 接 (max 3)<br>危险: `8/10` | `0.40` 接 (max 1)<br>危险: `10/10` | `0.60` 接 (max 2)<br>危险: `9/10` | `2.90` 接 (max 8)<br>危险: `9/10` | `2.40` 接 (max 6)<br>危险: `10/10` | `1.30` 接 (max 3)<br>**危险: `4/10`** |
-| **0.25 mm** | `2.00` 接 (max 5)<br>危险: `8/10` | `0.10` 接 (max 1)<br>危险: `7/10` | `1.50` 接 (max 4)<br>危险: `7/10` | `2.50` 接 (max 6)<br>危险: `9/10` | `1.90` 接 (max 6)<br>危险: `8/10` | `2.40` 接 (max 5)<br>**危险: `4/10`** |
-| **0.50 mm** | `1.10` 接 (max 3)<br>危险: `10/10` | `0.60` 接 (max 1)<br>危险: `9/10` | `1.00` 接 (max 5)<br>危险: `7/10` | `1.20` 接 (max 3)<br>危险: `8/10` | `1.60` 接 (max 5)<br>危险: `9/10` | `1.60` 接 (max 5)<br>**危险: `4/10`** |
-| **1.00 mm** | `0.40` 接 (max 1)<br>危险: `9/10` | `0.20` 接 (max 1)<br>危险: `10/10` | `0.10` 接 (max 1)<br>危险: `9/10` | `0.40` 接 (max 2)<br>危险: `10/10` | `0.60` 接 (max 2)<br>危险: `9/10` | `0.70` 接 (max 3)<br>**危险: `7/10`** |
-| **2.00 mm** | `0.20` 接 (max 1)<br>危险: `6/10` | `0.70` 接 (max 1)<br>危险: `9/10` | `0.50` 接 (max 2)<br>危险: `10/10` | `0.30` 接 (max 1)<br>危险: `8/10` | `0.50` 接 (max 3)<br>危险: `9/10` | `0.40` 接 (max 2)<br>**危险: `3/10`** |
-| **6 档扰动汇总<br>（60 回合）** | 平均 **`1.00` 接**<br>完整成功: `0/60`<br>危险: `48/60 (80.0%)` | 平均 **`0.40` 接**<br>完整成功: `0/60`<br>危险: `54/60 (90.0%)` | 平均 **`0.80` 接**<br>完整成功: `0/60`<br>危险: `49/60 (81.7%)` | 平均 **`1.42` 接**<br>完整成功: `0/60`<br>危险: `53/60 (88.3%)` | 平均 **`1.37` 接**<br>完整成功: `0/60`<br>危险: `54/60 (90.0%)` | 平均 **`1.20` 接**<br>完整成功: `0/60`<br>**危险: `28/60 (46.7%)`** |
+| **0.00 mm** | `10/10`, `30.00` catches<br>Unsafe: `0/10` | `10/10`, `30.00` catches<br>Unsafe: `0/10` | `10/10`, `30.00` catches<br>Unsafe: `0/10` | `10/10`, `30.00` catches<br>Unsafe: `0/10` | `10/10`, `30.00` catches<br>Unsafe: `0/10` | **`10/10`, `30.00` catches**<br>**Unsafe: `0/10`** |
+| **0.02 mm** | `1.00` (max 3)<br>Unsafe: `7/10` | `0.40` (max 1)<br>Unsafe: `9/10` | `1.10` (max 3)<br>Unsafe: `7/10` | `1.20` (max 5)<br>Unsafe: `9/10` | `1.20` (max 5)<br>Unsafe: `9/10` | `0.80` (max 2)<br>**Unsafe: `6/10`** |
+| **0.10 mm** | `1.30` (max 3)<br>Unsafe: `8/10` | `0.40` (max 1)<br>Unsafe: `10/10` | `0.60` (max 2)<br>Unsafe: `9/10` | `2.90` (max 8)<br>Unsafe: `9/10` | `2.40` (max 6)<br>Unsafe: `10/10` | `1.30` (max 3)<br>**Unsafe: `4/10`** |
+| **0.25 mm** | `2.00` (max 5)<br>Unsafe: `8/10` | `0.10` (max 1)<br>Unsafe: `7/10` | `1.50` (max 4)<br>Unsafe: `7/10` | `2.50` (max 6)<br>Unsafe: `9/10` | `1.90` (max 6)<br>Unsafe: `8/10` | `2.40` (max 5)<br>**Unsafe: `4/10`** |
+| **0.50 mm** | `1.10` (max 3)<br>Unsafe: `10/10` | `0.60` (max 1)<br>Unsafe: `9/10` | `1.00` (max 5)<br>Unsafe: `7/10` | `1.20` (max 3)<br>Unsafe: `8/10` | `1.60` (max 5)<br>Unsafe: `9/10` | `1.60` (max 5)<br>**Unsafe: `4/10`** |
+| **1.00 mm** | `0.40` (max 1)<br>Unsafe: `9/10` | `0.20` (max 1)<br>Unsafe: `10/10` | `0.10` (max 1)<br>Unsafe: `9/10` | `0.40` (max 2)<br>Unsafe: `10/10` | `0.60` (max 2)<br>Unsafe: `9/10` | `0.70` (max 3)<br>**Unsafe: `7/10`** |
+| **2.00 mm** | `0.20` (max 1)<br>Unsafe: `6/10` | `0.70` (max 1)<br>Unsafe: `9/10` | `0.50` (max 2)<br>Unsafe: `10/10` | `0.30` (max 1)<br>Unsafe: `8/10` | `0.50` (max 3)<br>Unsafe: `9/10` | `0.40` (max 2)<br>**Unsafe: `3/10`** |
+| **6-Level Summary<br>(60 Episodes)** | Mean **`1.00`**<br>Full pass: `0/60`<br>Unsafe: `48/60 (80.0%)` | Mean **`0.40`**<br>Full pass: `0/60`<br>Unsafe: `54/60 (90.0%)` | Mean **`0.80`**<br>Full pass: `0/60`<br>Unsafe: `49/60 (81.7%)` | Mean **`1.42`**<br>Full pass: `0/60`<br>Unsafe: `53/60 (88.3%)` | Mean **`1.37`**<br>Full pass: `0/60`<br>Unsafe: `54/60 (90.0%)` | Mean **`1.20`**<br>Full pass: `0/60`<br>**Unsafe: `28/60 (46.7%)`** |
 
-- **数据来源（均归档于 `v8_robust_control/results/`）**：
-  - 固定对照：`ablation_baselines/baseline_jitter_sweep.json` + `baseline_jitter_sweep_small.json`
-  - 时序对照：`ablation_baselines/timing_baseline_jitter_sweep.json`
-  - `6D-LCB`：`ablation_baselines/lcb_report.json`
-  - `7D-LCB (v2)` 与 `PPO-BC`：`ablation_baselines/ppo_and_lcb_evaluation.json`
-  - 规则闭环：`closed_loop_bvp/heldout_7gradient.json`
-  - 另注：此前从零课程奖励训练 PPO（4096 步，0.25 mm 裸环境）仅达 `0.60` 接、`10/10` 危险，未展现有效改进。
+- **Archived sources (under `v8_robust_control/results/`)**:
+  - Fixed baseline: `ablation_baselines/baseline_jitter_sweep.json` + `baseline_jitter_sweep_small.json`
+  - Timing baseline: `ablation_baselines/timing_baseline_jitter_sweep.json`
+  - `6D-LCB`: `ablation_baselines/lcb_report.json`
+  - `7D-LCB (v2)` and `PPO-BC`: `ablation_baselines/ppo_and_lcb_evaluation.json`
+  - Rule closed loop: `closed_loop_bvp/heldout_7gradient.json`
+  - Note: PPO trained from scratch with curriculum reward (4,096 steps, 0.25 mm bare) reached only `0.60` catches and `10/10` unsafe.
 
 ---
 
-## 三、 Gate 1B 受控归因：配对安全退化、早掉球核查与同底座 PPO-BC 对照
+## 3. Gate 1B Controlled Attribution: Paired Safety Regressions, Early-Drop Check, and Same-Base PPO-BC
 
-完整逐回合记录归档于 [gate1_diagnostics.json](gate1_diagnostics.json)。
+Full per-episode records are archived in [gate1_diagnostics.json](gate1_diagnostics.json).
 
-### 1. 全部 6 个配对安全退化案例的受控消融与首次命令分歧
+### 1. Controlled Ablation of All 6 Paired Safety Regressions
 
-分别关闭 `apex_trim`（`apex_trim_dvz=0.0`）、`tight`（`tight_window=0.0`）、`uncaught_braking`（`enable_uncaught_braking=False`）及仅保留安全底座（`min_released=999, tight_window=0.0`）：
+Disabling `apex_trim` (`apex_trim_dvz=0.0`), `tight` (`tight_window=0.0`), `uncaught_braking` (`enable_uncaught_braking=False`), or keeping only the safety base (`min_released=999, tight_window=0.0`):
 
-| 退化对（种子 / 档位） | 对照侧结果 | 规则闭环 (`full_cl`) | 首次命令分歧（`full_cl` vs `fixed`） | 受控消融实证根因 |
+| Regression Pair (Seed / Jitter) | Control Outcome | Rule Closed Loop (`full_cl`) | First Command Divergence (`full_cl` vs `fixed`) | Verified Root Cause |
 | :--- | :--- | :--- | :--- | :--- |
-| **`440002` / `0.10 mm`**<br>*(vs 固定)* | Fixed: `c=3, t=2.025s`<br>`DROPPED` (安全) | `c=2, t=1.502s`<br>`ARM_COLLISION` (`rh_palm`/`lh_rf_tip`) | `k=3, t=0.940s, throw right, rel=2`:<br>`CL=[-0.145,-0.003,-0.256,0,0,0]` vs `[0..0]` | **`apex_trim_dvz=-0.32` 直接导致**：关闭 `apex_trim` 后立即恢复 `c=3, t=2.024s, DROPPED`（安全）；关闭 `tight` 或 `uncaught_braking` 仍 `ARM_COLLISION`。 |
-| **`440000` / `2.00 mm`**<br>*(vs 固定 & 时序)* | Fixed: `c=0, t=1.146s`<br>Timing: `c=0, t=1.155s`<br>`DROPPED` (安全) | `c=0, t=1.038s`<br>`HIT_ARM` (`ball2`/`left_wrist_yaw`) | `k=3, t=0.940s`（同上），但 `safety_base_only` 亦触发 `HIT_ARM` | **`uncaught_braking` 直接导致**（触发 `58` 步）：关闭 `uncaught_braking` 后立即恢复 `c=0, t=1.147s, DROPPED`（安全）；关闭 `apex_trim` 或 `tight` 仍 `HIT_ARM`。制动左手停在 `ball2` 下落路径中。 |
-| **`440005` / `0.02 mm`**<br>*(仅 vs 时序)* | Timing: `c=0, t=1.335s` `DROPPED`<br>*(Fixed: `c=2, t=1.723s` `BALL_COLLISION` 危险)* | `c=2, t=1.908s`<br>`POSE_LIMIT` (`clearance=0.0797<0.080`) | `k=3, t=0.940s`: BVP 避免 `BALL_COLLISION`；`k=5` `apex_trim` 分歧 | 时序对照早掉球；CL 避开了 Fixed 的球碰并多活 `185 ms`，末段因 `apex_trim` 压低球轨触及肩肘间隙微幅越限（关闭 `apex_trim` 变为 `c=2, t=1.781s, DROPPED` 安全）。 |
-| **`440003` / `0.25 mm`**<br>*(仅 vs 时序)* | Timing: `c=0, t=1.224s` `DROPPED`<br>*(Fixed: `c=0, t=0.844s` `BALL_COLLISION` 危险)* | `c=0, t=0.844s`<br>`BALL_COLLISION` | **无分歧（`None`）**：在 `min_released=2` 激活前已撞球 | 时序对照靠 `defer=0.5` 延迟首抛避开球碰后早掉球；CL 与 Fixed 在 `t=0.844s` 完全同轨。 |
-| **`440006` / `0.25 mm`**<br>*(仅 vs 时序)* | Timing: `c=0, t=1.197s` `DROPPED`<br>*(Fixed: `c=1, t=1.300s` `ball0` 超顶危险)* | `c=4, t=2.302s`<br>`HIT_ARM` (`ball1`/`left_wrist_yaw`) | `k=3, t=0.940s`: `apex_trim` 消除 `ball0` 超顶 | 时序对照 `c=0` 早掉球；CL 用 `apex_trim` 救下 Fixed 的 `t=1.300s` 超顶并将存活延至 **`c=4, t=2.302s`（+1.00 s）**，随后第 5 接手腕擦球。 |
-| **`440001` / `0.50 mm`**<br>*(仅 vs 时序)* | Timing: `c=0, t=1.137s` `DROPPED`<br>*(Fixed: `c=1, t=1.319s` `POSE_LIMIT` 危险)* | `c=4, t=2.391s`<br>`POSE_LIMIT` (`self_pen=4.07mm`) | `k=3, t=0.940s`: `apex_trim` 介入 | 时序对照 `c=0` 早掉球；CL 救下 Fixed 的 `t=1.319s` 越限并将存活延至 **`c=4, t=2.391s`（+1.07 s）**。 |
+| **`440002` / `0.10 mm`**<br>*(vs Fixed)* | Fixed: `c=3, t=2.025s`<br>`DROPPED` (safe) | `c=2, t=1.502s`<br>`ARM_COLLISION` (`rh_palm`/`lh_rf_tip`) | `k=3, t=0.940s, throw right, rel=2`:<br>`CL=[-0.145,-0.003,-0.256,0,0,0]` vs `[0..0]` | **Caused by `apex_trim_dvz=-0.32`**: disabling `apex_trim` restores `c=3, t=2.024s, DROPPED` (safe); disabling `tight` or `uncaught_braking` still hits `ARM_COLLISION`. |
+| **`440000` / `2.00 mm`**<br>*(vs Fixed & Timing)* | Fixed: `c=0, t=1.146s`<br>Timing: `c=0, t=1.155s`<br>`DROPPED` (safe) | `c=0, t=1.038s`<br>`HIT_ARM` (`ball2`/`left_wrist_yaw`) | `k=3, t=0.940s` (same), but `safety_base_only` also hits `HIT_ARM` | **Caused by `uncaught_braking`** (`58` steps active): disabling `uncaught_braking` restores `c=0, t=1.147s, DROPPED` (safe). Braking halted the left hand in `ball2`'s descent path. |
+| **`440005` / `0.02 mm`**<br>*(vs Timing only)* | Timing: `c=0, t=1.335s` `DROPPED`<br>*(Fixed: `c=2, t=1.723s` `BALL_COLLISION` unsafe)* | `c=2, t=1.908s`<br>`POSE_LIMIT` (`clearance=0.0797<0.080`) | `k=3, t=0.940s`: BVP avoided `BALL_COLLISION`; `k=5` `apex_trim` diverged | Timing dropped early; CL avoided Fixed's ball collision (+`185 ms` survival), then `apex_trim` lowered the arc into a marginal shoulder-elbow clearance breach (disabling `apex_trim` yields `c=2, t=1.781s, DROPPED`, safe). |
+| **`440003` / `0.25 mm`**<br>*(vs Timing only)* | Timing: `c=0, t=1.224s` `DROPPED`<br>*(Fixed: `c=0, t=0.844s` `BALL_COLLISION` unsafe)* | `c=0, t=0.844s`<br>`BALL_COLLISION` | **None**: collision occurred before `min_released=2` activated | Timing deferred the first throw via `defer=0.5` and dropped early; CL and Fixed followed identical trajectories to `t=0.844s`. |
+| **`440006` / `0.25 mm`**<br>*(vs Timing only)* | Timing: `c=0, t=1.197s` `DROPPED`<br>*(Fixed: `c=1, t=1.300s` `ball0` apex unsafe)* | `c=4, t=2.302s`<br>`HIT_ARM` (`ball1`/`left_wrist_yaw`) | `k=3, t=0.940s`: `apex_trim` eliminated `ball0` apex violation | Timing dropped at `c=0`; CL rescued Fixed's `t=1.300s` apex failure and extended survival to **`c=4, t=2.302s` (+1.00 s)** before a wrist graze on catch 5. |
+| **`440001` / `0.50 mm`**<br>*(vs Timing only)* | Timing: `c=0, t=1.137s` `DROPPED`<br>*(Fixed: `c=1, t=1.319s` `POSE_LIMIT` unsafe)* | `c=4, t=2.391s`<br>`POSE_LIMIT` (`self_pen=4.07mm`) | `k=3, t=0.940s`: `apex_trim` engaged | Timing dropped at `c=0`; CL rescued Fixed's `t=1.319s` limit violation and extended survival to **`c=4, t=2.391s` (+1.07 s)**. |
 
-### 2. 早掉球核查（危险终止下降是否伴随更早掉球？）
+### 2. Early-Drop Check (Does Lower Unsafe Rate Trade Off Survival Time?)
 
-| 档位 | 规则闭环均值时长 | 固定对照均值时长 | 时序对照均值时长 | 危险→安全翻转（vs Fixed）数 / 早掉数 / 均值 $\Delta t$ / 均值 $\Delta\text{catches}$ |
+| Jitter | Rule CL Mean Duration | Fixed Mean Duration | Timing Mean Duration | Unsafe→Safe Flips (vs Fixed) / Earlier Drops / Mean $\Delta t$ / Mean $\Delta\text{catches}$ |
 | :--- | :---: | :---: | :---: | :--- |
-| `0.02 mm` | **`1.403 s`** | `1.383 s` | `1.200 s` | `2` 例 / 早掉 `0` 例 / **`+0.140 s`** / `+0.00` 接 |
-| `0.10 mm` | **`1.540 s`** | `1.524 s` | `1.462 s` | `3` 例 / 早掉 `1` 例 / **`+0.090 s`** / `+0.00` 接 |
-| `0.25 mm` | **`1.826 s`** | `1.758 s` | `1.232 s` | `4` 例 / 早掉 `1` 例 / **`+0.275 s`** / `+0.75` 接 |
-| `0.50 mm` | **`1.707 s`** | `1.457 s` | `1.227 s` | `4` 例 / 早掉 `1` 例 / **`+0.421 s`** / `+0.75` 接 |
-| `1.00 mm` | **`1.256 s`** | `1.142 s` | `1.183 s` | `2` 例 / 早掉 `0` 例 / **`+0.345 s`** / `+0.50` 接 |
-| `2.00 mm` | **`1.316 s`** | `1.122 s` | `1.237 s` | `4` 例 / 早掉 `0` 例 / **`+0.460 s`** / `+0.75` 接 |
+| `0.02 mm` | **`1.403 s`** | `1.383 s` | `1.200 s` | `2` / `0` earlier / **`+0.140 s`** / `+0.00` |
+| `0.10 mm` | **`1.540 s`** | `1.524 s` | `1.462 s` | `3` / `1` earlier / **`+0.090 s`** / `+0.00` |
+| `0.25 mm` | **`1.826 s`** | `1.758 s` | `1.232 s` | `4` / `1` earlier / **`+0.275 s`** / `+0.75` |
+| `0.50 mm` | **`1.707 s`** | `1.457 s` | `1.227 s` | `4` / `1` earlier / **`+0.421 s`** / `+0.75` |
+| `1.00 mm` | **`1.256 s`** | `1.142 s` | `1.183 s` | `2` / `0` earlier / **`+0.345 s`** / `+0.50` |
+| `2.00 mm` | **`1.316 s`** | `1.122 s` | `1.237 s` | `4` / `0` earlier / **`+0.460 s`** / `+0.75` |
 
-**结论**：全部 6 档下规则闭环的平均存活时长均**严格大于**固定对照与时序对照；在 19 例由危险转为安全的配对回合中，16 例存活时长持平或更长（各档均值 $\Delta t \in [+0.090, +0.460]\text{ s}$），仍有 3 例更早结束，**总体未见以提前掉球换取安全的趋势**。
+**Conclusion**: Across all 6 levels, mean survival duration of the rule closed loop strictly exceeds both baselines. Among 19 unsafe→safe paired flips vs fixed, 16 lasted as long or longer (per-level mean $\Delta t \in [+0.090, +0.460]\text{ s}$) and 3 ended earlier, showing **no aggregate trend of achieving safety via earlier drops**.
 
-### 3. 同底座受控对照：检验旧 `PPO-BC` 安全退化的真实来源
+### 3. Same-Base Controlled Check of Legacy `PPO-BC` Safety Degradation
 
-将已归档的 `v8_robust_control/models/ppo_official_imitation_seed0_epoch2000.zip`（原在 `0.25 mm` 裸环境训练）放到三套底座上对比（开发对照集 `440000..440009`）：
+Evaluating archived `v8_robust_control/models/ppo_official_imitation_seed0_epoch2000.zip` (trained at `0.25 mm` bare) across three bases (`440000..440009`):
 
-| 扰动档位 | `ppo_bare`<br>（裸 `TaskResidualEnv`） | `ppo_safety_base`<br>（仅加 CBF + 制动保护层） | `ppo_plus_rule_cl`<br>（`ClosedLoopResidualEnv` 叠加） | 参照：纯规则闭环<br>（`learned_residual = 0`） |
+| Jitter | `ppo_bare`<br>(Bare `TaskResidualEnv`) | `ppo_safety_base`<br>(CBF + Braking Only) | `ppo_plus_rule_cl`<br>(`ClosedLoopResidualEnv`) | Reference: Pure Rule CL<br>(`learned_residual = 0`) |
 | :--- | :---: | :---: | :---: | :---: |
-| `0.00 mm` | `10/10`, `30.00` 接, `0/10` 危险 | `10/10`, `30.00` 接, `0/10` 危险 | `10/10`, `30.00` 接, `0/10` 危险 | `10/10`, `30.00` 接, `0/10` 危险 |
-| `0.25 mm` | `1.50` 接, `7/10` 危险 | `1.40` 接, `5/10` 危险 | `1.10` 接, **`1/10` 危险** | `2.10` 接, `4/10` 危险 |
-| `0.50 mm` | `1.20` 接, `8/10` 危险 | `1.20` 接, `6/10` 危险 | `1.10` 接, **`1/10` 危险** | `1.60` 接, `6/10` 危险 |
-| `1.00 mm` | `0.10` 接, `9/10` 危险 | `0.10` 接, `9/10` 危险 | `0.10` 接, `8/10` 危险 | `0.70` 接, `7/10` 危险 |
-| `2.00 mm` | `0.50` 接, **`10/10` 危险** | `0.50` 接, **`10/10` 危险** | `0.60` 接, `8/10` 危险 | `0.50` 接, **`3/10` 危险** |
+| `0.00 mm` | `10/10`, `30.00`, `0/10` unsafe | `10/10`, `30.00`, `0/10` unsafe | `10/10`, `30.00`, `0/10` unsafe | `10/10`, `30.00`, `0/10` unsafe |
+| `0.25 mm` | `1.50`, `7/10` unsafe | `1.40`, `5/10` unsafe | `1.10`, **`1/10` unsafe** | `2.10`, `4/10` unsafe |
+| `0.50 mm` | `1.20`, `8/10` unsafe | `1.20`, `6/10` unsafe | `1.10`, **`1/10` unsafe** | `1.60`, `6/10` unsafe |
+| `1.00 mm` | `0.10`, `9/10` unsafe | `0.10`, `9/10` unsafe | `0.10`, `8/10` unsafe | `0.70`, `7/10` unsafe |
+| `2.00 mm` | `0.50`, **`10/10` unsafe** | `0.50`, **`10/10` unsafe** | `0.60`, `8/10` unsafe | `0.50`, **`3/10` unsafe** |
 
-**关键实证结论**：
-- 在 `0.25 / 0.50 mm` 下，保护层与规则底座显著降低了 `PPO-BC` 的危险率（`7→5→1/10`, `8→6→1/10`），但也伴随着接稳下降（`2.10→1.10`）；
-- 在 `1.00 / 2.00 mm` 下，**仅加保护层（`ppo_safety_base`）未能降低危险率（仍为 `9/10` 和 `10/10`）**，即使叠加规则闭环在 `2.00 mm` 下仍高达 `8/10`（远差于纯规则闭环的 `3/10`）。这证伪了“此前安全退化仅因缺少保护层”的假设——根本原因是旧 `PPO-BC` 仅在 `0.25 mm` 裸环境拟合，在分布外大扰动下直接输出冲突动作。因此下一步 RL 必须在 `ClosedLoopResidualEnv` 上进行多梯度安全约束训练。
+**Findings**: At `0.25 / 0.50 mm`, adding guards and the rule base lowered `PPO-BC` unsafe rates (`7→5→1/10`, `8→6→1/10`) while lowering catches (`2.10→1.10`). At `1.00 / 2.00 mm`, adding guards alone did not reduce unsafe rates (`9/10`, `10/10`), and even with the rule base `2.00 mm` remained `8/10` unsafe (vs `3/10` for pure rule CL), refuting the hypothesis that legacy degradation was caused solely by missing guards.
 
 ---
 
-## 四、 Gate 1C：增量 RL 底座与零残差等价性验证
+## 4. Gate 1C: Incremental RL Base and Zero-Residual Equivalence
 
-- 已在 [v8_robust_control/closed_loop_bvp.py](../../closed_loop_bvp.py) 新增 `ClosedLoopResidualEnv(ClosedLoopTaskEnv)`：冻结规则闭环与保护层，统一执行 `combined = clip(rule_action + clip(learned_action, -1, 1) * residual_scale, -1, 1)`，经 `TaskResidualEnv.step` 统一 `action_authority(obs)` 门控与限幅。
-- 已在 [v8_robust_control/test_closed_loop_bvp.py](../../test_closed_loop_bvp.py) 通过 **7/7 单测**（含 `active_max_decisions` vs `active_max_released` 窗口区分、`active_mask` 通道限幅与 `action_log` 全量审计）：
-  1. `test_zero_learned_residual_reproduces_pure_rule_closed_loop`：在 `2.00 mm` 扰动下实测验证 `learned_action == 0` 与纯规则闭环逐决策动作、奖励、接稳数、时长及终止事件**逐比特一致**。
-  2. `test_nonzero_learned_residual_clipped_and_authority_gated`：在 `0.00 mm` 无扰动下传入 `np.ones(6)`，实测验证经统一限幅后仍被 `action_authority` 归零（`max_executed_action == 0.0`）。
-  3. `test_residual_window_decisions_vs_releases_and_action_log`：实测验证同时受 `active_max_decisions` 与 `active_max_released` 门控并完整记录 `rule_action / requested_delta / learned_delta / combined_action / executed_action`。
+- Added `ClosedLoopResidualEnv(ClosedLoopTaskEnv)` in [v8_robust_control/closed_loop_bvp.py](../../closed_loop_bvp.py): freezes the rule closed loop and guards, applies `combined = clip(rule_action + clip(learned_action, -1, 1) * residual_scale, -1, 1)`, and enforces unified `action_authority(obs)` gating and clipping in `TaskResidualEnv.step`.
+- Passed **7/7 unit tests** in [v8_robust_control/test_closed_loop_bvp.py](../../test_closed_loop_bvp.py):
+  1. `test_zero_learned_residual_reproduces_pure_rule_closed_loop`: bit-exact match between `learned_action == 0` and pure rule CL at `2.00 mm`.
+  2. `test_nonzero_learned_residual_clipped_and_authority_gated`: `np.ones(6)` at `0.00 mm` is gated to `max_executed_action == 0.0`.
+  3. `test_residual_window_decisions_vs_releases_and_action_log`: verifies `active_max_decisions` vs `active_max_released` gating and complete `action_log` auditing.
 
 ---
 
-## 五、 Step 2B 首轮小规模受限开局增量 RL 试训结果（验证通过、开发集分化）
+## 5. Step 2B Round 1: Bounded Opening Incremental RL Pilot (Validation Pass, Dev Split)
 
-训练与评测入口：[v8_robust_control/train_closed_loop_rl.py](../../train_closed_loop_rl.py)，冻结检查点：[v8_robust_control/models/ppo_cl_opening_pilot.zip](../../models/ppo_cl_opening_pilot.zip)，逐回合与 `action_log` 归档：[v8_robust_control/results/closed_loop_bvp/step2b_rl_pilot.json](step2b_rl_pilot.json)。
+Entry point: [v8_robust_control/train_closed_loop_rl.py](../../train_closed_loop_rl.py); frozen checkpoint: [v8_robust_control/models/ppo_cl_opening_pilot.zip](../../models/ppo_cl_opening_pilot.zip); archive: [step2b_rl_pilot.json](step2b_rl_pilot.json).
 
-- **受限协议**：冻结 `trim_m15_wguard` 规则底座；窗口明确设为 **`active_max_decisions = 5`（前 5 次决策回调 `k < 5`）且 `active_max_released = 3`（前 3 次释放 `released < 3`）**；仅开放 3D 空间/速度通道 `active_mask = (1, 1, 1, 0, 0, 0)`，`residual_scale = 0.25`；`TaskPolicy` 输出头零初始化，在 `TRAIN_SEEDS (435000..435015 × 6 档)` 上以相对零残差底座的配对安全奖励训练 4 轮（每轮 256 活跃开局步），经 `VAL_SEEDS (436000..436007 × 6 档)` 门控选出 `iter=2`（512 活跃步）。
-- **验证集（`VAL_SEEDS`, 48 扰动回合）**：
-  - 零残差底座：`mean_c = 0.896`, `mean_t = 1.360 s`, `unsafe = 32/48 (66.7%)`
-  - `iter=1`（256 步）：`mean_c = 1.042 (+16.3%)`, `mean_t = 1.510 s (+150 ms)`, `unsafe = 25/48 (52.1%, -7)` → `PASS`
-  - **`iter=2`（512 步，选中）**：`mean_c = 0.979 (+9.3%)`, `mean_t = 1.456 s (+96 ms)`, **`unsafe = 21/48 (43.8%, -11)`** → `PASS`
-  - `iter=3`（768 步）：`mean_c = 1.021 (+14.0%)`, `mean_t = 1.442 s (+82 ms)`, `unsafe = 23/48 (47.9%, -9)` → `PASS`
-  - `iter=4`（1024 步）：`mean_c = 0.792`, `mean_t = 1.439 s`, `unsafe = 17/48 (35.4%, -15)` → `FAIL`（安全权重过重导致接稳低于底座）
-- **开发对照集（`DEV_SEEDS 440000..440009 × 7 档`，严格配对同底座零残差）**：
+- **Bounded protocol**: Frozen `trim_m15_wguard` rule base; window **`active_max_decisions = 5` (`k < 5`) and `active_max_released = 3` (`released < 3`)**; 3D velocity/position channels `active_mask = (1, 1, 1, 0, 0, 0)`, `residual_scale = 0.25`; zero-initialized `TaskPolicy` head trained on `TRAIN_SEEDS (435000..435015 × 6 levels)` for 4 iterations (256 active opening steps/iter) with paired relative safety reward; `iter=2` (512 active steps) selected on `VAL_SEEDS (436000..436007 × 6 levels)`.
+- **Validation (`VAL_SEEDS`, 48 disturbed episodes)**:
+  - Zero-base: `mean_c = 0.896`, `mean_t = 1.360 s`, `unsafe = 32/48 (66.7%)`
+  - `iter=1` (256 steps): `mean_c = 1.042 (+16.3%)`, `mean_t = 1.510 s (+150 ms)`, `unsafe = 25/48 (52.1%, -7)` → `PASS`
+  - **`iter=2` (512 steps, selected)**: `mean_c = 0.979 (+9.3%)`, `mean_t = 1.456 s (+96 ms)`, **`unsafe = 21/48 (43.8%, -11)`** → `PASS`
+  - `iter=3` (768 steps): `mean_c = 1.021 (+14.0%)`, `mean_t = 1.442 s (+82 ms)`, `unsafe = 23/48 (47.9%, -9)` → `PASS`
+  - `iter=4` (1024 steps): `mean_c = 0.792`, `mean_t = 1.439 s`, `unsafe = 17/48 (35.4%, -15)` → `FAIL` (excessive safety weight reduced catches below base)
+- **Development comparison set (`DEV_SEEDS 440000..440009 × 7 levels`, paired vs zero-residual base)**:
 
-| 扰动档位 | 同底座零残差 (`Zero-Base`) | 冻结底座 + 首轮 RL 增量 (`RL+CL`, `iter=2`) | 配对变化（相对 Zero-Base） |
+| Jitter | Same-Base Zero Residual (`Zero-Base`) | Frozen Base + Opening RL (`RL+CL`, `iter=2`) | Paired Change vs Zero-Base |
 | :--- | :---: | :---: | :--- |
-| `0.00 mm` | `10/10`, `30.00` 接, `0/10` 危险 | **`10/10`, `30.00` 接, `0/10` 危险** | 100% 保持无扰动完整任务 |
-| `0.02 mm` | `0.80` 接, `6/10` 危险, `1.365 s` | **`1.60` 接, `2/10` 危险, `1.702 s`** | 接稳 `+100%`，危险 `-4`（`reg=1, u2s=5[ear=1]`） |
-| `0.10 mm` | `1.30` 接, `4/10` 危险, `1.607 s` | `1.10` 接, `6/10` 危险, `1.573 s` | 接稳 `-0.20`，危险 `+2`（`reg=4, u2s=2[ear=0]`） |
-| `0.25 mm` | `2.40` 接, `4/10` 危险, `1.881 s` | `0.90` 接, `5/10` 危险, `1.469 s` | **主要回撤档**：接稳 `-1.50`（`reg=3, u2s=2[ear=1]`） |
-| `0.50 mm` | `1.60` 接, `4/10` 危险, `1.728 s` | `1.20` 接, **`2/10` 危险**, `1.640 s` | 危险 `-2`，接稳 `-0.40`（`reg=1, u2s=3[ear=1]`） |
-| `1.00 mm` | `0.70` 接, `7/10` 危险, `1.269 s` | **`0.80` 接, `6/10` 危险, `1.422 s`** | 接稳 `+0.10`，危险 `-1`（`reg=2, u2s=3[ear=1]`） |
-| `2.00 mm` | `0.40` 接, `3/10` 危险, `1.247 s` | **`0.90` 接, `4/10` 危险, `1.445 s`** | 接稳 **`+125%`**（超越时序 `0.70`），时长 `+198 ms`（`reg=2, u2s=1[ear=0]`） |
-| **60 回合汇总** | **`1.200` 接, `28/60 (46.7%)` 危险, `1.516 s`** | `1.083` 接, **`25/60 (41.7%)` 危险, `1.542 s`** | 危险再降 `3` 例、均时长 `+26 ms`，但均接稳 `-0.117` 且 `reg=13` |
+| `0.00 mm` | `10/10`, `30.00`, `0/10` unsafe | **`10/10`, `30.00`, `0/10` unsafe** | 100% zero-disturbance task preserved |
+| `0.02 mm` | `0.80`, `6/10` unsafe, `1.365 s` | **`1.60`, `2/10` unsafe, `1.702 s`** | Catches `+100%`, unsafe `-4` (`reg=1, u2s=5[ear=1]`) |
+| `0.10 mm` | `1.30`, `4/10` unsafe, `1.607 s` | `1.10`, `6/10` unsafe, `1.573 s` | Catches `-0.20`, unsafe `+2` (`reg=4, u2s=2[ear=0]`) |
+| `0.25 mm` | `2.40`, `4/10` unsafe, `1.881 s` | `0.90`, `5/10` unsafe, `1.469 s` | **Primary regression level**: catches `-1.50` (`reg=3, u2s=2[ear=1]`) |
+| `0.50 mm` | `1.60`, `4/10` unsafe, `1.728 s` | `1.20`, **`2/10` unsafe**, `1.640 s` | Unsafe `-2`, catches `-0.40` (`reg=1, u2s=3[ear=1]`) |
+| `1.00 mm` | `0.70`, `7/10` unsafe, `1.269 s` | **`0.80`, `6/10` unsafe, `1.422 s`** | Catches `+0.10`, unsafe `-1` (`reg=2, u2s=3[ear=1]`) |
+| `2.00 mm` | `0.40`, `3/10` unsafe, `1.247 s` | **`0.90`, `4/10` unsafe, `1.445 s`** | Catches **`+125%`** (above timing `0.70`), duration `+198 ms` (`reg=2, u2s=1[ear=0]`) |
+| **60-Episode Summary** | **`1.200`, `28/60 (46.7%)` unsafe, `1.516 s`** | `1.083`, **`25/60 (41.7%)` unsafe, `1.542 s`** | Unsafe `-3`, mean duration `+26 ms`, but mean catches `-0.117` and `reg=13` |
 
-- **首轮试训诊断与门槛判定（暂不扩大训练预算）**：
-  - `action_log` 揭示了清晰根因：`k=0` 上输出增量跨 `0.02 / 0.25 / 2.00 mm` 几乎为常值偏置（`[+0.0024, +0.0154, +0.0046]`，即约 `1.1 cm/s` 横向微偏），表明 512 步内输出偏置移动快于状态条件权重，且奖励安全权重呈现保守取舍。
+- **Diagnosis**: `action_log` shows `k=0` output deltas across `0.02 / 0.25 / 2.00 mm` are nearly constant (`[+0.0024, +0.0154, +0.0046]`, ≈ `1.1 cm/s` lateral bias), indicating output bias moved faster than state-conditioned weights within 512 steps.
 
 ---
 
-## 六、 Step 2B 第二轮小规模对照：固定偏置、状态条件、误差显式依赖与感知扰动消融
+## 6. Step 2B Round 2: Fixed Bias, State Conditioning, Error-Diff, and Perception Stress Ablations
 
-代码与评测入口：
-- 训练集均值偏置提取：[v8_robust_control/compute_train_delta.py](../../compute_train_delta.py)
-- 四方对照评估脚本：[v8_robust_control/eval_pilot_comparison.py](../../eval_pilot_comparison.py)
-- 感知扰动评估脚本：[v8_robust_control/eval_perception_dev.py](../../eval_perception_dev.py)
-- 数据归档：[step2b_four_way_dev_comparison.json](step2b_four_way_dev_comparison.json)、[perception_dev_comparison.json](perception_dev_comparison.json)、[train_mean_deltas_iter2.json](train_mean_deltas_iter2.json)。
+Entry points:
+- Training mean-delta extractor: [v8_robust_control/compute_train_delta.py](../../compute_train_delta.py)
+- Four-way comparison: [v8_robust_control/eval_pilot_comparison.py](../../eval_pilot_comparison.py)
+- Perception stress evaluation: [v8_robust_control/eval_perception_dev.py](../../eval_perception_dev.py)
+- Archives: [step2b_four_way_dev_comparison.json](step2b_four_way_dev_comparison.json), [perception_dev_comparison.json](perception_dev_comparison.json), [train_mean_deltas_iter2.json](train_mean_deltas_iter2.json).
 
-### 1. 训练集（`TRAIN_SEEDS` 96 回合）开局经验增量分布
-经回放 `ppo_cl_opening_iter2.zip` 提取前 5 次开局决策经验均值（由限幅、`residual_scale=0.25` 与权限门控执行）：
-- $k=0$ ($N=96$)：请求均值 `[+0.0100, +0.0601, +0.0165]`, $\sigma=[0.0021, 0.0031, 0.0042]$；执行均值 `[+0.0025, +0.0150, +0.0041]`
-- $k=1$ ($N=90$)：请求均值 `[+0.0039, -0.0006, -0.0236]`；执行均值 `[+0.0010, -0.0001, -0.0059]`
-- $k=2$ ($N=90$)：请求均值 `[-0.0283, +0.0304, -0.0255]`；执行均值 `[-0.0071, +0.0076, -0.0064]`
-- $k=3$ ($N=87$)：请求均值 `[-0.0121, +0.0100, -0.0433]`；执行均值 `[-0.0030, +0.0025, -0.0108]`
-- $k\ge 4$：因 `active_max_released < 3` 窗口拦截，执行增量严格为 0。
+### 1. Empirical Opening Deltas on `TRAIN_SEEDS` (96 Episodes)
+Replaying `ppo_cl_opening_iter2.zip` over the first 5 opening callbacks:
+- $k=0$ ($N=96$): requested mean `[+0.0100, +0.0601, +0.0165]`, $\sigma=[0.0021, 0.0031, 0.0042]$; executed mean `[+0.0025, +0.0150, +0.0041]`
+- $k=1$ ($N=90$): requested `[+0.0039, -0.0006, -0.0236]`; executed `[+0.0010, -0.0001, -0.0059]`
+- $k=2$ ($N=90$): requested `[-0.0283, +0.0304, -0.0255]`; executed `[-0.0071, +0.0076, -0.0064]`
+- $k=3$ ($N=87$): requested `[-0.0121, +0.0100, -0.0433]`; executed `[-0.0030, +0.0025, -0.0108]`
+- $k\ge 4$: executed delta strictly `0` due to `active_max_released < 3`.
 
-### 2. 开发对照集（`DEV_SEEDS 440000..440009 × 6 档` 60 扰动回合）四方对比实测
+### 2. Four-Way Comparison on `DEV_SEEDS` (`440000..440009 × 6 levels`, 60 Episodes)
 
-| 扰动档位 | 零残差底座 (`Zero-Base`) | 固定偏置对照 (`Fixed-Bias`) | 原有偏置 PPO (`Biased-PPO`) | 显式误差差分 PPO (`Error-Diff`) |
+| Jitter | Zero-Base | Fixed-Bias | Biased-PPO | Error-Diff PPO |
 | :--- | :---: | :---: | :---: | :---: |
-| `0.02 mm` | `0.80` 接, `6/10` 危险 (`reg=0`) | `1.40` 接, `3/10` 危险 (`reg=1`) | **`1.60` 接, `2/10` 危险 (`reg=1`)** | `1.30` 接, `3/10` 危险 (`reg=0`) |
-| `0.10 mm` | `1.30` 接, `4/10` 危险 (`reg=0`) | `1.30` 接, `5/10` 危险 (`reg=3`) | `1.10` 接, `6/10` 危险 (`reg=4`) | `1.00` 接, `5/10` 危险 (`reg=2`) |
-| `0.25 mm` | **`2.40` 接, `4/10` 危险 (`reg=0`)** | `1.00` 接, `6/10` 危险 (`reg=4`) | `0.90` 接, `5/10` 危险 (`reg=3`) | `1.50` 接, `5/10` 危险 (`reg=2`) |
-| `0.50 mm` | `1.60` 接, `4/10` 危险 (`reg=0`) | `1.40` 接, `3/10` 危险 (`reg=2`) | `1.20` 接, **`2/10` 危险 (`reg=1`)** | `1.50` 接, `7/10` 危险 (`reg=4`) |
-| `1.00 mm` | `0.70` 接, `7/10` 危险 (`reg=0`) | `0.50` 接, `7/10` 危险 (`reg=3`) | `0.80` 接, `6/10` 危险 (`reg=2`) | `0.60` 接, `7/10` 危险 (`reg=2`) |
-| `2.00 mm` | `0.40` 接, `3/10` 危险 (`reg=0`) | `0.80` 接, `5/10` 危险 (`reg=3`) | **`0.90` 接, `4/10` 危险 (`reg=2`)** | `0.50` 接, `5/10` 危险 (`reg=4`) |
-| **60 回合汇总** | **`1.200` 接, `28/60` 危险 (`reg=0`)** | **`1.067` 接, `29/60` 危险 (`reg=16`)** | **`1.083` 接, `25/60` 危险 (`reg=13`)** | **`1.067` 接, `32/60` 危险 (`reg=14`)** |
+| `0.02 mm` | `0.80`, `6/10` unsafe (`reg=0`) | `1.40`, `3/10` unsafe (`reg=1`) | **`1.60`, `2/10` unsafe (`reg=1`)** | `1.30`, `3/10` unsafe (`reg=0`) |
+| `0.10 mm` | `1.30`, `4/10` unsafe (`reg=0`) | `1.30`, `5/10` unsafe (`reg=3`) | `1.10`, `6/10` unsafe (`reg=4`) | `1.00`, `5/10` unsafe (`reg=2`) |
+| `0.25 mm` | **`2.40`, `4/10` unsafe (`reg=0`)** | `1.00`, `6/10` unsafe (`reg=4`) | `0.90`, `5/10` unsafe (`reg=3`) | `1.50`, `5/10` unsafe (`reg=2`) |
+| `0.50 mm` | `1.60`, `4/10` unsafe (`reg=0`) | `1.40`, `3/10` unsafe (`reg=2`) | `1.20`, **`2/10` unsafe (`reg=1`)** | `1.50`, `7/10` unsafe (`reg=4`) |
+| `1.00 mm` | `0.70`, `7/10` unsafe (`reg=0`) | `0.50`, `7/10` unsafe (`reg=3`) | `0.80`, `6/10` unsafe (`reg=2`) | `0.60`, `7/10` unsafe (`reg=2`) |
+| `2.00 mm` | `0.40`, `3/10` unsafe (`reg=0`) | `0.80`, `5/10` unsafe (`reg=3`) | **`0.90`, `4/10` unsafe (`reg=2`)** | `0.50`, `5/10` unsafe (`reg=4`) |
+| **60-Episode Summary** | **`1.200`, `28/60` unsafe (`reg=0`)** | **`1.067`, `29/60` unsafe (`reg=16`)** | **`1.083`, `25/60` unsafe (`reg=13`)** | **`1.067`, `32/60` unsafe (`reg=14`)** |
 
-**核心对照结论**：
-1. **PPO 与固定偏置高度等效**：`Biased-PPO`（`mean_c = 1.083`）相对 `Fixed-Bias`（`mean_c = 1.067`）在 60 回合中仅多接稳 1 次球，两者的档位增减曲线高度重合（`0.02 mm` 均改善、`0.25 mm` 均发生严重回撤、`2.00 mm` 均微增）。这证明：**PPO 的增益与退化本质上均由静态开局横向偏置驱动，尚未证明状态条件反馈带来了超出常值微调的收益**。
-2. **误差显式依赖 $f(s, e) - f(s, 0)$ 减缓但未解决回撤**：去掉静态偏置后，`0.25 mm` 接稳由 `0.90` 回升至 `1.50`（挽回 6 次接稳），但在 `0.50 mm` 与 `2.00 mm` 出现危险率反弹（总危险升至 `32/60`，高于底座的 `28/60`），均值接稳仍仅 `1.067`。
-3. **零残差规则底座仍是全局最优**：在相同底座与相同 60 扰动回合下，`Zero-Base` 均值接稳最高（`1.200`），无自身配对退化，在 `0.25 mm` 保持断层优势（`2.40`）。
+**Key Conclusions**:
+1. **PPO behaves almost identically to Fixed-Bias**: `Biased-PPO` (`1.083`) confirmed only 1 more catch than `Fixed-Bias` (`1.067`) across 60 episodes with nearly identical per-level curves, showing gains and regressions were driven primarily by a static opening lateral bias rather than state-conditioned feedback.
+2. **Explicit error-diff $f(s, e) - f(s, 0)$ partially recovered `0.25 mm` (`0.90→1.50`)** but increased unsafe terminations at `0.50` and `2.00 mm` (`32/60` total) with mean catches still `1.067`.
+3. **Zero-residual rule base remains best overall** (`1.200` mean catches, `0` self-regressions, strong `2.40` advantage at `0.25 mm`).
 
-### 3. 开发集感知扰动组合消融（噪声、延迟、丢帧与组合压力）
+### 3. Combined Perception Disturbance Ablation on `DEV_SEEDS` (60 Episodes)
 
-在 `DEV_SEEDS (440000..440009 × 6 档)` 60 扰动回合下，评测四类感知退化条件：
-- `noise_1mm`：球位置测量高斯噪声 $\sigma = 1.0\text{ mm}$
-- `delay_20ms`：观察延迟 $\tau = 20\text{ ms}$
-- `dropout_10pct`：观测帧丢弃率 $p = 10\%$
-- `combined`：$\sigma = 1.0\text{ mm} + \tau = 20\text{ ms} + p = 10\%$ 组合压力
+Four perception conditions overlaid on the 60 seat-offset episodes: `noise_1mm` ($\sigma=1.0\text{ mm}$), `delay_20ms` ($\tau=20\text{ ms}$), `dropout_10pct` ($p=10\%$), and `combined` ($\sigma=1.0\text{ mm} + \tau=20\text{ ms} + p=10\%$).
 
-| 感知退化条件 | 零残差底座 (`Zero-Base`) | 固定偏置 (`Fixed-Bias`) | 有偏置 PPO (`Biased-PPO`) | 配对翻转（PPO 相对零残差） |
+| Condition | Zero-Base | Fixed-Bias | Biased-PPO | Paired Flips (PPO vs Zero-Base) |
 | :--- | :---: | :---: | :---: | :--- |
-| `noise_1mm` | `1.133` 接, `28/60` 危险 (`reg=7`) | `0.867` 接, `31/60` 危险 (`reg=17`) | `1.000` 接, **`22/60` 危险 (`reg=12`)** | 危险降 6 例，但 18 例危转安中有 8 例更早结束 |
-| `delay_20ms` | **`1.217` 接**, `30/60` 危险 (`reg=5`) | `1.067` 接, `33/60` 危险 (`reg=18`) | `1.133` 接, `26/60` 危险 (`reg=14`) | 危险降 4 例，接稳少 5 次，`reg=14` |
-| `dropout_10pct` | **`1.200` 接**, `28/60` 危险 (`reg=0`) | `1.083` 接, `28/60` 危险 (`reg=15`) | `1.067` 接, `28/60` 危险 (`reg=15`) | 危险持平，均接稳少 8 次，`reg=15` |
-| **`combined`** | **`1.200` 接, `31/60` 危险 (`reg=12`)** | `1.017` 接, `31/60` 危险 (`reg=16`) | `1.000` 接, **`34/60` 危险 (`reg=17`)** | **组合压力下 PPO 安全与接稳全面退化**（`34 > 31` 危险） |
+| `noise_1mm` | `1.133`, `28/60` unsafe (`reg=7`) | `0.867`, `31/60` unsafe (`reg=17`) | `1.000`, **`22/60` unsafe (`reg=12`)** | Unsafe `-6`, but 8 of 18 unsafe→safe flips ended earlier |
+| `delay_20ms` | **`1.217`**, `30/60` unsafe (`reg=5`) | `1.067`, `33/60` unsafe (`reg=18`) | `1.133`, `26/60` unsafe (`reg=14`) | Unsafe `-4`, catches `-5`, `reg=14` |
+| `dropout_10pct` | **`1.200`**, `28/60` unsafe (`reg=0`) | `1.083`, `28/60` unsafe (`reg=15`) | `1.067`, `28/60` unsafe (`reg=15`) | Unsafe tied, catches `-8`, `reg=15` |
+| **`combined`** | **`1.200`, `31/60` unsafe (`reg=12`)** | `1.017`, `31/60` unsafe (`reg=16`) | `1.000`, **`34/60` unsafe (`reg=17`)** | **PPO regressed on both safety (`34 > 31`) and catches (`-12`)** |
 
-**感知扰动消融结论**：
-- 在单因素轻度噪声与延迟下，PPO 依靠开局偏置略微减少了末端撞击，但部分表现为更早掉球（8/18 例提早结束）；
-- 在真实最苛刻的 **`combined` 组合压力下，`Biased-PPO` 的危险终止率恶化至 `34/60`（相比 `Zero-Base` 的 `31/60` 发生 17 例配对退化），均值接稳降至 `1.000`（相比底座的 `1.200` 少接稳 12 次）**；
-- 规则闭环底座在感知扰动下表现出极强的鲁棒稳定性（`dropout` 保持 `1.200` 接稳且 0 退化，`delay` 接稳维持 `1.217`，`combined` 危险率仅 `31/60`）。
-
-### 4. 阶段总结与停步决策
-- **结论 1（规则闭环降低危险终止、保持无扰动 30 抛）**：证据确凿，已在 `heldout_7gradient.json` 固化。
-- **结论 2（RL 在闭环之上进一步改善表现）**：**未见显著收益，不予放行验收**。现有开局 PPO 增量本质上与固定静态偏置无异，不仅在开发集无扰动/弱扰动下牺牲了 `0.25 mm` 的断层接稳优势，且在感知组合扰动下出现安全反向退化。
-- **纪律执行**：严格遵守原定实验协议，**不扩大训练预算，不扩大动作窗口，`450000..450019` 继续保持严格零触碰冻结**，客观诚实地将上述结果作为探索性结论归档。
+### 4. Stop Decision
+- **Conclusion 1 (rule closed loop reduces unsafe terminations and preserves zero-disturbance 30 throws)**: Confirmed in `heldout_7gradient.json`.
+- **Conclusion 2 (RL improving over the rule closed loop)**: **Not demonstrated; not promoted**. Training budget and action window are not expanded, and `450000..450019` remain strictly untouched.
 
 ---
 
-## 七、 单种子开发探索记录（仅归档于 `build/`，非正式提交验收项）
+## 7. Single-Seed Local Exploration Note (Archived Under `build/` Only)
 
-- `build/v8_carry_compress_15plus.py`（依赖 `build/v8_external_review/intercept.py` 与历史 9 接前缀，保留在 `build/` 下作为单种子开发记录，已从 `v8_robust_control/` 移出）：在开发种子 `432226`（$\pm 2.00\text{ mm}$）上验证了因果运球截止期压缩（`[CARRY-COMP]`），达到连续 16 次确认接球 / 17 次抛球 / `5.835 s`。该机制尚未在多随机种子与无前缀完整任务上验证。
+- `build/v8_carry_compress_15plus.py` (depends on `build/v8_external_review/intercept.py` and a historical 9-catch prefix; kept under `build/` only): demonstrated causal carry-deadline compression (`[CARRY-COMP]`) on development seed `432226` ($\pm 2.00\text{ mm}$), reaching 16 consecutive confirmed catches / 17 throws / `5.835 s`. Not validated across multiple seeds or prefix-free complete tasks.
 
 ---
 
-## 六点五、 Step 2B 第三轮：开局观测能否区分「偏置帮忙 / 伤害」（开发集配对诊断）
+## 6.5. Step 2B Round 3: Can Opening Observations Separate "Bias Helps vs Hurts"? (Dev Paired Diagnosis)
 
-入口：[collect_opening_obs.py](../../collect_opening_obs.py)（只采集 k=0 观测，无训练）、[diagnose_bias_effect.py](../../diagnose_bias_effect.py)（逐特征 AUC + 最大 AUC 置换检验）。数据：DEV_SEEDS 440000..440009 × 6 档；标签为候选与零残差底座同种子同档位的配对结果（帮忙 = 危险转安全或多接稳；伤害 = 安全转危险或少接稳）。450000..450019 未触碰。
+Entry points: [collect_opening_obs.py](../../collect_opening_obs.py) (collects `k=0` observations only, no training), [diagnose_bias_effect.py](../../diagnose_bias_effect.py) (per-feature AUC + max-AUC permutation test). Data: `DEV_SEEDS 440000..440009 × 6 levels`; labels compare candidate vs zero-base on matched `(seed, jitter)` (`help` = unsafe→safe or more catches; `hurt` = safe→unsafe or fewer catches). `450000..450019` untouched.
 
-| 条件 | 候选 | 帮忙/伤害 | 最大单特征 AUC | 置换 95% 阈值 | 结论 |
+| Condition | Candidate | Help / Hurt | Max Single-Feature AUC | Permutation 95% Threshold | Verdict |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| 干净 | 固定偏置 | 25/25 | 0.731 | 0.771 | 无信号 |
-| 干净 | 有偏置 PPO | 24/22 | 0.758 | 0.790 | 无信号 |
-| 组合扰动 | 固定偏置 | 21/30 | 0.751 | 0.778 | 无信号 |
-| 组合扰动 | 有偏置 PPO | 20/29 | 0.752 | 0.785 | 无信号 |
+| Clean | Fixed-Bias | 25 / 25 | 0.731 | 0.771 | No signal |
+| Clean | Biased-PPO | 24 / 22 | 0.758 | 0.790 | No signal |
+| Combined | Fixed-Bias | 21 / 30 | 0.751 | 0.778 | No signal |
+| Combined | Biased-PPO | 20 / 29 | 0.752 | 0.785 | No signal |
 
-- 扫描 262~274 个非常量 k=0 特征，最高 AUC 均未超过多重比较随机上限；不可观测的扰动档位本身 AUC 仅 0.55~0.59。
-- 局限：每组仅 40~50 个非中性回合，标签来自单次确定性回放，接球结果的混沌敏感性可能压低可分性上限；检验功效有限，「无信号」不等于「不存在信号」。
-- **决策**：未找到可重复的区分信号，按预定门槛**不再试状态条件残差**；VAL_SEEDS 复核不需要执行（无候选判据可复核）。
+- Scanning 262–274 non-constant `k=0` features, no maximum AUC exceeded the multiple-testing permutation threshold; even the unobservable jitter level itself had AUC only 0.55–0.59.
+- Limitations: only 40–50 non-neutral episodes per group; single deterministic rollouts; chaotic sensitivity may cap separability; limited statistical power ("no signal" does not prove absence of signal).
+- **Decision**: No repeatable discriminating signal found; per pre-registered gate, **stop testing state-conditioned opening residuals** and do not run `VAL_SEEDS` confirmation.

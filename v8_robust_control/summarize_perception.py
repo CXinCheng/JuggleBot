@@ -68,23 +68,47 @@ def validate(rows):
     return manifest,sorted(trials,key=lambda r:(r['case'],r['seed']))
 
 
+def _estimator_note(trials):
+    def estimator_of(row):
+        return row['result']['conditions']['ball_observation'].get('estimator', 'three_position_backward_difference')
+
+    def is_undisturbed(row):
+        p = row['perception']
+        return p['noise_std_m'] == 0 and p['delay_s'] == 0 and p['dropout_probability'] == 0
+
+    estimators = {estimator_of(r) for r in trials}
+    undisturbed = {estimator_of(r) for r in trials if is_undisturbed(r)}
+    disturbed = {estimator_of(r) for r in trials if not is_undisturbed(r)}
+    if estimators == {'three_position_backward_difference'}:
+        desc = 'position sampling and three-point state estimation'
+    elif estimators == {'contact_support_and_ballistic_fit'}:
+        desc = 'position sampling and filtered (contact-support and ballistic-fit) state estimation'
+    elif (undisturbed == {'three_position_backward_difference'}
+          and disturbed == {'contact_support_and_ballistic_fit'}):
+        desc = 'position sampling (three-point state estimation when undisturbed; filtered contact-support and ballistic-fit estimation under perception disturbances)'
+    else:
+        desc = 'position sampling with recorded estimators: ' + ', '.join(sorted(map(str, estimators)))
+    return f'Controller parameters are fixed, using {desc}. Noise is independent per-axis Gaussian noise, delay is a fixed FIFO delivery delay, and dropout drops whole frames independently.'
+
+
 def reports(rows):
     manifest,trials = validate(rows)
-    text = ['# 感知扰动评估结果','',
-            f"每次请求 {manifest['requested_flights']} 次完整飞行；测试种子：{', '.join(map(str,manifest['seeds']))}。",
-            '控制器参数固定，使用位置采样与三点状态估计。噪声为各坐标轴独立高斯噪声，延迟为固定 FIFO 交付延迟，丢帧按整帧独立采样。',
-            '接触、安全检查和私有规划试算使用仿真真值。以下结果属于仿真敏感性评估，扰动范围未经真实传感器标定。','',
-            '| 配置 | 噪声 σ (mm) | 延迟 (ms) | 丢帧概率 | 成功/试验 | 平均完成飞行 | 掉球总数 | 球球碰撞总数 |',
+    estimator_note = _estimator_note(trials)
+    text = ['# Perception Disturbance Evaluation Results','',
+            f"Requested {manifest['requested_flights']} complete flights per trial; test seeds: {', '.join(map(str,manifest['seeds']))}.",
+            estimator_note,
+            'Contacts, safety checks, and private planning rollouts use simulation ground truth. These results are a simulation sensitivity study; disturbance ranges are not calibrated to real hardware sensors.','',
+            '| Case | Noise sigma (mm) | Delay (ms) | Dropout prob | Success/Trials | Mean completed flights | Total drops | Total ball-ball collisions |',
             '| --- | --- | --- | --- | --- | --- | --- | --- |']
     for case in manifest['cases']:
         selected = [r for r in trials if r['case']==case['name']]
         success = sum(r['result']['success'] for r in selected)
         text.append(f"| {case['name']} | {case['noise_std_m']*1000:g} | {case['delay_s']*1000:g} | {case['dropout_probability']:g} | {success}/{len(selected)} | {mean(r['result']['validated_flights'] for r in selected):.1f} | {sum(r['result']['drops'] for r in selected)} | {sum(r['result']['ball_contacts'] for r in selected)} |")
-    text += ['', '各条件的试验次数有限；成功次数用于描述本次实验，不作为总体成功概率的精确估计。',
-             '规划拒绝、姿态越限和数据过期造成的失败均保留在逐次结果中。估计误差仅统计实时空中球的有效估计，按物理步采样；无效估计单独计数。','']
+    text += ['', 'Trial counts per condition are limited; success counts summarize this experiment and are not an accurate estimate of population success probability.',
+             'Failures from planning rejections, posture limit violations, and expired measurements are retained in per-trial records. Estimation error is computed only over valid online airborne-ball estimates sampled per physics step; invalid estimates are counted separately.','']
     if manifest.get('task') == 'complete':
-        text[2:2] = ['任务包含三球 2+1 开局、级联和 2+1 收尾。成功要求全部目标飞行完成，且三球连续 0.8 s 接触承托、相对手掌速度低于 0.15 m/s；初始持球连续稳定至少 0.05 s。', '']
-        text += ['球球碰撞列仅统计禁止的接触。首次确认释放前允许的开局球对承托接触，其持续步数与峰值力在逐次 CSV 和原始记录中单独列出。', '']
+        text[2:2] = ['The task includes the three-ball 2+1 opening, cascade, and 2+1 ending. Success requires completing all target flights plus 0.8 s continuous three-ball hand contact with relative palm speed < 0.15 m/s; initial hold requires >= 0.05 s continuous stability.', '']
+        text += ['The ball-ball collisions column counts forbidden contacts only. Permitted opening pair support contact before the first confirmed release has its step count and peak force listed separately in the per-trial CSV and raw records.', '']
     stream = io.StringIO(newline='')
     writer = csv.writer(stream,lineterminator='\n')
     complete_task = manifest.get('task') == 'complete'

@@ -20,7 +20,7 @@ Omit `--check-archive` to run the six online branches. New results are written u
 
 ## Single-ball reception
 
-Use the same reception environment for PPO and SAC. Start with one short run to check the training pipeline. Use distinct output directories for repeat runs. For the full comparison budget and evaluation commands, see [reception results and reproduction](EXPERIMENT_REFERENCE.md#参考结果).
+Use the same reception environment for PPO and SAC. Start with one short run to check the training pipeline. Use distinct output directories for repeat runs. For the full comparison budget and evaluation commands, see [reception results and reproduction](EXPERIMENT_REFERENCE.md#reference-results).
 
 ```bash
 uv run python -m v8_robust_control.train_residual --algorithms ppo --steps 256 --checkpoints 256 --seeds 0 --eval-episodes 1 --jobs 1 --output-dir build/v8_team_reception_ppo
