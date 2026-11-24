@@ -153,41 +153,41 @@ def summarize(manifest, rows):
                     str(r['seed']): sum(t['is_success'] for t in r['trials'] if t['case'] == case)
                     for r in runs}
         aggregates.append(aggregate)
-    lines = ['# 单球接球残差控制验证', '',
-             '任务为预置下降球的接稳，不包含主动抛球或完整三球任务。', '',
-             'zero 为经典反馈控制器；static 关闭其落点预测，保留相同的手指控制和接触缓冲。', '',
-             '结果属于验证集，最终结论需结合独立测试和反馈消融，不能单独证明闭环抗噪能力。', '',
-             f"每次训练 {manifest['steps']} 个控制步；训练种子：{manifest['training_seeds']}。",
-             f"每个感知配置使用 {len(manifest['evaluation_seeds'])} 个独立评估种子，关闭策略探索。", '',
-             *(['表中训练策略的结果来自各自选中的检查点；各训练种子均执行完整预算。', '']
+    lines = ['# Single-Ball Reception Residual Control Validation', '',
+             'The task is catching a pre-launched descending ball, excluding active throws or the complete three-ball task.', '',
+             'zero is the classical feedback controller; static disables its landing prediction while keeping identical finger control and contact cushioning.', '',
+             'These results are on the validation set; final conclusions require independent tests and feedback ablations and cannot alone establish closed-loop noise robustness.', '',
+             f"Training budget: {manifest['steps']} control steps per seed; training seeds: {manifest['training_seeds']}.",
+             f"Each perception condition uses {len(manifest['evaluation_seeds'])} independent evaluation seeds with exploration disabled.", '',
+             *(['Trained policy rows come from each seed\'s selected checkpoint; all training seeds ran the full budget.', '']
                if 'checkpoints' in manifest else []),
-             '| 策略 | 学习率 | 训练引导权重 | '+' | '.join(cases)+' | 训练耗时（s） |',
+             '| Policy | Learning rate | Shaping weight | '+' | '.join(cases)+' | Training time (s) |',
              '| --- | --- | --- | '+' | '.join('---' for _ in cases)+' | --- |']
     for r in aggregates:
         counts = [f"{r['cases'][c]['successes']}/{r['cases'][c]['episodes']}" for c in cases]
         lines.append(f"| {r['policy']} | {r['learning_rate'] if r['learning_rate'] is not None else '—'} | "
                      f"{r['shaping_weight'] if r['shaping_weight'] is not None else '—'} | "
                      + ' | '.join(counts) + f" | {r['training_wall_time_s']:.2f} |")
-    lines += ['', '各对照策略评估一次；训练策略的汇总分母包含全部训练种子。',
-              '引导权重列指训练设置；评估回报使用清单中的统一奖励配置，策略优劣以独立验收指标衡量。',
-              '不同训练种子共享评估场景，不能把这些重复场景视为独立样本。',
-              '本预算用于验证训练链路和筛选配置，不能据此断言 SAC 或 PPO 已收敛或普遍更优。',
-              '评估集用于本次筛选；后续确认实验须另选种子。耗时包含本机并发负载影响。',
-              '名义接球根据位置采样预测落点，接触后下沉缓冲；本子任务不等同于完整三球任务。', '']
+    lines += ['', 'Each control policy is evaluated once; trained-policy denominators pool all training seeds.',
+              'The shaping-weight column reflects training setup; evaluation returns use the unified reward config in the manifest, and policies are judged by independent verification metrics.',
+              'Different training seeds share the same evaluation scenes; repeated scenes are not independent samples.',
+              'This budget verifies the training pipeline and screens configurations; it does not establish convergence or general superiority of SAC or PPO.',
+              'The validation set is used for this screening; confirmation experiments must use fresh seeds. Wall-clock time reflects local concurrency load.',
+              'Nominal reception predicts landing from position samples and yields on contact; this subtask is not equivalent to the complete three-ball task.', '']
     if 'checkpoints' in manifest:
-        lines += ['## 学习曲线', '',
-                  '各预算沿同一次训练连续推进；检查点仅按验证集选择，独立测试不参与选择。', '',
-                  '训练耗时为各次 learn 调用的耗时之和，不含检查点评估；多个种子的耗时相加不等于并发任务的总历时。', '',
-                  '| 算法/训练种子 | 控制步 | '+' | '.join(cases)+' | 选用 |',
+        lines += ['## Learning Curve', '',
+                  'Budgets advance continuously along the same training run; checkpoints are selected on the validation set only, excluding independent test scenes.', '',
+                  'Training time sums actual learn calls excluding checkpoint evaluation; summing across seeds does not equal concurrent wall-clock duration.', '',
+                  '| Algorithm/Seed | Control steps | '+' | '.join(cases)+' | Selected |',
                   '| --- | --- | '+' | '.join('---' for _ in cases)+' | --- |']
         for run in trained:
             for point in run['validation_curve']:
                 counts = [f"{sum(t['is_success'] for t in point['trials'] if t['case'] == c)}/{len(manifest['evaluation_seeds'])}"
                           for c in cases]
                 lines.append(f"| {run['algorithm']}/{run['seed']} | {point['training_steps']} | "
-                             + ' | '.join(counts) + (' | 是 |' if point['training_steps'] == run['selected_training_steps'] else ' | — |'))
-        lines += ['', '学习曲线使用同一组验证场景；误差带表示训练种子间范围，不是成功率置信区间。',
-                  '较大训练预算不保证改善；检查点被选中也不代表训练已收敛。', '']
+                             + ' | '.join(counts) + (' | Yes |' if point['training_steps'] == run['selected_training_steps'] else ' | — |'))
+        lines += ['', 'Learning curves use the same validation scenes; shaded bands show range across training seeds, not confidence intervals on success rate.',
+                  'Larger budgets do not guarantee improvement, and checkpoint selection does not imply convergence.', '']
     return aggregates, '\n'.join(lines)
 
 
@@ -259,10 +259,10 @@ def confirmation_report(receipt):
             raise ValueError('Confirmation coverage mismatch')
         for trial in row['trials']:
             validate_trial(receipt['config'], trial, receipt['environment_version'])
-    title = '单球接球独立测试' if training else '单球名义控制器验收'
-    lines = ['# '+title, '', '任务为单球接球，不包含主动抛球或完整三球循环。', '',
-             f'每个感知配置使用 {len(seeds)} 个场景种子：{seeds}。', '',
-             '| 策略 | '+' | '.join(cases)+' |',
+    title = 'Single-Ball Reception Independent Test' if training else 'Single-Ball Nominal Controller Verification'
+    lines = ['# '+title, '', 'The task is single-ball reception only, excluding active throws or the complete three-ball cycle.', '',
+             f'Each perception condition uses {len(seeds)} scene seeds: {seeds}.', '',
+             '| Policy | '+' | '.join(cases)+' |',
              '| --- | '+' | '.join('---' for _ in cases)+' |']
     groups = [(p, [t for t in controls[0]['trials'] if t['policy'] == p]) for p in ('zero', 'static')]
     if training:
@@ -274,9 +274,9 @@ def confirmation_report(receipt):
             values = [t for t in trials if t['case'] == case]
             counts.append(f"{sum(t['is_success'] for t in values)}/{len(values)}")
         lines.append('| '+label+' | '+' | '.join(counts)+' |')
-    lines += ['', 'zero 为名义接球反馈控制器，static 仅关闭落点预测，保留相同的抓握与缓冲。',
-              '学习策略按全部训练种子汇总；各训练种子使用相同测试场景，不视为独立场景样本。',
-              '策略评估关闭探索；失败原因、接稳证据和动作指标保存在原始 JSON 中。', '']
+    lines += ['', 'zero is the nominal reception feedback controller; static disables landing prediction while keeping identical grasping and cushioning.',
+              'Learned policies are pooled across all training seeds; training seeds share the same test scenes and are not independent scene samples.',
+              'Policy evaluation disables exploration; failure reasons, catch evidence, and action metrics are stored in the raw JSON.', '']
     return '\n'.join(lines)
 
 
@@ -321,19 +321,19 @@ def delivery_report(test, training=None, nominal=None, feedback=None):
             raise ValueError('Training and confirmation revisions differ')
         if training['manifest']['config'] != test['config']:
             raise ValueError('Training and confirmation task configurations differ')
-        sections.append(text.replace('# 单球接球残差控制验证', '## 训练与验证', 1))
+        sections.append(text.replace('# Single-Ball Reception Residual Control Validation', '## Training and Validation', 1))
     if nominal is not None:
         if not compatible_training_sources(nominal['source_sha256'], test['source_sha256']):
             raise ValueError('Nominal verification revision differs')
         if nominal['config'] != test['config']:
             raise ValueError('Nominal verification task configuration differs')
-        sections.append(confirmation_report(nominal).replace('# 单球名义控制器验收', '## 名义控制器验收', 1))
+        sections.append(confirmation_report(nominal).replace('# Single-Ball Nominal Controller Verification', '## Nominal Controller Verification', 1))
     if feedback is not None:
         if (feedback['environment_version'] != test['environment_version']
                 or not compatible_training_sources(feedback['training_manifest']['source_sha256'], test['source_sha256'])
                 or feedback['config'] != test['config']):
             raise ValueError('Feedback diagnostic revision differs')
-        diagnostic_lines = ['## 反馈诊断', '', '| 策略/模式 | 配置 | 成功 |', '| --- | --- | --- |']
+        diagnostic_lines = ['## Feedback Diagnostics', '', '| Policy/Mode | Case | Success |', '| --- | --- | --- |']
         for row in feedback['records']:
             trials = row['trials']
             policies = list(dict.fromkeys(t['policy'] for t in trials))
@@ -348,7 +348,7 @@ def delivery_report(test, training=None, nominal=None, feedback=None):
                     label = row.get('checkpoint', policy).split('_lr')[0]+' / '+row['mode']
                     diagnostic_lines.append(f"| {label} | {case} | {sum(t['is_success'] for t in selected)}/{len(selected)} |")
         sections.append('\n'.join(diagnostic_lines))
-        sections.append('\n策略球状态遮盖仅作用直接输入字段，名义参考仍含球信息；冻结策略输出仍保留经典控制器。\n')
+        sections.append('\nMasking policy ball state affects direct input fields only (nominal reference still carries ball info); frozen policy output still retains the classical controller.\n')
         if test['environment_version'] >= 3:
             checkpoints = dict.fromkeys(r['checkpoint'] for r in feedback['records'] if 'checkpoint' in r)
             for checkpoint in checkpoints:
@@ -356,36 +356,36 @@ def delivery_report(test, training=None, nominal=None, feedback=None):
                 normal, frozen = modes.get('unmodified', []), modes.get('frozen_initial', [])
                 if normal and len(normal) == len(frozen):
                     count, fixed = sum(t['is_success'] for t in normal), sum(t['is_success'] for t in frozen)
-                    sections.append(f"{checkpoint.split('_lr')[0]}：正常策略 {count}/{len(normal)}，"
-                                    f"冻结初始输出 {fixed}/{len(frozen)}；两者保留相同的名义反馈。"
-                                    + ('本组小样本未显示实时策略反馈的额外收益。' if fixed >= count else
-                                       '本组小样本中的差异仍需更多独立场景确认。'))
+                    sections.append(f"{checkpoint.split('_lr')[0]}: normal policy {count}/{len(normal)}, "
+                                    f"frozen initial output {fixed}/{len(frozen)}; both retain identical nominal feedback. "
+                                    + ('This small sample shows no additional gain from online policy feedback.' if fixed >= count else
+                                       'Differences in this small sample require more independent scenes to confirm.'))
     if test.get('training_manifest'):
-        sections.append('## 筛选门槛\n\n各训练种子均须保持零扰动成功数，且扰动场景的配对汇总须超过经典控制器。此门槛不触发自动替换。\n')
+        sections.append('## Screening Gate\n\nEvery training seed must preserve zero-disturbance catches and paired disturbed totals must exceed the classical controller. This gate does not trigger automatic replacement.\n')
         for algorithm, decision in screening_decisions(test).items():
-            verdict = '通过候选筛选' if decision['candidate_gate'] else '未通过候选筛选'
-            sections.append(f"- {algorithm}：{verdict}；零扰动各种子 {decision['baseline_per_seed']}，"
-                            f"经典控制器 {decision['nominal_baseline']}；扰动配对完成数差 {decision['paired_perturbed_gain']:+d}。")
+            verdict = 'passed candidate screening' if decision['candidate_gate'] else 'failed candidate screening'
+            sections.append(f"- {algorithm}: {verdict}; zero-disturbance per seed {decision['baseline_per_seed']}, "
+                            f"classical controller {decision['nominal_baseline']}; paired disturbed delta {decision['paired_perturbed_gain']:+d}.")
             if test['environment_version'] >= 3:
-                sections.append(f"  安全失败数：经典控制器 {decision['nominal_unsafe']}；"
-                                f"各训练种子 {decision['unsafe_per_seed']}。任一种子增加安全失败数均不通过。")
+                sections.append(f"  Safety failures: classical controller {decision['nominal_unsafe']}; "
+                                f"per training seed {decision['unsafe_per_seed']}. Any seed increasing safety failures fails.")
             if test['environment_version'] >= 4:
                 episodes = decision['perturbed_episodes_per_seed']
                 repeats = len(decision['perturbed_per_seed'])
-                sections.append(f"  扰动对照实际完成 {decision['nominal_perturbed']}/{episodes}，"
-                                f"各策略完成数 {decision['perturbed_per_seed']}（各 {episodes} 次）。"
-                                f"配对汇总将同一对照重复 {repeats} 次，不代表新增独立场景。")
-        sections.append('\n本预算与测试集不能证明算法普遍优劣；须同时检查各配置的退化与实际碰撞。三球任务尚未接入学习策略。\n')
+                sections.append(f"  Disturbed baseline completions {decision['nominal_perturbed']}/{episodes}; "
+                                f"per-seed policy completions {decision['perturbed_per_seed']} (out of {episodes} each). "
+                                f"Paired pooling repeats the same baseline {repeats} times and does not add independent scenes.")
+        sections.append('\nThis budget and test set cannot establish general algorithm superiority; per-condition degradation and collisions must be checked jointly. The three-ball task is not yet wired to learned policies.\n')
     if test['environment_version'] >= 3:
-        lines = ['## 首次接触后的估计', '',
-                 '误差仅使用有效估计时刻统计；真值用于诊断，不输入策略。无有效估计的回合不计作零误差。', '',
-                 '| 策略 | 配置 | 有效估计时刻数 | 位置 RMSE（mm） | 速度 RMSE（m/s） |',
+        lines = ['## Post-Contact Estimation', '',
+                 'Errors are computed over valid estimation steps only; ground truth is diagnostic and never fed to policies. Episodes without valid estimates are not counted as zero error.', '',
+                 '| Policy | Case | Valid estimate steps | Position RMSE (mm) | Velocity RMSE (m/s) |',
                  '| --- | --- | --- | --- | --- |']
         groups = [('zero', [t for r in test['records'] if r['kind'] == 'controls' for t in r['trials'] if t['policy'] == 'zero'])]
         for algorithm in test.get('algorithms', []):
             groups.append((algorithm, [t for r in test['records'] if r['kind'] == 'trained' and r['algorithm'] == algorithm for t in r['trials']]))
-        safety = ['## 安全与动作指标', '',
-                  '| 策略 | 配置 | 评估次数 | 禁止接触 | 姿态越限 | 球高越限 | 其他安全失败 | 截止超时 | 平均残差 RMS | 最大单轴偏移（mm） |',
+        safety = ['## Safety and Action Metrics', '',
+                  '| Policy | Case | Episodes | Forbidden contact | Pose limit | Ball height | Other safety | Task deadline | Mean residual RMS | Max axis offset (mm) |',
                   '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
         for policy, trials in groups:
             for case in test['evaluation_cases']:
@@ -455,7 +455,7 @@ def main():
                         for name in ('training', 'nominal', 'feedback')}
             report = delivery_report(archive, **optional)
             args.report.parent.mkdir(parents=True, exist_ok=True)
-            args.report.write_text(report, encoding='utf-8')
+            args.report.write_text(report, encoding='utf-8', newline='\n')
             print(report)
             return
         manifest = archive['manifest']
@@ -467,8 +467,8 @@ def main():
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(json.dumps(dict(manifest=manifest, trials_sha256=hashlib.sha256(raw).hexdigest(),
-                                             aggregates=aggregates, records=rows), indent=2, allow_nan=False)+'\n', encoding='utf-8')
-    args.report.write_text(report, encoding='utf-8')
+                                             aggregates=aggregates, records=rows), indent=2, allow_nan=False)+'\n', encoding='utf-8', newline='\n')
+    args.report.write_text(report, encoding='utf-8', newline='\n')
     print(report)
 
 

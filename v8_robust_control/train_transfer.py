@@ -369,18 +369,18 @@ def report(record, test=None):
     if summary != record['summary']:
         raise ValueError('Transfer summary differs')
     n = len(record['manifest']['validation_seeds'])
-    lines = ['# 完整单球残差 PPO 验证', '',
-             '任务从右手持球开始，真实释放并由左手连续接稳 0.2 秒。物理初态变化只在 reset 施加；感知扰动独立作用于位置测量。',
-             '名义电机参考离线生成，训练过程连续积分物理，不进行在线抛接试算。零残差在理想初态逐值复现原轨迹。',
-             '固定动作及逐时刻平均动作只用验证集选择；冻结输出等待首次有效位置观测。该报告不是独立测试结论。', '',
-             '| 控制器 | 理想初态 | 仅感知噪声 | 物理初态扰动 | 安全失败 |', '| --- | --- | --- | --- | --- |']
+    lines = ['# Full Single-Ball Residual PPO Validation', '',
+             'The task starts with the ball held in the right hand, executes a physical release, and holds it stably in the left hand for 0.2 s. Physical initial-state offsets are applied only at reset; perception disturbances affect position measurements independently.',
+             'Nominal motor references are generated offline, and training integrates physics continuously without online planning rollouts. Zero residual reproduces the nominal trajectory under clean initial conditions.',
+             'Fixed and per-step mean controls are selected on validation only; frozen output waits for the first valid position observation. This report is not an independent test conclusion.', '',
+             '| Controller | Clean | Perception noise only | Physical seat jitter & combined | Safety failures |', '| --- | --- | --- | --- | --- |']
     rows = [('zero', summary['baseline']), ('fixed', summary['fixed']), ('timed', summary['timed'])]
     rows += [(f'PPO seed {seed}', value) for seed, value in summary['learned'].items()]
     for name, value in rows:
         lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{6*n} | {value['unsafe']}/{8*n} |")
-    lines += ['', f"候选门槛：{summary['candidate_gates']}。",
-              '各训练种子须保持理想初态、仅感知噪声及安全指标，并严格超过零残差、固定、逐时刻平均和自身冻结对照的扰动成功数。',
-              '全部通过后使用新的独立种子验证；未通过时不作为双球、三球策略扩展的依据。', '']
+    lines += ['', f"Candidate gates: {summary['candidate_gates']}.",
+              'Each training seed must preserve clean, perception-only, and safety metrics while strictly exceeding zero-residual, fixed, per-step mean, and own-frozen controls on disturbed completions.',
+              'Only after all seeds pass are fresh independent seeds evaluated; failure does not support scaling to two- or three-ball policies.', '']
     if test is not None:
         raw = (json.dumps(record, allow_nan=False, separators=(',', ':'))+'\n').encode('utf-8')
         if test['training_sha256'] not in {hashlib.sha256(raw).hexdigest(), hashlib.sha256(raw.replace(b'\n', b'\r\n')).hexdigest()}:
@@ -389,11 +389,11 @@ def report(record, test=None):
         if checked != test['summary']:
             raise ValueError('Independent transfer summary differs')
         n = len(test['seeds'])
-        lines += ['## 独立测试', '', '| 控制器 | 理想初态 | 仅感知噪声 | 物理初态扰动 | 安全失败 |',
+        lines += ['## Independent Test', '', '| Controller | Clean | Perception noise only | Physical seat jitter & combined | Safety failures |',
                   '| --- | --- | --- | --- | --- |']
         for name, value in checked['counts'].items():
             lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{6*n} | {value['unsafe']}/{8*n} |")
-        lines += ['', f"独立验收：{checked['candidate_gates']}。", '']
+        lines += ['', f"Independent acceptance: {checked['candidate_gates']}.", '']
     return '\n'.join(lines)
 
 
@@ -425,7 +425,7 @@ def main():
     if args.command == 'report':
         text = report(read_json(args.input), None if args.test is None else read_json(args.test))
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(text, encoding='utf-8')
+        args.output.write_text(text, encoding='utf-8', newline='\n')
         print(text)
         return
     if args.command == 'test':
@@ -450,7 +450,7 @@ def main():
         result = dict(training_sha256=digest(args.training), source_sha256=sources(), seeds=seeds, records=rows)
         result['summary'] = summarize_test(result, training)
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(json.dumps(result, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8')
+        args.output.write_text(json.dumps(result, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8', newline='\n')
         return
     if (args.output_dir.exists() or args.seed_start < 380000 or args.episodes < 1 or args.jobs < 1
             or not args.checkpoints or args.checkpoints != sorted(set(args.checkpoints))
@@ -477,10 +477,10 @@ def main():
                     versions={name: importlib.metadata.version(name) for name in ('mujoco', 'numpy', 'torch', 'gymnasium', 'stable-baselines3')},
                     action='two XY palm requests and two grip synergies; observed permissions and physical rate limits',
                     physical_variation='initial seated ball XY only, up to +/-5mm; never changes a live flight')
-    (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
+    (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8', newline='\n')
     with ProcessPoolExecutor(args.jobs) as pool:
         refs = list(pool.map(reference_task, [(candidate, manifest) for candidate in fixed_candidates()]))
-    (args.output_dir/'references.json').write_text(json.dumps(refs, allow_nan=False)+'\n', encoding='utf-8')
+    (args.output_dir/'references.json').write_text(json.dumps(refs, allow_nan=False)+'\n', encoding='utf-8', newline='\n')
     nominal = counts(refs[0]['trials'])
     with ProcessPoolExecutor(args.jobs) as pool:
         models = list(pool.map(train_one, [(seed, manifest, args.output_dir, nominal) for seed in manifest['training_seeds']]))
@@ -489,7 +489,7 @@ def main():
     record = dict(manifest=manifest, references=refs, models=models)
     record['summary'] = summarize(record)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    with args.output.open('x', encoding='utf-8') as stream:
+    with args.output.open('x', encoding='utf-8', newline='\n') as stream:
         stream.write(json.dumps(record, allow_nan=False, separators=(',', ':'))+'\n')
     print('[Transfer screening]', record['summary'], flush=True)
 

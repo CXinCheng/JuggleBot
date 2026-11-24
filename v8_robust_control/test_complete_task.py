@@ -255,7 +255,34 @@ class TestCompleteTask(unittest.TestCase):
 
     def test_complete_report_requires_actual_final_support_evidence(self):
         rows = self.complete_rows()
-        self.assertIn('三球连续 0.8 s', reports(rows)[0])
+        self.assertIn('0.8 s continuous three-ball hand contact', reports(rows)[0])
+        self.assertIn('three-point state estimation', reports(rows)[0])
+        self.assertNotIn('filtered', reports(rows)[0])
+        # Undisturbed uses three-point; disturbed uses filtered -> split description.
+        split = deepcopy(rows)
+        split[0]['cases'].append(dict(name='noise_1mm', noise_std_m=0.001, delay_s=0.0, dropout_probability=0.0))
+        disturbed = deepcopy(split[1])
+        disturbed['case'] = 'noise_1mm'
+        disturbed['perception']['noise_std_m'] = 0.001
+        disturbed['result']['conditions']['ball_observation']['perception']['noise_std_m'] = 0.001
+        disturbed['result']['conditions']['ball_observation']['estimator'] = 'contact_support_and_ballistic_fit'
+        split[1]['result']['conditions']['ball_observation']['estimator'] = 'three_position_backward_difference'
+        split.insert(2, disturbed)
+        split[-1]['trials'] = 2
+        self.assertIn('filtered contact-support and ballistic-fit estimation under perception disturbances', reports(split)[0])
+        # Arbitrary mix (two undisturbed trials with different estimators) -> neutral fallback.
+        arbitrary = deepcopy(rows)
+        arbitrary[0]['seeds'] = [0, 1]
+        second = deepcopy(arbitrary[1])
+        second['seed'] = 1
+        second['perception']['seed'] = 1
+        second['result']['conditions']['ball_observation']['perception']['seed'] = 1
+        second['result']['conditions']['ball_observation']['estimator'] = 'contact_support_and_ballistic_fit'
+        arbitrary[1]['result']['conditions']['ball_observation']['estimator'] = 'three_position_backward_difference'
+        arbitrary.insert(2, second)
+        arbitrary[-1]['trials'] = 2
+        self.assertIn('recorded estimators: contact_support_and_ballistic_fit, three_position_backward_difference', reports(arbitrary)[0])
+        self.assertNotIn('when undisturbed', reports(arbitrary)[0])
         for field, value in (('final_hold', None), ('airborne_at_end', [2]), ('throws', 31)):
             bad = deepcopy(rows)
             bad[1]['result'][field] = value

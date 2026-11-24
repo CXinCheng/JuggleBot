@@ -71,8 +71,8 @@ class ResidualComparisonTests(unittest.TestCase):
         for algorithm in ('PPO', 'SAC'):
             for seed in (0, 1, 2):
                 self.assertIn(f'{algorithm} / seed {seed}', text)
-        self.assertIn('固定残差', text)
-        self.assertIn('不表示任一算法已收敛', text)
+        self.assertIn('Fixed residual', text)
+        self.assertIn('convergence of either algorithm', text)
 
     def test_fixed_action_does_not_depend_on_observation_or_mutate(self):
         model = FixedResidual([.1, -.2, 0., .3])
@@ -122,7 +122,7 @@ class ResidualComparisonTests(unittest.TestCase):
         crlf = hashlib.sha256(raw.replace(b'\n', b'\r\n')).hexdigest()
         for actual, recorded in ((lf, crlf), (crlf, lf)):
             evidence[-1]['selection_sha256'] = recorded
-            self.assertIn('固定残差', comparison_report(*evidence, selection_sha256=actual))
+            self.assertIn('Fixed residual', comparison_report(*evidence, selection_sha256=actual))
 
     def test_newline_compatibility_cannot_hide_changed_selection_content(self):
         evidence = comparison_fixture()

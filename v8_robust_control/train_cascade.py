@@ -437,18 +437,18 @@ def report(record):
         raise ValueError('Cascade summary differs')
     manifest = record['manifest']
     n = len(manifest['validation_seeds'])
-    lines = [f"# {manifest['task']}：{manifest['requested_throws']} 次完整抛接验证", '',
-             '任务验收与 RL 相对对照的收益分别报告。策略必须保留无扰动完成情况、安全性及扰动完成数；额外反馈收益由时间序列和冻结对照判定。', '',
-             '零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。', '',
-             '| 控制器 | 理想初态 | 仅感知噪声 | 物理初态扰动 | 安全失败 |', '| --- | --- | --- | --- | --- |']
+    lines = [f"# {manifest['task']}: {manifest['requested_throws']}-Throw Complete Validation", '',
+             'Task acceptance and RL gains over baselines are reported separately. Policies must preserve clean completion, safety, and disturbed completions; additional feedback gain is judged against timed and frozen controls.', '',
+             'At zero error, feedback gains preserve the nominal trajectory; the clean column verifies compatibility, while disturbed columns and baselines test learning gain.', '',
+             '| Controller | Clean | Perception noise only | Physical seat jitter & combined | Safety failures |', '| --- | --- | --- | --- | --- |']
     rows = [('zero', summary['baseline']), ('timed', summary['timed'])]
     rows += [(f'PPO seed {seed}', value) for seed, value in summary['learned'].items()]
     for name, value in rows:
         lines.append(f"| {name} | {value['clean']}/{n} | {value['sensor_only']}/{n} | {value['perturbed']}/{6*n} | {value['unsafe']}/{8*n} |")
     if 'nominal_task_gates' in summary:
-        lines += ['', f"无扰动完整任务验收：{summary['nominal_task_gates']}。"]
-    lines += ['', f"扰动非退化验收：{summary['task_and_safety_gates']}。",
-              f"严格超过名义、时间序列和自身冻结对照：{summary['feedback_advantage']}。", '']
+        lines += ['', f"Clean complete-task acceptance: {summary['nominal_task_gates']}."]
+    lines += ['', f"Disturbance non-degradation: {summary['task_and_safety_gates']}.",
+              f"Strictly exceeds zero, timed, and own-frozen controls: {summary['feedback_advantage']}.", '']
     return '\n'.join(lines)
 
 
@@ -478,7 +478,7 @@ def main():
     if args.command == 'report':
         text = report(read_json(args.input))
         args.output.parent.mkdir(parents=True, exist_ok=True)
-        args.output.write_text(text, encoding='utf-8')
+        args.output.write_text(text, encoding='utf-8', newline='\n')
         print(text)
         return
     if (args.output_dir.exists() or args.checkpoints != sorted(set(args.checkpoints))
@@ -538,7 +538,7 @@ def main():
     baseline = evaluate(Fixed(), args.reference_dir, manifest['validation_seeds'], controller=args.controller)
     print('[Cascade baseline]', task, requested, counts(baseline), flush=True)
     args.output_dir.mkdir(parents=True)
-    (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
+    (args.output_dir/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8', newline='\n')
     with ProcessPoolExecutor(args.jobs) as pool:
         models = list(pool.map(train_one, [(seed, manifest, args.output_dir, warm, args.warm_start_dir, counts(baseline))
                                           for seed in manifest['training_seeds']]))
@@ -547,7 +547,7 @@ def main():
     record = dict(manifest=manifest, baseline=baseline, models=models)
     record['summary'] = summarize(record)
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(record, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8')
+    args.output.write_text(json.dumps(record, allow_nan=False, separators=(',', ':'))+'\n', encoding='utf-8', newline='\n')
     print('[Cascade qualification]', record['summary'], flush=True)
 
 

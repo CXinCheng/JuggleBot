@@ -63,7 +63,7 @@
     "assets/unitree_g1/g1.xml": "3c2616550a31f33e84d3c80b8e913ac5618c8888019b0c9490dae93493e647f3",
     "assets/ur5e_leap_hands/world.xml": "43c2616bb4e685c78f0b3bd3d553603776754818c0a310d952ed663d3960c7bb"
   },
-  "selection_sha256": "27a032b5d1b4704dfef446042aed7b643386298553f2ee95b88729574b344bda",
+  "selection_sha256": "4cc9056f07d8825ce24c95e7c8ddc5c120bf3eec4df30fc4a68a6f73f9f8db7a",
   "selected_candidate_id": "ppo_seed2_contact_mean",
   "action": [
     0.1651602286603874,
@@ -113,7 +113,7 @@
       "dropout": 0.3
     }
   },
-  "comparison_source_sha256": "373ee13b0d1ec873e09d04e897ca0fb5bb88de62c9ed47a816f3a376bcd7f66f",
+  "comparison_source_sha256": "99540df0ff8340d23962f7ffb2312b23a1c949925f93866941c4e311db61170f",
   "trials": [
     {
       "is_success": true,
@@ -164,7 +164,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9572134000190999,
+      "wall_time_s": 1.3109907999751158,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -217,7 +217,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.134249800001271,
+      "wall_time_s": 1.2160506999935023,
       "residual_rms": 0.11405003851464371,
       "residual_change_rms": 0.030997061080572236
     },
@@ -270,7 +270,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.8784420000156388,
+      "wall_time_s": 0.8990979999653064,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -323,7 +323,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.9991829000064172,
+      "wall_time_s": 1.0552347999764606,
       "residual_rms": 0.11578353116091435,
       "residual_change_rms": 0.03324064477379515
     },
@@ -376,7 +376,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9383346000104211,
+      "wall_time_s": 1.0008178999996744,
       "residual_rms": 0.11199705908085193,
       "residual_change_rms": 0.03410418194726634
     },
@@ -429,7 +429,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9420756000035908,
+      "wall_time_s": 0.9211116000078619,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -482,7 +482,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.100767600000836,
+      "wall_time_s": 1.0846557000186294,
       "residual_rms": 0.12963525367208065,
       "residual_change_rms": 0.04980795351145947
     },
@@ -535,7 +535,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1648991999973077,
+      "wall_time_s": 1.1660555000416934,
       "residual_rms": 0.11105426775401131,
       "residual_change_rms": 0.044821676269364355
     },
@@ -588,7 +588,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.021116499992786,
+      "wall_time_s": 1.0025303000002168,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     },
@@ -641,7 +641,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.9527049000025727,
+      "wall_time_s": 0.9445928999921307,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     },
@@ -694,7 +694,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9955146000138484,
+      "wall_time_s": 0.9715957000153139,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -747,7 +747,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9555169999948703,
+      "wall_time_s": 0.9399310000007972,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -800,7 +800,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 19,
-      "wall_time_s": 0.9592652000137605,
+      "wall_time_s": 0.8796300999820232,
       "residual_rms": 0.11490655811415612,
       "residual_change_rms": 0.035038716125921736
     },
@@ -853,7 +853,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9734536999894772,
+      "wall_time_s": 0.9326369999907911,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -906,7 +906,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.150134600000456,
+      "wall_time_s": 1.0884649999788962,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -959,7 +959,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1178267000068445,
+      "wall_time_s": 1.0766672000172548,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -1012,7 +1012,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 25,
-      "wall_time_s": 1.1387080999847967,
+      "wall_time_s": 1.096408599987626,
       "residual_rms": 0.1274805476714844,
       "residual_change_rms": 0.05083502968139223
     },
@@ -1065,7 +1065,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 25,
-      "wall_time_s": 1.2445328999892808,
+      "wall_time_s": 1.3550163000472821,
       "residual_rms": 0.11710395276664289,
       "residual_change_rms": 0.03034441828103969
     },
@@ -1118,7 +1118,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9969473999808542,
+      "wall_time_s": 1.09621160000097,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1171,7 +1171,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.9517173999920487,
+      "wall_time_s": 0.9347375999786891,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     },
@@ -1224,7 +1224,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.963061500020558,
+      "wall_time_s": 0.9620239000068977,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1277,7 +1277,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.1320433000219055,
+      "wall_time_s": 1.0964150999789126,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -1330,7 +1330,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 19,
-      "wall_time_s": 0.9200826000014786,
+      "wall_time_s": 0.9058023999677971,
       "residual_rms": 0.11490655811415612,
       "residual_change_rms": 0.035038716125921736
     },
@@ -1383,7 +1383,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1565298000059556,
+      "wall_time_s": 1.0928298000362702,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -1436,7 +1436,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.3935902999946848,
+      "wall_time_s": 1.1399391000159085,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -1489,7 +1489,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.364840499998536,
+      "wall_time_s": 0.8992233999888413,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1542,7 +1542,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.4887974000012036,
+      "wall_time_s": 1.0261132000014186,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -1595,7 +1595,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.1975079999829177,
+      "wall_time_s": 1.172270200040657,
       "residual_rms": 0.10289826526774312,
       "residual_change_rms": 0.04585837304259316
     },
@@ -1648,7 +1648,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9448783000116237,
+      "wall_time_s": 0.9469321999931708,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1701,7 +1701,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.9634849000140093,
+      "wall_time_s": 1.0007730000070296,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     },
@@ -1754,7 +1754,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1766667000192683,
+      "wall_time_s": 1.0854295000317506,
       "residual_rms": 0.12743095604287144,
       "residual_change_rms": 0.031693711234215695
     },
@@ -1807,7 +1807,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0305916999932379,
+      "wall_time_s": 1.0371710000326857,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1860,7 +1860,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 0.9864813000021968,
+      "wall_time_s": 1.1565943000023253,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -1913,7 +1913,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0011858000070788,
+      "wall_time_s": 1.07144500000868,
       "residual_rms": 0.11199705908085193,
       "residual_change_rms": 0.03410418194726634
     },
@@ -1966,7 +1966,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0017896000063047,
+      "wall_time_s": 0.9914756999933161,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -2019,7 +2019,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 31,
-      "wall_time_s": 1.4080179000156932,
+      "wall_time_s": 1.4073067999561317,
       "residual_rms": 0.04720289012605219,
       "residual_change_rms": 0.03838299041637472
     },
@@ -2072,7 +2072,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.0523848999873735,
+      "wall_time_s": 1.049575399956666,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -2125,7 +2125,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.1757673999818508,
+      "wall_time_s": 1.1508396999561228,
       "residual_rms": 0.1195187213088573,
       "residual_change_rms": 0.030997061080572236
     },
@@ -2178,7 +2178,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.005961799994111,
+      "wall_time_s": 1.0105228000320494,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -2231,7 +2231,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.2304281999822706,
+      "wall_time_s": 1.203055599995423,
       "residual_rms": 0.12743095604287144,
       "residual_change_rms": 0.031693711234215695
     },
@@ -2284,7 +2284,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 40,
-      "wall_time_s": 1.7657133000029717,
+      "wall_time_s": 1.7789457999751903,
       "residual_rms": 0.13874315203310283,
       "residual_change_rms": 0.04985692410067358
     },
@@ -2337,7 +2337,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.1662174000230152,
+      "wall_time_s": 1.219532499962952,
       "residual_rms": 0.11045428382409692,
       "residual_change_rms": 0.04979121881066838
     },
@@ -2390,7 +2390,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9027072000026237,
+      "wall_time_s": 0.9114697999903001,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -2443,7 +2443,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0880548999994062,
+      "wall_time_s": 1.4011271999916062,
       "residual_rms": 0.11708423421551663,
       "residual_change_rms": 0.05091026232722574
     },
@@ -2496,7 +2496,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.1780099000025075,
+      "wall_time_s": 1.1792220000061207,
       "residual_rms": 0.09667986716515951,
       "residual_change_rms": 0.04302250329141123
     },
@@ -2549,7 +2549,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9903782999899704,
+      "wall_time_s": 0.9871335999923758,
       "residual_rms": 0.11380364837516806,
       "residual_change_rms": 0.03410418194726634
     },
@@ -2602,7 +2602,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.1385056999861263,
+      "wall_time_s": 1.0928036000113934,
       "residual_rms": 0.12474789858517413,
       "residual_change_rms": 0.030997061080572236
     },
@@ -2655,7 +2655,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 19,
-      "wall_time_s": 1.0675323999894317,
+      "wall_time_s": 1.0378485000110231,
       "residual_rms": 0.06703834862986958,
       "residual_change_rms": 0.04955222755341939
     },
@@ -2708,7 +2708,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.0430218999972567,
+      "wall_time_s": 1.060950100014452,
       "residual_rms": 0.11596643425323927,
       "residual_change_rms": 0.03243954765960297
     },
@@ -2761,7 +2761,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 40,
-      "wall_time_s": 1.9713974999904167,
+      "wall_time_s": 2.3713594999862835,
       "residual_rms": 0.0,
       "residual_change_rms": 0.0
     },
@@ -2814,7 +2814,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.211986899987096,
+      "wall_time_s": 1.315906400035601,
       "residual_rms": 0.13060072170160558,
       "residual_change_rms": 0.047758059351272926
     },
@@ -2867,7 +2867,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0467864999955054,
+      "wall_time_s": 1.0247437000507489,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -2920,7 +2920,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.1213699999789242,
+      "wall_time_s": 0.9955105000408366,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -2973,7 +2973,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.1033090999990236,
+      "wall_time_s": 0.9698345999931917,
       "residual_rms": 0.11199705908085193,
       "residual_change_rms": 0.03410418194726634
     },
@@ -3026,7 +3026,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 31,
-      "wall_time_s": 1.4961260000127368,
+      "wall_time_s": 1.432378700003028,
       "residual_rms": 0.04991285332508594,
       "residual_change_rms": 0.03838299041637472
     },
@@ -3079,7 +3079,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.8253852000052575,
+      "wall_time_s": 0.8258459999924526,
       "residual_rms": 0.08074111217750875,
       "residual_change_rms": 0.04823059664346373
     },
@@ -3132,7 +3132,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.0352678000053857,
+      "wall_time_s": 1.053491499973461,
       "residual_rms": 0.1083055761587515,
       "residual_change_rms": 0.030997061080572236
     },
@@ -3185,7 +3185,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 16,
-      "wall_time_s": 0.5977783999987878,
+      "wall_time_s": 0.5910723999841139,
       "residual_rms": 0.0,
       "residual_change_rms": 0.0
     },
@@ -3238,7 +3238,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9387890000070911,
+      "wall_time_s": 0.9438738999888301,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -3291,7 +3291,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.03158720000647,
+      "wall_time_s": 1.0088145000045188,
       "residual_rms": 0.12076426496855118,
       "residual_change_rms": 0.05210831476700043
     },
@@ -3344,7 +3344,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 10,
-      "wall_time_s": 0.40220680000493303,
+      "wall_time_s": 0.4000934999785386,
       "residual_rms": 0.0158113883008419,
       "residual_change_rms": 0.01666666666666667
     },
@@ -3397,7 +3397,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0469458000152372,
+      "wall_time_s": 1.0267360000289045,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -3450,7 +3450,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 28,
-      "wall_time_s": 1.2275624000176322,
+      "wall_time_s": 1.1652203000267036,
       "residual_rms": 0.05967980662266369,
       "residual_change_rms": 0.04045922437471959
     },
@@ -3503,7 +3503,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.3625813999969978,
+      "wall_time_s": 1.3237732000416145,
       "residual_rms": 0.1195187213088573,
       "residual_change_rms": 0.030997061080572236
     },
@@ -3556,7 +3556,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 19,
-      "wall_time_s": 0.8824468000093475,
+      "wall_time_s": 0.8319667999749072,
       "residual_rms": 0.082838633217403,
       "residual_change_rms": 0.04833896953475339
     },
@@ -3609,7 +3609,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0037281999830157,
+      "wall_time_s": 1.0246751999948174,
       "residual_rms": 0.12743095604287144,
       "residual_change_rms": 0.031693711234215695
     },
@@ -3662,7 +3662,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 40,
-      "wall_time_s": 3.0665686999855097,
+      "wall_time_s": 3.8689977999893017,
       "residual_rms": 0.12905686548489628,
       "residual_change_rms": 0.02635984188289252
     },
@@ -3715,7 +3715,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 18,
-      "wall_time_s": 0.8319941000081599,
+      "wall_time_s": 0.7976448999834247,
       "residual_rms": 0.0,
       "residual_change_rms": 0.0
     },
@@ -3768,7 +3768,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.0349006000033114,
+      "wall_time_s": 1.031364599999506,
       "residual_rms": 0.11596643425323927,
       "residual_change_rms": 0.03243954765960297
     },
@@ -3821,7 +3821,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.109098199987784,
+      "wall_time_s": 1.0947605000110343,
       "residual_rms": 0.1128299165466515,
       "residual_change_rms": 0.05091026232722574
     },
@@ -3874,7 +3874,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0742304000013974,
+      "wall_time_s": 1.0740457000210881,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -3927,7 +3927,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 29,
-      "wall_time_s": 1.3521755999827292,
+      "wall_time_s": 1.2828412999515422,
       "residual_rms": 0.036153055545888615,
       "residual_change_rms": 0.03926748355305945
     },
@@ -3980,7 +3980,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0989365999994334,
+      "wall_time_s": 1.10185979999369,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -4033,7 +4033,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.035337500012247,
+      "wall_time_s": 1.0361730000004172,
       "residual_rms": 0.11254985710597697,
       "residual_change_rms": 0.030997061080572236
     },
@@ -4086,7 +4086,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 0.981841099972371,
+      "wall_time_s": 0.9691435000277124,
       "residual_rms": 0.1191213801977174,
       "residual_change_rms": 0.03243954765960297
     },
@@ -4139,7 +4139,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 15,
-      "wall_time_s": 0.5831156999920495,
+      "wall_time_s": 0.5582108000526205,
       "residual_rms": 0.012909944487358056,
       "residual_change_rms": 0.018898223650461364
     },
@@ -4192,7 +4192,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.327484999987064,
+      "wall_time_s": 1.3254181999946013,
       "residual_rms": 0.12474789858517413,
       "residual_change_rms": 0.030997061080572236
     },
@@ -4245,7 +4245,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 28,
-      "wall_time_s": 1.302540400007274,
+      "wall_time_s": 1.394441000011284,
       "residual_rms": 0.08020624321357415,
       "residual_change_rms": 0.05581703414647798
     },
@@ -4298,7 +4298,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 32,
-      "wall_time_s": 1.3615697999775875,
+      "wall_time_s": 1.3664058000431396,
       "residual_rms": 0.07739783384861,
       "residual_change_rms": 0.037758835154559606
     },
@@ -4351,7 +4351,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.0344238999823574,
+      "wall_time_s": 1.0421774000278674,
       "residual_rms": 0.12483323308960917,
       "residual_change_rms": 0.03243954765960297
     },
@@ -4404,7 +4404,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9913883999979589,
+      "wall_time_s": 1.0330926000024192,
       "residual_rms": 0.10234923081983324,
       "residual_change_rms": 0.05527169115311621
     },
@@ -4457,7 +4457,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 32,
-      "wall_time_s": 1.2999257999763358,
+      "wall_time_s": 1.3194183000014164,
       "residual_rms": 0.008838834764831846,
       "residual_change_rms": 0.012700012700019052
     },
@@ -4510,7 +4510,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.022452200006228,
+      "wall_time_s": 1.0010728999623097,
       "residual_rms": 0.086474752129369,
       "residual_change_rms": 0.05975884859085853
     },
@@ -4563,7 +4563,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.0681190000032075,
+      "wall_time_s": 1.0368889000383206,
       "residual_rms": 0.09809051726890843,
       "residual_change_rms": 0.06518433621672096
     },
@@ -4616,7 +4616,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 32,
-      "wall_time_s": 1.5222435999894515,
+      "wall_time_s": 1.517883999971673,
       "residual_rms": 0.04415172978567846,
       "residual_change_rms": 0.03731910667279294
     },
@@ -4669,7 +4669,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.914479900005972,
+      "wall_time_s": 0.9147313000285067,
       "residual_rms": 0.10234923081983324,
       "residual_change_rms": 0.05527169115311621
     },
@@ -4722,7 +4722,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 0.9851299000147264,
+      "wall_time_s": 0.9937047999701463,
       "residual_rms": 0.0,
       "residual_change_rms": 0.0
     },
@@ -4775,7 +4775,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 17,
-      "wall_time_s": 0.8048937999992631,
+      "wall_time_s": 0.7647093000123277,
       "residual_rms": 0.01212678125181665,
       "residual_change_rms": 0.01767766952966369
     },
@@ -4828,7 +4828,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.028637899988098,
+      "wall_time_s": 1.0147123000351712,
       "residual_rms": 0.08888599339407316,
       "residual_change_rms": 0.07234688798008038
     },
@@ -4881,7 +4881,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 40,
-      "wall_time_s": 1.97379039999214,
+      "wall_time_s": 1.9509035000228323,
       "residual_rms": 0.0,
       "residual_change_rms": 0.0
     },
@@ -4934,7 +4934,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9451621000189334,
+      "wall_time_s": 1.1481708000064828,
       "residual_rms": 0.10234923081983324,
       "residual_change_rms": 0.05527169115311621
     },
@@ -4987,7 +4987,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.0287836999923456,
+      "wall_time_s": 1.093345400004182,
       "residual_rms": 0.10192845282430936,
       "residual_change_rms": 0.06144315880482702
     },
@@ -5040,7 +5040,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9107856999908108,
+      "wall_time_s": 0.9532894000294618,
       "residual_rms": 0.10234923081983324,
       "residual_change_rms": 0.05527169115311621
     },
@@ -5093,7 +5093,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9392322000057902,
+      "wall_time_s": 0.9275525999837555,
       "residual_rms": 0.10234923081983324,
       "residual_change_rms": 0.05527169115311621
     },
@@ -5146,7 +5146,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 36,
-      "wall_time_s": 1.7901061000011396,
+      "wall_time_s": 1.7387984999804758,
       "residual_rms": 0.03691021574825535,
       "residual_change_rms": 0.02283618111873866
     },
@@ -5199,7 +5199,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.7807556000188924,
+      "wall_time_s": 0.7770636000204831,
       "residual_rms": 0.02718885640875516,
       "residual_change_rms": 0.02640991727908512
     },
@@ -5252,7 +5252,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.1247819999989588,
+      "wall_time_s": 1.1279541999683715,
       "residual_rms": 0.10595431688782621,
       "residual_change_rms": 0.06259911614105229
     },
@@ -5305,7 +5305,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 31,
-      "wall_time_s": 1.2589861000014935,
+      "wall_time_s": 1.2378724999725819,
       "residual_rms": 0.008980265101338746,
       "residual_change_rms": 0.012909944487358056
     },
@@ -5358,7 +5358,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.0408081999921706,
+      "wall_time_s": 1.0207370000425726,
       "residual_rms": 0.009805806756909202,
       "residual_change_rms": 0.014142135623730952
     },
@@ -5411,7 +5411,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.960354400012875,
+      "wall_time_s": 0.9765098000061698,
       "residual_rms": 0.10192845282430936,
       "residual_change_rms": 0.06144315880482702
     },
@@ -5464,7 +5464,7 @@
       "seed": 140000,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0088493000075687,
+      "wall_time_s": 0.9879928000154905,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -5517,7 +5517,7 @@
       "seed": 140001,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.122334800020326,
+      "wall_time_s": 1.1213769000023603,
       "residual_rms": 0.09822791880566434,
       "residual_change_rms": 0.029731336532051632
     },
@@ -5570,7 +5570,7 @@
       "seed": 140002,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 0.9856743999989703,
+      "wall_time_s": 0.9691774999955669,
       "residual_rms": 0.12182629739430816,
       "residual_change_rms": 0.03243954765960297
     },
@@ -5623,7 +5623,7 @@
       "seed": 140003,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.8610963999817614,
+      "wall_time_s": 0.807548200013116,
       "residual_rms": 0.05495145698013658,
       "residual_change_rms": 0.04959718671411988
     },
@@ -5676,7 +5676,7 @@
       "seed": 140004,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1407231999910437,
+      "wall_time_s": 1.1043318000156432,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -5729,7 +5729,7 @@
       "seed": 140005,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9153432000020985,
+      "wall_time_s": 0.9265043999766931,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -5782,7 +5782,7 @@
       "seed": 140006,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.1124400999979116,
+      "wall_time_s": 1.1122233999776654,
       "residual_rms": 0.12963525367208065,
       "residual_change_rms": 0.04980795351145947
     },
@@ -5835,7 +5835,7 @@
       "seed": 140007,
       "policy": "fixed",
       "control_steps": 22,
-      "wall_time_s": 1.1552985000016633,
+      "wall_time_s": 1.1429847000399604,
       "residual_rms": 0.10769115075674472,
       "residual_change_rms": 0.06248116062260866
     },
@@ -5888,7 +5888,7 @@
       "seed": 140008,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.0011539999977686,
+      "wall_time_s": 0.9784293999546207,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     },
@@ -5941,7 +5941,7 @@
       "seed": 140009,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 0.9920819000108168,
+      "wall_time_s": 0.9770184999797493,
       "residual_rms": 0.11755295590052688,
       "residual_change_rms": 0.05339513359145789
     },
@@ -5994,7 +5994,7 @@
       "seed": 140010,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 0.9619840000232216,
+      "wall_time_s": 0.9459532999899238,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -6047,7 +6047,7 @@
       "seed": 140011,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.0125146999780554,
+      "wall_time_s": 0.9907702000346035,
       "residual_rms": 0.11755295590052686,
       "residual_change_rms": 0.04447460374318848
     },
@@ -6100,7 +6100,7 @@
       "seed": 140012,
       "policy": "fixed",
       "control_steps": 19,
-      "wall_time_s": 0.8987757000140846,
+      "wall_time_s": 0.8729087999672629,
       "residual_rms": 0.11490655811415612,
       "residual_change_rms": 0.035038716125921736
     },
@@ -6153,7 +6153,7 @@
       "seed": 140013,
       "policy": "fixed",
       "control_steps": 24,
-      "wall_time_s": 1.0972664000000805,
+      "wall_time_s": 1.0024857000098564,
       "residual_rms": 0.1083055761587515,
       "residual_change_rms": 0.030997061080572236
     },
@@ -6206,7 +6206,7 @@
       "seed": 140014,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1520192000025418,
+      "wall_time_s": 1.1032791000325233,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -6259,7 +6259,7 @@
       "seed": 140015,
       "policy": "fixed",
       "control_steps": 23,
-      "wall_time_s": 1.1103073000267614,
+      "wall_time_s": 1.1089362000348046,
       "residual_rms": 0.12208931047451951,
       "residual_change_rms": 0.031693711234215695
     },
@@ -6312,7 +6312,7 @@
       "seed": 140016,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.0576308000017889,
+      "wall_time_s": 1.051008600043133,
       "residual_rms": 0.0993226029261712,
       "residual_change_rms": 0.04980795351145947
     },
@@ -6365,7 +6365,7 @@
       "seed": 140017,
       "policy": "fixed",
       "control_steps": 26,
-      "wall_time_s": 1.2091697999858297,
+      "wall_time_s": 1.1380961000104435,
       "residual_rms": 0.11206389458521164,
       "residual_change_rms": 0.029731336532051632
     },
@@ -6418,7 +6418,7 @@
       "seed": 140018,
       "policy": "fixed",
       "control_steps": 20,
-      "wall_time_s": 1.0285364000010304,
+      "wall_time_s": 1.0299998000264168,
       "residual_rms": 0.11864281433148384,
       "residual_change_rms": 0.03410418194726634
     },
@@ -6471,7 +6471,7 @@
       "seed": 140019,
       "policy": "fixed",
       "control_steps": 21,
-      "wall_time_s": 1.177668000018457,
+      "wall_time_s": 1.0833831999916583,
       "residual_rms": 0.12192461973433404,
       "residual_change_rms": 0.03324064477379515
     }

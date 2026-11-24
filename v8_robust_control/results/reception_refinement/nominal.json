@@ -142,7 +142,7 @@
           "seed": 1000,
           "policy": "zero",
           "control_steps": 21,
-          "wall_time_s": 1.5940535999834538,
+          "wall_time_s": 1.2860640999861062,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -195,7 +195,7 @@
           "seed": 1000,
           "policy": "static",
           "control_steps": 22,
-          "wall_time_s": 1.5590468000154942,
+          "wall_time_s": 1.0980226000538096,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -248,7 +248,7 @@
           "seed": 1001,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.663308200018946,
+          "wall_time_s": 1.2167559000081383,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -301,7 +301,7 @@
           "seed": 1001,
           "policy": "static",
           "control_steps": 40,
-          "wall_time_s": 2.946974799997406,
+          "wall_time_s": 2.301394700014498,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -354,7 +354,7 @@
           "seed": 1002,
           "policy": "zero",
           "control_steps": 21,
-          "wall_time_s": 1.6626914000080433,
+          "wall_time_s": 1.2672650000313297,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -407,7 +407,7 @@
           "seed": 1002,
           "policy": "static",
           "control_steps": 23,
-          "wall_time_s": 1.6770097000116948,
+          "wall_time_s": 1.1958673999761231,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -460,7 +460,7 @@
           "seed": 1003,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.5412198999838438,
+          "wall_time_s": 1.1269987999694422,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -513,7 +513,7 @@
           "seed": 1003,
           "policy": "static",
           "control_steps": 30,
-          "wall_time_s": 2.10703710000962,
+          "wall_time_s": 1.572111900022719,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -566,7 +566,7 @@
           "seed": 1004,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.5602292999974452,
+          "wall_time_s": 1.1703877000254579,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -619,7 +619,7 @@
           "seed": 1004,
           "policy": "static",
           "control_steps": 40,
-          "wall_time_s": 2.89427550000255,
+          "wall_time_s": 2.1968213000218384,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -672,7 +672,7 @@
           "seed": 1005,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.3098448000091594,
+          "wall_time_s": 0.9767259000218473,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -725,7 +725,7 @@
           "seed": 1005,
           "policy": "static",
           "control_steps": 28,
-          "wall_time_s": 1.7214413000037894,
+          "wall_time_s": 1.2759593999944627,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -778,7 +778,7 @@
           "seed": 1006,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.4991345999878831,
+          "wall_time_s": 1.1020005000173114,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -831,7 +831,7 @@
           "seed": 1006,
           "policy": "static",
           "control_steps": 31,
-          "wall_time_s": 1.8885317999811377,
+          "wall_time_s": 1.4257121999980882,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -884,7 +884,7 @@
           "seed": 1007,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.3285073000006378,
+          "wall_time_s": 1.1254512000014074,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -937,7 +937,7 @@
           "seed": 1007,
           "policy": "static",
           "control_steps": 30,
-          "wall_time_s": 1.8094102000177372,
+          "wall_time_s": 1.3260624000104144,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -990,7 +990,7 @@
           "seed": 1008,
           "policy": "zero",
           "control_steps": 19,
-          "wall_time_s": 1.367911200009985,
+          "wall_time_s": 1.0499159999890253,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1043,7 +1043,7 @@
           "seed": 1008,
           "policy": "static",
           "control_steps": 27,
-          "wall_time_s": 1.7208271000126842,
+          "wall_time_s": 1.2937116000102833,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1096,7 +1096,7 @@
           "seed": 1009,
           "policy": "zero",
           "control_steps": 19,
-          "wall_time_s": 1.3535557999857701,
+          "wall_time_s": 1.0571110000018962,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1149,7 +1149,7 @@
           "seed": 1009,
           "policy": "static",
           "control_steps": 26,
-          "wall_time_s": 1.9097135000047274,
+          "wall_time_s": 1.3658811000059359,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1202,7 +1202,7 @@
           "seed": 1010,
           "policy": "zero",
           "control_steps": 19,
-          "wall_time_s": 1.4384785000002012,
+          "wall_time_s": 1.0044059000210837,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1255,7 +1255,7 @@
           "seed": 1010,
           "policy": "static",
           "control_steps": 26,
-          "wall_time_s": 1.6308460000145715,
+          "wall_time_s": 1.169923099980224,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1308,7 +1308,7 @@
           "seed": 1011,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.4956644999911077,
+          "wall_time_s": 1.1432662999723107,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1361,7 +1361,7 @@
           "seed": 1011,
           "policy": "static",
           "control_steps": 27,
-          "wall_time_s": 1.7036282000190113,
+          "wall_time_s": 1.2348214000230655,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1414,7 +1414,7 @@
           "seed": 1012,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.4910533000074793,
+          "wall_time_s": 1.0726151999551803,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1467,7 +1467,7 @@
           "seed": 1012,
           "policy": "static",
           "control_steps": 34,
-          "wall_time_s": 2.248442900017835,
+          "wall_time_s": 1.782180599984713,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1520,7 +1520,7 @@
           "seed": 1013,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.6127049000060651,
+          "wall_time_s": 1.1535944999777712,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1573,7 +1573,7 @@
           "seed": 1013,
           "policy": "static",
           "control_steps": 18,
-          "wall_time_s": 1.022393799998099,
+          "wall_time_s": 0.8030943000339903,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1626,7 +1626,7 @@
           "seed": 1014,
           "policy": "zero",
           "control_steps": 26,
-          "wall_time_s": 2.6129484999983106,
+          "wall_time_s": 1.531480500008911,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1679,7 +1679,7 @@
           "seed": 1014,
           "policy": "static",
           "control_steps": 23,
-          "wall_time_s": 1.8105349000252318,
+          "wall_time_s": 1.235780099988915,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1732,7 +1732,7 @@
           "seed": 1015,
           "policy": "zero",
           "control_steps": 26,
-          "wall_time_s": 1.982036600005813,
+          "wall_time_s": 1.4524669999955222,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1785,7 +1785,7 @@
           "seed": 1015,
           "policy": "static",
           "control_steps": 32,
-          "wall_time_s": 2.1400075999845285,
+          "wall_time_s": 1.5260680000064895,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1838,7 +1838,7 @@
           "seed": 1016,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.5708872999821324,
+          "wall_time_s": 1.128210399998352,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1891,7 +1891,7 @@
           "seed": 1016,
           "policy": "static",
           "control_steps": 27,
-          "wall_time_s": 1.604341199999908,
+          "wall_time_s": 1.2329238000093028,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1944,7 +1944,7 @@
           "seed": 1017,
           "policy": "zero",
           "control_steps": 28,
-          "wall_time_s": 2.8267918000055943,
+          "wall_time_s": 1.601844999997411,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -1997,7 +1997,7 @@
           "seed": 1017,
           "policy": "static",
           "control_steps": 33,
-          "wall_time_s": 2.509027199994307,
+          "wall_time_s": 1.5010214000358246,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -2050,7 +2050,7 @@
           "seed": 1018,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.6929779999773018,
+          "wall_time_s": 1.2939016000018455,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -2103,7 +2103,7 @@
           "seed": 1018,
           "policy": "static",
           "control_steps": 26,
-          "wall_time_s": 2.0809699000092223,
+          "wall_time_s": 1.8968601999804378,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -2156,7 +2156,7 @@
           "seed": 1019,
           "policy": "zero",
           "control_steps": 20,
-          "wall_time_s": 1.508639299980132,
+          "wall_time_s": 1.4113239999860525,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         },
@@ -2209,7 +2209,7 @@
           "seed": 1019,
           "policy": "static",
           "control_steps": 25,
-          "wall_time_s": 1.8962034999858588,
+          "wall_time_s": 1.691703399992548,
           "residual_rms": 0.0,
           "residual_change_rms": 0.0
         }

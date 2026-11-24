@@ -1,27 +1,27 @@
-# 感知扰动评估结果
+# Perception Disturbance Evaluation Results
 
-任务包含三球 2+1 开局、级联和 2+1 收尾。成功要求全部目标飞行完成，且三球连续 0.8 s 接触承托、相对手掌速度低于 0.15 m/s；初始持球连续稳定至少 0.05 s。
+The task includes the three-ball 2+1 opening, cascade, and 2+1 ending. Success requires completing all target flights plus 0.8 s continuous three-ball hand contact with relative palm speed < 0.15 m/s; initial hold requires >= 0.05 s continuous stability.
 
-每次请求 30 次完整飞行；测试种子：0, 1。
-控制器参数固定，使用位置采样与三点状态估计。噪声为各坐标轴独立高斯噪声，延迟为固定 FIFO 交付延迟，丢帧按整帧独立采样。
-接触、安全检查和私有规划试算使用仿真真值。以下结果属于仿真敏感性评估，扰动范围未经真实传感器标定。
+Requested 30 complete flights per trial; test seeds: 0, 1.
+Controller parameters are fixed, using position sampling (three-point state estimation when undisturbed; filtered contact-support and ballistic-fit estimation under perception disturbances). Noise is independent per-axis Gaussian noise, delay is a fixed FIFO delivery delay, and dropout drops whole frames independently.
+Contacts, safety checks, and private planning rollouts use simulation ground truth. These results are a simulation sensitivity study; disturbance ranges are not calibrated to real hardware sensors.
 
-| 配置 | 噪声 σ (mm) | 延迟 (ms) | 丢帧概率 | 成功/试验 | 平均完成飞行 | 掉球总数 | 球球碰撞总数 |
+| Case | Noise sigma (mm) | Delay (ms) | Dropout prob | Success/Trials | Mean completed flights | Total drops | Total ball-ball collisions |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | baseline | 0 | 0 | 0 | 2/2 | 30.0 | 0 | 0 |
-| noise_1mm | 1 | 0 | 0 | 0/2 | 0.0 | 0 | 0 |
-| noise_3mm | 3 | 0 | 0 | 0/2 | 0.0 | 0 | 0 |
-| noise_5mm | 5 | 0 | 0 | 0/2 | 0.0 | 0 | 0 |
-| noise_10mm | 10 | 0 | 0 | 0/2 | 0.0 | 0 | 0 |
+| noise_1mm | 1 | 0 | 0 | 0/2 | 26.5 | 0 | 0 |
+| noise_3mm | 3 | 0 | 0 | 0/2 | 15.5 | 0 | 0 |
+| noise_5mm | 5 | 0 | 0 | 0/2 | 5.5 | 0 | 0 |
+| noise_10mm | 10 | 0 | 0 | 0/2 | 5.5 | 0 | 0 |
 | delay_10ms | 0 | 10 | 0 | 2/2 | 30.0 | 0 | 0 |
 | delay_20ms | 0 | 20 | 0 | 2/2 | 30.0 | 0 | 0 |
 | delay_40ms | 0 | 40 | 0 | 2/2 | 30.0 | 0 | 0 |
 | dropout_5pct | 0 | 0 | 0.05 | 2/2 | 30.0 | 0 | 0 |
 | dropout_15pct | 0 | 0 | 0.15 | 1/2 | 20.5 | 0 | 0 |
-| dropout_30pct | 0 | 0 | 0.3 | 0/2 | 6.0 | 0 | 0 |
-| combined | 3 | 20 | 0.1 | 0/2 | 0.0 | 0 | 0 |
+| dropout_30pct | 0 | 0 | 0.3 | 0/2 | 7.0 | 0 | 0 |
+| combined | 3 | 20 | 0.1 | 0/2 | 11.5 | 0 | 0 |
 
-各条件的试验次数有限；成功次数用于描述本次实验，不作为总体成功概率的精确估计。
-规划拒绝、姿态越限和数据过期造成的失败均保留在逐次结果中。估计误差仅统计实时空中球的有效估计，按物理步采样；无效估计单独计数。
+Trial counts per condition are limited; success counts summarize this experiment and are not an accurate estimate of population success probability.
+Failures from planning rejections, posture limit violations, and expired measurements are retained in per-trial records. Estimation error is computed only over valid online airborne-ball estimates sampled per physics step; invalid estimates are counted separately.
 
-球球碰撞列仅统计禁止的接触。首次确认释放前允许的开局球对承托接触，其持续步数与峰值力在逐次 CSV 和原始记录中单独列出。
+The ball-ball collisions column counts forbidden contacts only. Permitted opening pair support contact before the first confirmed release has its step count and peak force listed separately in the per-trial CSV and raw records.

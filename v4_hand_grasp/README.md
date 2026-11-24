@@ -1,373 +1,159 @@
-# v4 — Stage 4：UR5e + LEAP 灵巧手（E1 握持 / 离手，E2 张开手指抛球，E3 接球与自抛自接，碗状手型，E4 甩抛，E5 三球 cascade 中的一只手）
+# v4 — Stage 4: UR5e + LEAP Dexterous Hand (E1 Grasp/Release, E2 Timed-Open Throw, E3 Catch & Self-Juggle, Bowl Posture, E4 Whip Throw, E5 Single-Hand Three-Ball Cascade)
 
-杯子阶段的双臂实验（v3）已暂停（见 `git stash list`），项目直接转到灵巧手。v4 依次回答：
+Dual-arm cup experiments (v3) were paused (see `git stash list`) and development moved directly to a dexterous hand. v4 addresses:
 
-- **E1**：LEAP 手装在 UR5e 上，能否在抛球级别的加速度下握住一个 juggling 尺寸的球，不握时又能否让它离手？
-- **E2**：握住加速，按设定时刻张开手指离手（两个参数），能否控制抛球？
-- **E3a**：用这只手接发射器抛来的球。
-- **E3b**：单臂、单球、灵巧手，在两点之间连续自抛自接（v2 实验 B 的手版本）。
-- **E3c**：像人一样用"碗状"的手接球（拳峰最低、掌根和手指高于拳峰），与平放的手掌对比。
-- **E4**：甩抛（手可以转动，几个平行关节的转速沿手臂叠加）能把出手速度提高多少？这决定了三球 cascade 是否可行。
-- **E5**：单臂扮演三球 cascade 中的一只手（另一只手用镜像发射器代替），这只手能否跟上 cascade 的节奏？
+- **E1**: Can a LEAP Hand mounted on a UR5e hold a juggling-sized ball under throw-level accelerations and release it when open?
+- **E2**: Can opening the fingers at a scheduled time (`t_open`, `T_open`) control throw velocity?
+- **E3a**: Catching balls tossed by a launcher with the LEAP Hand.
+- **E3b**: Single-arm, single-ball two-point self-throw/catch (hand version of v2 Experiment B).
+- **E3c**: Human-like "bowl" hand posture (knuckles lowest, palm heel and fingers raised) compared against a flat palm.
+- **E4**: How much release speed does whip throwing add when parallel arm joints rotate together?
+- **E5**: Can one arm play one hand of a three-ball cascade (with the other hand replaced by a mirrored launcher)?
 
-没有强化学习。
+Classical control only (no RL).
 
-## 文件
+## Files
 
-| 文件 | 内容 |
+| File | Contents |
 |---|---|
-| `ur5e_leap.xml` | Menagerie UR5e（同 v1/v2）在法兰处用 `<attach>` 装上 Menagerie LEAP 右手（前缀 `leap_`）。手掌的抓握面朝法兰外侧，掌心中心在法兰轴线上，掌背离法兰约 3 cm。site `ball_seat`（球静置时的球心，沿法兰轴 122 mm）、`catch_point`（再往上 25 mm，接球目标）；`bowl_seat`、`bowl_point`（碗状接球，由 `handsim.set_bowl_sites()` 放置，z 轴为碗口方向） |
-| `scene.xml` | 场景：地面、相机（`close`、`throw`，E3b 用 `loop`）、一个球；`cone="elliptic"`、`impratio="100"`（Menagerie LEAP 模型推荐的设置，被 attach 的子模型不会带上这些选项） |
-| `handsim.py` | 仿真封装（E5：`load_model(extra_balls=)` 加入多个球，`select_ball` / `set_ball_state` / `park_ball`）：`load_model()` 用 MjSpec 设置手的重力补偿、手指力矩上限、手掌和指尖的柔顺接触，以及可选的底座垫高（`pedestal`，E3b）；手臂跟踪（PD + 逆动力学前馈，同 v2）；手型；放球；球的接触分类（掌 / 指 / 臂 / 地面）；180°/s 检查；直线运动段 `LineStroke` |
-| `kinematics.py` | v2 的 IK / FK，任务点可选（默认法兰，接球用 `catch_point`）；5 维：位置 + 掌心法向，绕法向的转动交给零空间 |
-| `prediction.py`、`planning.py` | v1/v2 的弹道拟合和接球规划。`planning.py` 新增 `cushion_dir="down"`（缓冲沿竖直向下）和策略 `"direct"`（E5：从运动中的手臂直接一段五次多项式到接球位姿，不先停稳；`rejections` 记录候选被拒的原因）；`prediction.py` 新增 `fit_with_prior()`（以名义出手状态为先验的加权拟合，E3b） |
-| `grasp_test.py` | E1 |
-| `hand_throw.py` | E2 |
-| `hand_catch.py` | E3a |
-| `hand_juggle.py` | E3b |
-| `whip_test.py` | E4 |
-| `hand_cascade.py` | E5 |
-| `video.py` | v2 的录像工具（修正：从 t > 0 开始录时不再先补拍一串帧） |
-| `results/` | 各实验原始输出；`postures.png`（三种手型）、`hand_throw_frames.png`（E2 抛球抽帧） |
-| `../assets/leap_hand/` | Menagerie `leap_hand`（commit `0059d43`，MIT 许可）的 mesh、`LICENSE`、原版 `right_hand.xml`（`meshdir` 改为 `.`） |
+| `ur5e_leap.xml` | Menagerie UR5e (same as v1/v2) with Menagerie right LEAP Hand attached at flange (prefix `leap_`). Sites: `ball_seat` (122 mm along flange axis), `catch_point` (+25 mm); `bowl_seat`, `bowl_point` placed by `handsim.set_bowl_sites()` |
+| `scene.xml` | Floor, cameras (`close`, `throw`, `loop` for E3b), ball; `cone="elliptic"`, `impratio="100"` (recommended Menagerie LEAP settings) |
+| `handsim.py` | Simulation wrapper (`load_model(extra_balls=)` for E5): sets hand `gravcomp`, finger torque limits, compliant palm/fingertip contacts, optional `pedestal` (E3b); PD + inverse-dynamics arm tracking; hand poses; contact classification; 180°/s guard; `LineStroke` |
+| `kinematics.py` | v2 IK/FK with selectable target site (5 DoF: position + palm normal; spin handled in null space) |
+| `prediction.py`, `planning.py` | v1/v2 ballistic fit and catch planner, adding `cushion_dir="down"`, `"direct"` strategy (E5: single quintic from moving arm without stopping), and `fit_with_prior()` (E3b) |
+| `grasp_test.py` .. `hand_cascade.py` | E1 (`grasp_test.py`), E2 (`hand_throw.py`), E3a (`hand_catch.py`), E3b (`hand_juggle.py`), E4 (`whip_test.py`), E5 (`hand_cascade.py`) |
+| `video.py` | v2 video recorder (fixed frame padding when recording starts at `t > 0`) |
+| `results/` | Raw outputs, `postures.png`, `hand_throw_frames.png` |
+| `../assets/leap_hand/` | Menagerie `leap_hand` (commit `0059d43`, MIT license) meshes, `LICENSE`, and original `right_hand.xml` (`meshdir="."`) |
 
-## 运行（在仓库根目录）
+## Running (from the repository root)
 
 ```bash
 uv run python v4_hand_grasp/grasp_test.py --a-up 2 3 --a-down 0.5 1.5 3
-uv run python v4_hand_grasp/grasp_test.py --images v4_hand_grasp/results     # 另存三种手型的截图
-uv run python v4_hand_grasp/hand_throw.py                                    # E2 参数扫描（约 3 分钟）
+uv run python v4_hand_grasp/grasp_test.py --images v4_hand_grasp/results     # Save posture screenshots
+uv run python v4_hand_grasp/hand_throw.py                                    # E2 sweep (~3 min)
 uv run python v4_hand_grasp/hand_throw.py --tilt 20 --heading 90 --t-open -0.02 0.02 --T-open 0.03
-uv run python v4_hand_grasp/hand_throw.py --t-open 0.02 --T-open 0.03 --trials 1 --video videos/   # 0.25 倍速录像
-uv run python v4_hand_grasp/hand_catch.py --trials 20                        # E3a/E3c：默认碗状手型，接触后收紧 vs 只托不握
-uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat            # E3a：平放手掌
+uv run python v4_hand_grasp/hand_throw.py --t-open 0.02 --T-open 0.03 --trials 1 --video videos/
+uv run python v4_hand_grasp/hand_catch.py --trials 20                        # E3a/E3c: default bowl posture
+uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat            # E3a: flat palm
 uv run python v4_hand_grasp/hand_catch.py --trials 20 --hand flat --obs-noise 0.005 --cushion-dir ball --d-pre 0.05 --d-cush 0.10
-uv run python v4_hand_grasp/hand_catch.py --fingers close --obs-bias 0.03    # 人为 3 cm 落点误差
-uv run python v4_hand_grasp/hand_juggle.py --obs-noise 0.01                  # 自抛自接，默认碗状（yaw 0，出手点 0.9 m）
-uv run python v4_hand_grasp/hand_juggle.py --hand flat --obs-noise 0.005     # E3b：平放手掌（yaw 90，出手点 0.85 m）
+uv run python v4_hand_grasp/hand_catch.py --fingers close --obs-bias 0.03    # 3 cm artificial landing bias
+uv run python v4_hand_grasp/hand_juggle.py --obs-noise 0.01                  # Self-juggle, default bowl
+uv run python v4_hand_grasp/hand_juggle.py --hand flat --obs-noise 0.005     # E3b: flat palm
 uv run python v4_hand_grasp/hand_juggle.py --runs 1 --cycles 6 --video videos/hand_juggle.mp4
-uv run python v4_hand_grasp/whip_test.py --poses 5 --a-up 2 3                # E4（约 15 分钟）
+uv run python v4_hand_grasp/whip_test.py --poses 5 --a-up 2 3                # E4 (~15 min)
 uv run python v4_hand_grasp/whip_test.py --pose 0.9 0.3 --pose 0.9 0.2 --a-up 3 --a-down 2.5 4 5
-uv run python v4_hand_grasp/hand_cascade.py --tau 0.35 0.37 0.39 --runs 2                 # E5，无噪声
+uv run python v4_hand_grasp/hand_cascade.py --tau 0.35 0.37 0.39 --runs 2
 uv run python v4_hand_grasp/hand_cascade.py --launch-noise 0.03 --obs-noise 0.005 --runs 5 --throws 50 --seed 1
 uv run python v4_hand_grasp/hand_cascade.py --runs 1 --throws 8 --video videos/hand_cascade.mp4
 ```
 
-## 球与接触模型
+## Ball and Contact Model
 
-| | 人手 | LEAP 手 |
+| | Human Hand | LEAP Hand |
 |---|---|---|
-| 手的大小 | 1 | 约 1.3 倍人手（Shaw et al., RSS 2023："similar in size to Allegro and ∼30% larger than a human hand"） |
-| 常用 juggling 球直径 | 65–67 mm（成人标准 beanbag） | **85 mm**（= 65 mm × 1.3） |
-| 球的质量 | 120 g（零售商称最标准、最常用） | **120 g**：LEAP 的握力与人手相当（拉脱力 19.5 N，论文称"超过人手"），所以不按体积放大（按体积会到约 260 g） |
+| Scale | 1 | ≈ 1.3× human hand (Shaw et al., RSS 2023) |
+| Juggling ball diameter | 65–67 mm (standard beanbag) | **85 mm** (= 65 mm × 1.3) |
+| Ball mass | 120 g | **120 g** (LEAP grip pull-out force 19.5 N is comparable to human hand, so mass is not scaled by volume) |
 
-- **球**：普通球，接触参数同 v0–v2（`solref=(0.003, 0.5)`）。
-- **手掌和指尖**（`leap_palm_collision_*`、`leap_*_tip`）：Menagerie 原模型近似刚性（`solref=0.0001`）。这里改为柔顺、有阻尼的"皮肤垫"：`solref=(0.006, 1.2)`（时间常数 6 ms，阻尼比 1.2，不反弹）、`solimp=(0.9, 0.95, 0.004)`，`solmix=100`（MuJoCo 按接触对平均参数，这样与球接触时以手的参数为主）。其余手指连杆保持原样。
-- **曾试过的沙包球**（球本身过阻尼）也能让接球成功，但按要求改回普通球，柔顺性放在手上。
+- **Ball**: Standard ball with v0–v2 contact parameters (`solref=(0.003, 0.5)`).
+- **Palm and fingertips** (`leap_palm_collision_*`, `leap_*_tip`): Replaced Menagerie's near-rigid `solref=0.0001` with a compliant damped pad `solref=(0.006, 1.2)`, `solimp=(0.9, 0.95, 0.004)`, `solmix=100` so hand compliance dominates ball-hand contacts.
 
-## 模型设置
+## Model Settings
 
-| 项目 | 值 | 说明 |
+| Item | Value | Notes |
 |---|---|---|
-| 手的质量 | 0.746 kg（模型） | 实物 595 g（论文）。模型偏重约 25%，偏保守 |
-| 手指执行器 | 位置伺服 kp = 3，**力矩上限 ±0.5 N·m** | Menagerie 模型没有力矩上限。LEAP 用 Dynamixel XC330-M288-T，电流上限 600–750 mA（论文）；0.5 N·m 是该电流下的保守估计，**待核实** |
-| 重力补偿 | 手的所有刚体 `gravcomp=1` | 真实机械臂控制器会补偿负载重力 |
-| 手指尺寸 | 根部间距：食指到无名指 91 mm；手指长约 0.11–0.12 m | 从模型中测得 |
+| Hand mass | 0.746 kg (model) | Hardware 595 g (paper); model is ≈ 25% heavier (conservative) |
+| Finger actuators | Position servo kp = 3, **torque limit ±0.5 N·m** | Menagerie model omits torque limits; 0.5 N·m is a conservative estimate for Dynamixel XC330-M288-T at 600–750 mA (**to be verified**) |
+| Gravity compensation | `gravcomp=1` on all hand bodies | Matches arm controller payload gravity compensation |
+| Finger geometry | Index-to-ring base span 91 mm; finger length ≈ 0.11–0.12 m | Measured from model |
 
-## 手型
+## Hand Postures
 
-| 手型 | 关节目标 | 说明 |
+| Posture | Joint Targets | Notes |
 |---|---|---|
-| flat 平掌 | 全 0 | 参照组；抛球时手指张开的目标 |
-| cradle 托球 | 手指 mcp = pip = 0.8、dip = 0.48；拇指 th_cmc = 1.2 | 小规模搜索得到：球在掌心时，手指一侧、拇指一侧、掌根一侧都有"墙"（在这些方向移动 6–34 mm 就会碰到）。**LEAP 没有小指，无名指一侧是敞开的**（移动 60 mm 都碰不到） |
-| grasp 握球 | 手指 1.2 / 1.2 / 0.72；拇指 th_cmc 1.2、th_mcp 0.5 | 指令越过接触位置：三根手指、拇指和手掌同时接触球，舵机以力矩上限压住球。更紧的手型（th_cmc 1.6–1.8）会把球从敞开的一侧挤出去；直接以闭合手型放球也会把球弹开，所以要先托住再收紧 |
-| catch 接球 | 托球手型，但手指只弯 0.3 | 托球手型那样立起的手指，会挡开从指尖方向斜着飞来的球（E3a） |
-| bowl 碗状（E3c，默认） | 手指 MCP 1.1、PIP 0.3，拇指同托球；配合掌根抬高 30°；碰掌后收紧到 MCP 1.4、PIP 1.2 | 拳峰最低，球落进掌心和手指之间的折痕（E3c） |
+| `flat` | All 0 | Reference; open target for throwing |
+| `cradle` | Fingers mcp = pip = 0.8, dip = 0.48; thumb `th_cmc = 1.2` | Forms walls on finger, thumb, and palm-heel sides (6–34 mm clearance); **ring-finger side is open** (no pinky on LEAP) |
+| `grasp` | Fingers 1.2 / 1.2 / 0.72; thumb `th_cmc = 1.2`, `th_mcp = 0.5` | Overdriven past contact so servos apply torque limit; tighter `th_cmc` (1.6–1.8) squeezes the ball out the open side |
+| `catch` | Same as `cradle` with fingers bent only 0.3 | Upright cradle fingers deflect balls arriving obliquely from the fingertip side (E3a) |
+| `bowl` (E3c, default) | Fingers MCP 1.1, PIP 0.3, thumb as `cradle`, palm heel raised 30°; closes to MCP 1.4, PIP 1.2 on touch | Knuckles lowest; ball settles into palm-finger crease |
 
-## E1：握持 / 离手（`results/grasp_test.txt`）
+## E1: Grasp / Release (`results/grasp_test.txt`)
 
-测试：ready 姿态（掌心朝上），球在手型中静置 1 s，然后手**竖直向上平移、姿态不变**（关节路径由 6 维任务 [z; 0] 积分得到）。
-速度曲线：先以峰值加速度 a_up 加速到 0.9 m/s，再以峰值减速度 a_down 停下。
-球离开手超过 20 ms 判为 THROWN（被抛出）；否则为 HELD（握住）。
+Vertical linear translation from `ready` (palm up) accelerating at `a_up` to 0.9 m/s and decelerating at `a_down`. Separation > 20 ms counts as `THROWN`, else `HELD`.
 
-| 手型 | a_up | a_down = 0.5 g | a_down = 1.5 g | a_down = 3 g | 握持时球在掌中的滑移 | 手指力矩 / 上限 |
+| Posture | a_up | a_down = 0.5 g | a_down = 1.5 g | a_down = 3 g | Ball Slip While Held | Finger Torque / Limit |
 |---|---|---|---|---|---|---|
-| flat | 2–3 g | HELD | THROWN（空中约 105 ms） | THROWN（约 147 ms） | 2–4 mm | 0.33–0.50 |
-| cradle | 2–3 g | HELD | THROWN（约 106 ms） | THROWN（约 148 ms） | 2–4 mm | 0.19–0.28 |
-| grasp | 2–3 g | HELD | **HELD** | **HELD** | 1.6–1.7 mm | 1.00（按设计压到上限） |
+| `flat` | 2–3 g | HELD | THROWN (≈ 105 ms) | THROWN (≈ 147 ms) | 2–4 mm | 0.33–0.50 |
+| `cradle` | 2–3 g | HELD | THROWN (≈ 106 ms) | THROWN (≈ 148 ms) | 2–4 mm | 0.19–0.28 |
+| `grasp` | 2–3 g | HELD | **HELD** | **HELD** | 1.6–1.7 mm | 1.00 (at limit by design) |
 
-- 手臂关节速度峰值 0.88–0.90 × 180°/s：这个姿态下竖直平移约 1 m/s 就接近上限，和 v2 的平移抛结论一致。
-- 手臂执行器力峰值 0.74 × 上限，出现在 shoulder_lift（3g 向上加速时）。腕部 wrist_1 为 0.41 × 上限（28 N·m），手加球的负载可以承受。
+Peak arm joint speed 0.88–0.90 × 180°/s; peak arm actuator force 0.74 × limit (`shoulder_lift`), `wrist_1` 0.41 × limit. **Conclusion**: `grasp` holds 120 g through 3 g acceleration/deceleration; `flat`/`cradle` release above 1 g deceleration.
 
-**结论**：握球手型能在 3g 加速 / 3g 减速下握住 120 g 的球；平掌和托球手型在减速度超过 1g 时让球离手，与杯子的离手机理相同。
+## E2: Timed Finger-Opening Throws (`hand_throw.py`)
 
-## E2：握住加速、按时刻张开手指抛球（`hand_throw.py`）
+Linear flange stroke (`LineStroke`, 3 g up / 3 g down, V = 1.7 m/s, arm joint speed 0.82 × 180°/s), interpolating from `grasp` to `flat` starting at `t_open` (relative to peak speed) over `T_open`. Random perturbations: ±3 mm ball offset, ±3 ms timing jitter, ±0.02 rad finger targets (10 trials/setting).
 
-**动作**：
-- 球先在托球手型里放好，再收紧成握球手型。
-- 法兰沿直线运动（手的姿态不变，`handsim.LineStroke`）：以 3g 加速到 V，峰值速度时法兰位于 (0.85, 0, 0.30)、掌心朝上，然后以 3g 减速停下。
-- 手指从握球手型张到平掌（关节目标线性插值），由**两个参数**描述：
-  - `t_open`：开始张开的时刻，相对峰值速度（负值表示在峰值之前）；
-  - `T_open`：张开所用的时长（舵机受力矩上限限制，实际可能更慢）。
-- 手指松开、且手的减速度超过 1g 时，球就离手。
-- 速度上限：这个姿态手臂伸直，竖直平移最快约 2 m/s（扫描结果）。V = 1.7 m/s 时手臂关节速度为 0.82 × 180°/s。
+**Vertical throws (`results/hand_throw_vertical.txt`, mean ± std)**:
 
-**随机扰动**（衡量重复性）：球在掌中初始位置 ±3 mm、张开起始时刻抖动 ±3 ms、手指目标 ±0.02 rad。每组 10 次。
-
-**竖直抛结果**（`results/hand_throw_vertical.txt`，均值 ± 标准差；柔顺手掌 / 指尖）：
-
-| t_open | T_open | 离手（峰值后） | 球速 / 手速 (m/s) | 方向偏差 | 自转 (rad/s) | 抛高 (mm) |
+| t_open | T_open | Release (after peak) | Ball / Hand Speed (m/s) | Direction Error | Spin (rad/s) | Apex (mm) |
 |---|---|---|---|---|---|---|
 | −40 / −20 ms | 10–60 ms | 8–15 ms | 1.63–1.69 ± 0.01–0.03 / 1.62–1.70 | 1.4–3.4° | 0.9–2.4 | 135–146 ± 2–5 |
-| 0 ms | 10 / 30 / 60 ms | 10 / 14 / 21 ms | 1.80 / 1.70 / 1.60 ± 0.04–0.07（手 1.65 / 1.60 / 1.50） | 2–3° | 2.4–3.8 | 164 / 147 / 130 ± 7–12 |
-| +20 ms | 10 / 30 / 60 ms | 29 / 35 / 43 ms | 1.58 / 1.38 / 1.16 ± 0.06–0.07（手 1.30 / 1.15 / 0.94） | 2–4° | 2.6–4.3 | 127 / 96 / 68 ± 9–10 |
-| +40 ms | 10 / 30 / 60 ms | 48 / 55 / 63 ms | 1.05 / 0.88 / 0.61 ± 0.06–0.09（手 0.77 / 0.57 / 0.38） | 6–7° | 3.1–5.3 | 56 / 40 / 19 ± 4–8 |
+| 0 ms | 10 / 30 / 60 ms | 10 / 14 / 21 ms | 1.80 / 1.70 / 1.60 ± 0.04–0.07 (hand 1.65 / 1.60 / 1.50) | 2–3° | 2.4–3.8 | 164 / 147 / 130 ± 7–12 |
+| +20 ms | 10 / 30 / 60 ms | 29 / 35 / 43 ms | 1.58 / 1.38 / 1.16 ± 0.06–0.07 (hand 1.30 / 1.15 / 0.94) | 2–4° | 2.6–4.3 | 127 / 96 / 68 ± 9–10 |
+| +40 ms | 10 / 30 / 60 ms | 48 / 55 / 63 ms | 1.05 / 0.88 / 0.61 ± 0.06–0.09 (hand 0.77 / 0.57 / 0.38) | 6–7° | 3.1–5.3 | 56 / 40 / 19 ± 4–8 |
 
-**发现**：
-1. **在峰值之前张开**（t_open < 0）时，球在减速度超过 1g 时自然离手，速度约等于手速，机理和杯子相同，t_open 几乎不起作用。
-2. **在峰值附近或之后张开**时，手指在减速段继续握住球。离手推迟，离手速度随 t_open、T_open 单调变化（1.8 → 0.6 m/s），**张开时刻成为控制抛速的手段**，这是靠 grasping 实现的离手控制。
-3. **球速比离手瞬间的手速快 0.1–0.3 m/s**：握紧时手掌、指尖的软垫被压缩，张开时把球"弹"出去；同时带来 2–5 rad/s 的自转和 2–7° 的方向偏差。这一项解析模型难以算准，正是之后 RL 修正的切入点。（接触刚硬时只快 0.07–0.14 m/s，见 git 历史中的上一版结果。）
-4. **重复性**：速度标准差 0.01–0.09 m/s，抛高标准差 2–12 mm；越晚张开、离散度越大。
+**Findings**: Opening before peak (`t_open < 0`) releases naturally at > 1 g deceleration; opening at/after peak monotonically modulates speed (1.8 → 0.6 m/s); compliant pad spring-back adds 0.1–0.3 m/s over hand speed with 2–5 rad/s spin and 2–7° angular error.
 
-**斜向抛**（偏离竖直 20°，`results/hand_throw_tilt20.txt`；t_open = −20 / +20 ms，T_open = 30 ms）：
+**Tilted throws (20° from vertical, `results/hand_throw_tilt20.txt`)**: 10/10 clean releases in all four palm directions (ring-side 1.7 m/s, thumb-side 1.7 m/s, fingertip 1.0 m/s, palm-heel 1.2 m/s), direction error 1.6–8.7°.
 
-| 偏斜方向（手掌坐标） | V | 结果 | 方向偏差 | 侧向速度 |
-|---|---|---|---|---|
-| 无名指侧（敞开的一侧） | 1.7 m/s | 10/10 抛出 | 1.6 / 3.8° | 45 / 92 mm/s |
-| 拇指侧 | 1.7 m/s | 10/10 | 1.8 / 2.8° | 52 / 69 mm/s |
-| 指尖方向 | 1.0 m/s | 10/10 | 3.7 / 8.7° | 60 / 86 mm/s |
-| 掌根方向 | 1.2 m/s | 10/10 | 3.7 / 5.6° | 72 / 82 mm/s |
+## E3a: Catching Launched Balls (`hand_catch.py --hand flat`, `results/hand_catch_compare.txt`)
 
-握球手型在四个方向的侧向负载下都能握住，球不会提前掉出。朝指尖、掌根方向，在这个姿态下需要手臂伸缩，1.7 m/s 会超速（1.33 / 1.15 × 180°/s），所以用了较低的速度。
+v1 launcher (4.4–5.8 m/s at catch), 20 trials/setting:
 
-## E3a：接发射器抛来的球（`hand_catch.py --hand flat`，`results/hand_catch_compare.txt`）
-
-**设置**：
-- 发射器同 v1：从 (1.8, 0, 0.65) 附近抛出，飞行 0.8–1.1 s，到手时球速 4.4–5.8 m/s；目标区域比 v1 高约 7 cm，因为手的接球点比杯口高。
-- 观测 100 Hz，拟合弹道，规划接球并在飞行中重新规划（同 v1）；接球目标为 `catch_point`，掌心法向对着来球（倾角 ≤ 40°）；接球规划的关节速度上限加了 0.9 余量。
-- **手臂让位**（按要求）：接触前 3 cm 开始竖直向下运动，接触时手速达到 min(0.4 × 球速, 0.7 m/s)，接触后再向下 8 cm 停下（`cushion_dir="down"`）。对照组：沿来球方向缓冲（v1 做法，5 cm / 10 cm）、静止等球。
-- **手指**：
-  - "接触后收紧"：接球手型等球，球一碰到手掌就收紧成握球手型；
-  - "只托不握"：一直保持接球手型。
-- **成功判定**：手臂停下后，球在 `ball_seat` 3 cm 以内、相对手的速度 < 0.05 m/s，持续 0.5 s。
-
-**结果**（每组 20 次）：
-
-| 手臂动作 | 手指 | 无噪声 | 5 mm 观测噪声 | 接触相对速度（均值 / 最大） | 穿透深度（最大） |
+| Arm Motion | Fingers | Zero Noise | 5 mm Noise | Relative Impact Speed (mean / max) | Max Penetration |
 |---|---|---|---|---|---|
-| 竖直向下让位 | 接触后收紧 | **20/20** | 13/20 | 3.04 / 3.54 m/s | 10.7 mm |
-| 竖直向下让位 | 只托不握 | 0/20 | 0/20 | 同上 | — |
-| 沿来球方向缓冲 | 接触后收紧 | 20/20 | **19/20** | 3.10 / 3.55 m/s | 11.7 mm |
-| 静止等球 | 接触后收紧 | 20/20 | 17/20 | 3.46 / 3.83 m/s | 12.4 mm |
+| Downward cushion | Close on touch | **20/20** | 13/20 | 3.04 / 3.54 m/s | 10.7 mm |
+| Downward cushion | Passive | 0/20 | 0/20 | Same | — |
+| Along-ball cushion | Close on touch | 20/20 | **19/20** | 3.10 / 3.55 m/s | 11.7 mm |
+| Static wait | Close on touch | 20/20 | 17/20 | 3.46 / 3.83 m/s | 12.4 mm |
 
-**发现**：
-1. **主动收紧手指是接住的前提**：只托不握在所有设置下都接不住，平掌加三根手指托不住来球。接球离不开 grasping。
-2. **接球时手指不能立起来**：托球手型的手指（0.8 rad）会挡开从指尖方向斜着飞来的球（第一版 0/20）。手指只弯 0.3 rad，再在球碰到掌心时收紧，就能 20/20 接住。
-3. **手臂让位能降低冲击，但幅度有限**：向下让位使接触相对速度降低约 12%（3.46 → 3.04 m/s）。原因是在 180°/s 下，接球姿态的手速上限只有 0.7 m/s，而发射器的来球有 4.4–5.8 m/s。在自抛自接里来球只有约 1.7–2 m/s，同样的让位能抵消更大比例。
-4. **有观测噪声时，竖直让位不如沿来球方向缓冲**（13/20 对比 19/20）。推测是因为竖直向下时，手在水平方向不跟随来球，球接触后会在掌面上横向滑动。**[待查]**
-5. 软垫的穿透深度约 11–12 mm，对 4–5 m/s 的冲击来说偏深；真实 LEAP 指尖没有这么厚的垫子。
+Active finger closure is required (passive 0/20 vs active 20/20); downward cushioning cuts impact speed by ≈ 12% but trails along-ball cushioning under 5 mm noise (13/20 vs 19/20).
 
-## E3b：单臂自抛自接循环（`hand_juggle.py --hand flat`，`results/hand_juggle_noise*.txt`）
+## E3b: Single-Arm Two-Point Self-Juggling (`hand_juggle.py --hand flat`, `results/hand_juggle_noise*.txt`)
 
-**设置**（v2 实验 B 的手版本）：
-- **底座垫高 0.4 m**（`load_model(pedestal=0.4)`）。手臂水平伸直、大约在肩部高度时，手的竖直速度最快（E2）；接球点比出手点低，接球时手腕挂在手下方，手臂还要向下让位，这些都需要下方留出空间。不垫高时，接球位置会碰到地面。
-- **两个出手点**：法兰位于底座前方 0.85 m、高 0.30 m，在 y 方向相距 15 cm（A、B）。从 A 抛向 B 点上方，目标是飞行 0.4 s 后到达 B 的球位下方 10 cm 处；接住后握着球搬到 B 的行程起点，再抛回 A，如此循环。
-- **抛球**：E2 的直线行程，加速 2g、减速 2.5g，手指在峰值前 20 ms 开始张开，30 ms 张完。离线标定：在仿真中试抛，迭代峰值手速向量，直到落点误差 < 5 mm/s。张开手指的离手每次有 ±20 mm/s 的随机跳动，所以标定用带阻尼的更新，并保留最好的一次。标定结果：手速 1.75 m/s，偏离竖直 12–13°，关节速度 0.77 × 180°/s。
-- **接球**：E3a 的做法。出手后观测（100 Hz）、拟合并重规划；接球手型；手臂沿来球方向让位（这里来球偏离竖直约 10°，基本是向下）；球一碰到手掌就收紧手指。
-- **判定**：手臂停下后，球静止在手中（离 `ball_seat` < 5 cm、相对速度 < 0.05 m/s，持续 0.1 s）才算接住；一次运行在第一次失败或连续接住 20 次时结束。
+0.4 m pedestal, points A/B 15 cm apart (`F = 0.4 s`), 10 runs × up to 20 catches with prior-weighted ballistic fit (`fit_with_prior`):
 
-**结果**（10 次运行 × 最多 20 次接球）：
-
-| 观测噪声 | 接满 20 次的运行 | 失败 | 离手速度误差（均值 / 最大） | 接触相对速度（均值 / 最大） | 每次接球重规划 | 停留（接住 → 下次出手） |
+| Observation Noise | Full 20-Catch Runs | Failures | Release Speed Error (mean / max) | Relative Contact Speed (mean / max) | Replans / Catch | Dwell |
 |---|---|---|---|---|---|---|
 | 0 | **10/10** | — | 45 / 144 mm/s | 1.4 / 1.9 m/s | 1.2 | 0.84 s |
 | 5 mm | **10/10** | — | 47 / 144 mm/s | 1.3 / 1.9 m/s | 2.6 | 0.86 s |
 | 10 mm | **10/10** | — | 52 / 144 mm/s | 1.3 / 1.9 m/s | 2.8 | 0.86 s |
 
-关节速度实际峰值 0.91 × 180°/s，手臂执行器力峰值 0.94 × 上限。对照 v2 杯子：5 mm 噪声 10/10，10 mm 噪声 5/10；离手速度误差 11–15 mm/s。
+Peak joint speed 0.91 × 180°/s, peak arm force 0.94 × limit. Long test (20 runs × 50 catches, `results/hand_juggle_long_*.txt`): rotating the hand 90° (gap perpendicular to throw plane) reduced `NOT_CAUGHT` gap-side slips from 4/1807 to 0/1903 (1/952 `DROPPED` at both 0 and 10 mm noise from a 313 mm/s release outlier; per-catch failure rate ≈ 0.1–0.5%). Release-speed error is ≈ 3× larger than the v2 cup (45–52 mm/s vs 11–15 mm/s).
 
-**调试过程中的对照**（每组 10 次运行 × 最多 20 次接球；"失败 / 接球"按次数统计）：
+## E3c: Bowl Posture (`--hand bowl`, default)
 
-| 球的拟合 | 手的朝向 | 无噪声：接满的运行 | 失败 / 接球 | 5 mm 噪声：接满的运行 | 失败 / 接球 |
-|---|---|---|---|---|---|
-| 最小二乘（v1/v2） | 不转 | 6/10 | 4 / 173 | 1/10 | 9 / 86 |
-| 最小二乘 | 转 90° | 9/10 | 1 / 181 | 0/10 | 10 / 48 |
-| **先验拟合** | 不转 | 10/10 | 0 / 200 | 10/10 | 0 / 200 |
-| **先验拟合** | 转 90°（默认） | 10/10 | 0 / 200 | 10/10 | 0 / 200 |
-| 先验拟合，竖直向下让位 | 转 90° | 10/10 | 0 / 200 | 10/10 | 0 / 200 |
+Raised palm heel (30°) with fingers MCP 1.1 / PIP 0.3 (closing to 1.4 / 1.2 on touch):
+- Static capture grid (154 landing spots at 1.5 / 2.5 m/s): flat 120 / 114 vs **bowl 144 / 138**.
+- E3a launched balls: 20/20 at 5 mm noise (vs 13/17 flat), impact speed 1.9–2.3 m/s (vs 3.0–3.1), penetration 6–7 mm (vs 11 mm); 4 cm bias catches doubled (11/19, 9/18 vs 5/15, 4/13).
+- E3b self-juggling: **0/1000** failures in long 10 mm noise test (vs 1/952 flat); mean release-speed error **42–44 mm/s**; under 2 cm / 3 cm bias, full runs rose from 0/10 to **7/10** (3/163 failures) and **8/10** (2/164 failures).
 
-抛球减速度：3g 时 shoulder_lift 力矩饱和（1.00 × 上限）；2g 时离手太晚，来不及赶到接球位置（NO_CATCH_PLAN）；2.5g 两者都避免。
-无噪声时最小二乘拟合本身就是精确的，那一列的差别（4/173 对 0/200）在随机波动范围内，不能算作先验的作用。
+## E4: Whip Throwing (`whip_test.py`, `results/whip_test.txt`, `results/whip_test_decel.txt`)
 
-**长测试**（先验拟合；20 次运行 × 最多 50 次接球，`--runs 20 --cycles 50 --seed 1`；`results/hand_juggle_long_*.txt`）：
+Within 0.9 × 180°/s and 0.9 × feedforward torque limit:
+- `translate`: 1.83 m/s (`F = 0.42–0.46 s`), cascade margin ≈ 0.46 s.
+- `linewhip` (3 g / 4 g): **2.99–3.16 m/s** (`F = 0.64–0.70 s`, 1.8–1.9° error, spin 2.5–4.8 rad/s), cascade margin ≈ 0.86–0.90 s — **selected for cascade**.
+- `jointwhip`: up to 3.91 m/s (`F = 0.82–0.84 s`), limited by floor clearance and 5–7 rad/s spin.
 
-| 手的朝向 | 无噪声：失败 / 接球 | 10 mm 噪声：失败 / 接球 |
-|---|---|---|
-| 不转 | 4 / 843（3 次握偏 NOT_CAUGHT，1 次 DROPPED） | 1 / 964（握偏 NOT_CAUGHT） |
-| 转 90°（默认） | 1 / 952（DROPPED） | 1 / 952（DROPPED，同一次运行，见下） |
+## E5: Single-Hand Three-Ball Cascade (`hand_cascade.py`, `results/hand_cascade_*.txt`)
 
-每次接球的失败率约 0.1–0.5 %。"握偏到缺口一侧"（NOT_CAUGHT）在不转时出现 4 次（共 1807 次接球），转 90° 后 0 次（共 1903 次）。转 90° 后两次失败都在第 6 次运行的第 2 次抛球：两种噪声下种子相同，抛球也相同；那一抛的离手速度误差达到 313 mm/s（平时均值约 50 mm/s），是离手本身出了问题。
+Mirrored virtual launcher `O` (`F = 0.6 s`, `|w| = 0.15 m`, `direct` catch strategy from moving arm):
+- Zero noise (2 runs × 20 throws): `τ = 0.35, 0.37 s` achieved 40/40; `τ = 0.39 s` failed first catch (`NO_CATCH_PLAN`).
+- With noise (`σ_launch = 30 mm/s`, 5 mm obs noise, 5 runs × 50 throws): `τ = 0.36 s` completed 3/5 (194 catches, 2 LATE; ≈ 1% per-throw failure); `τ = 0.37 s` across 3 seeds had ≈ 2.5% per-throw failure (10/406); `τ = 0.38 s` failed on first catch. Peak arm force reached 1.00 × limit (zero margin).
 
-**发现**：
-1. **灵巧手可以完成连续自抛自接**：三个噪声水平下 30 次运行全部连续接满 20 次，共 600 次接球；长测试中每次接球的失败率约 0.1–0.5 %。
-2. **手需要的接球精度比杯子高**：杯子是漏斗，球落偏几厘米也会滑进杯底；手是平的掌面加三根手指，没有这种自动对中。主要的失败方式是手指收紧时把球挤向 LEAP 没有小指的那一侧（无名指外侧），握偏甚至挤出去：追踪显示接触瞬间球在掌心，偏移发生在收紧后的 50 ms 内，而且发生在球带着侧向速度朝缺口飞来时。把手转 90°，让缺口不对着抛球方向，可以减少这种失败。
-3. **以名义出手状态为先验的拟合是关键**：飞行只有约 0.4 s，用于拟合的观测只有约 0.2 s，最小二乘外推的误差有几厘米；自己抛的球，出手状态事先就知道到 ±5 cm/s 以内，把它作为先验后，5 mm 噪声下从 1/10 提高到 10/10，10 mm 噪声下也是 10/10（杯子只有 5/10）。
-4. **张开手指离手的重复性比杯子差约 3 倍**（离手速度误差均值 45–52 mm/s，最大 144 mm/s；杯子 11–15 / 27 mm/s）：接住后握球的位置每次不同，再加上手指软垫的回弹，这正是 RL 修正可以切入的地方（预测离手速度的偏差，或者修正 t_open / 手速）。
-5. **底座垫高 0.4 m** 让"伸直手臂抛球、在下方接球并让位"这套几何可行。
+## Limitations / Open Items
 
-## E3c：碗状手型接球（`--hand bowl`，现在是 `hand_catch.py` / `hand_juggle.py` 的默认；`results/hand_catch_bowl.txt`、`results/hand_juggle_bowl_*.txt`、`results/hand_juggle*_bias*.txt`）
-
-**动机**：人接球时手呈碗状——拳峰（指根关节）在最低点，掌根和手指都高于拳峰，球落进掌心和手指之间的折痕，手指从上方包住。平放的手掌只能让手指从一侧包住球。
-
-**手型和姿态**（`handsim.set_bowl_sites`）：
-- 接球手型：手指 MCP 1.1 rad（从拳峰竖起）、PIP 0.3；拇指同托球手型；球碰到手掌后收紧（MCP 1.4、PIP 1.2）。
-- 掌根抬高 30°：球在这个碗里静置于掌心坐标 (−35.5, −36, −77) mm，比平放时的座位往拳峰方向 10 mm。20° 时球会滚向敞开的无名指一侧。
-- 新的 site `bowl_point` 的 z 轴为碗口方向（掌心法向往掌根倾斜 30°），IK 和接球规划让碗口对着来球。
-
-**静态测试（手不动，倾斜重力等效于倾斜手）**：
-- 握紧后的包裹度、拉脱力与平放差别很小（包裹度 0.30–0.35，拉脱力 > 20 N）：85 mm 的球几乎和掌面一样长，收紧后总被推到相同位置。
-- **捕获范围**（球以 1.5 / 2.5 m/s 落到掌面上 154 个落点，碰掌即收紧）：平放 120 / 114，碗状（MCP 1.1、30°）**144 / 138**。多出来的全在掌根一侧：平放时球从掌根滚出，碗状时滚回拳峰。
-- **减小球径无帮助**：65 / 75 / 85 mm 的捕获范围相同（碗状 142–143 / 154）；65 mm 球只被中指和手掌接触（LEAP 手指间距 45 mm，三指横跨约 90 mm），拉脱力降到 12–18 N。保留 85 mm。
-- 只把平放手掌的瞄准点往拳峰方向移（`--aim-dx`）无效：手指收紧会把球扫回掌心；移 35 mm 时球先撞手指。
-
-**E3a：发射器来球**（每组 20 次；各配置从各自的预备姿态出发）：
-
-| 手型 | 朝向 | 无噪声 | 5 mm 噪声 | 接触相对速度 | 穿透 |
-|---|---|---|---|---|---|
-| 平放 | yaw 0 / 90 | 20 / 20 | 13 / 17 | 3.0–3.1 m/s | 11 mm |
-| **碗状** | yaw 0 / 90 | 20 / 20 | **20 / 20** | 1.9–2.3 m/s | 6–7 mm |
-
-人为落点误差（`--obs-bias`：所有观测水平偏移，方向随机），接住 /（接住 + 握住但离座位 > 3 cm）：
-
-| 误差 | 平放 yaw 0 | 平放 yaw 90 | 碗状 yaw 0 | 碗状 yaw 90 |
-|---|---|---|---|---|
-| 2 cm | 12 / 15 | 13 / 15 | **17 / 18** | **17 / 20** |
-| 3 cm | 10 / 15 | 11 / 13 | 12 / 18 | 9 / 18 |
-| 4 cm | 5 / 15 | 4 / 13 | **11 / 19** | **9 / 18** |
-
-**E3b：自抛自接**（默认：`--hand bowl`，即 `--yaw 0 --release 0.9 0.23`）：
-- **抛球也用碗状手型**：抛完再把平放的手转成碗状需要手腕转约 0.5 rad，在 0.9 × 180°/s 下约 0.37 s，比抛球结束到接球的时间还长（每个候选接球时刻都差 0.12–0.17 s）。这也更像人。
-- 掌根抬高后手臂构型变了，原出手点需要 1.01 × 180°/s；出手点外移到底座前方 0.9 m、球心高 0.35 m 后为 0.81–0.83。
-- 球过了最高点才换成接球手型（竖起的手指不能碰到上升的球）。
-- **朝向**：yaw 0（手指朝外，倾斜方向垂直于抛球连线）可行；yaw ±90（掌根对着抛球连线）不可行——碗口要朝来球偏约 10°，在抛球平面内对两个方向一加一减，两次接球姿态差约 20°，手腕来不及，规划失败（NO_CATCH_PLAN）。
-
-| 设置 | 平放 yaw 90（E3b 默认） | 碗状 yaw 0 |
-|---|---|---|
-| 0 / 5 / 10 mm 噪声 | 10/10 ×3 | 10/10 ×3 |
-| 长测试 10 mm 噪声（失败 / 接球） | 1 / 952 | **0 / 1000** |
-| 接触相对速度（均值） | 1.3–1.4 m/s | 1.1 m/s |
-| 离手速度误差（均值） | 45–52 mm/s | 42–44 mm/s |
-| **2 cm 落点误差**：接满运行，失败 / 接球 | 0/10，10 / 52 | **7/10，3 / 163** |
-| **3 cm 落点误差** | 0/10，10 / 21 | **8/10，2 / 164** |
-
-关节速度峰值 0.90 × 180°/s，手臂力峰值 0.93–0.96 × 上限。
-
-**发现**：
-1. **碗状手型显著提高对落点误差的容忍度**：自抛自接中，2–3 cm 落点误差下每次抛接的失败率从 16–32 % 降到 1–2 %；发射器来球 4 cm 误差下成功率翻倍。原因是碗的两面墙（抬高的掌根、竖起的手指）把偏离的球导向拳峰折痕，而平放的手掌在掌根一侧没有墙。
-2. 碗状的接触相对速度更低、穿透更浅：球先擦过倾斜的掌面或手指，不是正面撞上平面。
-3. 剩下的失败仍是"握住但偏向无名指外侧的缺口"（掌心坐标 y ≈ −90 mm），LEAP 没有小指这一点碗状手型解决不了。
-4. 碗状手型需要连带改变抛球姿态和出手位置；倾斜方向要垂直于抛球连线。
-
-## E4：甩抛（`whip_test.py`，`results/whip_test.txt`、`results/whip_test_decel.txt`）
-
-**动机**：三球 cascade 的时序约束是 **D + 3E = 2F**（每拍 τ，每只手每 2τ 抛一次：F + D = 3τ，D + E = 2τ；D 持球、E 空手、F 飞行）。平移抛（E2/E3b，手的姿态不变）出手最快约 2 m/s，F ≈ 0.45 s，D + 3E 只有约 0.9 s。甩抛让手转动，shoulder_lift、elbow、wrist_1 三个平行关节的转速沿手臂叠加。杯子阶段（v2）甩抛失败，是因为弯曲的球位路径把球压在杯壁上；手是握住球、靠张开手指离手的，这个问题可能不存在。
-
-**三种抛法**（都用 E3c 的碗状手型，底座 0.4 m）：
-
-| 抛法 | 关节 | 路径 |
-|---|---|---|
-| translate 平移抛 | 6 个 | 手的姿态不变，直线（`handsim.LineStroke`，E3b 所用） |
-| linewhip 直线甩抛 | shoulder_pan + 三个平行关节（wrist_2/3 不动） | 球位（`bowl_seat`）走直线，手自由转动；零空间分量取出手时使关节速度最大值最小的那个（同 v2） |
-| jointwhip 关节空间甩抛 | 同上 | 关节空间直线，球位走弧线 |
-
-速度曲线同 `LineStroke`：smoothstep 加速到 V（峰值加速度 a_up），再以峰值减速度 a_down 停下。每种抛法用二分法找出满足 0.9 × 180°/s、0.9 × 力矩上限（前馈）、关节范围、无碰撞（含地面）的最大 V，再仿真一次：球先在出手姿态（碗口朝上）握住，带到行程起点，再按 E2 的方式张开手指（峰值前 20 ms 开始，30 ms 张完）。
-
-**A：瞬时运动学上限**（所有关节 ≤ 180°/s 时球位的最大竖直速度；碗口朝上，球位在底座前方 0.6–1.0 m、底座以上 0–0.5 m 的 29 个位姿）：平移 中位数 1.40 / 最大 2.44 m/s；whip4（上述 4 个关节）3.18 / 5.25；6 个关节都用 3.29 / 5.29。
-
-**B：实际出手**（各抛法的最好结果；F 为到比出手点低 0.1 / 0.2 m 处的飞行时间）：
-
-| 抛法 | 位姿 (x, z) | a_up / a_down | 出手速度 | F | 偏离竖直 | 自转 | 关节速度 / 力矩 | 行程（出手后） | 限制 |
-|---|---|---|---|---|---|---|---|---|---|
-| 平移 | 0.9, 0.3 | 2 / 2.5 g | 1.83 m/s | 0.42 / 0.46 s | 3.1° | 2.0 rad/s | 0.90 / 0.71 | 0.24 m（0.10） | 关节速度；3 g 时力矩到 0.90，4 g 不可行 |
-| 直线甩抛 | 0.9, 0.2 | 3 / 4 g | 3.16 m/s | 0.67 / 0.70 s | 1.8° | 4.8 rad/s | 0.90 / 0.87 | 0.46 m（0.20） | 关节速度 |
-| 直线甩抛 | 0.9, 0.3 | 3 / 4 g | 2.99 m/s | 0.64 / 0.67 s | 1.9° | 2.5 rad/s | 0.90 / 0.88 | 0.40 m（0.17） | 关节速度 |
-| 关节空间甩抛 | 0.9, 0.2 | 3 / 4 g | 3.91 m/s | 0.82 / 0.84 s | 4.1° | 7.0 rad/s | 0.84 / 0.87 | 0.67 m（0.30） | 手碰到地面 |
-| 关节空间甩抛 | 0.9, 0.3 | 3 / 2.5 g | 3.57 m/s | 0.75 / 0.78 s | 2.2° | 5.6 rad/s | 0.90 / 0.63 | 0.77 m（0.44） | 关节速度；4 g 时力矩限制 V 到 2.5 m/s |
-
-5 g 减速三种抛法都不可行（力矩）。所有甩抛都干净离手，球在 3 g 加速和手的转动下一直握住。
-
-**cascade 时间余量**：手持球时要完成加速段 T1，出手后要完成余下的减速段 T2'，于是 2F − T1 − 3·T2' 是留给"接球缓冲 + 带球到行程起点"和三次"从行程终点回到接球点"的时间（F 取低 0.2 m 时）：平移约 0.46 s（手在出手点上方 0.10 m 停下），直线甩抛（3 g / 4 g）约 0.86–0.90 s（0.17–0.20 m），关节空间甩抛约 1.0 s（0.30 m）。
-
-**发现**：
-1. **甩抛在 180°/s 内把出手速度提高约 1.6–2 倍**（1.8 → 3.0–3.2 / 3.6–3.9 m/s），F 从约 0.45 s 提高到 0.67–0.84 s，不需要放宽速度限制。
-2. **用手握住球后，杯子甩抛的失败机理消失**：离手方向偏离竖直 1.4–4.4°，和平移抛相当。
-3. 甩抛的力矩余量更大（平移抛手臂伸直，shoulder_lift 先到上限），所以减速可以加到 4 g，出手后的行程更短，这对 cascade 的空手时间 E 很重要。
-4. **速度越快，出手后手在越高处停下**，要回到出手点下方去接球；每个 cascade 周期要回三次，所以甩抛给 cascade 带来的余量比 F 的增长小。
-5. 直线甩抛是 cascade 抛法的首选：余量接近关节空间甩抛，方向更准、行程更短、不碰地面。关节空间甩抛受底座高度限制（0.4 m 时碰地），自转达到 5–7 rad/s。
-
-**对其他三球手法**（粗算）：shower（51）的右手要在一拍内接住快传的球，再完成高抛的整个加速段，需要 F₅ ≥ 3τ + E；按 3 g smoothstep 加速，需要约 11 m/s（理想恒定加速约 5.6 m/s），远超 3.9 m/s，放宽到 1.5 × 180°/s 也不行（6 m/s 的加速段约 0.9 m，超过臂展）。双球 shower（31）只需要 F₃ ≳ 0.5 s，直线甩抛可以做到。
-
-## E5：三球 cascade 中的一只手（`hand_cascade.py`，`results/hand_cascade_*.txt`，`videos/hand_cascade.mp4`）
-
-**问题**：cascade（siteswap 3）每拍 τ，每只手每 2τ 抛一次，F + D = 3τ、D + E = 2τ，于是 **D + 3E = 2F**，τ 的可行范围是 [(F + D_min) / 3, F − E_min]。E4 的余量是由行程时间推算的；E5 用完整的抛接循环实测。
-
-**做法**：这台手臂是手 H；另一只手 O 用发射器代替，按 H 的镜像发球（对称面在两个出手点中间），出手速度可加噪声。坐标相对底座、球心：
-
-| | 出手点 | 目标（对方的接球点） |
-|---|---|---|
-| H | (0.8, 0, 0.25) | (0.8, −s − w, 0.25) = (0.8, 0.35, 0.25) |
-| O（虚拟） | (0.8, −s, 0.25) = (0.8, 0.2, 0.25) | (0.8, w, 0.25) = (0.8, −0.15, 0.25) |
-
-s = −0.2、w = −0.15（O 在 H 的左侧），接球点与出手点同高，F = 0.6 s。H 的抛球是 E4 的直线甩抛（3 g / 4 g），离线标定到 V = 3.0 m/s（关节速度 0.88，力矩 0.69）。时间表：H 在 T0 + 2kτ 出手，O 在 T0 + (2k − 1)τ 出手。每个周期 H：
-1. 甩抛出手（手指同 E2）；
-2. **峰值速度后 30 ms 就从手臂当前的运动状态转去接球**（`planning` 新策略 `direct`）：一段五次多项式直接到接球位姿，到达时沿来球方向 0.7 m/s，再缓冲 3 cm；碗状手型，碰到掌心收紧手指；出手前按 O 的名义出手状态规划，之后用先验拟合重规划（同 E3b）；
-3. 缓冲一结束就把球带到下一次行程的起点（最快的五次多项式，0.9 × 180°/s、力矩 ≤ 0.9），至少停 10 ms，按时间表出手。出手前检查球在手中（离 `ball_seat` < 5 cm、相对速度 < 0.15 m/s）。
-
-场景里有 4 个球轮流使用：手里的、飞来的、刚抛出的（出手 0.12 s 后移出场景，落点误差由出手状态推算）。
-
-**调试中确定的设计**（每一项都是先失败、找到原因后改的）：
-
-| 问题 | 原因 | 改法 |
-|---|---|---|
-| 一直 NO_CATCH_PLAN | E3a 的接球要先停到预接球位、等待、再从静止加速匹配来球；出手时手以 2.7 m/s 上冲，这样要 0.23–0.42 s 才到位，而 E 只有约 0.2 s | 策略 `direct`：不停稳，从运动状态直接去接 |
-| 接球点在出手点下方 0.2 m 时不可行 | 可行的接球时刻只在出手后约 0.2 s、出手点高度附近 | 接球点与出手点同高（drop 0）。这和人的 cascade 一样：抛完在高处横移去接，带着球向下、向内绕回再抛 |
-| 加噪声后两球相撞 | 刚抛出的球和落向本手的球最近距离约 0.95·\|w\|（与 s、τ 无关）；w = 0.1 时表面只隔 1 cm | \|w\| = 0.15（隔 5.5 cm）。改为两手的球走前后错开 10 cm 的平面不可行：手要多走 10 cm，关节速度不够 |
-| 握偏到缺口（2 / 339） | LEAP 是右手；O 在 H 的右侧（−y）时，H 相当于左手，来球推向无名指外侧的缺口 | s、w 取负（O 在左侧），来球推向拇指一侧，此类失败消失 |
-| 接近段关节加速度 / 力矩超限 | 手臂伸直，要刹住上冲的大关节 | 出手点从 0.9 移到 0.8 m；接球规划的关节加速度上限 ×2（只是规划参数，力矩检查才是物理约束）；接球和搬运的前馈力矩上限 0.8 → 0.9 |
-
-**结果**（F = 0.6 s；`results/hand_cascade_sweep.txt`、`hand_cascade_noise_*.txt`）：
-
-无噪声（每组 2 次运行 × 20 次抛接）：τ = 0.35、0.37 都 40/40；τ = 0.39 规划不出第一次接球（关节速度、力矩）。
-
-有噪声（O 的出手速度每轴 σ = 30 mm/s，约等于 H 自己的离手误差；观测噪声 5 mm），每组 5 次运行 × 最多 50 次：
-
-| τ | 名义 D / E | 跑满 50 次的运行 | 接住 | 失败 |
-|---|---|---|---|---|
-| 0.36 | 0.48 / 0.24 s | 3/5 | 194 | LATE 2 |
-| 0.37（种子 1） | 0.51 / 0.23 s | 3/5 | 191 | LATE 2 |
-| 0.37（种子 2） | | 2/5 | 166 | LATE 1，握偏离座 2 |
-| 0.37（种子 3） | | 0/5 | 39 | LATE 3；两球相撞 2（1 次是来球只碰到手指、没碰到手掌，手指没收紧，球搁在手上被下一个球砸到；1 次是交错的两球相撞） |
-| 0.38 | 0.54 / 0.22 s | 0/5 | 0 | NO_CATCH_PLAN（第一次接球就规划不出） |
-
-每次抛接的失败率：τ = 0.36 约 1 %（2 / 196），τ = 0.37 约 2.5 %（10 / 406）。
-
-实测时序：E = 0.23 s（0.18–0.27），D = 0.49–0.51 s（0.47–0.56），D + 3E ≈ 1.2 s = 2F。搬运平均提前约 100 ms 到位，最差迟到 46 ms。估计 E_min ≈ 0.21 s（τ = 0.38 规划不出），D_min ≈ 0.42 s，D_min + 3E_min ≈ 1.05 s，比 2F 少约 0.15 s。H 的离手速度误差均值 50–58 mm/s（最大 231），落到 O 接球点的偏差均值 30–34 mm（最大 133）。关节速度峰值 0.90 × 180°/s；**手臂执行器力峰值 1.00**（规划的前馈 ≤ 0.9，伺服修正让它短时到达上限）。
-
-**发现**：
-1. **在 180°/s 内，一只手能跟上三球 cascade 的节奏**：F = 0.6 s，τ ≈ 0.36–0.37 s（每只手每 0.72–0.74 s 抛一次），有噪声时每次抛接失败率约 1–2.5 %。可行窗口很窄（约 0.35–0.375 s）。
-2. 窗口的两端各由一个阶段决定：τ 大了 E 太短，刚抛完、还在以 3 m/s 上冲的手来不及反向去接（关节速度、力矩）；τ 小了 D 太短，来不及把球带回行程起点（LATE）。噪声使接球时刻和位置变化，主要表现为 LATE。
-3. 接球必须"边动边接"：从运动状态直接规划到接球位姿，接球点在出手高度。E3a / E3b 的"停稳—等待—匹配"在 cascade 里不可行。
-4. 两手的弹道要在横向错开足够远（|w| ≥ 0.15 m），LEAP 缺小指的一侧不能朝着来球的横向速度，这两条对 v5 的双臂布局有直接约束。
-5. 手臂执行器力已到上限，没有余量。
-
-## 局限 / 待办
-
-- 手指力矩上限 0.5 N·m 是估计值，需要用 XC330-M288-T 的规格和 LEAP 的电流设置核实。
-- 握球时手指一直压在力矩上限：真实舵机长时间堵转会发热（额定连续力矩约为堵转力矩的 20%），实际应只在需要时收紧。
-- 手掌和指尖的柔顺参数（6 ms / 1.2）是为接球选的，没有对照真实材料标定。
-- E2 只有一个离手姿态、手的姿态在运动中不变（平移）；手指张开是关节目标的线性插值。
-- E3a 用的是 v1 的高速发射器；有观测噪声时竖直让位的失败原因待查（E3b 中加了先验拟合后，竖直让位也是 10/10）。
-- E3c：碗的参数（MCP 1.1、30°）只在小范围内选过；碗状的离手（张开到平掌）没有单独优化。
-- E3b：只测了一种几何（间距 15 cm、飞行 0.4 s、底座 0.4 m）；接住后没有"重新握球"，球在手中的位置会一次次累积偏差，靠下一次接球重规划吸收；先验的 σ（5 mm、30 mm/s）是按实测量级手选的。
-- E4：甩抛只做了竖直方向、y = 0 的位姿和一组手指张开参数；没有标定落点，也没有放进抛接循环；cascade 余量是由行程时间推算的，回程和接球所需的时间还没有实测（E5）。
-- E5：O 是完美的镜像发射器（没有 O 手臂的动力学、碰撞和接球误差），只有一种几何和一个 F；手只在碰到掌心时收紧（只碰到手指时不收紧，见上）；节拍固定，搬运来不及就失败，没有根据实际接球时刻调整出手时刻；缓冲、搬运、行程三段之间都停下，没有连成一条连续的轨迹；手臂执行器力峰值到 1.00。
+- Finger torque limit (0.5 N·m) is estimated and needs hardware verification; continuous stall clamping would overheat real servos.
+- Compliant pad parameters (6 ms / 1.2) are uncalibrated against physical materials.
+- E5 uses an ideal mirrored launcher with fixed timing, stops between cushion/carry/stroke, and hits 1.00 × arm actuator force.

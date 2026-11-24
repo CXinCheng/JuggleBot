@@ -1,10 +1,10 @@
-# two：2 次完整抛接验证
+# two: 2-Throw Complete Validation
 
-任务验收与 RL 相对对照的收益分别报告。策略必须保留无扰动完成情况、安全性及扰动完成数；额外反馈收益由时间序列和冻结对照判定。
+Task acceptance and RL gains over baselines are reported separately. Policies must preserve clean completion, safety, and disturbed completions; additional feedback gain is judged against timed and frozen controls.
 
-零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。
+At zero error, feedback gains preserve the nominal trajectory; the clean column verifies compatibility, while disturbed columns and baselines test learning gain.
 
-| 控制器 | 理想初态 | 仅感知噪声 | 物理初态扰动 | 安全失败 |
+| Controller | Clean | Perception noise only | Physical seat jitter & combined | Safety failures |
 | --- | --- | --- | --- | --- |
 | zero | 3/3 | 3/3 | 2/18 | 11/24 |
 | timed | 3/3 | 3/3 | 2/18 | 11/24 |
@@ -12,7 +12,7 @@
 | PPO seed 1 | 3/3 | 3/3 | 2/18 | 11/24 |
 | PPO seed 2 | 3/3 | 2/3 | 3/18 | 11/24 |
 
-无扰动完整任务验收：{'0': True, '1': True, '2': True}。
+Clean complete-task acceptance: {'0': True, '1': True, '2': True}.
 
-扰动非退化验收：{'0': False, '1': True, '2': False}。
-严格超过名义、时间序列和自身冻结对照：{'0': False, '1': False, '2': False}。
+Disturbance non-degradation: {'0': False, '1': True, '2': False}.
+Strictly exceeds zero, timed, and own-frozen controls: {'0': False, '1': False, '2': False}.

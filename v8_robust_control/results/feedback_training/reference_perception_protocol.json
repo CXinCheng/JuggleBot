@@ -1,5 +1,5 @@
 {
-  "training_sha256": "deb827a2c212cea7a69b49c40c2294daf17f3a756f79ff505ce8e44f93b3ddbf",
+  "training_sha256": "56397b2f8dd9a7287704ed6f83459283d52420efa8f52222c316186bb827f91f",
   "source_sha256": {
     "src/jugglebot/humanoid/__init__.py": "888e372da1163ebfbb2d8573d383a2a6c94c92600ce65ab40a0cf06805847ce5",
     "src/jugglebot/humanoid/cascade.py": "47903e49d916eb11660961040ac77bcfad73d973053770ff51e06b25030ab432",
@@ -16,7 +16,7 @@
     "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
     "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
     "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
-    "v8_robust_control/complete_task.py": "7471e67e1e05487ef511993cc0be5f2c1dc650fa23692e1539a99be795c21a92",
+    "v8_robust_control/complete_task.py": "7abc35b9e356455ba589f1da52aee26ad0397b8a622587888bda78119938f65e",
     "v7_three_ball_hold/cascade21.py": "9612d138d24d25eb3784d61415d8241d0d1e6227b3fee3eee77deb655ce5fad4",
     "v7_three_ball_hold/end21.py": "69280fc370d851d2e477d0bbef2b22b962a9954a320c3865d96d7800200552a6",
     "v7_three_ball_hold/results/hold2f_right_s20.json": "02df596241e3498bea5c186a23e80d04a6c0950cb4616882d1200e9ed985a5d2",
@@ -45,8 +45,8 @@
     "v8_robust_control/cascade_env.py:nominal_support": "14bd7437042b974815336b6161f5841f9d85659ecf93a20f10bc501ef4212cea",
     "v8_robust_control/cascade_env.py:CascadeEnv": "975390e50a0f42fb902ff26d292894ba57e865153cbb2dd83c23a39bec8aee8a",
     "v8_robust_control/cascade_env.py": "3b74bd5b4e73130986cc8be36fe06b64919cf376efd9165de3d5884934744ce4",
-    "v8_robust_control/train_transfer.py": "f4816ee79ee65e596cd15dad5ea2b7f5c6adfcef756beeb82a00b3a7c996a192",
-    "v8_robust_control/train_cascade.py": "c2278fd8de4ce7f5fa38e1102ccd09fcff25c6aa8a41965f878d99e4cbe479e5",
+    "v8_robust_control/train_transfer.py": "bbde6e786a0bb03bdb60e7bfc6a48139cd812c37bec8e6ea0c525d88d254ff16",
+    "v8_robust_control/train_cascade.py": "9103632e73817984f1329a172988ae28c205add59d9fd7217b9d0edfa9ee73fa",
     "v8_robust_control/train_cascade.py:CascadeFeatures": "4478236bd2d16f91789b443c69adadd0cb607997e2ec92bc8cd92978e705e432"
   },
   "evaluation_source_sha256": {
@@ -65,7 +65,7 @@
     "src/jugglebot/robustness/observation.py": "ebfd361ff73b52800e1f6393dc16a56bfa95b8f3886118deeedcb4c65db9e360",
     "src/jugglebot/robustness/perception.py": "bb19e22548ad8d8ab348843896113ba1c887c68df757a03351c9c6776baf2676",
     "v8_robust_control/juggle.py": "04631f135d949ec363b333068332eac7c819ca58a3b827c937fd18e20b49832c",
-    "v8_robust_control/complete_task.py": "7471e67e1e05487ef511993cc0be5f2c1dc650fa23692e1539a99be795c21a92",
+    "v8_robust_control/complete_task.py": "7abc35b9e356455ba589f1da52aee26ad0397b8a622587888bda78119938f65e",
     "v7_three_ball_hold/cascade21.py": "9612d138d24d25eb3784d61415d8241d0d1e6227b3fee3eee77deb655ce5fad4",
     "v7_three_ball_hold/end21.py": "69280fc370d851d2e477d0bbef2b22b962a9954a320c3865d96d7800200552a6",
     "v7_three_ball_hold/results/hold2f_right_s20.json": "02df596241e3498bea5c186a23e80d04a6c0950cb4616882d1200e9ed985a5d2",
@@ -94,11 +94,11 @@
     "v8_robust_control/cascade_env.py:nominal_support": "14bd7437042b974815336b6161f5841f9d85659ecf93a20f10bc501ef4212cea",
     "v8_robust_control/cascade_env.py:CascadeEnv": "975390e50a0f42fb902ff26d292894ba57e865153cbb2dd83c23a39bec8aee8a",
     "v8_robust_control/cascade_env.py": "3b74bd5b4e73130986cc8be36fe06b64919cf376efd9165de3d5884934744ce4",
-    "v8_robust_control/train_transfer.py": "f4816ee79ee65e596cd15dad5ea2b7f5c6adfcef756beeb82a00b3a7c996a192",
-    "v8_robust_control/train_cascade.py": "e9b1dc2fb94e2b51ad93f050eabf1f4c8669a14a3cfe8911e077d36e4e09d3af",
+    "v8_robust_control/train_transfer.py": "bbde6e786a0bb03bdb60e7bfc6a48139cd812c37bec8e6ea0c525d88d254ff16",
+    "v8_robust_control/train_cascade.py": "9103632e73817984f1329a172988ae28c205add59d9fd7217b9d0edfa9ee73fa",
     "v8_robust_control/train_cascade.py:CascadeFeatures": "4478236bd2d16f91789b443c69adadd0cb607997e2ec92bc8cd92978e705e432"
   },
-  "evaluator_sha256": "9ac8cf2cdee7e99de7387d5207c77cd9422b8add8673ceeaa83e0d335481b3d4",
+  "evaluator_sha256": "5312b29b3dd22640a0fb2529562e99f563699bb0076e17b6aeb0a377649d6dc3",
   "task": "complete",
   "requested_throws": 30,
   "controller": "reference",
@@ -147,19 +147,19 @@
       "seed": 0,
       "selected_step": 1024,
       "checkpoint": "ppo_seed0.zip",
-      "checkpoint_sha256": "2888c9808e0d0726de2e438e659fe02cf105bf4e8e25cd5a7319262a309eb8f0"
+      "checkpoint_sha256": "8bb584c33a6213294890537aae1b65492dc461a8205bff116736bd2e0bd83c3d"
     },
     {
       "seed": 1,
       "selected_step": 1024,
       "checkpoint": "ppo_seed1.zip",
-      "checkpoint_sha256": "36357c95b025d43c4054304b128b008827a0c52a4dfaee24951289abe58802bc"
+      "checkpoint_sha256": "5186edd2924e8f6c9d6abad3d1757aae67ba782c712454ec155972d4484e2857"
     },
     {
       "seed": 2,
       "selected_step": 8192,
       "checkpoint": "ppo_seed2.zip",
-      "checkpoint_sha256": "7a49fe163987f0eb91fc382ba6f9348397256e2ade2225aa1ef5a2bcf495bb75"
+      "checkpoint_sha256": "bdb38be0650eb181b89bc4a49834202b9dd983acc84037d464febedde4faae47"
     }
   ],
   "validation_robustness_passed": true,

@@ -6,11 +6,11 @@
   "controller": "nominal controller + trained PPO residual",
   "deterministic": true,
   "training": "v8_robust_control/results/full_transfer/training.json",
-  "training_sha256": "43cd298daaa904df7b6d822818a133cf0d7490700ae55c5e54b350acac7af92e",
+  "training_sha256": "9c38f771b4089ff9ab5d02be65ed365ffd1fd9a4db0a750ba9379371b9703920",
   "training_seed": 0,
   "selected_step": 32768,
   "checkpoint": "ppo_seed0.zip",
-  "checkpoint_sha256": "80ef7b14350a99d7f7e127d201a399518a10a466e97d50604da60b3d6407713a",
+  "checkpoint_sha256": "72664407ef6b29743534d0eb2f3939be17d8b829136648014b893ff25fa4ddf4",
   "source_sha256": {
     "v8_robust_control/train_residual.py": "fcc78ab57c247b4bbb8901f47160056060228719e362561a6046af846c3b3d8b",
     "v8_robust_control/residual_env.py": "05c3ed96a0a1d1ce87e2f3a344a1db69b4f1e6bbb860d228f90db25373742c6c",
@@ -40,9 +40,9 @@
     "v8_robust_control/transfer_env.py": "508d8f24bf685dbe353b4bfdc5695cc54cabd862dfec3a430d8166a496202184",
     "v8_robust_control/transfer_observation.py": "031d9f2fd4f9df9dd1434699da25bc92f72d4337c214cd9960ae5155bd70007a",
     "src/jugglebot/humanoid/leap_cascade_seed_plans.json": "139ec9ef5241d6b4bb68b35a40cd1a3e9a1a4f79c050eaa8050941e78fb225ef",
-    "v8_robust_control/train_transfer.py": "f4816ee79ee65e596cd15dad5ea2b7f5c6adfcef756beeb82a00b3a7c996a192"
+    "v8_robust_control/train_transfer.py": "bbde6e786a0bb03bdb60e7bfc6a48139cd812c37bec8e6ea0c525d88d254ff16"
   },
-  "recorder_sha256": "7e0865db42782135988597b8126313a66f0f137b7f62e1097bdc9dcceaea4731",
+  "recorder_sha256": "ff1de4e761730e49536526e836a2f24e84c3d3c14bf70560c8fa9b49776214ca",
   "reference_sha256": "63d9b2b146974f067f6a2a391b70d11da42085ae918371fe418b769b34ed16cf",
   "reference_manifest_sha256": "841c5844d5deeca176f23b995677452c0018e28542886b7497a3ca28b7389fb5",
   "video": {

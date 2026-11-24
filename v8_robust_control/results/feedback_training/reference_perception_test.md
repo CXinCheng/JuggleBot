@@ -1,12 +1,12 @@
-# 30 抛完整任务独立评估
+# 30-Throw Complete-Task Independent Evaluation
 
-控制器：`reference`；测试集：`perception`。
+Controller: `reference`; suite: `perception`.
 
-完整任务能力、扰动下的非退化表现和反馈收益分别验收。每个成功回合均须通过释放、接回、连续承托、碰撞和姿态检查。
+Complete-task capability, disturbance non-degradation, and strict feedback gain are verified separately. Every successful episode must pass release, catch, continuous support, collision, and posture checks.
 
-零误差时反馈增益保持名义轨迹；无扰动行用于兼容性检查，扰动行与对照用于检验学习收益。
+At zero error, feedback gains preserve the nominal trajectory; clean counts verify compatibility, while disturbed counts and baselines test learning gain.
 
-| 控制器 | 无扰动 | 仅 3 mm 位置噪声 | 其他感知扰动 | 安全失败 |
+| Controller | Clean | 3 mm noise only | Other perception disturbances | Safety failures |
 | --- | --- | --- | --- | --- |
 | zero | 5/5 | 0/5 | 0/40 | 41/50 |
 | timed | 5/5 | 0/5 | 0/40 | 38/50 |
@@ -17,15 +17,15 @@
 | live_seed2 | 5/5 | 0/5 | 0/40 | 42/50 |
 | frozen_seed2 | 5/5 | 0/5 | 0/40 | 38/50 |
 
-| PPO 训练种子 | 无扰动完整任务 | 扰动非退化 | 严格反馈收益 |
+| PPO training seed | Clean complete task | Disturbance non-degradation | Strict feedback gain |
 | --- | --- | --- | --- |
-| 0 | 通过 | 未通过 | 未通过 |
-| 1 | 通过 | 通过 | 未通过 |
-| 2 | 通过 | 未通过 | 未通过 |
+| 0 | PASS | FAIL | FAIL |
+| 1 | PASS | PASS | FAIL |
+| 2 | PASS | FAIL | FAIL |
 
-本测试集只改变位置测量、传输延迟和丢帧，不包含物理初态随机化。
+This suite varies only position measurement noise, transmission delay, and frame dropout, with no physical initial-state randomization.
 
-| 条件 | 零请求 | 时序增益 | PPO 0 | PPO 1 | PPO 2 |
+| Condition | Zero request | Timed gain | PPO 0 | PPO 1 | PPO 2 |
 | --- | --- | --- | --- | --- | --- |
 | clean | 5/5 | 5/5 | 5/5 | 5/5 | 5/5 |
 | sensor_only_3mm | 0/5 | 0/5 | 0/5 | 0/5 | 0/5 |
@@ -38,8 +38,8 @@
 | dropout_30pct | 0/5 | 0/5 | 0/5 | 0/5 | 0/5 |
 | perception_combined | 0/5 | 0/5 | 0/5 | 0/5 | 0/5 |
 
-无扰动重复使用同一物理初态，用于检查完整任务与重置一致性；重复种子不代表独立物理初态样本。
+Clean runs repeat the same physical initial state to verify complete-task and reset consistency; repeated seeds do not represent independent physical initial states.
 
-扰动非退化要求感知扰动完成数不降低，且安全失败数不增加。严格反馈收益还要求其他感知扰动完成数超过零请求、时间序列及自身冻结对照。
+Disturbance non-degradation requires non-decreasing completions on perception disturbances with non-increasing safety failures. Strict feedback gain additionally requires exceeding zero-request, timed, and own-frozen baselines on other perception disturbances.
 
-候选检查点和时间序列对照在验证集上确定，独立评估不重新选择策略。配置、模型校验值、源码和逐回合物理证据保存在协议与原始 JSON 中。
+Candidate checkpoints and timed baselines were fixed on the validation set; independent evaluation does not re-select policies. Configuration, model checksums, source hashes, and per-episode physical evidence are stored in the protocol and raw JSON.

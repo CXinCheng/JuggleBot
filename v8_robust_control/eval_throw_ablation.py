@@ -3,10 +3,10 @@
 Ablation Arms (all with Underlying Closed-Loop Intervention ON):
 1. Arm 2 (Zero Throw Correction):
    Baseline with zero rule actions; underlying guards active.
-2. Arm 2 + Vertical-Only Limited (仅限制竖直修正):
+2. Arm 2 + Vertical-Only Limited (vertical correction clamped only):
    Throw horizontal corrections zeroed (act[0]=act[1]=0);
    Vertical correction clamped to [-0.20, 0.20] (max |dv_z| <= 0.05 m/s, ~30% of full trim).
-3. Arm 2 + 3-Axis Limited (限制三轴修正):
+3. Arm 2 + 3-Axis Limited (all 3 velocity axes clamped):
    Throw 3D velocity corrections clamped to [-0.20, 0.20] (max |dv| <= 0.05 m/s across x, y, z).
 4. Arm 1 (Full Rule Throw):
    Original frozen trim_m15_wguard throw corrections.
